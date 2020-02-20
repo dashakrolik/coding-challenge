@@ -1,4 +1,11 @@
 .ace-editor {
     min-height: 300px;
-    margin-top:20px;
+    margin-top: 20px;
+}
+
+.square {
+    height: 70px;
+    width: 70px;
+    background-color: orange;
+    margin-top: 100px;
 }

@@ -15,6 +15,7 @@ export class WelcomePageComponent implements OnInit {
 
   email: string;
   form: FormGroup;
+  squareMargin = 'margin-left: 20px';
 
   ngOnInit() {
     this.getForm();

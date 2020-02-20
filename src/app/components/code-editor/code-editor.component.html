@@ -10,5 +10,11 @@
 <ace-editor #editField [(text)]="text" (textChanged)="onChange($event)" [(mode)]="language" [options]="options"
     [readOnly]="false" class="ace-editor">
 </ace-editor>
+
 <br>
-<button (click)="submit()" mat-raised-button color="warn">Run</button>
+
+<button (click)="run()" mat-raised-button color="warn">Run</button>
+
+
+<div id="square" class="square"></div>
+<p>Given that the orange square has an id "square", move the square to the right by 20px.</p>
