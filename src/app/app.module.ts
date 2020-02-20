@@ -14,12 +14,14 @@ import { AppComponent } from './app.component';
 import { CodeEditorComponent } from './components/code-editor/code-editor.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
+import { JavascriptTaskComponent } from './components/output/javascript-task/javascript-task.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CodeEditorComponent,
-    WelcomePageComponent
+    WelcomePageComponent,
+    JavascriptTaskComponent
   ],
   imports: [
     BrowserModule,

@@ -1,9 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnChanges } from '@angular/core';
 import { AceEditorComponent } from 'ng2-ace-editor';
 import 'brace';
 import 'brace/mode/java';
 import 'brace/mode/python';
 
+import {JavascriptTaskComponent} from '../output/javascript-task/javascript-task.component';
 @Component({
   selector: 'app-code-editor',
   templateUrl: './code-editor.component.html',
@@ -14,7 +15,7 @@ export class CodeEditorComponent {
   codeSnippet = '';
   text = '';
   language = 'java';
-  
+  loadJavascriptTask = false;
 
   public options = {
     animatedScroll: true,
@@ -25,6 +26,15 @@ export class CodeEditorComponent {
 
   onChange = (event: any) => {
     this.codeSnippet = event;
+  }
+
+  doSomething = (event: any) => {
+    console.log(event.value);
+    if (event.value === 'javascript') {
+      this.loadJavascriptTask = true;
+    } else {
+      this.loadJavascriptTask = false;
+    }
   }
 
   run = () => {
