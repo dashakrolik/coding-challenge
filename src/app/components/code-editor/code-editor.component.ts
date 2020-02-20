@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { AceEditorComponent } from 'ng2-ace-editor';
 import 'brace';
 import 'brace/mode/java';
