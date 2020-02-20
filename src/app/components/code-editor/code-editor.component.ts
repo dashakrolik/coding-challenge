@@ -14,6 +14,7 @@ export class CodeEditorComponent {
   codeSnippet = '';
   text = '';
   language = 'java';
+  
 
   public options = {
     animatedScroll: true,
@@ -22,14 +23,27 @@ export class CodeEditorComponent {
     useSoftTabs: true
   };
 
-  chooseLanguage = () => {
-
-  }
-
   onChange = (event: any) => {
     this.codeSnippet = event;
   }
 
-  submit = () => console.log(this.codeSnippet);
+  run = () => {
+    switch (this.language) {
+      case 'javascript':
+        eval(this.codeSnippet);
+        break;
+
+      case 'java':
+        console.log('java');
+        break;
+
+      case 'python':
+        console.log('python');
+        break;
+      default:
+        console.log('default option in case switch');
+    }
+
+  }
 
 }
