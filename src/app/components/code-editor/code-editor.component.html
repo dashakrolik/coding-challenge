@@ -1,0 +1,14 @@
+<mat-form-field>
+    <mat-label>Select a language</mat-label>
+    <mat-select [(value)]="language">
+        <mat-option value="java">Java</mat-option>
+        <mat-option value="python">Python</mat-option>
+        <mat-option value="javascript">JavaScript</mat-option>
+    </mat-select>
+</mat-form-field>
+
+<ace-editor #editField [(text)]="text" (textChanged)="onChange($event)" [(mode)]="language" [options]="options"
+    [readOnly]="false" class="ace-editor">
+</ace-editor>
+<br>
+<button (click)="submit()" mat-raised-button color="warn">Run</button>
