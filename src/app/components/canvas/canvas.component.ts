@@ -6,17 +6,18 @@ import { Square } from './square';
   templateUrl: './canvas.component.html',
   styleUrls: ['./canvas.component.css']
 })
-export class CanvasComponent implements OnInit, OnDestroy  {
+export class CanvasComponent implements OnInit, OnDestroy {
   @ViewChild('canvas', { static: true }) canvas: ElementRef<HTMLCanvasElement>;
   ctx: CanvasRenderingContext2D;
   requestId;
   interval;
   squares: Square[] = [];
 
-  constructor(private ngZone: NgZone) {}
+  constructor(private ngZone: NgZone) { }
 
   ngOnInit() {
     this.ctx = this.canvas.nativeElement.getContext('2d');
+
     this.ctx.fillStyle = 'red';
     this.ngZone.runOutsideAngular(() => this.tick());
     setInterval(() => {
