@@ -30,7 +30,7 @@ export class WelcomePageComponent implements OnInit {
       // send to backend
       // if success then proceed to redirect to code challenge
       // for now only this code:
-      console.log(this.form.value.email);
+      console.log('email:', this.form.value.email);
       this.routing.navigateByUrl('challenge');
     }
 
