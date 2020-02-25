@@ -14,7 +14,7 @@ export class CodeEditorComponent {
   codeSnippet = '';
   text = '';
   language = 'java';
-  
+  loadJavascriptTask = false;
 
   public options = {
     animatedScroll: true,
@@ -27,9 +27,18 @@ export class CodeEditorComponent {
     this.codeSnippet = event;
   }
 
+  doSomething = (event: any) => {
+    if (event.value === 'javascript') {
+      this.loadJavascriptTask = true;
+    } else {
+      this.loadJavascriptTask = false;
+    }
+  }
+
   run = () => {
     switch (this.language) {
       case 'javascript':
+        // tslint:disable-next-line: no-eval
         eval(this.codeSnippet);
         break;
 
