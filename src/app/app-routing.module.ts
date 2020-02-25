@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CodeEditorComponent } from './components/code-editor/code-editor.component';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
+import { JavascriptTaskComponent } from './components/output/javascript-task/javascript-task.component';
 
 const routes: Routes = [
   {
@@ -10,7 +11,13 @@ const routes: Routes = [
   },
   {
     path: 'challenge',
-    component: CodeEditorComponent
+    component: CodeEditorComponent,
+    children: [
+      {
+        path: 'javascript/:id',
+        component: JavascriptTaskComponent
+      }
+    ]
   }
 ];
 
