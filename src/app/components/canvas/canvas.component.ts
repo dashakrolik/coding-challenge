@@ -1,49 +1,46 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy, NgZone } from '@angular/core';
+import { Square } from './square';
 
 @Component({
   selector: 'app-canvas',
   templateUrl: './canvas.component.html',
   styleUrls: ['./canvas.component.css']
 })
-export class CanvasComponent implements OnInit {
+export class CanvasComponent implements OnInit, OnDestroy  {
+  @ViewChild('canvas', { static: true }) canvas: ElementRef<HTMLCanvasElement>;
+  ctx: CanvasRenderingContext2D;
+  requestId;
+  interval;
+  squares: Square[] = [];
 
-  constructor() { }
+  constructor(private ngZone: NgZone) {}
 
-  @ViewChild('canvas', { static: true })
-  canvas: ElementRef<HTMLCanvasElement>;
-  private ctx: CanvasRenderingContext2D;
-
-  ngOnInit(): void {
+  ngOnInit() {
     this.ctx = this.canvas.nativeElement.getContext('2d');
-  }
-
-  animate() {
     this.ctx.fillStyle = 'red';
+    this.ngZone.runOutsideAngular(() => this.tick());
+    setInterval(() => {
+      this.tick();
+    }, 200);
+  }
+
+  tick() {
+    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    this.squares.forEach((square: Square) => {
+      square.moveRight();
+    });
+    this.requestId = requestAnimationFrame(() => this.tick);
+  }
+
+  play() {
     const square = new Square(this.ctx);
-    square.draw(5, 1, 20);
-    square.move(1,30)
+    this.squares = this.squares.concat(square);
   }
 
-}
-
-export class Square {
-  constructor(private ctx: CanvasRenderingContext2D) {}
-
-  draw(x: number, y: number, z: number) {
-    this.ctx.fillRect(z * x, z * y, z, z);
-  }
-
-  move(y: number, z: number) {
-    const max = this.ctx.canvas.width / z;
-    const canvas = this.ctx.canvas;
-    let x = 0;
-    const i = setInterval(() => {
-      this.ctx.clearRect(0, 0, canvas.width, canvas.height);      
-      this.draw(x, y, z);
-      x++;
-      if (x >= max) {
-        clearInterval(i);
-      }
-    }, 200);    
+  ngOnDestroy() {
+    clearInterval(this.interval);
+    cancelAnimationFrame(this.requestId);
   }
 }
+
+
