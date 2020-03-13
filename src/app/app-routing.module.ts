@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CodeEditorComponent } from './components/code-editor/code-editor.component';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
 import { JavascriptTaskComponent } from './components/output/javascript-task/javascript-task.component';
-import {CandidateComponent} from "./candidate/candidate.component";
+import {CandidateComponent} from "./components/candidate/candidate.component";
 
 const routes: Routes = [
   {
