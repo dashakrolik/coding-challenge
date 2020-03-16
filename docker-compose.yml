@@ -1,0 +1,9 @@
+version: '3'
+services:
+  angular-service:
+    container_name: angular-front
+    build: .
+    volumes:
+      - '.:/app'
+    ports:
+      - "4200:4200"
