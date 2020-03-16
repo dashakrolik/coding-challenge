@@ -3,7 +3,6 @@ services:
   #DATABASE
   database:
     image: postgres:latest
-    container_name: postgres
     ports:
       - 5432:5432
     environment:
@@ -14,15 +13,17 @@ services:
 
   # BACK-END
   back-end:
+    depends_on:
+      - database
     image: coding-challenge-backend_springbootapp
-    container_name: springbootapp
     ports:
       - 8080:8080
     restart: unless-stopped
 
   # FRONT-END
   angular-service:
-    container_name: angular-front
+    depends_on:
+      - back-end
     build: .
     volumes:
       - '.:/app'
