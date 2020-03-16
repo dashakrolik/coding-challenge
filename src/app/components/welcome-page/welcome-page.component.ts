@@ -26,8 +26,8 @@ export class WelcomePageComponent implements OnInit {
 
   getForm = (): FormGroup =>
     this.form = this.formBuilder.group({
-      firstName: [''],
-      lastName: [''],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       email: ['', Validators.email]
     })
 
@@ -47,9 +47,17 @@ export class WelcomePageComponent implements OnInit {
       this.routing.navigateByUrl('challenge');
     }
 
-    getErrorMessage() {
+    getErrorMessageEmail() {
       return this.form.invalid ? 'Not a valid email' : null;
     }
+
+  getErrorMessageFirstName() {
+    return this.form.invalid ? 'please give a first name' : null;
+  }
+
+  getErrorMessageLastName() {
+    return this.form.invalid ? 'please give a last name' : null;
+  }
 
   handleSuccessfulResponse(response) {
       // TODO: do something with a successful response
