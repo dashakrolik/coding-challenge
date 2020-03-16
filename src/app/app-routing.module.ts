@@ -15,12 +15,12 @@ const routes: Routes = [
     component: CandidateComponent
   },
   {
-    path: 'challenge',
+    path: 'challenge/:language',
     component: CodeEditorComponent,
     children: [
       {
-        path: 'javascript/:id',
-        component: JavascriptTaskComponent
+        path: ':id',
+        component: CodeEditorComponent,
       }
     ]
   }

@@ -27,7 +27,11 @@
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/ace-builds/src-min/ace.js",
+              "./node_modules/ace-builds/src-min/theme-dracula.js",
+              "./node_modules/ace-builds/src-min/mode-javascript.js"
+            ]
           },
           "configurations": {
             "production": {
