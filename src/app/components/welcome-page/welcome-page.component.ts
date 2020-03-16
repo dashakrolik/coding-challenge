@@ -26,6 +26,8 @@ export class WelcomePageComponent implements OnInit {
 
   getForm = (): FormGroup =>
     this.form = this.formBuilder.group({
+      firstName: [''],
+      lastName: [''],
       email: ['', Validators.email]
     })
 
@@ -34,10 +36,11 @@ export class WelcomePageComponent implements OnInit {
       // if success then proceed to redirect to code challenge
       // for now only this code:
       console.log('email:', this.form.value.email);
+      console.log('first name:', this.form.value.firstName);
+      console.log('last name:', this.form.value.lastName);
       // Create a new candidate, for now it has a placeholder for first name and last name.
       // Id is not necessary, it will create an id automatically in the backend.
-      // TODO: replace placeholders with actual names.
-      let candidate = new Candidate("0", "test","TEST", this.form.value.email);
+      let candidate = new Candidate("0", this.form.value.firstName,this.form.value.lastName, this.form.value.email);
       this.httpClientService.createCandidate(candidate).subscribe(
         response => this.handleSuccessfulResponse(response),
       );
