@@ -9,6 +9,8 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=1234
       - POSTGRES_DB=codechallengedb
+    volumes:
+      - "./data:/var/lib/postgresql/data"
     restart: unless-stopped
 
   # BACK-END
@@ -26,7 +28,7 @@ services:
       - back-end
     build: .
     volumes:
-      - '.:/app'
+      - ".:/app"
     ports:
       - 4200:4200
     restart: unless-stopped
