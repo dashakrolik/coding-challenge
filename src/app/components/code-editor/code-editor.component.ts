@@ -1,6 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import {Component, TemplateRef, ViewChild} from '@angular/core';
 import { AceEditorComponent } from 'ng2-ace-editor';
 import { ActivatedRoute, Router } from '@angular/router'
+import {SubscribeComponent} from "../overlay/subscribe/subscribe.component";
+import {OverlayService} from "../../service/overlay/overlay.service";
+import {ComponentType} from "@angular/cdk/portal";
+import {Candidate} from "../candidate/Candidate";
+import {HttpClientService} from "../../service/http/http-client.service";
 // import * as ace from 'brace'
 // import 'brace/mode/java'
 // import 'brace/mode/python'
@@ -16,7 +21,12 @@ import { ActivatedRoute, Router } from '@angular/router'
 })
 
 export class CodeEditorComponent {
-  public constructor(private route:ActivatedRoute, private router:Router) {
+  public constructor(
+    private route:ActivatedRoute,
+    private router:Router,
+    private overlayService: OverlayService,
+    private httpClientService: HttpClientService
+  ) {
     this.route = route;
   }
 
@@ -29,7 +39,7 @@ export class CodeEditorComponent {
   codeSnippet = '';
 
   ngOnInit() {
-    this.route.paramMap.subscribe(language => 
+    this.route.paramMap.subscribe(language =>
       this.selectedLanguage = language.get("language")
       )
     this.exerciseId = this.route.firstChild.snapshot.params['id']
@@ -102,4 +112,25 @@ export class CodeEditorComponent {
 
   }
 
+  subscribeComponent = SubscribeComponent;
+
+  open(content: TemplateRef<any> | ComponentType<any> | string) {
+    const ref = this.overlayService.open(content, null);
+
+    ref.afterClosed$.subscribe(res => {
+      console.log("subscribing new user, first name: " + res.data.firstName + + " last name: " + res.data.lastName + " email: " + res.data.email);
+      // Create a new candidate, for now it has a placeholder for first name and last name.
+      // Id is not necessary, it will create an id automatically in the backend.
+      let candidate = new Candidate("0", res.data.firstName, res.data.lastName, res.data.email);
+      this.httpClientService.createCandidate(candidate).subscribe(
+        response => this.handleSuccessfulResponse(response),
+      );
+    });
+  }
+
+  handleSuccessfulResponse(response) {
+    // TODO: do something with a successful response
+    console.log("successful post message");
+  }
 }
+

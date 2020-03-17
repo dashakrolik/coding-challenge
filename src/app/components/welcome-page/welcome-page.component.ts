@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators, FormBuilder, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
-import {HttpClientService} from "../../service/http-client.service";
 import {Candidate} from "../candidate/Candidate";
 
 @Component({
@@ -13,7 +12,6 @@ export class WelcomePageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private routing: Router,
-    private httpClientService: HttpClientService
   ) {
   }
 
@@ -36,11 +34,7 @@ export class WelcomePageComponent implements OnInit {
   }
 
   getForm = (): FormGroup =>
-    this.form = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', Validators.email]
-    })
+    this.form = this.formBuilder.group({})
 
   setExercise() {
     if (this.user.exercise.progressId === 0) {
@@ -55,40 +49,13 @@ export class WelcomePageComponent implements OnInit {
     // if success then proceed to redirect to code challenge
     // for now only this code:
     this.setExercise()
-    console.log('submit')
-    console.log('email:', this.form.value.email);
-    console.log('first name:', this.form.value.firstName);
-    console.log('last name:', this.form.value.lastName);
-    // Create a new candidate, for now it has a placeholder for first name and last name.
-    // Id is not necessary, it will create an id automatically in the backend.
-    let candidate = new Candidate("0", this.form.value.firstName, this.form.value.lastName, this.form.value.email);
-    this.httpClientService.createCandidate(candidate).subscribe(
-      response => this.handleSuccessfulResponse(response),
-    );
     this.routing.navigateByUrl('challenge/' + this.language + '/' + this.loadExerciseId);
-  }
-
-  getErrorMessageEmail() {
-    return this.form.invalid ? 'Not a valid email' : null;
   }
 
   setLanguage(event: any) {
     this.language = event.value
   }
 
-
-  getErrorMessageFirstName() {
-    return this.form.invalid ? 'please give a first name' : null;
-  }
-
-  getErrorMessageLastName() {
-    return this.form.invalid ? 'please give a last name' : null;
-  }
-
-  handleSuccessfulResponse(response) {
-    // TODO: do something with a successful response
-    console.log("successful post message");
-  }
 }
 
 

@@ -1,6 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 import {AceEditorModule} from 'ng2-ace-editor';
 
@@ -18,13 +19,18 @@ import {JavascriptTaskComponent} from './components/output/javascript-task/javas
 import {HttpClientModule} from '@angular/common/http';
 import {CandidateComponent} from './components/candidate/candidate.component';
 
+import { OverlayComponent } from "./components/overlay/overlay/overlay.component";
+import { SubscribeComponent } from './components/overlay/subscribe/subscribe.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     CodeEditorComponent,
     WelcomePageComponent,
     JavascriptTaskComponent,
-    CandidateComponent
+    CandidateComponent,
+    OverlayComponent,
+    SubscribeComponent
   ],
   imports: [
     BrowserModule,
@@ -36,10 +42,12 @@ import {CandidateComponent} from './components/candidate/candidate.component';
     MatSelectModule,
     MatFormFieldModule,
     MatInputModule,
-    HttpClientModule
+    HttpClientModule,
+    OverlayModule
   ],
   providers: [],
   bootstrap: [AppComponent],
+  entryComponents: [OverlayComponent, SubscribeComponent],
   schemas: [NO_ERRORS_SCHEMA]
 })
 export class AppModule {

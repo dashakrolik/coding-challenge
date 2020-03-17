@@ -1,10 +1,10 @@
 
-<ace-editor 
+<ace-editor
     editor
-    [(text)]="text" 
+    [(text)]="text"
     [mode]="'javascript'"
     [theme]="'dracula'"
-    (textChanged)="onChange($event)" 
+    (textChanged)="onChange($event)"
     [readOnly]="false"
     class="ace-editor"
 ></ace-editor>
@@ -14,3 +14,9 @@
 
 <button (click)="run()" mat-raised-button color="warn">Run</button>
 <app-javascript-task *ngIf="loadJavascriptTask"></app-javascript-task>
+
+<div>
+<button (click)="open(subscribeComponent)" mat-raised-button color="warn">
+  Submit Code
+</button>
+</div>
