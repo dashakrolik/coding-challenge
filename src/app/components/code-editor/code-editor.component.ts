@@ -6,13 +6,6 @@ import {OverlayService} from "../../service/overlay/overlay.service";
 import {ComponentType} from "@angular/cdk/portal";
 import {Candidate} from "../candidate/Candidate";
 import {HttpClientService} from "../../service/http/http-client.service";
-// import * as ace from 'brace'
-// import 'brace/mode/java'
-// import 'brace/mode/python'
-// import 'brace/mode/javascript'
-// import 'brace/theme/dracula'
-// import 'brace/theme/eclipse'
-// import 'brace/theme/monokai';
 
 @Component({
   selector: 'app-code-editor',
@@ -32,10 +25,6 @@ export class CodeEditorComponent {
 
   selectedLanguage: string
   exerciseId: any
-  languageOptions: {
-    mode: string,
-    theme: string
-  }
   codeSnippet = '';
 
   ngOnInit() {
@@ -43,7 +32,7 @@ export class CodeEditorComponent {
       this.selectedLanguage = language.get("language")
       )
     this.exerciseId = this.route.firstChild.snapshot.params['id']
-    this.isJavascriptTest()
+
   }
 
   @ViewChild('editor') editor: AceEditorComponent;
@@ -52,36 +41,44 @@ export class CodeEditorComponent {
   loadJavascriptTask = false;
 
   ngAftterViewInit() {
-    this.setLanguageOptions()
-    this.editor.setTheme('ace/theme/monokai')
-    this.editor.setMode('ace/mode/javascript')
     this.editor.setOptions({
       animatedScroll: true,
       showPrintMargin: false,
       tabSize: 2,
       useSoftTabs: true,
-      mode: this.languageOptions.mode,
-      theme: this.languageOptions.theme
     })
   }
 
   onChange = (event: any) => {
-    // console.log('event', event)
     this.codeSnippet = event;
   }
 
-  setLanguageOptions() {
+  setLanguageMode() {
     if (this.selectedLanguage === 'javascript') {
-      this.languageOptions.mode = 'javascript'
-      this.languageOptions.theme = 'dracula'
+      this.loadJavascriptTask = true;
+      return 'javascrip';
     }
+
     if (this.selectedLanguage === 'java') {
-      this.languageOptions.mode = 'java'
-      this.languageOptions.theme = "eclipse"
+      return 'java';
     }
+
     if (this.selectedLanguage === 'python') {
-      this.languageOptions.mode = 'python'
-      this.languageOptions.theme = "eclipse"
+      return 'python';
+    }
+  }
+
+  setLanguageTheme() {
+    if (this.selectedLanguage === 'javascript') {
+      return 'dracula';
+    }
+
+    if (this.selectedLanguage === 'java') {
+      return 'eclipse';
+    }
+
+    if (this.selectedLanguage === 'python') {
+      return 'monokai';
     }
   }
 

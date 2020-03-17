@@ -1,13 +1,12 @@
-
-<ace-editor
-    editor
-    [(text)]="text"
-    [mode]="'javascript'"
-    [theme]="'dracula'"
-    (textChanged)="onChange($event)"
-    [readOnly]="false"
-    class="ace-editor"
-></ace-editor>
+    <ace-editor
+        editor
+        [(text)]="text"
+        [mode]="setLanguageMode()"
+        [theme]="setLanguageTheme()"
+        (textChanged)="onChange($event)"
+        [readOnly]="false"
+        class="ace-editor"
+    ></ace-editor>
 
 
 <br>
