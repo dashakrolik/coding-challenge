@@ -64,9 +64,3 @@ export class WelcomePageComponent implements OnInit {
   
 
 }
-
-
-submissions: [
-  { userId: 1, chosenLanguage: 'java', exercise: { progressId: 0, exerciseId: 1 } },
-  { userId: 2, chosenLanguage: 'javaScript', exercise: { progressId: 0, exerciseId: 1 } }
-]
