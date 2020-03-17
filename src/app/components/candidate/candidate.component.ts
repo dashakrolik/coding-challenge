@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClientService} from "../../service/http-client.service";
 import {Candidate} from "./Candidate";
 
@@ -10,20 +10,21 @@ import {Candidate} from "./Candidate";
 export class CandidateComponent implements OnInit {
 
   // Here the candidate names are stored to be used in the html
-  candidates:Candidate[];
+  candidates: Candidate[];
 
   constructor(
-    private httpClientService:HttpClientService
-  ) { }
+    private httpClientService: HttpClientService
+  ) {
+  }
 
   ngOnInit() {
     this.httpClientService.getCandidates().subscribe(
-      response =>this.handleSuccessfulResponse(response),
+      response => this.handleSuccessfulResponse(response),
     );
   }
 
   handleSuccessfulResponse(response) {
     // The response from the backend with the candidates from the database.
-    this.candidates=response;
+    this.candidates = response;
   }
 }
