@@ -121,13 +121,15 @@ export class CodeEditorComponent {
       console.log("subscribing new user, first name: " + res.data.firstName + " last name: " + res.data.lastName + " email: " + res.data.email);
       // Create a new candidate, for now it has a placeholder for first name and last name.
       // Id is not necessary, it will create an id automatically in the backend.
-      let candidate = new Candidate(1, res.data.firstName, res.data.lastName, res.data.email);
-      // this.httpClientService.createCandidate(candidate).subscribe(
-      //   response => this.handleSuccessfulResponseCreateCandidate(response),
-      // );
+      let newCandidate = new Candidate(1, res.data.firstName, res.data.lastName, res.data.email);
+      this.httpClientService.createCandidate(newCandidate).subscribe(
+        response => this.handleSuccessfulResponseCreateCandidate(response),
+      );
 
-      let task = new Task(1, "do a task");
-      let language = new Language(1, "Nederlands");
+      // TODO: get the task, language and also candidate from the backend. You need the id's
+      let candidate = this.getCandidate(res.data.firstName, res.data.lastName, res.data.email);
+      let task = this.getTask();
+      let language = this.getLanguage();
 
       let submission = new Submission(1, "answer", false, candidate, language, task);
       console.log("submission");
@@ -136,6 +138,18 @@ export class CodeEditorComponent {
       );
 
     });
+  }
+
+  getCandidate(firstName, lastName, email) {
+    return new Candidate(1, "Sander", "Kools", "Sander@Koo.ls");
+  }
+
+  getTask() {
+    return new Task(1, "do a task");
+  }
+
+  getLanguage() {
+    return new Language(1, "Nederlands");
   }
 
   handleSuccessfulResponseCreateSubmission(response) {
