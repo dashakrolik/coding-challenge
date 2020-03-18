@@ -141,7 +141,7 @@ export class CodeEditorComponent {
   }
 
   getCandidate(firstName, lastName, email) {
-    return new Candidate(1, "Sander", "Kools", "Sander@Koo.ls");
+    return new Candidate(1, firstName, lastName, email);
   }
 
   getTask() {
