@@ -1,7 +1,7 @@
 // A submission object that maps of the object from the backend.
-import {Candidate} from "../candidate/Candidate";
-import {Language} from "./Language";
-import {Task} from "./Task";
+import { Candidate } from "../candidate/Candidate";
+import { Language } from "./Language";
+import { Task } from "./Task";
 
 export class Submission {
   constructor(
