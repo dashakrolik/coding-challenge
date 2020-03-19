@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, Validators, FormBuilder, FormGroup} from '@angular/forms';
-import {Router} from '@angular/router';
-import {Candidate} from "../candidate/Candidate";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Candidate } from "../candidate/Candidate";
 
 @Component({
   selector: 'app-welcome-page',

@@ -1,14 +1,14 @@
-import {Component, TemplateRef, ViewChild} from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { AceEditorComponent } from 'ng2-ace-editor';
 import { ActivatedRoute, Router } from '@angular/router'
-import {SubscribeComponent} from "../overlay/subscribe/subscribe.component";
-import {OverlayService} from "../../service/overlay/overlay.service";
-import {ComponentType} from "@angular/cdk/portal";
-import {Candidate} from "../candidate/Candidate";
-import {HttpClientService} from "../../service/http/http-client.service";
-import {Submission} from "./Submission";
-import {Task} from "./Task";
-import {Language} from "./Language";
+import { SubscribeComponent } from "../overlay/subscribe/subscribe.component";
+import { OverlayService } from "../../service/overlay/overlay.service";
+import { ComponentType } from "@angular/cdk/portal";
+import { Candidate } from "../candidate/Candidate";
+import { HttpClientService } from "../../service/http/http-client.service";
+import { Submission } from "./Submission";
+import { Task } from "./Task";
+import { Language } from "./Language";
 
 @Component({
   selector: 'app-code-editor',
@@ -64,7 +64,7 @@ export class CodeEditorComponent {
   setLanguageMode() {
     if (this.selectedLanguage === 'javascript') {
       this.loadJavascriptTask = true;
-      return 'javascrip';
+      return 'javascript';
     }
 
     if (this.selectedLanguage === 'java') {
