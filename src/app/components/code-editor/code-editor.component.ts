@@ -123,15 +123,17 @@ export class CodeEditorComponent {
     const ref = this.overlayService.open(content, null);
 
     ref.afterClosed$.subscribe(res => {
-      // We will create a submission. To do this we must first create the new candidate and retrieve other data
-      // Create a new candidate, for now it has a placeholder for first name and last name.
-      // Id is not necessary, it will create an id automatically in the backend.
-      // TODO: instead of creating it and retrieving it we want to add a user login possibility
-      let newCandidate = new Candidate(1, res.data.firstName, res.data.lastName, res.data.email);
-      this.httpClientService.createCandidate(newCandidate).subscribe(
-        response => this.handleSuccessfulResponseCreateCandidate(response),
-      );
-
+      // simple check to see if the user cancelled the form.
+      if (res.data != null) {
+        // We will create a submission. To do this we must first create the new candidate and retrieve other data
+        // Create a new candidate, for now it has a placeholder for first name and last name.
+        // Id is not necessary, it will create an id automatically in the backend.
+        // TODO: instead of creating it and retrieving it we want to add a user login possibility
+        let newCandidate = new Candidate(1, res.data.firstName, res.data.lastName, res.data.email);
+        this.httpClientService.createCandidate(newCandidate).subscribe(
+          response => this.handleSuccessfulResponseCreateCandidate(response),
+        );
+      }
     });
   }
 
