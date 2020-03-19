@@ -26,9 +26,14 @@ export class CodeEditorComponent {
     this.route = route;
   }
 
-  selectedLanguage: string
-  exerciseId: any
+  selectedLanguage: string;
+  exerciseId: any;
   codeSnippet = '';
+
+  // These variables are used to create the submission object
+  submissionLanguage: Language;
+  submissionCandidate: Candidate;
+  submissionTask: Task;
 
   ngOnInit() {
     this.route.paramMap.subscribe(language =>
@@ -110,7 +115,7 @@ export class CodeEditorComponent {
       default: return
     }
 
-  }
+  };
 
   subscribeComponent = SubscribeComponent;
 
@@ -118,38 +123,32 @@ export class CodeEditorComponent {
     const ref = this.overlayService.open(content, null);
 
     ref.afterClosed$.subscribe(res => {
-      console.log("subscribing new user, first name: " + res.data.firstName + " last name: " + res.data.lastName + " email: " + res.data.email);
+      // We will create a submission. To do this we must first create the new candidate and retrieve other data
       // Create a new candidate, for now it has a placeholder for first name and last name.
       // Id is not necessary, it will create an id automatically in the backend.
+      // TODO: instead of creating it and retrieving it we want to add a user login possibility
       let newCandidate = new Candidate(1, res.data.firstName, res.data.lastName, res.data.email);
       this.httpClientService.createCandidate(newCandidate).subscribe(
         response => this.handleSuccessfulResponseCreateCandidate(response),
       );
 
-      // TODO: get the task, language and also candidate from the backend. You need the id's
-      let candidate = this.getCandidate(res.data.firstName, res.data.lastName, res.data.email);
-      let task = this.getTask();
-      let language = this.getLanguage();
-
-      let submission = new Submission(1, "answer", false, candidate, language, task);
-      console.log("submission");
-      this.httpClientService.createSubmission(submission).subscribe(
-        response => this.handleSuccessfulResponseCreateSubmission(response),
-      );
-
     });
   }
 
-  getCandidate(firstName, lastName, email) {
-    return new Candidate(1, firstName, lastName, email);
-  }
-
   getTask() {
-    return new Task(1, "do a task");
+    // TODO: retrieve the correct task with the given task and get the correct id for the task object.
+    // TODO: Not implemented! - No task yet implemented. It will return the first task in the database.
+    this.httpClientService.getTask("nothing").subscribe(
+      response => this.handleSuccessfulResponseGetTask(response),
+    );
+
   }
 
   getLanguage() {
-    return new Language(1, "Nederlands");
+    console.log("this.selectedLanguage " + this.selectedLanguage);
+    this.httpClientService.getLanguage(this.selectedLanguage).subscribe(
+      response => this.handleSuccessfulResponseGetLanguage(response),
+    );
   }
 
   handleSuccessfulResponseCreateSubmission(response) {
@@ -157,9 +156,43 @@ export class CodeEditorComponent {
     console.log("successful post message create submission");
   }
 
+  createSubmission() {
+    let answer = this.codeSnippet;
+    let submission = new Submission(1, answer, false, this.submissionCandidate, this.submissionLanguage, this.submissionTask);
+    this.httpClientService.createSubmission(submission).subscribe(
+      response => this.handleSuccessfulResponseCreateSubmission(response),
+    );
+  }
+
+  handleSuccessfulResponseGetTask(response) {
+    console.log("successful post message get task");
+    let taskId = response.id;
+    let taskDescription = response.task;
+    this.submissionTask = new Task(taskId, taskDescription);
+
+    this.createSubmission();
+  }
+
+  handleSuccessfulResponseGetLanguage(response) {
+    console.log("successful post message get language");
+    let languageId = response.id;
+    let languageName = response.language;
+    this.submissionLanguage = new Language(languageId, languageName);
+
+    // Finally we want to find the task that candidate has performed to create the final submission to send.
+    this.getTask();
+  }
+
   handleSuccessfulResponseCreateCandidate(response) {
-    // TODO: do something with a successful response
     console.log("successful post message create candidates");
+    let candidateId = response.id;
+    let candidateFirstName = response.firstName;
+    let candidateLastName = response.lastName;
+    let candidateEmail = response.email;
+    this.submissionCandidate = new Candidate(candidateId, candidateFirstName, candidateLastName, candidateEmail);
+
+    // To create the submission we also need to know which language the user Candidate is using.
+    this.getLanguage();
   }
 }
 
