@@ -18,8 +18,8 @@ import { Language } from "./Language";
 
 export class CodeEditorComponent {
   public constructor(
-    private route:ActivatedRoute,
-    private router:Router,
+    private route: ActivatedRoute,
+    private router: Router,
     private overlayService: OverlayService,
     private httpClientService: HttpClientService
   ) {
@@ -38,7 +38,7 @@ export class CodeEditorComponent {
   ngOnInit() {
     this.route.paramMap.subscribe(language =>
       this.selectedLanguage = language.get("language")
-      )
+    );
     this.exerciseId = this.route.firstChild.snapshot.params['id']
 
   }
@@ -59,7 +59,7 @@ export class CodeEditorComponent {
 
   onChange = (event: any) => {
     this.codeSnippet = event;
-  }
+  };
 
   setLanguageMode() {
     if (this.selectedLanguage === 'javascript') {
@@ -90,7 +90,7 @@ export class CodeEditorComponent {
     }
   }
 
- isJavascriptTest() {
+  isJavascriptTest() {
     if (this.selectedLanguage === 'javascript') {
       this.loadJavascriptTask = true;
     } else {
@@ -127,9 +127,9 @@ export class CodeEditorComponent {
       if (res.data != null) {
         // We will create a submission. To do this we must first create the new candidate and retrieve other data
         // Create a new candidate, for now it has a placeholder for first name and last name.
-        // Id is not necessary, it will create an id automatically in the backend.
+        // Id should be null. It will create an id automatically in the backend if it is null.
         // TODO: instead of creating it and retrieving it we want to add a user login possibility
-        let newCandidate = new Candidate(1, res.data.firstName, res.data.lastName, res.data.email);
+        let newCandidate = new Candidate(null, res.data.firstName, res.data.lastName, res.data.email);
         this.httpClientService.createCandidate(newCandidate).subscribe(
           response => this.handleSuccessfulResponseCreateCandidate(response),
         );
@@ -159,7 +159,8 @@ export class CodeEditorComponent {
 
   createSubmission() {
     let answer = this.codeSnippet;
-    let submission = new Submission(1, answer, false, this.submissionCandidate, this.submissionLanguage, this.submissionTask);
+    // When creating a new Submission we give id null so it creates a new entry. It will determine the id by itself.
+    let submission = new Submission(null, answer, false, this.submissionCandidate, this.submissionLanguage, this.submissionTask);
     this.httpClientService.createSubmission(submission).subscribe(
       response => this.handleSuccessfulResponseCreateSubmission(response),
     );
