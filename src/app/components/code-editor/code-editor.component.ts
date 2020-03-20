@@ -64,7 +64,7 @@ export class CodeEditorComponent {
     })
   }
 
-  onChange = (event: any) => {
+  onChange(event: any) {
     this.codeSnippet = event;
   };
 
@@ -112,7 +112,7 @@ export class CodeEditorComponent {
     }
   };
 
-  evaluateCode(language) {
+  evaluateCode(language: string) {
     //TODO: Implement Jupyter connection
     console.log(`submit code in ${language}`)
     console.log(`submitted code ${this.codeSnippet}`)
@@ -125,9 +125,9 @@ export class CodeEditorComponent {
     const ref = this.overlayService.open(content, null);
 
     ref.afterClosed$.subscribe(res => {
-      console.log('res', res.data)
-      // simple check to see if the user cancelled the form.
+      // simple check to see if the user cancelled the form and code is evaluated
       if (res.data != null && this.evaluationResult) {
+        console.log('fields not empty and code is evaluated')
         // We will create a submission. To do this we must first create the new candidate and retrieve other data
         // Create a new candidate, for now it has a placeholder for first name and last name.
         // Id should be null. It will create an id automatically in the backend if it is null.
@@ -136,6 +136,8 @@ export class CodeEditorComponent {
         this.httpClientService.createCandidate(newCandidate).subscribe(
           response => this.handleSuccessfulResponseCreateCandidate(response),
         );
+      } else {
+        console.log('Check fields and code')
       }
     });
   }
