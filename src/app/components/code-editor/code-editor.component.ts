@@ -29,18 +29,25 @@ export class CodeEditorComponent {
   selectedLanguage: string;
   exerciseId: any;
   codeSnippet = '';
+  selectedLanguageIsJavascript: boolean
+  selectedLanguageIsPython: boolean
+  selectedLanguageIsJava: boolean
+  evaluationResult: boolean
 
   // These variables are used to create the submission object
   submissionLanguage: Language;
   submissionCandidate: Candidate;
   submissionTask: Task;
 
+
   ngOnInit() {
     this.route.paramMap.subscribe(language =>
       this.selectedLanguage = language.get("language")
       )
     this.exerciseId = this.route.firstChild.snapshot.params['id']
-
+    this.selectedLanguageIsJavascript = this.selectedLanguage === 'javascript'
+    this.selectedLanguageIsPython = this.selectedLanguage === 'python'
+    this.selectedLanguageIsJava = this.selectedLanguage === 'java'
   }
 
   @ViewChild('editor') editor: AceEditorComponent;
@@ -61,70 +68,66 @@ export class CodeEditorComponent {
     this.codeSnippet = event;
   }
 
-  setLanguageMode() {
-    if (this.selectedLanguage === 'javascript') {
-      this.loadJavascriptTask = true;
-      return 'javascript';
-    }
+  setLanguageOptions (option: string) {
+    let isJavascriptMode = option === 'mode' && this.selectedLanguageIsJavascript
+    let isPythonMode = option === 'mode' && this.selectedLanguageIsPython
+    let isJavaMode = option === 'mode' && this.selectedLanguageIsJava
+    let isJavascriptTheme = option === 'theme' && this.selectedLanguageIsJavascript
+    let isPythonTheme = option === 'theme' && this.selectedLanguageIsPython
+    let isJavaTheme = option === 'theme' && this.selectedLanguageIsJava
 
-    if (this.selectedLanguage === 'java') {
-      return 'java';
-    }
-
-    if (this.selectedLanguage === 'python') {
-      return 'python';
-    }
-  }
-
-  setLanguageTheme() {
-    if (this.selectedLanguage === 'javascript') {
-      return 'dracula';
-    }
-
-    if (this.selectedLanguage === 'java') {
-      return 'eclipse';
-    }
-
-    if (this.selectedLanguage === 'python') {
-      return 'monokai';
+    switch (true)  {
+      case (isJavascriptMode):
+        this.isJavascriptTest()
+        return 'javascript'
+      case (isPythonMode):
+        return 'python'
+      case (isJavaMode):
+        return 'java'
+      case (isJavascriptTheme ):
+        return 'dracula'
+      case (isPythonTheme):
+        return 'monokai'
+      case (isJavaTheme ):
+        return 'eclipse'
     }
   }
 
  isJavascriptTest() {
-    if (this.selectedLanguage === 'javascript') {
+    if (this.selectedLanguageIsJavascript) {
       this.loadJavascriptTask = true;
     } else {
       this.loadJavascriptTask = false;
     }
   }
 
-  run = () => {
-    switch (this.selectedLanguage) {
-      case 'javascript':
-        // tslint:disable-next-line: no-eval
-        eval(this.codeSnippet);
-        break;
-
-      case 'java':
-        console.log('java');
-        break;
-
-      case 'python':
-        console.log('python');
-        break;
-      default: return
+  runCode() {
+    switch (true) {
+      case this.selectedLanguageIsJavascript:
+        return this.evaluateCode('javascript')
+      case this.selectedLanguageIsPython:
+        return this.evaluateCode('python')
+      case this.selectedLanguageIsJava:
+        return this.evaluateCode('java')
     }
-
   };
+
+  evaluateCode(language) {
+    //TODO: Implement Jupyter connection
+    console.log(`submit code in ${language}`)
+    console.log(`submitted code ${this.codeSnippet}`)
+    return this.evaluationResult = true
+  }
 
   subscribeComponent = SubscribeComponent;
 
-  open(content: TemplateRef<any> | ComponentType<any> | string) {
+  openModal(content: TemplateRef<any> | ComponentType<any> | string) {
     const ref = this.overlayService.open(content, null);
 
     ref.afterClosed$.subscribe(res => {
+      console.log('res', res.data)
       // simple check to see if the user cancelled the form.
-      if (res.data != null) {
+      if (res.data != null && this.evaluationResult) {
         // We will create a submission. To do this we must first create the new candidate and retrieve other data
         // Create a new candidate, for now it has a placeholder for first name and last name.
         // Id is not necessary, it will create an id automatically in the backend.
