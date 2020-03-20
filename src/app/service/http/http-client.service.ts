@@ -14,7 +14,7 @@ export class HttpClientService {
 
   getCandidates() {
     // The call to the backend. Linked to the endpoint to get all candidates.
-    return this.httpClient.get<Candidate[]>('http://localhost:8080/candidates');
+    return this.httpClient.get<Candidate[]>('http://localhost:8080/candidate');
   }
 
   createCandidate(candidate: Candidate) {
