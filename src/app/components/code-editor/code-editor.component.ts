@@ -33,6 +33,7 @@ export class CodeEditorComponent {
   selectedLanguageIsPython: boolean
   selectedLanguageIsJava: boolean
   evaluationResult: boolean
+  loadJavaScriptTask: any
 
   // These variables are used to create the submission object
   submissionLanguage: Language;
@@ -48,12 +49,12 @@ export class CodeEditorComponent {
     this.selectedLanguageIsJavascript = this.selectedLanguage === 'javascript'
     this.selectedLanguageIsPython = this.selectedLanguage === 'python'
     this.selectedLanguageIsJava = this.selectedLanguage === 'java'
+    this.loadJavaScriptTask = this.selectedLanguageIsJavascript;
   }
 
   @ViewChild('editor') editor: AceEditorComponent;
   text = '';
   language = this.selectedLanguage;
-  loadJavascriptTask = false;
 
   ngAftterViewInit() {
     this.editor.setOptions({
@@ -78,7 +79,6 @@ export class CodeEditorComponent {
 
     switch (true)  {
       case (isJavascriptMode):
-        this.isJavascriptTest()
         return 'javascript'
       case (isPythonMode):
         return 'python'
@@ -90,14 +90,6 @@ export class CodeEditorComponent {
         return 'monokai'
       case (isJavaTheme ):
         return 'eclipse'
-    }
-  }
-
- isJavascriptTest() {
-    if (this.selectedLanguageIsJavascript) {
-      this.loadJavascriptTask = true;
-    } else {
-      this.loadJavascriptTask = false;
     }
   }
 
