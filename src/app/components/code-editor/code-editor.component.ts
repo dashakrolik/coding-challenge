@@ -27,7 +27,7 @@ export class CodeEditorComponent {
   }
 
   selectedLanguage: string;
-  exerciseId: any;
+  exerciseId: number;
   codeSnippet = '';
   selectedLanguageIsJavascript: boolean
   selectedLanguageIsPython: boolean
