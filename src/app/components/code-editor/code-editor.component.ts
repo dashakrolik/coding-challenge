@@ -144,7 +144,7 @@ export class CodeEditorComponent {
   }
 
   getLanguage() {
-    this.httpClientService.getLanguage(this.selectedLanguage).subscribe(
+    this.httpClientService.getLanguages(this.selectedLanguage).subscribe(
       response => this.handleSuccessfulResponseGetLanguage(response),
     );
   }

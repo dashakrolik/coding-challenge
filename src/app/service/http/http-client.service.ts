@@ -22,17 +22,21 @@ export class HttpClientService {
   }
 
   createSubmission(submission: Submission) {
-    return this.httpClient.post<Submission>('http://localhost:8080/submission/create', submission);
+    return this.httpClient.post<Submission>('http://localhost:8080/submission', submission);
   }
 
-  getLanguage(language: String) {
+  getLanguage() {
     // The call to the backend. Linked to the endpoint to get all candidates.
-    return this.httpClient.post<String>('http://localhost:8080/language/get', language);
+    return this.httpClient.get<String>('http://localhost:8080/language');
+  }
+
+  getLanguages(language: any) {
+    return this.httpClient.post<String>('http://localhost:8080/language', language);
   }
 
   getTask(task: String) {
     // TODO: right now how you idenitify a task from the backend is by comparing the task description itself.
     //  Maybe find a way to identify them more easily like an id that is syncronized over both front and backend
-    return this.httpClient.post<String>('http://localhost:8080/task/get', task);
+    return this.httpClient.post<String>('http://localhost:8080/task', task);
   }
 }

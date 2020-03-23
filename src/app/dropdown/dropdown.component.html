@@ -1,0 +1,14 @@
+<div>
+    <h1 *ngFor="let languageName of language"> test {{ languageName.language }}</h1>
+    <mat-form-field>
+        <mat-label>Select a language </mat-label>
+        <mat-select
+            (selectionChange)="setValue($event)"
+            [(value)]="value"
+            >
+            <mat-option value="java">Java</mat-option>
+            <mat-option value="python">Python</mat-option>
+            <mat-option value="javascript">JavaScript</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>

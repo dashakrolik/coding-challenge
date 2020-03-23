@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Candidate } from "../candidate/Candidate";
+import { HttpClientService } from "../../service/http/http-client.service";
 
 @Component({
   selector: 'app-welcome-page',
@@ -12,13 +13,15 @@ export class WelcomePageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private routing: Router,
+    private httpClientService: HttpClientService
+    
   ) {
   }
 
   email: string;
   form: FormGroup;
   squareMargin = 'margin-left: 20px';
-  language: 'java';
+  languages: any;
   user = {
     email: 'test@test.nl',
     language: 'java',
@@ -28,9 +31,11 @@ export class WelcomePageComponent implements OnInit {
     }
   }
   loadExerciseId: any
+  selectedLanguage: any
 
   ngOnInit() {
     this.getForm();
+    this.getLanguage()
   }
 
   getForm () {
@@ -45,15 +50,26 @@ export class WelcomePageComponent implements OnInit {
     }
   }
 
+  getLanguage() {
+    this.httpClientService.getLanguage().subscribe(
+      response => this.handleSuccessfulResponseGetLanguage(response)
+    );
+  }
+
+  handleSuccessfulResponseGetLanguage(response) {
+    console.log("successful post message get language");
+    let languageId = response.id;
+    let languageName = response.language;
+    this.languages = response;
+    console.log(response)
+  }
+  
+
   submit() {
     // send to backend
     // if success then proceed to redirect to code challenge
     // for now only this code:
     this.setExercise()
-    this.routing.navigateByUrl('challenge/' + this.language + '/' + this.loadExerciseId);
-  }
-
-  setLanguage(event: any) {
-    this.language = event.value
+    this.routing.navigateByUrl('challenge/' + this.languages + '/' + this.loadExerciseId);
   }
 }
