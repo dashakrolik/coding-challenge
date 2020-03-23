@@ -1,14 +1,10 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { AceEditorComponent } from 'ng2-ace-editor';
-import { ActivatedRoute, Router } from '@angular/router'
-import { SubscribeComponent } from "../overlay/subscribe/subscribe.component";
-import { OverlayService } from "../../service/overlay/overlay.service";
-import { ComponentType } from "@angular/cdk/portal";
-import { Candidate } from "../candidate/Candidate";
-import { HttpClientService } from "../../service/http/http-client.service";
-import { Submission } from "./Submission";
-import { Task } from "./Task";
-import { Language } from "./Language";
+import {Component, TemplateRef, ViewChild} from '@angular/core';
+import {AceEditorComponent} from 'ng2-ace-editor';
+import {ActivatedRoute, Router} from '@angular/router'
+import {SubscribeComponent} from "../overlay/subscribe/subscribe.component";
+import {OverlayService} from "../../service/overlay/overlay.service";
+import {ComponentType} from "@angular/cdk/portal";
+import {HttpClientService} from "../../service/http/http-client.service";
 
 @Component({
   selector: 'app-code-editor',
@@ -31,16 +27,16 @@ export class CodeEditorComponent {
   codeSnippet = '';
 
   // These variables are used to create the submission object
-  submissionLanguage: Language;
-  submissionCandidate: Candidate;
-  submissionTask: Task;
+  submissionLanguageId: number;
+  submissionCandidateId: number;
+  submissionTaskId: number;
+  submission: Submission;
 
   ngOnInit() {
     this.route.paramMap.subscribe(language =>
       this.selectedLanguage = language.get("language")
     );
     this.exerciseId = this.route.firstChild.snapshot.params['id']
-
   }
 
   @ViewChild('editor') editor: AceEditorComponent;
@@ -129,72 +125,87 @@ export class CodeEditorComponent {
         // Create a new candidate, for now it has a placeholder for first name and last name.
         // Id should be null. It will create an id automatically in the backend if it is null.
         // TODO: instead of creating it and retrieving it we want to add a user login possibility
-        let newCandidate = new Candidate(null, res.data.firstName, res.data.lastName, res.data.email);
-        this.httpClientService.createCandidate(newCandidate).subscribe(
+        // TODO: Now we retrieve the task and the language. Later this should be retrieved already,
+        //  remove this at that point.
+
+        const candidate = {
+          id: null,
+          firstName: res.data.firstName,
+          lastName: res.data.lastName,
+          email: res.data.email
+        };
+
+        this.httpClientService.createCandidate(candidate).subscribe(
           response => this.handleSuccessfulResponseCreateCandidate(response),
         );
       }
     });
   }
 
-  getTask() {
+  getTask = (): void => {
     // TODO: retrieve the correct task with the given task and get the correct id for the task object.
     // TODO: Not implemented! - No task yet implemented. It will return the first task in the database.
     this.httpClientService.getTask("nothing").subscribe(
       response => this.handleSuccessfulResponseGetTask(response),
     );
+  };
 
-  }
-
-  getLanguage() {
+  getLanguage = (): void => {
     this.httpClientService.getLanguage(this.selectedLanguage).subscribe(
       response => this.handleSuccessfulResponseGetLanguage(response),
     );
-  }
+  };
 
-  handleSuccessfulResponseCreateSubmission(response) {
-    // TODO: do something with a successful response
-    console.log("successful post message create submission");
-  }
-
-  createSubmission() {
-    let answer = this.codeSnippet;
+  createSubmission = (): void => {
     // When creating a new Submission we give id null so it creates a new entry. It will determine the id by itself.
-    let submission = new Submission(null, answer, false, this.submissionCandidate, this.submissionLanguage, this.submissionTask);
-    this.httpClientService.createSubmission(submission).subscribe(
+    this.submission = {
+      id: null,
+      answer: this.codeSnippet,
+      correct: false,
+      candidateId: this.submissionCandidateId,
+      languageId: this.submissionLanguageId,
+      taskId: this.submissionTaskId
+    };
+
+    this.httpClientService.createSubmission(this.submission).subscribe(
       response => this.handleSuccessfulResponseCreateSubmission(response),
     );
-  }
+  };
 
-  handleSuccessfulResponseGetTask(response) {
-    console.log("successful post message get task");
-    let taskId = response.id;
-    let taskDescription = response.task;
-    this.submissionTask = new Task(taskId, taskDescription);
 
-    this.createSubmission();
-  }
-
-  handleSuccessfulResponseGetLanguage(response) {
-    console.log("successful post message get language");
-    let languageId = response.id;
-    let languageName = response.language;
-    this.submissionLanguage = new Language(languageId, languageName);
-
-    // Finally we want to find the task that candidate has performed to create the final submission to send.
-    this.getTask();
-  }
-
-  handleSuccessfulResponseCreateCandidate(response) {
+  handleSuccessfulResponseCreateCandidate = (response): void => {
     console.log("successful post message create candidates");
-    let candidateId = response.id;
-    let candidateFirstName = response.firstName;
-    let candidateLastName = response.lastName;
-    let candidateEmail = response.email;
-    this.submissionCandidate = new Candidate(candidateId, candidateFirstName, candidateLastName, candidateEmail);
+
+    const { id, firstName, lastName, email } = response;
+    this.submissionCandidateId = id;
 
     // To create the submission we also need to know which language the user Candidate is using.
     this.getLanguage();
-  }
-}
+  };
 
+  handleSuccessfulResponseGetTask = (response): void => {
+    console.log("successful post message get task");
+
+    // We receive the task object from the backend and we need the id.
+    // TODO: When leading the task from the backend keep the id stored so we don't have to retrieve it here.
+    const { id, task } = response;
+    this.submissionTaskId = id;
+
+    this.createSubmission();
+  };
+
+  handleSuccessfulResponseGetLanguage = (response): void => {
+    console.log("successful post message get language");
+
+    const { id, language } = response;
+    this.submissionLanguageId = id;
+
+    // Finally we want to find the task that candidate has performed to create the final submission to send.
+    this.getTask();
+  };
+
+  handleSuccessfulResponseCreateSubmission = (response): void => {
+    // TODO: do something with a successful response
+    console.log("successful post message create submission");
+  };
+}
