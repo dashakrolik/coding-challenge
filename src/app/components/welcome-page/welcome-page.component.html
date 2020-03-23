@@ -4,5 +4,14 @@
 <app-dropdown
     [language]="languages"
 ></app-dropdown>
+<mat-form-field>
+    <mat-label>Select a language</mat-label>
+    <mat-select (selectionChange)="setLanguage($event)" [(value)]="language">
+        <mat-option value="java">Java</mat-option>
+        <mat-option value="python">Python</mat-option>
+        <mat-option value="javascript">JavaScript</mat-option>
+    </mat-select>
+</mat-form-field>
 <br>
-<button [disabled]="form.invalid" (click)="submit()" mat-raised-button color="warn">Submit</button>
+<!--<button [disabled]="language.length === 0" (click)="submit()" mat-raised-button color="warn">Submit</button>-->
+<button [disabled]="getLanguage()" (click)="submit()" mat-raised-button color="warn">Submit</button>

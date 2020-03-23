@@ -1,12 +1,5 @@
-    <ace-editor
-        editor
-        [(text)]="text"
-        [mode]="setLanguageOptions('mode')"
-        [theme]="setLanguageOptions('theme')"
-        (textChanged)="onChange($event)"
-        [readOnly]="false"
-        class="ace-editor"
-    ></ace-editor>
+<ace-editor editor [(text)]="text" [mode]="setLanguageOptions('mode')" [theme]="setLanguageOptions('theme')"
+  (textChanged)="onChange($event)" [readOnly]="false" class="ace-editor"></ace-editor>
 
 
 <br>
@@ -15,7 +8,7 @@
 <app-javascript-task *ngIf="loadJavaScriptTask"></app-javascript-task>
 
 <div>
-<button (click)="openModal(subscribeComponent)" mat-raised-button color="warn">
-  Submit Code
-</button>
+  <button (click)="openModal(subscribeComponent)" mat-raised-button color="warn">
+    Submit Code
+  </button>
 </div>

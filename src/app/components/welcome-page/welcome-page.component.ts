@@ -38,7 +38,7 @@ export class WelcomePageComponent implements OnInit {
     this.getLanguage()
   }
 
-  getForm () {
+  getForm() {
     this.form = this.formBuilder.group({})
   }
 
@@ -71,5 +71,9 @@ export class WelcomePageComponent implements OnInit {
     // for now only this code:
     this.setExercise()
     this.routing.navigateByUrl('challenge/' + this.languages + '/' + this.loadExerciseId);
+  }
+
+  getLanguage() {
+    return this.languages === undefined;
   }
 }

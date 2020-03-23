@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Candidate } from "../../components/candidate/Candidate";
-import { Submission } from "../../components/code-editor/Submission";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +16,7 @@ export class HttpClientService {
   }
 
   createCandidate(candidate: Candidate) {
-    return this.httpClient.post<Candidate>('http://localhost:8080/candidate/create', candidate);
+    return this.httpClient.post<Candidate>('http://localhost:8080/candidate', candidate);
   }
 
   createSubmission(submission: Submission) {
