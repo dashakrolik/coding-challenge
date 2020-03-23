@@ -10,32 +10,53 @@ import { Router } from '@angular/router';
 export class WelcomePageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
-    private routing: Router
-  ) { }
+    private routing: Router,
+  ) {
+  }
 
   email: string;
   form: FormGroup;
   squareMargin = 'margin-left: 20px';
+  language: 'java';
+  user = {
+    email: 'test@test.nl',
+    language: 'java',
+    exercise: {
+      progressId: 0,
+      exerciseId: 1
+    }
+  }
+  loadExerciseId: any
 
   ngOnInit() {
     this.getForm();
   }
 
-  getForm = (): FormGroup =>
-    this.form = this.formBuilder.group({
-      email: ['', Validators.email]
-    })
+  getForm() {
+    this.form = this.formBuilder.group({})
+  }
 
-    submit = (): void => {
-      // send to backend
-      // if success then proceed to redirect to code challenge
-      // for now only this code:
-      console.log('email:', this.form.value.email);
-      this.routing.navigateByUrl('challenge');
+  setExercise() {
+    if (this.user.exercise.progressId === 0) {
+      this.loadExerciseId = 1
+    } else {
+      this.loadExerciseId = this.user.exercise.progressId
     }
+  }
 
-    getErrorMessage() {
-      return this.form.invalid ? 'Not a valid email' : null;
-    }
+  submit() {
+    // send to backend
+    // if success then proceed to redirect to code challenge
+    // for now only this code:
+    this.setExercise()
+    this.routing.navigateByUrl('challenge/' + this.language + '/' + this.loadExerciseId);
+  }
 
+  setLanguage(event: any) {
+    this.language = event.value
+  }
+
+  getLanguage() {
+    return this.language === undefined;
+  }
 }

@@ -1,11 +1,13 @@
 <p>Please enter your email to proceed to the coding challenge</p>
 
-<form [formGroup]="form">
-    <mat-form-field appearance="fill">
-        <mat-label>Enter your email</mat-label>
-        <input matInput placeholder="pat@example.com" formControlName="email">
-        <mat-error *ngIf="form.invalid">{{getErrorMessage()}}</mat-error>
-    </mat-form-field>
-</form>
-
-<button [disabled]="form.pristine || form.invalid" (click)="submit()" mat-raised-button color="warn">Submit</button>
+<mat-form-field>
+    <mat-label>Select a language</mat-label>
+    <mat-select (selectionChange)="setLanguage($event)" [(value)]="language">
+        <mat-option value="java">Java</mat-option>
+        <mat-option value="python">Python</mat-option>
+        <mat-option value="javascript">JavaScript</mat-option>
+    </mat-select>
+</mat-form-field>
+<br>
+<!--<button [disabled]="language.length === 0" (click)="submit()" mat-raised-button color="warn">Submit</button>-->
+<button [disabled]="getLanguage()" (click)="submit()" mat-raised-button color="warn">Submit</button>
