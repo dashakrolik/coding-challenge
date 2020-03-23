@@ -1,10 +1,10 @@
-import {Component, TemplateRef, ViewChild} from '@angular/core';
-import {AceEditorComponent} from 'ng2-ace-editor';
-import {ActivatedRoute, Router} from '@angular/router'
-import {SubscribeComponent} from "../overlay/subscribe/subscribe.component";
-import {OverlayService} from "../../service/overlay/overlay.service";
-import {ComponentType} from "@angular/cdk/portal";
-import {HttpClientService} from "../../service/http/http-client.service";
+import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { AceEditorComponent } from 'ng2-ace-editor';
+import { ActivatedRoute, Router } from '@angular/router'
+import { SubscribeComponent } from "../overlay/subscribe/subscribe.component";
+import { OverlayService } from "../../service/overlay/overlay.service";
+import { ComponentType } from "@angular/cdk/portal";
+import { HttpClientService } from "../../service/http/http-client.service";
 
 @Component({
   selector: 'app-code-editor',
@@ -25,11 +25,11 @@ export class CodeEditorComponent {
   selectedLanguage: string;
   exerciseId: number;
   codeSnippet = '';
-  selectedLanguageIsJavascript: boolean
-  selectedLanguageIsPython: boolean
-  selectedLanguageIsJava: boolean
-  evaluationResult: boolean
-  loadJavaScriptTask: any
+  selectedLanguageIsJavascript: boolean;
+  selectedLanguageIsPython: boolean;
+  selectedLanguageIsJava: boolean;
+  evaluationResult: boolean;
+  loadJavaScriptTask: any;
 
   // These variables are used to create the submission object
   submissionLanguageId: number;
@@ -42,10 +42,10 @@ export class CodeEditorComponent {
     this.route.paramMap.subscribe(language =>
       this.selectedLanguage = language.get("language")
     );
-    this.exerciseId = this.route.firstChild.snapshot.params['id']
-    this.selectedLanguageIsJavascript = this.selectedLanguage === 'javascript'
-    this.selectedLanguageIsPython = this.selectedLanguage === 'python'
-    this.selectedLanguageIsJava = this.selectedLanguage === 'java'
+    this.exerciseId = this.route.firstChild.snapshot.params['id'];
+    this.selectedLanguageIsJavascript = this.selectedLanguage === 'javascript';
+    this.selectedLanguageIsPython = this.selectedLanguage === 'python';
+    this.selectedLanguageIsJava = this.selectedLanguage === 'java';
     this.loadJavaScriptTask = this.selectedLanguageIsJavascript;
   }
 
@@ -66,26 +66,26 @@ export class CodeEditorComponent {
     this.codeSnippet = event;
   };
 
-  setLanguageOptions (option: string) {
-    let isJavascriptMode = option === 'mode' && this.selectedLanguageIsJavascript
-    let isPythonMode = option === 'mode' && this.selectedLanguageIsPython
-    let isJavaMode = option === 'mode' && this.selectedLanguageIsJava
-    let isJavascriptTheme = option === 'theme' && this.selectedLanguageIsJavascript
-    let isPythonTheme = option === 'theme' && this.selectedLanguageIsPython
-    let isJavaTheme = option === 'theme' && this.selectedLanguageIsJava
+  setLanguageOptions(option: string) {
+    let isJavascriptMode = option === 'mode' && this.selectedLanguageIsJavascript;
+    let isPythonMode = option === 'mode' && this.selectedLanguageIsPython;
+    let isJavaMode = option === 'mode' && this.selectedLanguageIsJava;
+    let isJavascriptTheme = option === 'theme' && this.selectedLanguageIsJavascript;
+    let isPythonTheme = option === 'theme' && this.selectedLanguageIsPython;
+    let isJavaTheme = option === 'theme' && this.selectedLanguageIsJava;
 
-    switch (true)  {
+    switch (true) {
       case (isJavascriptMode):
-        return 'javascript'
+        return 'javascript';
       case (isPythonMode):
-        return 'python'
+        return 'python';
       case (isJavaMode):
-        return 'java'
-      case (isJavascriptTheme ):
-        return 'dracula'
+        return 'java';
+      case (isJavascriptTheme):
+        return 'dracula';
       case (isPythonTheme):
-        return 'monokai'
-      case (isJavaTheme ):
+        return 'monokai';
+      case (isJavaTheme):
         return 'eclipse'
     }
   }
