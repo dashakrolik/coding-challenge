@@ -32,8 +32,9 @@ export class WelcomePageComponent implements OnInit {
     this.getForm();
   }
 
-  getForm = (): FormGroup =>
+  getForm() {
     this.form = this.formBuilder.group({})
+  }
 
   setExercise() {
     if (this.user.exercise.progressId === 0) {
@@ -43,7 +44,7 @@ export class WelcomePageComponent implements OnInit {
     }
   }
 
-  submit = (): void => {
+  submit() {
     // send to backend
     // if success then proceed to redirect to code challenge
     // for now only this code:
@@ -58,5 +59,4 @@ export class WelcomePageComponent implements OnInit {
   getLanguage() {
     return this.language === undefined;
   }
-
 }
