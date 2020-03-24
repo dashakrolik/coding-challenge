@@ -2,7 +2,8 @@
 
 
 <app-dropdown
-    [languages]="languages"
+    [inputValue]="setLanguage()"
+    labelText="Select a Language"
     (valueOutput)="onSelect($event)"
 ></app-dropdown>
 <br>

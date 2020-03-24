@@ -5,14 +5,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./dropdown.component.css']
 })
 export class DropdownComponent {
-  @Input() languages:string;
+  @Input() inputValue:string;
+  @Input() labelText:string
   @Output() valueOutput = new EventEmitter<any>()
-
-  constructor() {
-   }
-   
-  ngOnInit(): void {
-  }
 
   setValue = (event: any) => {
     this.valueOutput.emit(event)

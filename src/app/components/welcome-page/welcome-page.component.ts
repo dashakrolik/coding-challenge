@@ -29,8 +29,8 @@ export class WelcomePageComponent implements OnInit {
       exerciseId: 1
     }
   }
-  loadExerciseId: any
-  selectedLanguage: any
+  loadExerciseId: number
+  selectedLanguage: string
 
   ngOnInit() {
     this.getForm();
@@ -39,6 +39,12 @@ export class WelcomePageComponent implements OnInit {
 
   getForm() {
     this.form = this.formBuilder.group({})
+  }
+
+  setLanguage() {
+    if (this.languages) {
+      return this.languages.map(item => item.language)
+    }
   }
 
   setExercise() {
@@ -50,9 +56,9 @@ export class WelcomePageComponent implements OnInit {
   }
 
   async getLanguages() {
-    await this.httpClientService.getLanguage().subscribe(
-      response => this.languages = response 
-    );
+      await this.httpClientService.getLanguage().subscribe(
+        response => this.languages = response
+      );
   }
 
   submit() {
