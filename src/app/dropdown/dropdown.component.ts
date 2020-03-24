@@ -1,28 +1,21 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-
-
-
-
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 @Component({
   selector: 'app-dropdown',
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.css']
 })
 export class DropdownComponent {
-  @Input() language:string;
+  @Input() languages:string;
+  @Output() valueOutput = new EventEmitter<any>()
+
   constructor() {
    }
-
-   value
-
-
+   
   ngOnInit(): void {
   }
 
-  setValue(event: any) {
-    this.value = event.value
+  setValue = (event: any) => {
+    console.log('child event', event)
+    this.valueOutput.emit(event)
   }
-
 }

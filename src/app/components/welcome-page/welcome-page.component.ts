@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Candidate } from "../candidate/Candidate";
+// import { Candidate } from "../candidate/Candidate";
 import { HttpClientService } from "../../service/http/http-client.service";
 
 @Component({
@@ -35,7 +35,7 @@ export class WelcomePageComponent implements OnInit {
 
   ngOnInit() {
     this.getForm();
-    this.getLanguage()
+    this.getLanguages()
   }
 
   getForm() {
@@ -50,30 +50,25 @@ export class WelcomePageComponent implements OnInit {
     }
   }
 
-  getLanguage() {
-    this.httpClientService.getLanguage().subscribe(
-      response => this.handleSuccessfulResponseGetLanguage(response)
+  async getLanguages() {
+    await this.httpClientService.getLanguage().subscribe(
+      response => this.languages = response 
     );
   }
-
-  handleSuccessfulResponseGetLanguage(response) {
-    console.log("successful post message get language");
-    let languageId = response.id;
-    let languageName = response.language;
-    this.languages = response;
-    console.log(response)
-  }
-  
 
   submit() {
     // send to backend
     // if success then proceed to redirect to code challenge
     // for now only this code:
     this.setExercise()
-    this.routing.navigateByUrl('challenge/' + this.languages + '/' + this.loadExerciseId);
+    this.routing.navigateByUrl('challenge/' + this.selectedLanguage + '/' + this.loadExerciseId);
   }
 
   getLanguage() {
     return this.languages === undefined;
+  }
+
+  onSelect(event) {
+    this.selectedLanguage = event
   }
 }
