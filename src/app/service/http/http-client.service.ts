@@ -35,6 +35,6 @@ export class HttpClientService {
   getTask(task: String) {
     // TODO: right now how you idenitify a task from the backend is by comparing the task description itself.
     //  Maybe find a way to identify them more easily like an id that is syncronized over both front and backend
-    return this.httpClient.post<String>('http://localhost:8080/task/get', task);
+    return this.httpClient.post<String>('http://localhost:8080/task', task);
   }
 }
