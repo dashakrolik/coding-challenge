@@ -2,8 +2,8 @@
 <div>
     <label>Select a language </label>
     <select
-        #myValue
-        (change)="setValue(myValue.value)"
+        #selectedValue
+        (change)="setValue(selectedValue.value)"
         [(value)]="valueOutput"
         >
         <option 

@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
   selector: 'app-dropdown',
   templateUrl: './dropdown.component.html',
@@ -15,7 +15,6 @@ export class DropdownComponent {
   }
 
   setValue = (event: any) => {
-    console.log('child event', event)
     this.valueOutput.emit(event)
   }
 }
