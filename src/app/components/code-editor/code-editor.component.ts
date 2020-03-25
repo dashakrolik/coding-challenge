@@ -192,7 +192,7 @@ export class CodeEditorComponent {
     // We receive the task object from the backend and we need the id and the description.
     const { id, description, taskNumber } = response;
     this.submissionTaskId = id;
-    this.taskDescription = description
+    this.taskDescription = description;
   };
 
   handleSuccessfulResponseGetLanguage = (response): void => {
