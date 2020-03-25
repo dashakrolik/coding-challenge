@@ -22,7 +22,7 @@ export class CodeEditorComponent {
     this.route = route;
   }
 
-  selectedLanguage: string;
+  selectedLanguage: any;
   exerciseId: number;
   codeSnippet = '';
   selectedLanguageIsJavascript: boolean;
@@ -32,9 +32,9 @@ export class CodeEditorComponent {
   loadJavaScriptTask: any;
 
   // These variables are used to create the submission object
-  submissionLanguageId: number;
-  submissionCandidateId: number;
-  submissionTaskId: number;
+  submissionLanguageId: any;
+  submissionCandidateId: any;
+  submissionTaskId: any;
   submission: Submission;
 
 
@@ -131,31 +131,55 @@ export class CodeEditorComponent {
           email: res.data.email
         };
 
-        this.httpClientService.createCandidate(candidate).subscribe(
-          response => this.handleSuccessfulResponseCreateCandidate(response),
-        );
+          this.createCandidate(candidate)
+          console.log("successful post message create candidates")
       } else {
         console.log('Check fields and code')
       }
     });
   }
 
-  getTask = (): void => {
-    // TODO: retrieve the correct task with the given task and get the correct id for the task object.
+  async createCandidate(candidate) {
+    if (this.submissionCandidateId) {
+      await this.httpClientService.createCandidate(candidate).subscribe(
+        response => this.submissionCandidateId = response,
+        this.submissionCandidateId = this.submissionCandidateId.id
+        );
+      }
+      // To create the submission we also need to know which language the user Candidate is using.
+      this.getLanguage();
+  }
+
+  async getTask() {
+    if(this.submissionTaskId) {
+     // TODO: retrieve the correct task with the given task and get the correct id for the task object.
     // TODO: Not implemented! - No task yet implemented. It will return the first task in the database.
-    this.httpClientService.getTask("nothing").subscribe(
-      response => this.handleSuccessfulResponseGetTask(response),
-    );
+    await this.httpClientService.getTask("nothing").subscribe(
+      response => this.submissionTaskId = response,
+  
+      // We receive the task object from the backend and we need the id.
+      // TODO: When leading the task from the backend keep the id stored so we don't have to retrieve it here.
+      this.submissionTaskId = this.submissionTaskId.id,
+      )
+    }
+      this.createSubmission()
   };
 
-  getLanguage = (): void => {
-    this.httpClientService.getLanguage(this.selectedLanguage).subscribe(
-      response => this.handleSuccessfulResponseGetLanguage(response),
-    );
+  async getLanguage() {
+    console.log('test async', this.submissionLanguageId)
+    if (this.submissionLanguageId) {
+    await this.httpClientService.getLanguage(this.selectedLanguage).subscribe(
+      response => this.submissionLanguageId = response,
+      this.submissionLanguageId = this.submissionLanguageId.id
+        // Finally we want to find the task that candidate has performed to create the final submission to send.
+      )
+    }
+      this.getTask();
   };
 
-  createSubmission = (): void => {
+  async createSubmission() {
     // When creating a new Submission we give id null so it creates a new entry. It will determine the id by itself.
+    if (this.submissionCandidateId) {
     this.submission = {
       id: null,
       answer: this.codeSnippet,
@@ -164,46 +188,11 @@ export class CodeEditorComponent {
       languageId: this.submissionLanguageId,
       taskId: this.submissionTaskId
     };
+  }
 
-    this.httpClientService.createSubmission(this.submission).subscribe(
-      response => this.handleSuccessfulResponseCreateSubmission(response),
-    );
-  };
-
-
-  handleSuccessfulResponseCreateCandidate = (response): void => {
-    console.log("successful post message create candidates");
-
-    const { id, firstName, lastName, email } = response;
-    this.submissionCandidateId = id;
-
-    // To create the submission we also need to know which language the user Candidate is using.
-    this.getLanguage();
-  };
-
-  handleSuccessfulResponseGetTask = (response): void => {
-    console.log("successful post message get task");
-
-    // We receive the task object from the backend and we need the id.
-    // TODO: When leading the task from the backend keep the id stored so we don't have to retrieve it here.
-    const { id, task } = response;
-    this.submissionTaskId = id;
-
-    this.createSubmission();
-  };
-
-  handleSuccessfulResponseGetLanguage = (response): void => {
-    console.log("successful post message get language");
-
-    const { id, language } = response;
-    this.submissionLanguageId = id;
-
-    // Finally we want to find the task that candidate has performed to create the final submission to send.
-    this.getTask();
-  };
-
-  handleSuccessfulResponseCreateSubmission = (response): void => {
-    // TODO: do something with a successful response
-    console.log("successful post message create submission");
-  };
+    await this.httpClientService.createSubmission(this.submission).subscribe(
+      // TODO: do something with a successful response
+      response =>  console.log("successful post message create submission", response)
+    )
+  }
 }
