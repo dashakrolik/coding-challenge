@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClientService } from "../../service/http/http-client.service";
+import { HttpClientService } from '../../service/http/http-client.service';
 
 @Component({
   selector: 'app-candidate',
@@ -7,7 +7,6 @@ import { HttpClientService } from "../../service/http/http-client.service";
   styleUrls: ['./candidate.component.css']
 })
 export class CandidateComponent implements OnInit {
-
   // Here the candidate names are stored to be used in the html
   candidates: Candidate[];
 
@@ -22,8 +21,6 @@ export class CandidateComponent implements OnInit {
     );
   }
 
-  handleSuccessfulResponse(response) {
-    // The response from the backend with the candidates from the database.
-    this.candidates = response;
-  }
+  // @TODO: we don't need this, delete
+  handleSuccessfulResponse = (response) => this.candidates = response;
 }

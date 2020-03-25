@@ -21,11 +21,7 @@ export class SubscribeComponent implements OnInit {
 
   ngOnInit() {}
 
-  submit() {
-    this.ref.close(this.frmSubscribe.value);
-  }
+  submit = () => this.ref.close(this.frmSubscribe.value);
 
-  cancel() {
-    this.ref.close(null);
-  }
+  cancel = () => this.ref.close(null);
 }
