@@ -2,9 +2,9 @@ import { Component, TemplateRef, ViewChild, OnInit } from '@angular/core';
 import { AceEditorComponent } from 'ng2-ace-editor';
 import { ActivatedRoute } from '@angular/router';
 import { SubscribeComponent } from '../overlay/subscribe/subscribe.component';
-import { OverlayService } from '../../service/overlay/overlay.service';
+import { OverlayService } from '@service/overlay/overlay.service';
 import { ComponentType } from '@angular/cdk/portal';
-import { HttpClientService } from '../../service/http/http-client.service';
+import { HttpClientService } from '@service/http/http-client.service';
 
 @Component({
   selector: 'app-code-editor',
