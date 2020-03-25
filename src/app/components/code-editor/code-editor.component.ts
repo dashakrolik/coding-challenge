@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild, OnInit } from '@angular/core';
 import { AceEditorComponent } from 'ng2-ace-editor';
 import { ActivatedRoute, Router } from '@angular/router'
 import { SubscribeComponent } from "../overlay/subscribe/subscribe.component";
@@ -12,7 +12,7 @@ import { HttpClientService } from "../../service/http/http-client.service";
   styleUrls: ['./code-editor.component.css']
 })
 
-export class CodeEditorComponent {
+export class CodeEditorComponent implements OnInit {
   public constructor(
     private route: ActivatedRoute,
     private router: Router,

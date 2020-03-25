@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { baseUrl } from '../../shared/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -7,30 +8,20 @@ import { HttpClient } from '@angular/common/http';
 export class HttpClientService {
 
   constructor(
-    private httpClient:HttpClient
+    private httpClient: HttpClient
   ) { }
 
-  getCandidates() {
-    // The call to the backend. Linked to the endpoint to get all candidates.
-    return this.httpClient.get<Candidate[]>('http://localhost:8080/candidate');
-  }
+  getCandidates = () => this.httpClient.get<Candidate[]>(`${baseUrl}/candidate`);
 
-  createCandidate(candidate: Candidate) {
-    return this.httpClient.post<Candidate>('http://localhost:8080/candidate', candidate);
-  }
+  createCandidate = (candidate: Candidate) => this.httpClient.post<Candidate>(`${baseUrl}/candidate`, candidate);
 
-  createSubmission(submission: Submission) {
-    return this.httpClient.post<Submission>('http://localhost:8080/submission/create', submission);
-  }
+  createSubmission = (submission: Submission) => this.httpClient.post<Submission>(`${baseUrl}/submission/create`, submission);
 
-  getLanguage(language: String) {
-    // The call to the backend. Linked to the endpoint to get all candidates.
-    return this.httpClient.post<String>('http://localhost:8080/language/get', language);
-  }
+  getLanguage = (language: string) => this.httpClient.post<string>(`${baseUrl}/language/get`, language);
 
-  getTask(task: String) {
+  getTask = (task: string) => {
     // TODO: right now how you idenitify a task from the backend is by comparing the task description itself.
     //  Maybe find a way to identify them more easily like an id that is syncronized over both front and backend
-    return this.httpClient.post<String>('http://localhost:8080/task/get', task);
+    return this.httpClient.post<string>(`${baseUrl}/task/get`, task);
   }
 }
