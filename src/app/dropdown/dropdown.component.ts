@@ -9,7 +9,7 @@ export class DropdownComponent {
   @Input() labelText:string
   @Output() valueOutput = new EventEmitter<any>()
 
-  setValue = (event: any) => {
+  setValue (event: any) {
     this.valueOutput.emit(event)
   }
 }
