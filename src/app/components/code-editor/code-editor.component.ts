@@ -101,7 +101,7 @@ export class CodeEditorComponent implements OnInit {
       case this.selectedLanguageIsJava:
         return this.evaluateCode('java');
     }
-  };
+  }
 
   evaluateCode(language: string) {
     // TODO: Implement Jupyter connection
