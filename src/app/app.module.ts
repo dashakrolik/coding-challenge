@@ -19,7 +19,7 @@ import { JavascriptTaskComponent } from './components/output/javascript-task/jav
 import { HttpClientModule } from '@angular/common/http';
 import { CandidateComponent } from './components/candidate/candidate.component';
 
-import { OverlayComponent } from "./components/overlay/overlay/overlay.component";
+import { OverlayComponent } from './components/overlay/overlay/overlay.component';
 import { SubscribeComponent } from './components/overlay/subscribe/subscribe.component';
 
 @NgModule({

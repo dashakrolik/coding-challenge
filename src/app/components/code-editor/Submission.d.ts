@@ -1,4 +1,3 @@
-
 interface Submission {
   id: number;
   answer: string;
