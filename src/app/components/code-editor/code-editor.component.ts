@@ -51,7 +51,7 @@ export class CodeEditorComponent {
     this.loadJavaScriptTask = this.selectedLanguageIsJavascript;
 
     // We load the task based on the exerciseId
-    this.taskDescription = this.getTask()
+    this.getTask()
   }
 
   @ViewChild('editor') editor: AceEditorComponent;
@@ -145,12 +145,11 @@ export class CodeEditorComponent {
     });
   }
 
-  getTask = (): string => {
+  getTask = (): void => {
     console.log("getting task with task number " + this.exerciseId);
-    this.httpClientService.getTask(this.exerciseId.toString()).subscribe(
+    this.httpClientService.getTask(this.exerciseId).subscribe(
       response => this.handleSuccessfulResponseGetTask(response),
     );
-    return "test 2";
   };
 
   getLanguage = (): void => {
