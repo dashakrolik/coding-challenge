@@ -19,9 +19,9 @@ export class HttpClientService {
 
   getLanguage = (language: string) => this.httpClient.post<string>(`${baseUrl}/language/get`, language);
 
-  getTask = (task: string) => {
-    // TODO: right now how you idenitify a task from the backend is by comparing the task description itself.
+  getTask(subTaskNumber: number) {
+    // TODO: right now how you identify a task from the backend is by comparing the task description itself.
     //  Maybe find a way to identify them more easily like an id that is syncronized over both front and backend
-    return this.httpClient.post<string>(`${baseUrl}/task/get`, task);
+    return this.httpClient.get<number>(`${baseUrl}/api/v1.0/task/get/` + subTaskNumber + '/');
   }
 }

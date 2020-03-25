@@ -37,6 +37,8 @@ export class CodeEditorComponent implements OnInit {
   submissionTaskId: number;
   submission: Submission;
 
+  // The Task description
+  taskDescription: string;
 
   ngOnInit() {
     this.route.paramMap.subscribe(language =>
@@ -47,6 +49,9 @@ export class CodeEditorComponent implements OnInit {
     this.selectedLanguageIsPython = this.selectedLanguage === 'python';
     this.selectedLanguageIsJava = this.selectedLanguage === 'java';
     this.loadJavaScriptTask = this.selectedLanguageIsJavascript;
+
+    // We load the task based on the exerciseId
+    this.getTask()
   }
 
   @ViewChild('editor') editor: AceEditorComponent;
@@ -141,14 +146,14 @@ export class CodeEditorComponent implements OnInit {
   }
 
   getTask = (): void => {
-    // TODO: retrieve the correct task with the given task and get the correct id for the task object.
-    // TODO: Not implemented! - No task yet implemented. It will return the first task in the database.
-    this.httpClientService.getTask("nothing").subscribe(
+    console.log("getting task with task number " + this.exerciseId);
+    this.httpClientService.getTask(this.exerciseId).subscribe(
       response => this.handleSuccessfulResponseGetTask(response),
     );
   };
 
   getLanguage = (): void => {
+    // TODO: The language should be loaded already when entering this page. Remove this part when that is done.
     this.httpClientService.getLanguage(this.selectedLanguage).subscribe(
       response => this.handleSuccessfulResponseGetLanguage(response),
     );
@@ -184,12 +189,10 @@ export class CodeEditorComponent implements OnInit {
   handleSuccessfulResponseGetTask = (response): void => {
     console.log("successful post message get task");
 
-    // We receive the task object from the backend and we need the id.
-    // TODO: When leading the task from the backend keep the id stored so we don't have to retrieve it here.
-    const { id, task } = response;
+    // We receive the task object from the backend and we need the id and the description.
+    const { id, description, taskNumber } = response;
     this.submissionTaskId = id;
-
-    this.createSubmission();
+    this.taskDescription = description;
   };
 
   handleSuccessfulResponseGetLanguage = (response): void => {
@@ -199,11 +202,15 @@ export class CodeEditorComponent implements OnInit {
     this.submissionLanguageId = id;
 
     // Finally we want to find the task that candidate has performed to create the final submission to send.
-    this.getTask();
+    this.createSubmission();
   };
 
   handleSuccessfulResponseCreateSubmission = (response): void => {
     // TODO: do something with a successful response
     console.log("successful post message create submission");
   };
+
+  getTest() {
+    return this.taskDescription;
+  }
 }
