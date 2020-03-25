@@ -35,10 +35,12 @@ export class WelcomePageComponent implements OnInit {
   getForm = () => this.form = this.formBuilder.group({});
 
   setExercise = () => {
-    if (this.user.exercise.progressId === 0) {
+    const { progressId } = this.user.exercise;
+
+    if (progressId === 0) {
       this.loadExerciseId = 1;
     } else {
-      this.loadExerciseId = this.user.exercise.progressId;
+      this.loadExerciseId = progressId;
     }
   }
 

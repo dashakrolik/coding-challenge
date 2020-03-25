@@ -7,7 +7,7 @@ import { FormBuilder, Validators } from '@angular/forms';
   templateUrl: './subscribe.component.html',
   styleUrls: ['./subscribe.component.scss']
 })
-export class SubscribeComponent implements OnInit {
+export class SubscribeComponent {
   frmSubscribe = this.fb.group({
     firstName: 'Sander',
     lastName: 'Kools',
@@ -18,8 +18,6 @@ export class SubscribeComponent implements OnInit {
   });
 
   constructor(private fb: FormBuilder, private ref: MyOverlayRef) {}
-
-  ngOnInit() {}
 
   submit = () => this.ref.close(this.frmSubscribe.value);
 
