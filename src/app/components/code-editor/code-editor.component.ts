@@ -1,10 +1,10 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild, OnInit } from '@angular/core';
 import { AceEditorComponent } from 'ng2-ace-editor';
-import { ActivatedRoute, Router } from '@angular/router'
-import { SubscribeComponent } from "../overlay/subscribe/subscribe.component";
-import { OverlayService } from "../../service/overlay/overlay.service";
-import { ComponentType } from "@angular/cdk/portal";
-import { HttpClientService } from "../../service/http/http-client.service";
+import { ActivatedRoute } from '@angular/router';
+import { SubscribeComponent } from '../overlay/subscribe/subscribe.component';
+import { OverlayService } from '@service/overlay/overlay.service';
+import { ComponentType } from '@angular/cdk/portal';
+import { HttpClientService } from '@service/http/http-client.service';
 
 @Component({
   selector: 'app-code-editor',
@@ -12,15 +12,16 @@ import { HttpClientService } from "../../service/http/http-client.service";
   styleUrls: ['./code-editor.component.css']
 })
 
-export class CodeEditorComponent {
+export class CodeEditorComponent implements OnInit {
   public constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private overlayService: OverlayService,
     private httpClientService: HttpClientService
   ) {
     this.route = route;
   }
+
+  @ViewChild('editor') editor: AceEditorComponent;
 
   selectedLanguage: string;
   exerciseId: number;
@@ -37,21 +38,24 @@ export class CodeEditorComponent {
   submissionTaskId: number;
   submission: Submission;
 
+  taskDescription: string;
+  subscribeComponent = SubscribeComponent;
+  text = '';
+  language = this.selectedLanguage;
 
   ngOnInit() {
     this.route.paramMap.subscribe(language =>
-      this.selectedLanguage = language.get("language")
+      this.selectedLanguage = language.get('language')
     );
-    this.exerciseId = this.route.firstChild.snapshot.params['id'];
+    this.exerciseId = this.route.firstChild.snapshot.params.id;
     this.selectedLanguageIsJavascript = this.selectedLanguage === 'javascript';
     this.selectedLanguageIsPython = this.selectedLanguage === 'python';
     this.selectedLanguageIsJava = this.selectedLanguage === 'java';
     this.loadJavaScriptTask = this.selectedLanguageIsJavascript;
-  }
 
-  @ViewChild('editor') editor: AceEditorComponent;
-  text = '';
-  language = this.selectedLanguage;
+    // We load the task based on the exerciseId
+    this.getTask();
+  }
 
   ngAftterViewInit() {
     this.editor.setOptions({
@@ -59,20 +63,18 @@ export class CodeEditorComponent {
       showPrintMargin: false,
       tabSize: 2,
       useSoftTabs: true,
-    })
+    });
   }
 
-  onChange(event: any) {
-    this.codeSnippet = event;
-  };
+  onChange = (event: any) => this.codeSnippet = event;
 
   setLanguageOptions(option: string) {
-    let isJavascriptMode = option === 'mode' && this.selectedLanguageIsJavascript;
-    let isPythonMode = option === 'mode' && this.selectedLanguageIsPython;
-    let isJavaMode = option === 'mode' && this.selectedLanguageIsJava;
-    let isJavascriptTheme = option === 'theme' && this.selectedLanguageIsJavascript;
-    let isPythonTheme = option === 'theme' && this.selectedLanguageIsPython;
-    let isJavaTheme = option === 'theme' && this.selectedLanguageIsJava;
+    const isJavascriptMode = option === 'mode' && this.selectedLanguageIsJavascript;
+    const isPythonMode = option === 'mode' && this.selectedLanguageIsPython;
+    const isJavaMode = option === 'mode' && this.selectedLanguageIsJava;
+    const isJavascriptTheme = option === 'theme' && this.selectedLanguageIsJavascript;
+    const isPythonTheme = option === 'theme' && this.selectedLanguageIsPython;
+    const isJavaTheme = option === 'theme' && this.selectedLanguageIsJava;
 
     switch (true) {
       case (isJavascriptMode):
@@ -86,29 +88,23 @@ export class CodeEditorComponent {
       case (isPythonTheme):
         return 'monokai';
       case (isJavaTheme):
-        return 'eclipse'
+        return 'eclipse';
     }
   }
 
-  runCode() {
+  runCode = () => {
     switch (true) {
       case this.selectedLanguageIsJavascript:
-        return this.evaluateCode('javascript')
+        return this.evaluateCode('javascript');
       case this.selectedLanguageIsPython:
-        return this.evaluateCode('python')
+        return this.evaluateCode('python');
       case this.selectedLanguageIsJava:
-        return this.evaluateCode('java')
+        return this.evaluateCode('java');
     }
-  };
-
-  evaluateCode(language: string) {
-    //TODO: Implement Jupyter connection
-    console.log(`submit code in ${language}`)
-    console.log(`submitted code ${this.codeSnippet}`)
-    return this.evaluationResult = true
   }
 
-  subscribeComponent = SubscribeComponent;
+  // TODO: Implement Jupyter connection
+  evaluateCode = (language: string) => this.evaluationResult = true;
 
   openModal(content: TemplateRef<any> | ComponentType<any> | string) {
     const ref = this.overlayService.open(content, null);
@@ -116,7 +112,6 @@ export class CodeEditorComponent {
     ref.afterClosed$.subscribe(res => {
       // simple check to see if the user cancelled the form and code is evaluated
       if (res.data != null && this.evaluationResult) {
-        console.log('fields not empty and code is evaluated')
         // We will create a submission. To do this we must first create the new candidate and retrieve other data
         // Create a new candidate, for now it has a placeholder for first name and last name.
         // Id should be null. It will create an id automatically in the backend if it is null.
@@ -135,24 +130,22 @@ export class CodeEditorComponent {
           response => this.handleSuccessfulResponseCreateCandidate(response),
         );
       } else {
-        console.log('Check fields and code')
+        console.log('Check fields and code');
       }
     });
   }
 
   getTask = (): void => {
-    // TODO: retrieve the correct task with the given task and get the correct id for the task object.
-    // TODO: Not implemented! - No task yet implemented. It will return the first task in the database.
-    this.httpClientService.getTask("nothing").subscribe(
+    this.httpClientService.getTask(this.exerciseId).subscribe(
       response => this.handleSuccessfulResponseGetTask(response),
     );
-  };
+  }
 
   getLanguage = (): void => {
     this.httpClientService.getLanguage().subscribe(
       response => this.handleSuccessfulResponseGetLanguage(response),
     );
-  };
+  }
 
   createSubmission = (): void => {
     // When creating a new Submission we give id null so it creates a new entry. It will determine the id by itself.
@@ -168,42 +161,36 @@ export class CodeEditorComponent {
     this.httpClientService.createSubmission(this.submission).subscribe(
       response => this.handleSuccessfulResponseCreateSubmission(response),
     );
-  };
+  }
 
 
   handleSuccessfulResponseCreateCandidate = (response): void => {
-    console.log("successful post message create candidates");
-
-    const { id, firstName, lastName, email } = response;
+    const { id } = response;
     this.submissionCandidateId = id;
 
     // To create the submission we also need to know which language the user Candidate is using.
     this.getLanguage();
-  };
+  }
 
   handleSuccessfulResponseGetTask = (response): void => {
-    console.log("successful post message get task");
-
-    // We receive the task object from the backend and we need the id.
-    // TODO: When leading the task from the backend keep the id stored so we don't have to retrieve it here.
-    const { id, task } = response;
+    // We receive the task object from the backend and we need the id and the description.
+    const { id, description } = response;
     this.submissionTaskId = id;
-
-    this.createSubmission();
-  };
+    this.taskDescription = description;
+  }
 
   handleSuccessfulResponseGetLanguage = (response): void => {
-    console.log("successful post message get language");
-
-    const { id, language } = response;
+    const { id } = response;
     this.submissionLanguageId = id;
-
     // Finally we want to find the task that candidate has performed to create the final submission to send.
-    this.getTask();
-  };
+    this.createSubmission();
+  }
 
   handleSuccessfulResponseCreateSubmission = (response): void => {
     // TODO: do something with a successful response
-    console.log("successful post message create submission");
-  };
+    console.log('successful post message create submission');
+  }
+
+  getTest = () => this.taskDescription;
+
 }

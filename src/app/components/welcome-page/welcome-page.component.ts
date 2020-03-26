@@ -34,12 +34,10 @@ export class WelcomePageComponent implements OnInit {
 
   ngOnInit() {
     this.getForm();
-    this.getLanguages()
+    this.getLanguage()
   }
 
-  getForm() {
-    this.form = this.formBuilder.group({})
-  }
+  getForm = () => this.form = this.formBuilder.group({});
 
   setLanguage() {
     if (this.languages) {
@@ -48,12 +46,17 @@ export class WelcomePageComponent implements OnInit {
   }
 
   setExercise() {
-    if (this.user.exercise.progressId === 0) {
+    const { progressId } = this.user.exercise;
+    
+    if (progressId === 0) {
       this.loadExerciseId = 1
+    if (progressId === 0) {
+      this.loadExerciseId = 1;
     } else {
-      this.loadExerciseId = this.user.exercise.progressId
+      this.loadExerciseId = progressId;
     }
   }
+}
 
   async getLanguages() {
       await this.httpClientService.getLanguage().subscribe(
