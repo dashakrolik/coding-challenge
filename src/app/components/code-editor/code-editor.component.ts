@@ -2,9 +2,9 @@ import { Component, TemplateRef, ViewChild, OnInit } from '@angular/core';
 import { AceEditorComponent } from 'ng2-ace-editor';
 import { ActivatedRoute } from '@angular/router';
 import { SubscribeComponent } from '../overlay/subscribe/subscribe.component';
-import { OverlayService } from '../../service/overlay/overlay.service';
+import { OverlayService } from '@service/overlay/overlay.service';
 import { ComponentType } from '@angular/cdk/portal';
-import { HttpClientService } from '../../service/http/http-client.service';
+import { HttpClientService } from '@service/http/http-client.service';
 
 @Component({
   selector: 'app-code-editor',
@@ -92,7 +92,7 @@ export class CodeEditorComponent implements OnInit {
     }
   }
 
-  runCode() {
+  runCode = () => {
     switch (true) {
       case this.selectedLanguageIsJavascript:
         return this.evaluateCode('javascript');
@@ -103,10 +103,8 @@ export class CodeEditorComponent implements OnInit {
     }
   }
 
-  evaluateCode(language: string) {
-    // TODO: Implement Jupyter connection
-    return this.evaluationResult = true;
-  }
+  // TODO: Implement Jupyter connection
+  evaluateCode = (language: string) => this.evaluationResult = true;
 
   openModal(content: TemplateRef<any> | ComponentType<any> | string) {
     const ref = this.overlayService.open(content, null);
@@ -168,7 +166,7 @@ export class CodeEditorComponent implements OnInit {
 
 
   handleSuccessfulResponseCreateCandidate = (response): void => {
-    const { id, firstName, lastName, email } = response;
+    const { id } = response;
     this.submissionCandidateId = id;
 
     // To create the submission we also need to know which language the user Candidate is using.
@@ -177,13 +175,13 @@ export class CodeEditorComponent implements OnInit {
 
   handleSuccessfulResponseGetTask = (response): void => {
     // We receive the task object from the backend and we need the id and the description.
-    const { id, description, taskNumber } = response;
+    const { id, description } = response;
     this.submissionTaskId = id;
     this.taskDescription = description;
   }
 
   handleSuccessfulResponseGetLanguage = (response): void => {
-    const { id, language } = response;
+    const { id } = response;
     this.submissionLanguageId = id;
     // Finally we want to find the task that candidate has performed to create the final submission to send.
     this.createSubmission();
