@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpClientService } from "../../service/http/http-client.service";
 
 @Component({
   selector: 'app-welcome-page',
@@ -11,13 +12,15 @@ export class WelcomePageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private routing: Router,
+    private httpClientService: HttpClientService
+    
   ) {
   }
 
   email: string;
   form: FormGroup;
   squareMargin = 'margin-left: 20px';
-  language: 'java';
+  languages: any;
   user = {
     email: 'test@test.nl',
     language: 'java',
@@ -25,35 +28,55 @@ export class WelcomePageComponent implements OnInit {
       progressId: 0,
       exerciseId: 1
     }
-  };
-  loadExerciseId: any;
+  }
+  loadExerciseId: number
+  selectedLanguage: string
 
   ngOnInit() {
     this.getForm();
+    this.getLanguage()
   }
 
   getForm = () => this.form = this.formBuilder.group({});
 
-  setExercise = () => {
-    const { progressId } = this.user.exercise;
+  setLanguage() {
+    if (this.languages) {
+      return this.languages.map(item => item.language)
+    }
+  }
 
+  setExercise() {
+    const { progressId } = this.user.exercise;
+    
+    if (progressId === 0) {
+      this.loadExerciseId = 1
     if (progressId === 0) {
       this.loadExerciseId = 1;
     } else {
       this.loadExerciseId = progressId;
     }
   }
+}
 
-  submit = () => {
+  async getLanguages() {
+      await this.httpClientService.getLanguage().subscribe(
+        response => this.languages = response
+      );
+  }
+
+  submit() {
     // send to backend
     // if success then proceed to redirect to code challenge
     // for now only this code:
-    this.setExercise();
-    this.routing.navigateByUrl('challenge/' + this.language + '/' + this.loadExerciseId);
+    this.setExercise()
+    this.routing.navigateByUrl('challenge/' + this.selectedLanguage + '/' + this.loadExerciseId);
   }
 
-  setLanguage = (event: any) => this.language = event.value;
+  getLanguage() {
+    return this.languages === undefined;
+  }
 
-  getLanguage = () => this.language === undefined;
-
+  onSelect(event) {
+    this.selectedLanguage = event
+  }
 }

@@ -142,8 +142,7 @@ export class CodeEditorComponent implements OnInit {
   }
 
   getLanguage = (): void => {
-    // TODO: The language should be loaded already when entering this page. Remove this part when that is done.
-    this.httpClientService.getLanguage(this.selectedLanguage).subscribe(
+    this.httpClientService.getLanguage().subscribe(
       response => this.handleSuccessfulResponseGetLanguage(response),
     );
   }

@@ -1,13 +1,11 @@
 <p>Please enter your email to proceed to the coding challenge</p>
 
-<mat-form-field>
-    <mat-label>Select a language</mat-label>
-    <mat-select (selectionChange)="setLanguage($event)" [(value)]="language">
-        <mat-option value="java">Java</mat-option>
-        <mat-option value="python">Python</mat-option>
-        <mat-option value="javascript">JavaScript</mat-option>
-    </mat-select>
-</mat-form-field>
+
+<app-dropdown
+    [inputValue]="setLanguage()"
+    labelText="Select a Language"
+    (valueOutput)="onSelect($event)"
+></app-dropdown>
 <br>
 
 <button [disabled]="getLanguage()" (click)="submit()" mat-raised-button color="warn">Submit</button>

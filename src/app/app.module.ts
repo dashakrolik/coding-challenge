@@ -21,6 +21,7 @@ import { CandidateComponent } from './components/candidate/candidate.component';
 
 import { OverlayComponent } from './components/overlay/overlay/overlay.component';
 import { SubscribeComponent } from './components/overlay/subscribe/subscribe.component';
+import { DropdownComponent } from './dropdown/dropdown.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { SubscribeComponent } from './components/overlay/subscribe/subscribe.com
     JavascriptTaskComponent,
     CandidateComponent,
     OverlayComponent,
-    SubscribeComponent
+    SubscribeComponent,
+    DropdownComponent
   ],
   imports: [
     BrowserModule,
