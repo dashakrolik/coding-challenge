@@ -18,7 +18,7 @@ export class HttpClientService {
   createSubmission = (submission: Submission) => this.httpClient.post<Submission>(`${baseUrl}/submission`, submission);
 
   // The call to the backend. Linked to the endpoint to get all candidates.
-  getLanguage = () => this.httpClient.get<String>('http://localhost:8080/language');
+  getLanguage = () => this.httpClient.get<string>('http://localhost:8080/language');
 
   getLanguages = (language: string) => this.httpClient.post<string>(`${baseUrl}/language`, language);
 

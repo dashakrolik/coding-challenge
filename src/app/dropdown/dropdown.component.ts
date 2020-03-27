@@ -5,11 +5,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./dropdown.component.css']
 })
 export class DropdownComponent {
-  @Input() inputValue:string;
-  @Input() labelText:string
-  @Output() valueOutput = new EventEmitter<any>()
+  @Input() inputValue: string;
+  @Input() labelText: string;
+  @Output() valueOutput = new EventEmitter<any>();
 
-  setValue (event: any) {
-    this.valueOutput.emit(event)
+  setValue(event: any) {
+    this.valueOutput.emit(event);
   }
 }
