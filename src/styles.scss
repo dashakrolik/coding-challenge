@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~bulma/bulma.sass';
+
+.modal {
+  pointer-events: none !important;
+}
+
+.modal-content {
+  pointer-events: all !important;
+}
+
+// This is needed to make sure the background doesn't go over the form.
+.modal-background {
+  z-index: -1;
+}

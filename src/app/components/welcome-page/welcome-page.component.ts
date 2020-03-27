@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpClientService } from "../../service/http/http-client.service";
 
 @Component({
   selector: 'app-welcome-page',
@@ -10,32 +11,72 @@ import { Router } from '@angular/router';
 export class WelcomePageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
-    private routing: Router
-  ) { }
+    private routing: Router,
+    private httpClientService: HttpClientService
+    
+  ) {
+  }
 
   email: string;
   form: FormGroup;
   squareMargin = 'margin-left: 20px';
+  languages: any;
+  user = {
+    email: 'test@test.nl',
+    language: 'java',
+    exercise: {
+      progressId: 0,
+      exerciseId: 1
+    }
+  }
+  loadExerciseId: number
+  selectedLanguage: string
 
   ngOnInit() {
     this.getForm();
+    this.getLanguage()
   }
 
-  getForm = (): FormGroup =>
-    this.form = this.formBuilder.group({
-      email: ['', Validators.email]
-    })
+  getForm = () => this.form = this.formBuilder.group({});
 
-    submit = (): void => {
-      // send to backend
-      // if success then proceed to redirect to code challenge
-      // for now only this code:
-      console.log('email:', this.form.value.email);
-      this.routing.navigateByUrl('challenge');
+  setLanguage() {
+    if (this.languages) {
+      return this.languages.map(item => item.language)
     }
+  }
 
-    getErrorMessage() {
-      return this.form.invalid ? 'Not a valid email' : null;
+  setExercise() {
+    const { progressId } = this.user.exercise;
+    
+    if (progressId === 0) {
+      this.loadExerciseId = 1
+    if (progressId === 0) {
+      this.loadExerciseId = 1;
+    } else {
+      this.loadExerciseId = progressId;
     }
+  }
+}
 
+  async getLanguages() {
+      await this.httpClientService.getLanguage().subscribe(
+        response => this.languages = response
+      );
+  }
+
+  submit() {
+    // send to backend
+    // if success then proceed to redirect to code challenge
+    // for now only this code:
+    this.setExercise()
+    this.routing.navigateByUrl('challenge/' + this.selectedLanguage + '/' + this.loadExerciseId);
+  }
+
+  getLanguage() {
+    return this.languages === undefined;
+  }
+
+  onSelect(event) {
+    this.selectedLanguage = event
+  }
 }

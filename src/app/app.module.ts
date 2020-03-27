@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 import { AceEditorModule } from 'ng2-ace-editor';
 
@@ -16,6 +18,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
 import { JavascriptTaskComponent } from './components/output/javascript-task/javascript-task.component';
 import { CanvasComponent } from './components/canvas/canvas.component';
+import { CandidateComponent } from './components/candidate/candidate.component';
+import { OverlayComponent } from './components/overlay/overlay/overlay.component';
+import { SubscribeComponent } from './components/overlay/subscribe/subscribe.component';
+import { DropdownComponent } from './dropdown/dropdown.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +29,11 @@ import { CanvasComponent } from './components/canvas/canvas.component';
     CodeEditorComponent,
     WelcomePageComponent,
     JavascriptTaskComponent,
-    CanvasComponent
+    CanvasComponent,
+    CandidateComponent,
+    OverlayComponent,
+    SubscribeComponent,
+    DropdownComponent
   ],
   imports: [
     BrowserModule,
@@ -34,10 +44,14 @@ import { CanvasComponent } from './components/canvas/canvas.component';
     MatButtonModule,
     MatSelectModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    HttpClientModule,
+    OverlayModule
   ],
   providers: [],
   bootstrap: [AppComponent],
+  entryComponents: [OverlayComponent, SubscribeComponent],
   schemas: [NO_ERRORS_SCHEMA]
 })
-export class AppModule { }
+export class AppModule {
+}
