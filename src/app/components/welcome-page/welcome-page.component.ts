@@ -34,7 +34,7 @@ export class WelcomePageComponent implements OnInit {
 
   ngOnInit() {
     this.getForm();
-    this.getLanguage();
+    this.getLanguages()
   }
 
   getForm = () => this.form = this.formBuilder.group({});
