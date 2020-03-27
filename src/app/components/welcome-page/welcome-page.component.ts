@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpClientService } from "../../service/http/http-client.service";
+import { HttpClientService } from '@service/http/http-client.service';
 
 @Component({
   selector: 'app-welcome-page',
@@ -13,7 +13,7 @@ export class WelcomePageComponent implements OnInit {
     private formBuilder: FormBuilder,
     private routing: Router,
     private httpClientService: HttpClientService
-    
+
   ) {
   }
 
@@ -28,9 +28,9 @@ export class WelcomePageComponent implements OnInit {
       progressId: 0,
       exerciseId: 1
     }
-  }
-  loadExerciseId: number
-  selectedLanguage: string
+  };
+  loadExerciseId: number;
+  selectedLanguage: string;
 
   ngOnInit() {
     this.getForm();
@@ -47,21 +47,22 @@ export class WelcomePageComponent implements OnInit {
 
   setExercise() {
     const { progressId } = this.user.exercise;
-    
-    if (progressId === 0) {
-      this.loadExerciseId = 1
+
     if (progressId === 0) {
       this.loadExerciseId = 1;
-    } else {
-      this.loadExerciseId = progressId;
+      if (progressId === 0) {
+        this.loadExerciseId = 1;
+      } else {
+        this.loadExerciseId = progressId;
+      }
     }
   }
-}
 
-  async getLanguages() {
-      await this.httpClientService.getLanguage().subscribe(
-        response => this.languages = response
-      );
+  getLanguages() {
+    // await has no effect on this type of expression (Observable)
+    this.httpClientService.getLanguage().subscribe(
+      response => this.languages = response
+    );
   }
 
   submit() {
@@ -72,11 +73,7 @@ export class WelcomePageComponent implements OnInit {
     this.routing.navigateByUrl('challenge/' + this.selectedLanguage + '/' + this.loadExerciseId);
   }
 
-  getLanguage() {
-    return this.languages === undefined;
-  }
+  getLanguage = () => this.languages === undefined;
 
-  onSelect(event) {
-    this.selectedLanguage = event
-  }
+  onSelect = (event) => this.selectedLanguage = event;
 }
