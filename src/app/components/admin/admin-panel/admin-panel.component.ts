@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../../service/task/task.service';
+import { PersonService } from 'src/app/service/person/person.service';
+import { Task } from 'src/app/types/Task';
+import { Person } from 'src/app/types/Person';
 
 @Component({
   selector: 'app-admin-panel',
@@ -8,15 +11,21 @@ import { TaskService } from '../../../service/task/task.service';
 })
 
 export class AdminPanelComponent implements OnInit {
-  tasks: Task[]
+  tasks: Task[];
+  persons: Person[];
 
   constructor(
-    private taskService: TaskService
+    private taskService: TaskService,
+    private personService: PersonService
   ) { }
 
   ngOnInit(): void {
     this.taskService.getAllTasks().subscribe(tasks => {
       this.tasks = tasks;
     });
+    this.personService.getAllPersons().subscribe(persons => {
+      this.persons = persons;
+    });
   }
+
 }

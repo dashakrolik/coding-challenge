@@ -5,6 +5,7 @@ import { WelcomePageComponent } from './components/welcome-page/welcome-page.com
 import { JavascriptTaskComponent } from './components/output/javascript-task/javascript-task.component';
 import { CandidateComponent } from "./components/candidate/candidate.component";
 import { AdminPanelComponent } from "./components/admin/admin-panel/admin-panel.component";
+import { ProfileComponent } from './components/admin/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,10 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminPanelComponent,
+  },
+  {
+    path: 'admin/profile/:id',
+    component: ProfileComponent
   }
 ];
 
