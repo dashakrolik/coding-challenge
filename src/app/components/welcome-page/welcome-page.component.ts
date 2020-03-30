@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class WelcomePageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
-    private routing: Router,
+    private routing: Router
   ) {
   }
 

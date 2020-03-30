@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { OverlayModule } from '@angular/cdk/overlay';
 
 import { AceEditorModule } from 'ng2-ace-editor';
@@ -16,11 +16,13 @@ import { CodeEditorComponent } from './components/code-editor/code-editor.compon
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
 import { JavascriptTaskComponent } from './components/output/javascript-task/javascript-task.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CandidateComponent } from './components/candidate/candidate.component';
 
 import { OverlayComponent } from "./components/overlay/overlay/overlay.component";
 import { SubscribeComponent } from './components/overlay/subscribe/subscribe.component';
+import { LoginComponent } from './login/login.component';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { SubscribeComponent } from './components/overlay/subscribe/subscribe.com
     JavascriptTaskComponent,
     CandidateComponent,
     OverlayComponent,
-    SubscribeComponent
+    SubscribeComponent,
+    LoginComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +47,8 @@ import { SubscribeComponent } from './components/overlay/subscribe/subscribe.com
     MatFormFieldModule,
     MatInputModule,
     HttpClientModule,
-    OverlayModule
+    OverlayModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
