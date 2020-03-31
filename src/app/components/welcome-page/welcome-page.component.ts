@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
 import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import {OverlayService} from "../../service/overlay/overlay.service";
+import {ComponentType} from "@angular/cdk/portal";
+import {SubscribeComponent} from "../overlay/subscribe/subscribe.component";
 
 @Component({
   selector: 'app-welcome-page',
@@ -10,6 +13,7 @@ import { Router } from '@angular/router';
 export class WelcomePageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
+    private overlayService: OverlayService,
     private routing: Router
   ) {
   }
@@ -25,7 +29,7 @@ export class WelcomePageComponent implements OnInit {
       progressId: 0,
       exerciseId: 1
     }
-  }
+  };
   loadExerciseId: any
 
   ngOnInit() {

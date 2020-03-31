@@ -8,11 +8,7 @@
     </div>
   </nav>
   <div id="Sign-in" class="content-tab">
-    Hallo 2!
     <form [formGroup]="frmLogin">
-      <header class="modal-card-head has-text-weight-bold">
-      Subscribe
-      </header>
       <section class="modal-card-body">
         <div class="field">
           <label class="label">Email</label>
@@ -30,16 +26,13 @@
     </form>
     <footer class="modal-card-foot">
       <div class="buttons">
-        <button (click)="submitLogin()" type="submit" class="button is-success">Login and Submit</button>
+        <button id="button-submit-login" (click)="submitLogin()" type="submit" class="button is-success">Login</button>
         <button (click)="cancel()" type="button" class="button is-danger">Cancel</button>
       </div>
     </footer>
   </div>
   <div id="Sign-up" class="content-tab" style="display:none">
       <form [formGroup]="frmSubscribe">
-        <header class="modal-card-head has-text-weight-bold">
-          Subscribe
-        </header>
         <section class="modal-card-body">
           <div class="field">
             <label class="label">First Name</label>
@@ -72,7 +65,7 @@
         </section>
         <footer class="modal-card-foot">
           <div class="buttons">
-            <button (click)="submitRegister()" type="submit" class="button is-success">Register and Submit</button>
+            <button id="button-submit-register" (click)="submitRegister()" type="submit" class="button is-success">Register</button>
             <button (click)="cancel()" type="button" class="button is-danger">Cancel</button>
           </div>
         </footer>

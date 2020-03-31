@@ -21,8 +21,8 @@ import { CandidateComponent } from './components/candidate/candidate.component';
 
 import { OverlayComponent } from "./components/overlay/overlay/overlay.component";
 import { SubscribeComponent } from './components/overlay/subscribe/subscribe.component';
-import { LoginComponent } from './login/login.component';
-import { LogoutComponent } from './logout/logout.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { authInterceptorProviders } from './service/auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -33,8 +33,7 @@ import { LogoutComponent } from './logout/logout.component';
     CandidateComponent,
     OverlayComponent,
     SubscribeComponent,
-    LoginComponent,
-    LogoutComponent
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +49,7 @@ import { LogoutComponent } from './logout/logout.component';
     OverlayModule,
     FormsModule
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent],
   entryComponents: [OverlayComponent, SubscribeComponent],
   schemas: [NO_ERRORS_SCHEMA]

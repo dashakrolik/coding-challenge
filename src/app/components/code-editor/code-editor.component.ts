@@ -5,6 +5,7 @@ import { SubscribeComponent } from "../overlay/subscribe/subscribe.component";
 import { OverlayService } from "../../service/overlay/overlay.service";
 import { ComponentType } from "@angular/cdk/portal";
 import { HttpClientService } from "../../service/http/http-client.service";
+import {TokenStorageService} from "../../service/token/token-storage.service";
 
 @Component({
   selector: 'app-code-editor',
@@ -13,11 +14,13 @@ import { HttpClientService } from "../../service/http/http-client.service";
 })
 
 export class CodeEditorComponent implements OnInit {
+
   public constructor(
     private route: ActivatedRoute,
     private router: Router,
     private overlayService: OverlayService,
-    private httpClientService: HttpClientService
+    private httpClientService: HttpClientService,
+    private tokenStorageService: TokenStorageService
   ) {
     this.route = route;
   }
@@ -115,35 +118,13 @@ export class CodeEditorComponent implements OnInit {
 
   subscribeComponent = SubscribeComponent;
 
-  openModal(content: TemplateRef<any> | ComponentType<any> | string) {
+  loginWindow(content: ComponentType<SubscribeComponent>) {
     const ref = this.overlayService.open(content, null);
 
     ref.afterClosed$.subscribe(res => {
-      // simple check to see if the user cancelled the form and code is evaluated
-      if (res.data != null && this.evaluationResult) {
-        console.log('fields not empty and code is evaluated')
-        // We will create a submission. To do this we must first create the new candidate and retrieve other data
-        // Create a new candidate, for now it has a placeholder for first name and last name.
-        // Id should be null. It will create an id automatically in the backend if it is null.
-        // TODO: instead of creating it and retrieving it we want to add a user login possibility
-        // TODO: Now we retrieve the task and the language. Later this should be retrieved already,
-        //  remove this at that point.
-
-        const candidate = {
-          id: null,
-          firstName: res.data.firstName,
-          lastName: res.data.lastName,
-          email: res.data.email
-        };
-
-        this.httpClientService.createCandidate(candidate).subscribe(
-          response => this.handleSuccessfulResponseCreateCandidate(response),
-        );
-      } else {
-        console.log('Check fields and code')
-      }
-    });
-  }
+      // The user clicked away, so don't do anything.
+    })
+  };
 
   getTask = (): void => {
     console.log("getting task with task number " + this.exerciseId);
@@ -210,7 +191,15 @@ export class CodeEditorComponent implements OnInit {
     console.log("successful post message create submission");
   };
 
-  getTest() {
+  getTaskDescription() {
     return this.taskDescription;
+  }
+
+  submitCode() {
+    console.log("submit code");
+  }
+
+  checkLogin() {
+    return this.tokenStorageService.isUserLoggedIn();
   }
 }

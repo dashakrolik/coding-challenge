@@ -1,3 +1,14 @@
-<main>
-  <router-outlet></router-outlet>
-</main>
+<!-- header example -->
+<nav class="navbar">
+
+  <!-- possibly add Ordina logo -->
+  <div class="navbar-brand">
+    <!-- If the user is logged in we want to show the button for his account, otherwise we show the login button -->
+    <button *ngIf="!checkLogin()" (click)="loginWindow(subscribeComponent)" type="button" class="button is-primary">Login</button>
+    <button *ngIf="checkLogin()" (click)="myAccount()" type="button" class="button is-primary">My Account</button>
+    <button *ngIf="checkLogin()" (click)="logout()" type="button" class="button is-info">Logout</button>
+  </div>
+</nav>
+
+<!-- routes will be rendered here -->
+<router-outlet></router-outlet>

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MyOverlayRef } from 'src/app/service/overlay/myoverlay-ref';
 import { FormBuilder, Validators } from '@angular/forms';
-import {AuthenticationService} from "../../../service/authentication.service";
+import {HttpClientService} from "../../../service/http/http-client.service";
+import {TokenStorageService} from "../../../service/token/token-storage.service";
 
 @Component({
   selector: 'app-subscribe',
@@ -30,35 +31,73 @@ export class SubscribeComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private ref: MyOverlayRef,
-    private loginservice: AuthenticationService) {}
+    private httpClientService: HttpClientService,
+    private tokenStorageService: TokenStorageService
+  ) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   submitRegister() {
     console.log("submit register");
     console.log(this.frmSubscribe.value);
 
-    if (this.loginservice.registerUser(this.frmSubscribe.value.firstName, this.frmSubscribe.value.lastName, this.frmLogin.value.email, this.frmLogin.value.password)) {
-      console.log("success");
-    } else {
-      console.log("failed");
-    }
+    const { firstName, lastName, email, password } = this.frmSubscribe.value;
+
+    this.httpClientService.getRegister(firstName, lastName, email, password).subscribe(
+      response => this.handleSuccessfulResponseGetRegister(response, email, password),
+      err => {
+        // TODO: show error message on screen
+          console.log("big fail!");
+          console.log(err.error.message);
+        }
+    );
 
     this.ref.close(this.frmSubscribe.value);
   }
+
+  handleSuccessfulResponseGetRegister = (response, email, password): void => {
+    // The user successfully registered. We will log him in.
+    console.log("successful post message get register");
+    console.log(response);
+    this.httpClientService.getLogin(email, password).subscribe(
+      response => this.handleSuccessfulResponseGetLogin(response),
+      err => {
+        // TODO: show error message on screen
+        console.log("big fail!");
+        console.log(err.error.message);
+      }
+    );
+  };
 
   submitLogin() {
     console.log("submit login");
     console.log(this.frmLogin.value);
 
-    if (this.loginservice.loginUser(this.frmLogin.value.email, this.frmLogin.value.password)) {
-      console.log("success");
-    } else {
-      console.log("failed");
-    }
+    const { email, password } = this.frmLogin.value;
+    this.httpClientService.getLogin(email, password).subscribe(
+      response => this.handleSuccessfulResponseGetLogin(response),
+      err => {
+        // TODO: show error message on screen
+        console.log("big fail!");
+        console.log(err.error.message);
+      }
+    );
 
-    this.ref.close(this.frmLogin.value);
+    this.ref.close(this.frmSubscribe.value);
   }
+
+  handleSuccessfulResponseGetLogin = (response): void => {
+    // The user successfully logged in. We will store the username in the session
+    console.log("successful post message get login");
+    console.log(response);
+    sessionStorage.setItem('username', response.username);
+    this.tokenStorageService.saveToken(response.accessToken);
+    this.tokenStorageService.saveUser(response);
+
+    window.location.reload();
+  };
 
   cancel() {
     this.ref.close(null);
@@ -66,7 +105,7 @@ export class SubscribeComponent implements OnInit {
 
   openTab(tabName) {
     console.log("opening new tab " + tabName);
-    // We get both tab elements and we turn them off. Them we immediately turn the tab on that the user clicked on.
+    // We get both tab elements and we turn them off. Then we immediately turn the tab on that the user clicked on.
     let signIn = document.getElementById('Sign-in');
     let signUp = document.getElementById('Sign-up');
     signIn.style.display = "none";
