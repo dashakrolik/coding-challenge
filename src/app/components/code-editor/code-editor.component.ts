@@ -5,6 +5,10 @@ import { SubscribeComponent } from '../overlay/subscribe/subscribe.component';
 import { OverlayService } from '@service/overlay/overlay.service';
 import { ComponentType } from '@angular/cdk/portal';
 import { HttpClientService } from '@service/http/http-client.service';
+import { CandidateService } from '@service/candidate/candidate.service';
+import { TaskService } from '@service/task/task.service';
+import { SubmissionService } from '@service/submission/submission.service';
+import { LanguageService } from '@service/language/language.service';
 
 @Component({
   selector: 'app-code-editor',
@@ -16,7 +20,11 @@ export class CodeEditorComponent implements OnInit {
   public constructor(
     private route: ActivatedRoute,
     private overlayService: OverlayService,
-    private httpClientService: HttpClientService
+    private httpClientService: HttpClientService,
+    private candidateService: CandidateService,
+    private taskService: TaskService,
+    private languageService: LanguageService,
+    private submissionService: SubmissionService
   ) {
     this.route = route;
   }
@@ -126,7 +134,7 @@ export class CodeEditorComponent implements OnInit {
           email: res.data.email
         };
 
-        this.httpClientService.createCandidate(candidate).subscribe(
+        this.candidateService.createCandidate(candidate).subscribe(
           response => this.handleSuccessfulResponseCreateCandidate(response),
         );
       } else {
@@ -136,13 +144,13 @@ export class CodeEditorComponent implements OnInit {
   }
 
   getTask = (): void => {
-    this.httpClientService.getTask(this.exerciseId).subscribe(
+    this.taskService.getTask(this.exerciseId).subscribe(
       response => this.handleSuccessfulResponseGetTask(response),
     );
   }
 
   getLanguage = (): void => {
-    this.httpClientService.getLanguage().subscribe(
+    this.languageService.getLanguages().subscribe(
       response => this.handleSuccessfulResponseGetLanguage(response),
     );
   }
@@ -158,7 +166,7 @@ export class CodeEditorComponent implements OnInit {
       taskId: this.submissionTaskId
     };
 
-    this.httpClientService.createSubmission(this.submission).subscribe(
+    this.submissionService.createSubmission(this.submission).subscribe(
       response => this.handleSuccessfulResponseCreateSubmission(response),
     );
   }

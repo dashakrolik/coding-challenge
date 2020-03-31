@@ -25,18 +25,4 @@ export class HttpClientService {
   delete = (path: string): Observable<any> => {
     return this.http.delete(`${baseUrl}/${path}`);
   }
-
-  getCandidates = () => this.http.get<Candidate[]>(`${baseUrl}/candidate`);
-
-  createCandidate = (candidate: Candidate) => this.http.post<Candidate>(`${baseUrl}/candidate`, candidate);
-
-  createSubmission = (submission: Submission) => this.http.post<Submission>(`${baseUrl}/submission`, submission);
-
-  getLanguages = () => this.http.get<string>(`${baseUrl}/language`);
-
-  getTask(subTaskNumber: number) {
-    // TODO: right now how you identify a task from the backend is by comparing the task description itself.
-    //  Maybe find a way to identify them more easily like an id that is syncronized over both front and backend
-    return this.http.get<number>(`${baseUrl}/api/v1.0/task` + subTaskNumber + '/');
-  }
 }

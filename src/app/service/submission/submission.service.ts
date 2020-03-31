@@ -5,12 +5,11 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class LanguageService {
-  languages: Observable<string[]>;
+export class SubmissionService {
 
   constructor(
     private http: HttpClientService
   ) { }
 
-  getLanguages = (): Observable<Language[]> => this.http.get('language');
+  createSubmission = (submission: Submission): Observable<Submission> => this.http.post<Submission>('submission', submission);
 }

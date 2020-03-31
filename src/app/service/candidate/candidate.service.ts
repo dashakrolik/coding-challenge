@@ -13,4 +13,6 @@ export class CandidateService {
   ) { }
 
   getCandidates = (): Observable<Candidate[]> => this.http.get('candidates');
+
+  createCandidate = (candidate: Candidate): Observable<Candidate> => this.http.post<Candidate>('candidate', candidate);
 }

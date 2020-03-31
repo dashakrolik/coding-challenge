@@ -12,5 +12,5 @@ export class TaskService {
     private http: HttpClientService
   ) { }
 
-  getTask = (subTaskNumber: number): Observable<string[]> => this.http.get('/api/v1.0/task' + subTaskNumber + '/');
+  getTask = (subTaskNumber: number): Observable<string[]> => this.http.get('task/' + subTaskNumber);
 }

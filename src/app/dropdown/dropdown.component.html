@@ -1,15 +1,8 @@
-
-<div>
-    <label> {{ labelText }} </label>
-    <select
-        #selectedValue
-        (change)="setValue(selectedValue.value)"
-        [(value)]="valueOutput"
-        >
-        <option 
-            *ngFor="let value of inputValue"
-            [value]="value">
-            {{ value }}
-        </option>
-    </select>
-</div>
+<mat-form-field>
+    <mat-label>Select a language</mat-label>
+    <mat-select (selectionChange)="setValue($event)">
+        <ng-container *ngFor="let value of inputValue">
+            <mat-option [value]="value"> {{ value }}</mat-option>
+        </ng-container>
+    </mat-select>
+</mat-form-field>

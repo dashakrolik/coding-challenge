@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpClientService } from '@service/http/http-client.service';
+import { LanguageService } from '@service/language/language.service';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-welcome-page',
@@ -12,15 +13,14 @@ export class WelcomePageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private routing: Router,
-    private httpClientService: HttpClientService
-
+    private languageService: LanguageService
   ) {
   }
 
   email: string;
   form: FormGroup;
   squareMargin = 'margin-left: 20px';
-  languages: any;
+  languages: Language[] = [];
   user = {
     email: 'test@test.nl',
     language: 'java',
@@ -29,51 +29,42 @@ export class WelcomePageComponent implements OnInit {
       exerciseId: 1
     }
   };
-  loadExerciseId: number;
+  taskId: number;
   selectedLanguage: string;
 
   ngOnInit() {
     this.getForm();
-    this.getLanguages()
+    this.getLanguages();
   }
 
   getForm = () => this.form = this.formBuilder.group({});
 
-  setLanguage() {
-    if (this.languages) {
-      return this.languages.map(item => item.language)
-    }
+  getLanguages = () => {
+    this.languageService.getLanguages().subscribe(
+      response => this.languages = response
+    );
   }
+  setLanguage = () => this.languages.map(item => item.language);
 
   setExercise() {
     const { progressId } = this.user.exercise;
 
     if (progressId === 0) {
-      this.loadExerciseId = 1;
+      this.taskId = 1;
       if (progressId === 0) {
-        this.loadExerciseId = 1;
+        this.taskId = 1;
       } else {
-        this.loadExerciseId = progressId;
+        this.taskId = progressId;
       }
     }
   }
 
-  getLanguages() {
-    // await has no effect on this type of expression (Observable)
-    this.httpClientService.getLanguage().subscribe(
-      response => this.languages = response
-    );
-  }
-
-  submit() {
-    // send to backend
-    // if success then proceed to redirect to code challenge
-    // for now only this code:
-    this.setExercise()
-    this.routing.navigateByUrl('challenge/' + this.selectedLanguage + '/' + this.loadExerciseId);
+  submit = () => {
+    this.setExercise();
+    this.routing.navigateByUrl('challenge/' + this.selectedLanguage + '/' + this.taskId);
   }
 
   getLanguage = () => this.languages === undefined;
 
-  onSelect = (event) => this.selectedLanguage = event;
+  onSelect = (event: MatSelectChange) => this.selectedLanguage = event.value;
 }
