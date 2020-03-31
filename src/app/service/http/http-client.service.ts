@@ -32,10 +32,7 @@ export class HttpClientService {
 
   createSubmission = (submission: Submission) => this.http.post<Submission>(`${baseUrl}/submission`, submission);
 
-  // The call to the backend. Linked to the endpoint to get all candidates.
-  getLanguage = () => this.http.get<string>('http://localhost:8080/language');
-
-  getLanguages = (language: string) => this.http.post<string>(`${baseUrl}/language`, language);
+  getLanguages = () => this.http.get<string>(`${baseUrl}/language`);
 
   getTask(subTaskNumber: number) {
     // TODO: right now how you identify a task from the backend is by comparing the task description itself.
