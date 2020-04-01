@@ -17,19 +17,14 @@ export class HttpClientService {
     private httpClient: HttpClient
   ) { }
 
-  // TODO: candidate is changed. This doesn't work anymore.
-  getCandidates = () => this.httpClient.get<Candidate[]>(`${baseUrl}/candidate`);
-
-  createCandidate = (candidate: Candidate) => this.httpClient.post<Candidate>(`${baseUrl}/candidate`, candidate);
+  getCandidates = () => this.httpClient.get<Candidate[]>(`${baseUrl}/person`);
 
   createSubmission = (submission: Submission) => this.httpClient.post<Submission>(`${baseUrl}/submission/create`, submission);
 
   getLanguage = (language: string) => this.httpClient.post<string>(`${baseUrl}/language/get`, language);
 
   getTask(subTaskNumber: number) {
-    // TODO: right now how you identify a task from the backend is by comparing the task description itself.
-    //  Maybe find a way to identify them more easily like an id that is syncronized over both front and backend
-    return this.httpClient.get<number>(`${baseUrl}/api/v1.0/task/get/` + subTaskNumber + '/');
+    return this.httpClient.get<number>(`${baseUrl}/task/get/` + subTaskNumber + '/');
   }
 
   getLogin(email: string, password: string) {

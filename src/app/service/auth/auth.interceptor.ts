@@ -11,8 +11,9 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private token: TokenStorageService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    console.log("intercepting!");
     let authReq = req;
+    // The token is passed with the http call if the user is logged in. This is needed for some calls in the
+    // backend for which authorization is required.
     const token = this.token.getToken();
     if (token != null) {
       authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });

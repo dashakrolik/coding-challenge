@@ -12,8 +12,6 @@ import {Router} from "@angular/router";
 })
 export class AppComponent implements OnInit {
 
-  private roles: string[];
-  isLoggedIn = false;
   // these can be used to show information not accessible for normal users
   showAdminBoard = false;
   showModeratorBoard = false;
@@ -30,10 +28,10 @@ export class AppComponent implements OnInit {
     if (this.tokenStorageService.isUserLoggedIn()) {
       console.log("user logged in");
       const user = this.tokenStorageService.getUser();
-      this.roles = user.roles;
+      const roles = user.roles;
 
-      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
+      this.showAdminBoard = roles.includes('ROLE_ADMIN');
+      this.showModeratorBoard = roles.includes('ROLE_MODERATOR');
     }
   }
 
@@ -48,6 +46,7 @@ export class AppComponent implements OnInit {
 
   logout() {
     this.tokenStorageService.logOut()
+    window.location.reload();
   }
 
   myAccount() {

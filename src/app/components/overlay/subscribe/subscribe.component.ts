@@ -49,7 +49,6 @@ export class SubscribeComponent implements OnInit {
       response => this.handleSuccessfulResponseGetRegister(response, email, password),
       err => {
         // TODO: show error message on screen
-          console.log("big fail!");
           console.log(err.error.message);
         }
     );
@@ -59,13 +58,10 @@ export class SubscribeComponent implements OnInit {
 
   handleSuccessfulResponseGetRegister = (response, email, password): void => {
     // The user successfully registered. We will log him in.
-    console.log("successful post message get register");
-    console.log(response);
     this.httpClientService.getLogin(email, password).subscribe(
       response => this.handleSuccessfulResponseGetLogin(response),
       err => {
         // TODO: show error message on screen
-        console.log("big fail!");
         console.log(err.error.message);
       }
     );
@@ -80,7 +76,6 @@ export class SubscribeComponent implements OnInit {
       response => this.handleSuccessfulResponseGetLogin(response),
       err => {
         // TODO: show error message on screen
-        console.log("big fail!");
         console.log(err.error.message);
       }
     );

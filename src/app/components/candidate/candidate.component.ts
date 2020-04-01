@@ -10,15 +10,22 @@ export class CandidateComponent implements OnInit {
 
   // Here the candidate names are stored to be used in the html
   candidates: Candidate[];
+  errorMessage: String;
 
   constructor(
     private httpClientService: HttpClientService
   ) {
+    this.errorMessage = "";
   }
 
   ngOnInit() {
     this.httpClientService.getCandidates().subscribe(
       response => this.handleSuccessfulResponse(response),
+      err => {
+        // TODO: show error message on screen
+        console.log(err.error.message);
+        this.errorMessage = err.error.message;
+      }
     );
   }
 

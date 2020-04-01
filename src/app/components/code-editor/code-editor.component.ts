@@ -134,7 +134,6 @@ export class CodeEditorComponent implements OnInit {
   };
 
   getLanguage = (): void => {
-    // TODO: The language should be loaded already when entering this page. Remove this part when that is done.
     this.httpClientService.getLanguage(this.selectedLanguage).subscribe(
       response => this.handleSuccessfulResponseGetLanguage(response),
     );
@@ -168,8 +167,6 @@ export class CodeEditorComponent implements OnInit {
   };
 
   handleSuccessfulResponseGetTask = (response): void => {
-    console.log("successful post message get task");
-
     // We receive the task object from the backend and we need the id and the description.
     const { id, description, taskNumber } = response;
     this.submissionTaskId = id;
