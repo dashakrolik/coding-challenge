@@ -9,7 +9,7 @@ import { TokenStorageService } from "../../../service/token/token-storage.servic
   templateUrl: './subscribe.component.html',
   styleUrls: ['./subscribe.component.scss']
 })
-export class SubscribeComponent implements OnInit {
+export class SubscribeComponent {
   frmSubscribe = this.fb.group({
     firstName: '',
     lastName: '',

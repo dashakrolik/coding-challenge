@@ -24,7 +24,7 @@ export class WelcomePageComponent implements OnInit {
   email: string;
   form: FormGroup;
   squareMargin = 'margin-left: 20px';
-  language: 'java';
+  languages: any;
   user = {
     email: 'test@test.nl',
     language: 'java',
@@ -33,22 +33,40 @@ export class WelcomePageComponent implements OnInit {
       exerciseId: 1
     }
   };
-  loadExerciseId: any
+  loadExerciseId: number;
+  selectedLanguage: string;
 
   ngOnInit() {
     this.getForm();
+    this.getLanguages()
   }
 
-  getForm() {
-    this.form = this.formBuilder.group({})
+  getForm = () => this.form = this.formBuilder.group({});
+
+  setLanguage() {
+    if (this.languages) {
+      return this.languages.map(item => item.language)
+    }
   }
 
   setExercise() {
-    if (this.user.exercise.progressId === 0) {
-      this.loadExerciseId = 1
-    } else {
-      this.loadExerciseId = this.user.exercise.progressId
+    const { progressId } = this.user.exercise;
+
+    if (progressId === 0) {
+      this.loadExerciseId = 1;
+      if (progressId === 0) {
+        this.loadExerciseId = 1;
+      } else {
+        this.loadExerciseId = progressId;
+      }
     }
+  }
+
+  getLanguages() {
+    // await has no effect on this type of expression (Observable)
+    this.httpClientService.getLanguage().subscribe(
+      response => this.languages = response
+    );
   }
 
   submit() {
@@ -56,14 +74,10 @@ export class WelcomePageComponent implements OnInit {
     // if success then proceed to redirect to code challenge
     // for now only this code:
     this.setExercise()
-    this.routing.navigateByUrl('challenge/' + this.language + '/' + this.loadExerciseId);
+    this.routing.navigateByUrl('challenge/' + this.selectedLanguage + '/' + this.loadExerciseId);
   }
 
-  setLanguage(event: any) {
-    this.language = event.value
-  }
+  getLanguage = () => this.languages === undefined;
 
-  getLanguage() {
-    return this.language === undefined;
-  }
+  onSelect = (event) => this.selectedLanguage = event;
 }

@@ -19,11 +19,11 @@ import { JavascriptTaskComponent } from './components/output/javascript-task/jav
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CandidateComponent } from './components/candidate/candidate.component';
 
-import { OverlayComponent } from "./components/overlay/overlay/overlay.component";
+import { OverlayComponent } from './components/overlay/overlay/overlay.component';
 import { SubscribeComponent } from './components/overlay/subscribe/subscribe.component';
+import { DropdownComponent } from './dropdown/dropdown.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { authInterceptorProviders } from './service/auth/auth.interceptor';
-import { DropdownComponent } from './dropdown/dropdown.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +33,7 @@ import { DropdownComponent } from './dropdown/dropdown.component';
     JavascriptTaskComponent,
     CandidateComponent,
     OverlayComponent,
+    SubscribeComponent,
     SubscribeComponent,
     DropdownComponent,
     ProfileComponent

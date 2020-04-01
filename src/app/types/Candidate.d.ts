@@ -1,4 +1,3 @@
-
 interface Candidate {
   id: number;
   firstName: string;

@@ -19,9 +19,12 @@ export class HttpClientService {
 
   getCandidates = () => this.httpClient.get<Candidate[]>(`${baseUrl}/person`);
 
-  createSubmission = (submission: Submission) => this.httpClient.post<Submission>(`${baseUrl}/submission/create`, submission);
+  createSubmission = (submission: Submission) => this.httpClient.post<Submission>(`${baseUrl}/submission`, submission);
 
-  getLanguage = (language: string) => this.httpClient.post<string>(`${baseUrl}/language/get`, language);
+  // The call to the backend. Linked to the endpoint to get all candidates.
+  getLanguage = () => this.httpClient.get<string>(`${baseUrl}/language`);
+
+  getLanguages = (language: string) => this.httpClient.post<string>(`${baseUrl}/language`, language);
 
   getTask(subTaskNumber: number) {
     return this.httpClient.get<number>(`${baseUrl}/task/get/` + subTaskNumber + '/');
