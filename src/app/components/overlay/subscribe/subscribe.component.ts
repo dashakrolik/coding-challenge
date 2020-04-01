@@ -84,10 +84,6 @@ export class SubscribeComponent {
   }
 
   handleSuccessfulResponseGetLogin = (response): void => {
-    // The user successfully logged in. We will store the username in the session
-    console.log("successful post message get login");
-    console.log(response);
-    sessionStorage.setItem('username', response.username);
     this.tokenStorageService.saveToken(response.accessToken);
     this.tokenStorageService.saveUser(response);
 
