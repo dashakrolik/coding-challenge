@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { baseUrl } from '@shared/constants';
 
-const AUTH_API = 'http://localhost:8080/api/v1.0/auth/';
-
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -32,7 +30,7 @@ export class HttpClientService {
 
   getLogin(email: string, password: string) {
     console.log("going to login");
-    return this.httpClient.post(AUTH_API + 'signin', {
+    return this.httpClient.post(`${baseUrl}/auth/signin/`, {
       username: email,
       password: password
     }, httpOptions);
@@ -41,7 +39,7 @@ export class HttpClientService {
   getRegister(firstName: string, lastName: string, username: string, password: string) {
     console.log("going to register");
     if (firstName != null && lastName != null) {
-      return this.httpClient.post(AUTH_API + 'signup', {
+      return this.httpClient.post(`${baseUrl}/auth/signup/`, {
         firstname: firstName,
         lastname: lastName,
         username: username,

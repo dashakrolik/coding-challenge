@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {ComponentType} from "@angular/cdk/portal";
-import {OverlayService} from "./service/overlay/overlay.service";
-import {SubscribeComponent} from "./components/overlay/subscribe/subscribe.component";
-import {TokenStorageService} from "./service/token/token-storage.service";
-import {Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { ComponentType } from "@angular/cdk/portal";
+import { OverlayService } from "./service/overlay/overlay.service";
+import { SubscribeComponent } from "./components/overlay/subscribe/subscribe.component";
+import { TokenStorageService } from "./service/token/token-storage.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-root',
