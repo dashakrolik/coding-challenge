@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClientService } from '@service/http/http-client.service';
+import { CandidateService } from '@service/candidate/candidate.service';
 
 @Component({
   selector: 'app-candidate',
@@ -7,20 +7,16 @@ import { HttpClientService } from '@service/http/http-client.service';
   styleUrls: ['./candidate.component.css']
 })
 export class CandidateComponent implements OnInit {
-  // Here the candidate names are stored to be used in the html
   candidates: Candidate[];
 
   constructor(
-    private httpClientService: HttpClientService
+    private candiateService: CandidateService
   ) {
   }
 
   ngOnInit() {
-    this.httpClientService.getCandidates().subscribe(
-      response => this.handleSuccessfulResponse(response),
+    this.candiateService.getCandidates().subscribe(
+      response => this.candidates = response
     );
   }
-
-  // @TODO: we don't need this, delete
-  handleSuccessfulResponse = (response) => this.candidates = response;
 }

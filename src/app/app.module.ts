@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AceEditorModule } from 'ng2-ace-editor';
 
@@ -13,10 +15,9 @@ import { MatInputModule } from '@angular/material/input';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CodeEditorComponent } from './components/code-editor/code-editor.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
 import { JavascriptTaskComponent } from './components/output/javascript-task/javascript-task.component';
-import { HttpClientModule } from '@angular/common/http';
+
 import { CandidateComponent } from './components/candidate/candidate.component';
 
 import { OverlayComponent } from './components/overlay/overlay/overlay.component';

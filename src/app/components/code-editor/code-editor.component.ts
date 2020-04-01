@@ -4,11 +4,14 @@ import { ActivatedRoute } from '@angular/router';
 import { SubscribeComponent } from '../overlay/subscribe/subscribe.component';
 import { OverlayService } from '@service/overlay/overlay.service';
 import { ComponentType } from '@angular/cdk/portal';
-import { HttpClientService } from '@service/http/http-client.service';
 import { CandidateService } from '@service/candidate/candidate.service';
 import { TaskService } from '@service/task/task.service';
 import { SubmissionService } from '@service/submission/submission.service';
 import { LanguageService } from '@service/language/language.service';
+
+// @TODO: There are A LOT of things going on here (too many for just one component)
+// We need to split this up thats one
+// Two, a lot of this code is not necessary, let's refactor
 
 @Component({
   selector: 'app-code-editor',
@@ -20,7 +23,6 @@ export class CodeEditorComponent implements OnInit {
   public constructor(
     private route: ActivatedRoute,
     private overlayService: OverlayService,
-    private httpClientService: HttpClientService,
     private candidateService: CandidateService,
     private taskService: TaskService,
     private languageService: LanguageService,
@@ -76,7 +78,8 @@ export class CodeEditorComponent implements OnInit {
 
   onChange = (event: any) => this.codeSnippet = event;
 
-  setLanguageOptions(option: string) {
+  // @TODO refactor the code below
+  setLanguageOptions = (option: string): string => {
     const isJavascriptMode = option === 'mode' && this.selectedLanguageIsJavascript;
     const isPythonMode = option === 'mode' && this.selectedLanguageIsPython;
     const isJavaMode = option === 'mode' && this.selectedLanguageIsJava;
@@ -100,7 +103,7 @@ export class CodeEditorComponent implements OnInit {
     }
   }
 
-  runCode = () => {
+  runCode = (): boolean => {
     switch (true) {
       case this.selectedLanguageIsJavascript:
         return this.evaluateCode('javascript');
@@ -112,9 +115,9 @@ export class CodeEditorComponent implements OnInit {
   }
 
   // TODO: Implement Jupyter connection
-  evaluateCode = (language: string) => this.evaluationResult = true;
+  evaluateCode = (language: string): boolean => this.evaluationResult = true;
 
-  openModal(content: TemplateRef<any> | ComponentType<any> | string) {
+  openModal = (content: TemplateRef<any> | ComponentType<any> | string): void => {
     const ref = this.overlayService.open(content, null);
 
     ref.afterClosed$.subscribe(res => {
@@ -177,6 +180,7 @@ export class CodeEditorComponent implements OnInit {
     this.submissionCandidateId = id;
 
     // To create the submission we also need to know which language the user Candidate is using.
+    // @Dasha: this doesn't make sense, coz we already know the language, it's in the url
     this.getLanguage();
   }
 
@@ -199,6 +203,6 @@ export class CodeEditorComponent implements OnInit {
     console.log('successful post message create submission');
   }
 
-  getTest = () => this.taskDescription;
+  getTest = (): string => this.taskDescription;
 
 }
