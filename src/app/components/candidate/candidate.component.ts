@@ -10,12 +10,12 @@ export class CandidateComponent implements OnInit {
   candidates: Candidate[];
 
   constructor(
-    private candiateService: CandidateService
+    private candidateService: CandidateService
   ) {
   }
 
   ngOnInit() {
-    this.candiateService.getCandidates().subscribe(
+    this.candidateService.getCandidates().subscribe(
       response => this.candidates = response
     );
   }
