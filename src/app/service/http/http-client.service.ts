@@ -46,7 +46,7 @@ export class HttpClientService {
         password: password
       }, httpOptions);
     } else {
-      return this.httpClient.post(AUTH_API + 'signup', {
+      return this.httpClient.post(`${baseUrl}/auth/signup`, {
         username: username,
         password: password
       }, httpOptions);
