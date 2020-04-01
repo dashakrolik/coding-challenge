@@ -1,9 +1,10 @@
-import {Component, OnInit, TemplateRef} from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import {OverlayService} from "../../service/overlay/overlay.service";
-import {ComponentType} from "@angular/cdk/portal";
-import {SubscribeComponent} from "../overlay/subscribe/subscribe.component";
+import { OverlayService } from "../../service/overlay/overlay.service";
+import { ComponentType } from "@angular/cdk/portal";
+import { SubscribeComponent } from "../overlay/subscribe/subscribe.component";
+import { HttpClientService } from '@service/http/http-client.service';
 
 @Component({
   selector: 'app-welcome-page',
@@ -14,7 +15,9 @@ export class WelcomePageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private overlayService: OverlayService,
-    private routing: Router
+    private routing: Router,
+    private httpClientService: HttpClientService
+
   ) {
   }
 

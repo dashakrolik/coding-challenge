@@ -1,11 +1,11 @@
 import { Component, TemplateRef, ViewChild, OnInit } from '@angular/core';
 import { AceEditorComponent } from 'ng2-ace-editor';
-import { ActivatedRoute, Router } from '@angular/router'
-import { SubscribeComponent } from "../overlay/subscribe/subscribe.component";
-import { OverlayService } from "../../service/overlay/overlay.service";
-import { ComponentType } from "@angular/cdk/portal";
-import { HttpClientService } from "../../service/http/http-client.service";
-import {TokenStorageService} from "../../service/token/token-storage.service";
+import { ActivatedRoute, Router } from '@angular/router';
+import { SubscribeComponent } from '../overlay/subscribe/subscribe.component';
+import { OverlayService } from '@service/overlay/overlay.service';
+import { ComponentType } from '@angular/cdk/portal';
+import { HttpClientService } from '@service/http/http-client.service';
+import { TokenStorageService } from "../../service/token/token-storage.service";
 
 @Component({
   selector: 'app-code-editor',
@@ -117,7 +117,6 @@ export class CodeEditorComponent implements OnInit {
   }
 
   subscribeComponent = SubscribeComponent;
-
   loginWindow(content: ComponentType<SubscribeComponent>) {
     const ref = this.overlayService.open(content, null);
 
@@ -188,9 +187,7 @@ export class CodeEditorComponent implements OnInit {
     console.log("successful post message create submission");
   };
 
-  getTaskDescription() {
-    return this.taskDescription;
-  }
+  getTaskDescription = () => this.taskDescription;
 
   submitCode() {
     console.log("submit code");

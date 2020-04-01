@@ -23,6 +23,7 @@ import { OverlayComponent } from "./components/overlay/overlay/overlay.component
 import { SubscribeComponent } from './components/overlay/subscribe/subscribe.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { authInterceptorProviders } from './service/auth/auth.interceptor';
+import { DropdownComponent } from './dropdown/dropdown.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { authInterceptorProviders } from './service/auth/auth.interceptor';
     CandidateComponent,
     OverlayComponent,
     SubscribeComponent,
+    DropdownComponent,
     ProfileComponent
   ],
   imports: [

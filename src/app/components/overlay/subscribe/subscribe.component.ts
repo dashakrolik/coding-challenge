@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MyOverlayRef } from 'src/app/service/overlay/myoverlay-ref';
 import { FormBuilder, Validators } from '@angular/forms';
-import {HttpClientService} from "../../../service/http/http-client.service";
-import {TokenStorageService} from "../../../service/token/token-storage.service";
+import { HttpClientService } from "../../../service/http/http-client.service";
+import { TokenStorageService } from "../../../service/token/token-storage.service";
 
 @Component({
   selector: 'app-subscribe',
@@ -49,8 +49,8 @@ export class SubscribeComponent implements OnInit {
       response => this.handleSuccessfulResponseGetRegister(response, email, password),
       err => {
         // TODO: show error message on screen
-          console.log(err.error.message);
-        }
+        console.log(err.error.message);
+      }
     );
 
     this.ref.close(this.frmSubscribe.value);
@@ -94,10 +94,6 @@ export class SubscribeComponent implements OnInit {
     window.location.reload();
   };
 
-  cancel() {
-    this.ref.close(null);
-  }
-
   openTab(tabName) {
     console.log("opening new tab " + tabName);
     // We get both tab elements and we turn them off. Then we immediately turn the tab on that the user clicked on.
@@ -119,4 +115,6 @@ export class SubscribeComponent implements OnInit {
       signUpTab.className = "tab is-active";
     }
   }
+
+  cancel = () => this.ref.close(null);
 }
