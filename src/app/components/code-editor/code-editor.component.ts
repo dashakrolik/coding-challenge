@@ -58,6 +58,7 @@ export class CodeEditorComponent implements OnInit {
 
     // We load the task based on the exerciseId
     this.getTask();
+    this.getLanguage();
   }
 
   ngAftterViewInit() {
@@ -123,35 +124,35 @@ export class CodeEditorComponent implements OnInit {
     );
   };
 
-  getLanguage = (): void => {
-    this.httpClientService.getLanguages(this.selectedLanguage).subscribe(
-      response => this.handleSuccessfulResponseGetLanguage(response),
+  getLanguage() {
+    // await has no effect on this type of expression (Observable)
+    this.httpClientService.getLanguage().subscribe(
+      response => {
+        this.submissionLanguageId = null;
+        response.forEach(element => {
+          if (this.selectedLanguage === element.language) {
+            this.submissionLanguageId = element.id;
+          }
+        });
+      }
     );
-  };
+  }
 
   createSubmission = (): void => {
     // When creating a new Submission we give id null so it creates a new entry. It will determine the id by itself.
+    // The candidateId is left empty. The candidate is taken from the authorization token that will be send along.
     this.submission = {
-      id: null,
       answer: this.codeSnippet,
       correct: false,
-      candidateId: this.submissionCandidateId,
       languageId: this.submissionLanguageId,
       taskId: this.submissionTaskId
     };
 
+    console.log("quick test zoveel");
+    console.log(this.submission);
     this.httpClientService.createSubmission(this.submission).subscribe(
       response => this.handleSuccessfulResponseCreateSubmission(response),
     );
-  }
-
-
-  handleSuccessfulResponseCreateCandidate = (response): void => {
-    const { id } = response;
-    this.submissionCandidateId = id;
-
-    // To create the submission we also need to know which language the user Candidate is using.
-    this.getLanguage();
   }
 
   handleSuccessfulResponseGetTask = (response): void => {
@@ -159,24 +160,21 @@ export class CodeEditorComponent implements OnInit {
     const { id, description } = response;
     this.submissionTaskId = id;
     this.taskDescription = description;
-  }
-
-  handleSuccessfulResponseGetLanguage = (response): void => {
-    const { id } = response;
-    this.submissionLanguageId = id;
-    // Finally we want to find the task that candidate has performed to create the final submission to send.
-    this.createSubmission();
-  }
+  };
 
   handleSuccessfulResponseCreateSubmission = (response): void => {
     // TODO: do something with a successful response
     console.log('successful post message create submission');
-  }
+  };
 
   getTaskDescription = () => this.taskDescription;
 
   submitCode() {
-    console.log("submit code");
+    // This code is called when it is confirmed that the user is logged in
+    // We should have the language id. quick test to see if a language id is set.
+    if (this.submissionLanguageId !== null) {
+      this.createSubmission();
+    }
   }
 
   checkLogin() {

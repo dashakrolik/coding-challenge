@@ -73,11 +73,13 @@ export class WelcomePageComponent implements OnInit {
     // send to backend
     // if success then proceed to redirect to code challenge
     // for now only this code:
-    this.setExercise()
+    this.setExercise();
     this.routing.navigateByUrl('challenge/' + this.selectedLanguage + '/' + this.loadExerciseId);
   }
 
   getLanguage = () => this.languages === undefined;
 
-  onSelect = (event) => this.selectedLanguage = event;
+  onSelect = (event) => {
+    this.selectedLanguage = event;
+  }
 }

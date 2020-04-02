@@ -8,7 +8,7 @@ import { OverlayComponent } from '@components/overlay/overlay/overlay.component'
   providedIn: 'root'
 })
 export class OverlayService {
-  constructor(private overlay: Overlay, private injector: Injector) {}
+  constructor(private overlay: Overlay, private injector: Injector) { }
 
   open<R = any, T = any>(
     content: string | TemplateRef<any> | Type<any>,
