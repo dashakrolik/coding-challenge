@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Submission } from '../../types/Submission';
+import { Submission } from '../../types/Submission.d';
 import { Observable } from 'rxjs';
 
 @Injectable({

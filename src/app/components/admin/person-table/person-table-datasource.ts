@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
-import { Person } from 'src/app/types/Person';
+import { Person } from 'src/app/types/Person.d';
 
 /**
  * Data source for the PersonTable view. This class should

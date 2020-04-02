@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Person } from 'src/app/types/Person';
+import { Person } from 'src/app/types/Person.d';
 import { PersonService } from 'src/app/service/person/person.service';
 import { SubmissionService } from 'src/app/service/submission/submission.service';
-import { Submission } from '../../../types/Submission';
+import { Submission } from '../../../types/Submission.d';
 
 @Component({
   selector: 'app-profile',
@@ -35,6 +35,5 @@ export class ProfileComponent implements OnInit {
     this.submissionsService.getAllSubmissionsFromPerson(personId).subscribe(submissions => {
       this.submissions = submissions;
     });
-    console.log(this.submissions);
   }
 }

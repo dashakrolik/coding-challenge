@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { SubmissionTableDataSource } from './submission-table-datasource';
-import { Submission } from 'src/app/types/Submission';
+import { Submission } from 'src/app/types/Submission.d';
 import { SubmissionService } from 'src/app/service/submission/submission.service';
 
 @Component({

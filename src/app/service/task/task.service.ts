@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Task } from 'src/app/types/Task';
+import { Task } from 'src/app/types/Task.d';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,12 +19,12 @@ export class TaskService {
     private http: HttpClient
   ) { }
 
-  getAllTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.taskUrl);
+  getAllTasks = (): Observable<Task[]> => {
+    return this.http.get<Task[]>(this.taskUrl, httpOptions);
   }
 
-  getTaskById(id: number): Observable<Task> {
-    return this.http.get<Task>(this.taskUrl + '/' + id);
+  getTaskById = (id: number): Observable<Task> => {
+    return this.http.get<Task>(this.taskUrl + '/' + id, httpOptions);
   }
 
 }

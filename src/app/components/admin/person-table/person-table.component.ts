@@ -5,7 +5,7 @@ import { MatTable } from '@angular/material/table';
 import { PersonTableDataSource } from './person-table-datasource';
 import { PersonService } from 'src/app/service/person/person.service';
 import { Router } from '@angular/router';
-import { Person } from 'src/app/types/Person';
+import { Person } from 'src/app/types/Person.d';
 
 @Component({
   selector: 'app-person-table',

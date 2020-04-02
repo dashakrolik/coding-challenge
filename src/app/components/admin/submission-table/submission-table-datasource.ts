@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
-import { Submission } from 'src/app/types/Submission';
+import { Submission } from 'src/app/types/Submission.d';
 
 /**
  * Data source for the SubmissionTable view. This class should

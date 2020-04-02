@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../../service/task/task.service';
 import { PersonService } from 'src/app/service/person/person.service';
-import { Task } from 'src/app/types/Task';
-import { Person } from 'src/app/types/Person';
+import { Task } from 'src/app/types/Task.d';
+import { Person } from 'src/app/types/Person.d';
 
 @Component({
   selector: 'app-admin-panel',
