@@ -23,4 +23,7 @@ export class PersonService {
 
   getPersonById = (id: number): Observable<Person> => this.http.get<Person>(this.personUrl + '/' + id);
 
+  updatePerson = (person: Person): Observable<Person> => {
+    return this.http.patch<Person>(this.personUrl, person, httpOptions);
+  }
 }
