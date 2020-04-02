@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CandidateService {
-  candidates: Observable<Candidate[]>;
 
   constructor(
     private http: HttpClientService

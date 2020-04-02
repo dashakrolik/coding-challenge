@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TaskService {
-  languages: Observable<string[]>;
 
   constructor(
     private http: HttpClientService
