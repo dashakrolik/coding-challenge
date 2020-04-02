@@ -1,5 +1,5 @@
 <!-- We load the task and show the description -->
-{{getTest()}}
+{{taskDescription}}
 
 <ace-editor editor [(text)]="text" [mode]="setLanguageOptions('mode')" [theme]="setLanguageOptions('theme')"
   (textChanged)="onChange($event)" [readOnly]="false" class="ace-editor"></ace-editor>

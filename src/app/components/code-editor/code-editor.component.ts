@@ -203,6 +203,4 @@ export class CodeEditorComponent implements OnInit {
     console.log('successful post message create submission');
   }
 
-  getTest = (): string => this.taskDescription;
-
 }
