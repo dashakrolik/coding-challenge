@@ -1,14 +1,16 @@
 import { Component, TemplateRef, ViewChild, OnInit } from '@angular/core';
-import { AceEditorComponent } from 'ng2-ace-editor';
 import { ActivatedRoute } from '@angular/router';
-import { SubscribeComponent } from '../overlay/subscribe/subscribe.component';
-import { OverlayService } from '@service/overlay/overlay.service';
 import { ComponentType } from '@angular/cdk/portal';
+
+import { AceEditorComponent } from 'ng2-ace-editor';
+
 import { CandidateService } from '@service/candidate/candidate.service';
 import { TaskService } from '@service/task/task.service';
 import { SubmissionService } from '@service/submission/submission.service';
 import { LanguageService } from '@service/language/language.service';
+import { OverlayService } from '@service/overlay/overlay.service';
 
+import { SubscribeComponent } from '../overlay/subscribe/subscribe.component';
 // @TODO: There are A LOT of things going on here (too many for just one component)
 // We need to split this up thats one
 // Two, a lot of this code is not necessary, let's refactor

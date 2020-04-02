@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { MyOverlayRef } from 'src/app/service/overlay/myoverlay-ref';
 import { FormBuilder, Validators } from '@angular/forms';
+
+import { MyOverlayRef } from 'src/app/service/overlay/myoverlay-ref';
 
 @Component({
   selector: 'app-subscribe',
