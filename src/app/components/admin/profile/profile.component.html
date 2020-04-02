@@ -1,2 +1,22 @@
-<p>profile works!</p>
-{{ person.firstName }}
+<h1>{{person.firstName}}'s Profile</h1>
+<div class="personDetails">
+    <label for="id">ID</label>
+    <input type="text" name="id" id="id" value={{person.id}} disabled>
+
+    <label for="firstName">First name</label>
+    <input type="text" name="firstName" id="firstName" value={{person.firstName}} size="30">
+
+    <label for="firstName">Last name</label>
+    <input type="text" name="lastName" id="lastName" value={{person.lastName}} size="30">
+
+    <label for="firstName">Email address</label>
+    <input type="text" name="email" id="email" value={{person.email}} size="30">
+
+    <label for="firstName">Role</label>
+    <input type="text" name="role" id="role" value={{person.role}} size="30">
+
+</div>
+<input type="button" value="Save changes">
+<input type="button" value="Delete person" class="del">
+
+<app-submission-table [personId]='person.id'></app-submission-table>

@@ -28,6 +28,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { ProfileComponent } from './components/admin/profile/profile.component';
+import { SubmissionTableComponent } from './components/admin/submission-table/submission-table.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ProfileComponent } from './components/admin/profile/profile.component';
     AdminPanelComponent,
     TaskComponent,
     PersonTableComponent,
-    ProfileComponent
+    ProfileComponent,
+    SubmissionTableComponent
   ],
   imports: [
     BrowserModule,

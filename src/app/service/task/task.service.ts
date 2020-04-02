@@ -7,13 +7,13 @@ const httpOptions = {
   headers: new HttpHeaders({
     'Content-type': 'application/json'
   })
-}
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-  private taskUrl: string = 'http://localhost:8080/api/v1.0/task';
+  private taskUrl = 'http://localhost:8080/api/v1.0/task';
 
   constructor(
     private http: HttpClient
@@ -24,7 +24,7 @@ export class TaskService {
   }
 
   getTaskById(id: number): Observable<Task> {
-    return this.http.get<Task>(this.taskUrl + "/" + id);
+    return this.http.get<Task>(this.taskUrl + '/' + id);
   }
 
 }

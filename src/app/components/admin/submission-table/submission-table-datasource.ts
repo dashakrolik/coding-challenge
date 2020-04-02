@@ -3,15 +3,15 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
-import { Person } from 'src/app/types/Person';
+import { Submission } from 'src/app/types/Submission';
 
 /**
- * Data source for the PersonTable view. This class should
+ * Data source for the SubmissionTable view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
-export class PersonTableDataSource extends DataSource<Person> {
-  data: Person[];
+export class SubmissionTableDataSource extends DataSource<Submission> {
+  data: Submission[];
   paginator: MatPaginator;
   sort: MatSort;
 
@@ -20,7 +20,7 @@ export class PersonTableDataSource extends DataSource<Person> {
    * the returned stream emits new items.
    * @returns A stream of the items to be rendered.
    */
-  connect = (): Observable<Person[]> => {
+  connect(): Observable<Submission[]> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
     const dataMutations = [
@@ -44,7 +44,7 @@ export class PersonTableDataSource extends DataSource<Person> {
    * Paginate the data (client-side). If you're using server-side pagination,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getPagedData = (data: Person[]) => {
+  private getPagedData(data: Submission[]) {
     const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
     return data.splice(startIndex, this.paginator.pageSize);
   }
@@ -53,7 +53,7 @@ export class PersonTableDataSource extends DataSource<Person> {
    * Sort the data (client-side). If you're using server-side sorting,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getSortedData = (data: Person[]) => {
+  private getSortedData(data: Submission[]) {
     if (!this.sort.active || this.sort.direction === '') {
       return data;
     }
@@ -61,18 +61,15 @@ export class PersonTableDataSource extends DataSource<Person> {
     return data.sort((a, b) => {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
-        case 'firstName':
-          return compare(a.firstName, b.firstName, isAsc);
-        case 'id':
-          return compare(+a.id, +b.id, isAsc);
-        default:
-          return 0;
+        case 'answer': return compare(a.answer, b.answer, isAsc);
+        case 'id': return compare(+a.id, +b.id, isAsc);
+        default: return 0;
       }
     });
   }
 }
 
 /** Simple sort comparator for example ID/Name columns (for client-side sorting). */
-const compare = (a: string | number, b: string | number, isAsc: boolean) => {
+function compare(a: string | number, b: string | number, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-};
+}

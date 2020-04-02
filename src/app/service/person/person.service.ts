@@ -7,24 +7,20 @@ const httpOptions = {
   headers: new HttpHeaders({
     'Content-type': 'application/json'
   })
-}
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class PersonService {
-  private personUrl: string = 'http://localhost:8080/api/v1.0/person';
+  private personUrl = 'http://localhost:8080/api/v1.0/person';
 
   constructor(
     private http: HttpClient
   ) { }
 
-  getAllPersons(): Observable<Person[]> {
-    return this.http.get<Person[]>(this.personUrl);
-  }
+  getAllPersons = (): Observable<Person[]> => this.http.get<Person[]>(this.personUrl);
 
-  getPersonById(id: number): Observable<Person> {
-    return this.http.get<Person>(this.personUrl + "/" + id);
-  }
+  getPersonById = (id: number): Observable<Person> => this.http.get<Person>(this.personUrl + '/' + id);
 
 }

@@ -28,9 +28,7 @@ export class PersonTableComponent implements AfterViewInit, OnInit {
 
   ngOnInit() {
     this.dataSource = new PersonTableDataSource();
-    this.personService.getAllPersons().subscribe(persons => {
-      this.dataSource.data = persons;
-    });
+    this.personService.getAllPersons().subscribe(persons => this.dataSource.data = persons);
   }
 
   ngAfterViewInit() {
@@ -39,7 +37,7 @@ export class PersonTableComponent implements AfterViewInit, OnInit {
     this.table.dataSource = this.dataSource;
   }
 
-  onClick(person: Person) {
-    this.router.navigate(['/admin/profile/' + person.id])
+  onClick = (person: Person) => {
+    this.router.navigate(['/admin/profile/' + person.id], { state: { person } });
   }
 }

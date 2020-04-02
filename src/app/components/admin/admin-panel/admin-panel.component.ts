@@ -20,12 +20,8 @@ export class AdminPanelComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.taskService.getAllTasks().subscribe(tasks => {
-      this.tasks = tasks;
-    });
-    this.personService.getAllPersons().subscribe(persons => {
-      this.persons = persons;
-    });
+    this.taskService.getAllTasks().subscribe(tasks => this.tasks = tasks);
+    this.personService.getAllPersons().subscribe(persons => this.persons = persons);
   }
 
 }
