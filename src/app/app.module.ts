@@ -19,7 +19,7 @@ import { JavascriptTaskComponent } from './components/output/javascript-task/jav
 import { HttpClientModule } from '@angular/common/http';
 import { CandidateComponent } from './components/candidate/candidate.component';
 
-import { OverlayComponent } from "./components/overlay/overlay/overlay.component";
+import { OverlayComponent } from './components/overlay/overlay/overlay.component';
 import { SubscribeComponent } from './components/overlay/subscribe/subscribe.component';
 import { AdminPanelComponent } from './components/admin/admin-panel/admin-panel.component';
 import { TaskComponent } from './components/admin/task/task.component';
@@ -29,6 +29,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { ProfileComponent } from './components/admin/profile/profile.component';
 import { SubmissionTableComponent } from './components/admin/submission-table/submission-table.component';
+import { DropdownComponent } from './dropdown/dropdown.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { SubmissionTableComponent } from './components/admin/submission-table/su
     TaskComponent,
     PersonTableComponent,
     ProfileComponent,
-    SubmissionTableComponent
+    SubmissionTableComponent,
+    DropdownComponent
   ],
   imports: [
     BrowserModule,
