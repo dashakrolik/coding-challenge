@@ -1,11 +1,19 @@
 import { Component, TemplateRef, ViewChild, OnInit } from '@angular/core';
-import { AceEditorComponent } from 'ng2-ace-editor';
 import { ActivatedRoute } from '@angular/router';
-import { SubscribeComponent } from '../overlay/subscribe/subscribe.component';
-import { OverlayService } from '@service/overlay/overlay.service';
 import { ComponentType } from '@angular/cdk/portal';
-import { HttpClientService } from '@service/http/http-client.service';
-import { Submission } from 'src/app/types/Submission';
+
+import { AceEditorComponent } from 'ng2-ace-editor';
+
+import { CandidateService } from '@service/candidate/candidate.service';
+import { TaskService } from '@service/task/task.service';
+import { SubmissionService } from '@service/submission/submission.service';
+import { LanguageService } from '@service/language/language.service';
+import { OverlayService } from '@service/overlay/overlay.service';
+
+import { SubscribeComponent } from '../overlay/subscribe/subscribe.component';
+// @TODO: There are A LOT of things going on here (too many for just one component)
+// We need to split this up thats one
+// Two, a lot of this code is not necessary, let's refactor
 
 @Component({
   selector: 'app-code-editor',
@@ -17,7 +25,10 @@ export class CodeEditorComponent implements OnInit {
   public constructor(
     private route: ActivatedRoute,
     private overlayService: OverlayService,
-    private httpClientService: HttpClientService
+    private candidateService: CandidateService,
+    private taskService: TaskService,
+    private languageService: LanguageService,
+    private submissionService: SubmissionService
   ) {
     this.route = route;
   }
@@ -69,7 +80,8 @@ export class CodeEditorComponent implements OnInit {
 
   onChange = (event: any) => this.codeSnippet = event;
 
-  setLanguageOptions(option: string) {
+  // @TODO refactor the code below
+  setLanguageOptions = (option: string): string => {
     const isJavascriptMode = option === 'mode' && this.selectedLanguageIsJavascript;
     const isPythonMode = option === 'mode' && this.selectedLanguageIsPython;
     const isJavaMode = option === 'mode' && this.selectedLanguageIsJava;
@@ -93,7 +105,7 @@ export class CodeEditorComponent implements OnInit {
     }
   }
 
-  runCode = () => {
+  runCode = (): boolean => {
     switch (true) {
       case this.selectedLanguageIsJavascript:
         return this.evaluateCode('javascript');
@@ -105,9 +117,9 @@ export class CodeEditorComponent implements OnInit {
   }
 
   // TODO: Implement Jupyter connection
-  evaluateCode = (language: string) => this.evaluationResult = true;
+  evaluateCode = (language: string): boolean => this.evaluationResult = true;
 
-  openModal(content: TemplateRef<any> | ComponentType<any> | string) {
+  openModal = (content: TemplateRef<any> | ComponentType<any> | string): void => {
     const ref = this.overlayService.open(content, null);
 
     ref.afterClosed$.subscribe(res => {
@@ -127,7 +139,7 @@ export class CodeEditorComponent implements OnInit {
           email: res.data.email
         };
 
-        this.httpClientService.createCandidate(candidate).subscribe(
+        this.candidateService.createCandidate(candidate).subscribe(
           response => this.handleSuccessfulResponseCreateCandidate(response),
         );
       } else {
@@ -137,13 +149,13 @@ export class CodeEditorComponent implements OnInit {
   }
 
   getTask = (): void => {
-    this.httpClientService.getTask(this.exerciseId).subscribe(
+    this.taskService.getTask(this.exerciseId).subscribe(
       response => this.handleSuccessfulResponseGetTask(response),
     );
   }
 
   getLanguage = (): void => {
-    this.httpClientService.getLanguage().subscribe(
+    this.languageService.getLanguages().subscribe(
       response => this.handleSuccessfulResponseGetLanguage(response),
     );
   }
@@ -159,7 +171,7 @@ export class CodeEditorComponent implements OnInit {
       taskId: this.submissionTaskId
     };
 
-    this.httpClientService.createSubmission(this.submission).subscribe(
+    this.submissionService.createSubmission(this.submission).subscribe(
       response => this.handleSuccessfulResponseCreateSubmission(response),
     );
   }
@@ -168,9 +180,6 @@ export class CodeEditorComponent implements OnInit {
   handleSuccessfulResponseCreateCandidate = (response): void => {
     const { id } = response;
     this.submissionCandidateId = id;
-
-    // To create the submission we also need to know which language the user Candidate is using.
-    this.getLanguage();
   }
 
   handleSuccessfulResponseGetTask = (response): void => {
@@ -191,7 +200,5 @@ export class CodeEditorComponent implements OnInit {
     // TODO: do something with a successful response
     console.log('successful post message create submission');
   }
-
-  getTest = () => this.taskDescription;
 
 }

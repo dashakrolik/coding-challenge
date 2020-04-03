@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { MyOverlayRef } from 'src/app/service/overlay/myoverlay-ref';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+
+import { MyOverlayRef } from 'src/app/service/overlay/myoverlay-ref';
 
 @Component({
   selector: 'app-subscribe',
@@ -17,6 +18,7 @@ export class SubscribeComponent {
     ]
   });
 
+  // @TODO use Material Design Dialogue instead
   constructor(private fb: FormBuilder, private ref: MyOverlayRef) {}
 
   submit = () => this.ref.close(this.frmSubscribe.value);

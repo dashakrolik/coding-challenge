@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Person } from 'src/app/types/Person.d';
 import { PersonService } from '@service/person/person.service';
 import { SubmissionService } from '@service/submission/submission.service';
-import { Submission } from 'src/app/types/Submission.d';
 import { FormBuilder } from '@angular/forms';
 
 @Component({

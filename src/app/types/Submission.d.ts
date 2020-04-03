@@ -1,4 +1,4 @@
-export interface Submission {
+interface Submission {
   id: number;
   answer: string;
   taskId: number;

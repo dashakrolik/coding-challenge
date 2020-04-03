@@ -1,33 +1,21 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpClientService } from '@service/http/http-client.service';
 import { Observable } from 'rxjs';
-import { Person } from 'src/app/types/Person.d';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-type': 'application/json'
-  })
-};
 
 @Injectable({
   providedIn: 'root'
 })
 export class PersonService {
-  private personUrl = 'http://localhost:8080/api/v1.0/person';
 
   constructor(
-    private http: HttpClient
+    private http: HttpClientService
   ) { }
 
-  getAllPersons = (): Observable<Person[]> => this.http.get<Person[]>(this.personUrl);
+  getAllPersons = (): Observable<Person[]> => this.http.get('person');
 
-  getPersonById = (id: number): Observable<Person> => this.http.get<Person>(this.personUrl + '/' + id);
+  getPersonById = (id: number): Observable<Person> => this.http.get('person/' + id);
 
-  updatePerson = (person: Person): Observable<Person> => {
-    return this.http.patch<Person>(this.personUrl, person, httpOptions);
-  }
+  updatePerson = (person: Person): Observable<Person> => this.http.put('person', person);
 
-  deletePerson = (id: number): Observable<Person> => {
-    return this.http.delete<Person>(this.personUrl + '/' + id, httpOptions);
-  }
+  deletePerson = (id: number): Observable<Person> => this.http.delete('person/' + id);
 }

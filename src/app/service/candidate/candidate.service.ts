@@ -5,13 +5,13 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class TaskService {
+export class CandidateService {
 
   constructor(
     private http: HttpClientService
   ) { }
 
-  getTask = (subTaskNumber: number): Observable<string[]> => this.http.get('task/' + subTaskNumber);
+  getCandidates = (): Observable<Candidate[]> => this.http.get('candidates');
 
-  getAllTasks = (): Observable<Task[]> => this.http.get('task');
+  createCandidate = (candidate: Candidate): Observable<Candidate> => this.http.post<Candidate>('candidate', candidate);
 }

@@ -30,7 +30,7 @@ export class OverlayService {
     return myOverlayRef;
   }
 
-  createInjector(ref: MyOverlayRef, inj: Injector) {
+  createInjector = (ref: MyOverlayRef, inj: Injector) => {
     const injectorTokens = new WeakMap([[MyOverlayRef, ref]]);
     return new PortalInjector(inj, injectorTokens);
   }

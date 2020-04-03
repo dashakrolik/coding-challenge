@@ -4,7 +4,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { PersonService } from '@service/person/person.service';
 import { Router } from '@angular/router';
-import { Person } from 'src/app/types/Person.d';
 
 @Component({
   selector: 'app-person-table',
