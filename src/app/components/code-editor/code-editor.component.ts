@@ -180,10 +180,6 @@ export class CodeEditorComponent implements OnInit {
   handleSuccessfulResponseCreateCandidate = (response): void => {
     const { id } = response;
     this.submissionCandidateId = id;
-
-    // To create the submission we also need to know which language the user Candidate is using.
-    // @Dasha: this doesn't make sense, coz we already know the language, it's in the url
-    this.getLanguage();
   }
 
   handleSuccessfulResponseGetTask = (response): void => {
