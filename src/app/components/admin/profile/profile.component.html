@@ -1,4 +1,5 @@
-<h1>{{person.firstName}}'s Profile</h1>
+<button class="admin-button" (click)="toAdminPanel()">Admin panel</button>
+<h1>{{person ? person.firstName : ""}}'s Profile</h1>
 <form class="personDetails" [formGroup]="personDetailsForm" (ngSubmit)="onSubmit(personDetailsForm)">
     <label for="id">ID</label>
     <input type="text" name="id" id="id" value={{person.id}} disabled>

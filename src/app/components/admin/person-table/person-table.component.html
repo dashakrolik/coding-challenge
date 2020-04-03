@@ -1,6 +1,5 @@
 <div class="mat-elevation-z8 data-table">
-  <table mat-table (matSortChange)="sortData($event)" [dataSource]="dataSource" class="full-width-table" matSort
-    aria-label="Elements">
+  <table mat-table [dataSource]="dataSource" class="full-width-table" matSort aria-label="Elements">
     <!-- Id Column -->
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
@@ -24,7 +23,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let person; columns: displayedColumns;" (click)="onClick(person)"></tr>
+    <tr mat-row *matRowDef="let person; columns: displayedColumns;" (click)="toProfile(person)"></tr>
   </table>
 
   <mat-paginator #paginator [length]="dataSource?.data?.length" [pageIndex]="0" [pageSize]="50"

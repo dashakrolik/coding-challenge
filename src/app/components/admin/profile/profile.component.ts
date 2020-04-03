@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Person } from 'src/app/types/Person.d';
-import { PersonService } from 'src/app/service/person/person.service';
-import { SubmissionService } from 'src/app/service/submission/submission.service';
-import { Submission } from '../../../types/Submission.d';
+import { PersonService } from '@service/person/person.service';
+import { SubmissionService } from '@service/submission/submission.service';
+import { Submission } from 'src/app/types/Submission.d';
 import { FormBuilder } from '@angular/forms';
 
 @Component({
@@ -53,7 +53,6 @@ export class ProfileComponent implements OnInit {
   }
 
   onSubmit = (personData): void => {
-    console.log(personData.value);
     this.personService.updatePerson(personData.value).subscribe(savedPerson => {
       this.person = savedPerson;
       this.setFormDetails();
@@ -74,4 +73,6 @@ export class ProfileComponent implements OnInit {
     this.personDetailsForm.get('role').value = this.person.role;
     this.personDetailsForm.get('password').value = this.person.password;
   }
+
+  toAdminPanel = () => this.router.navigate(['/admin']);
 }

@@ -1,41 +1,39 @@
-import { AfterViewInit, Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTable } from '@angular/material/table';
-import { SubmissionTableDataSource } from './submission-table-datasource';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Submission } from 'src/app/types/Submission.d';
-import { SubmissionService } from 'src/app/service/submission/submission.service';
+import { SubmissionService } from '@service/submission/submission.service';
 
 @Component({
   selector: 'app-submission-table',
   templateUrl: './submission-table.component.html',
   styleUrls: ['./submission-table.component.css']
 })
-export class SubmissionTableComponent implements AfterViewInit, OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatTable) table: MatTable<Submission>;
-
-  @Input() personId: number;
-  dataSource: SubmissionTableDataSource;
+export class SubmissionTableComponent implements OnInit {
 
   constructor(
     private submissionService: SubmissionService
   ) { }
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatTable) table: MatTable<Submission>;
+  @Input() personId: number;
+  dataSource: MatTableDataSource<Submission>;
+
+
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'answer', 'taskId', 'languageId', 'correct'];
 
   ngOnInit() {
-    this.dataSource = new SubmissionTableDataSource();
     this.submissionService.getAllSubmissionsFromPerson(this.personId).subscribe(submissions => {
-      this.dataSource.data = submissions;
+      this.setDataSource(submissions);
+      this.dataSource.sort = this.sort;
     });
   }
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
+  setDataSource = (data: Submission[]) => {
+    this.dataSource = new MatTableDataSource(data);
   }
 }

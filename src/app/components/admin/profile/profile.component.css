@@ -29,3 +29,14 @@ input[type=button].del.del{
     border: black;
     border-radius: 5px;
 }
+
+.admin-button{
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #f58220;
+    border: none;
+    padding: 1em;
+    font-size: large;
+    font-weight: 600;
+}
