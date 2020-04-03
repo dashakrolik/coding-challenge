@@ -7,7 +7,6 @@ import { JavascriptTaskComponent } from './components/output/javascript-task/jav
 import { CandidateComponent } from './components/candidate/candidate.component';
 import { AdminPanelComponent } from './components/admin/admin-panel/admin-panel.component';
 import { ProfileComponent } from './components/admin/profile/profile.component';
-import { CandidateComponent } from './components/candidate/candidate.component';
 
 const routes: Routes = [
   {

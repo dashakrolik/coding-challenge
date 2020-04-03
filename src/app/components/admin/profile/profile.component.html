@@ -15,10 +15,8 @@
     <label for="role">Role</label>
     <input type="text" formControlName="role" id="role" placeholder={{person.role}} size="30">
 
-    <button class="button" type="submit">Save Changes</button>
+    <button class="button" type="submit">Save changes</button>
+    <input type="button" class="del" (click)="deletePerson()" value="Delete person">
 </form>
-
-<input type="button" value="Save changes" (click)="onClick()">
-<input type="button" value="Delete person" class="del">
 
 <app-submission-table [personId]='person.id'></app-submission-table>

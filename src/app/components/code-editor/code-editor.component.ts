@@ -5,6 +5,7 @@ import { SubscribeComponent } from '../overlay/subscribe/subscribe.component';
 import { OverlayService } from '@service/overlay/overlay.service';
 import { ComponentType } from '@angular/cdk/portal';
 import { HttpClientService } from '@service/http/http-client.service';
+import { Submission } from 'src/app/types/Submission';
 
 @Component({
   selector: 'app-code-editor',
@@ -153,7 +154,7 @@ export class CodeEditorComponent implements OnInit {
       id: null,
       answer: this.codeSnippet,
       correct: false,
-      candidateId: this.submissionCandidateId,
+      personId: this.submissionCandidateId,
       languageId: this.submissionLanguageId,
       taskId: this.submissionTaskId
     };

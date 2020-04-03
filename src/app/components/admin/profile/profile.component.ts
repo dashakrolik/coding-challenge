@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Person } from 'src/app/types/Person.d';
 import { PersonService } from 'src/app/service/person/person.service';
 import { SubmissionService } from 'src/app/service/submission/submission.service';
@@ -20,14 +20,16 @@ export class ProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private personService: PersonService,
     private submissionsService: SubmissionService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {
     this.personDetailsForm = this.formBuilder.group({
       id: 0,
       firstName: '',
       lastName: '',
       email: '',
-      role: ''
+      role: '',
+      password: ''
     });
   }
 
@@ -39,25 +41,37 @@ export class ProfileComponent implements OnInit {
     if (history.state.person === undefined) {
       this.personService.getPersonById(personId).subscribe(person => {
         this.person = person;
+        this.setFormDetails();
       });
     } else {
       this.person = history.state.person;
+      this.setFormDetails();
     }
     this.submissionsService.getAllSubmissionsFromPerson(personId).subscribe(submissions => {
       this.submissions = submissions;
     });
-    this.personDetailsForm.id = this.person.id;
-    this.personDetailsForm.firstName = this.person.firstName;
-    this.personDetailsForm.lastName = this.person.lastName;
-    this.personDetailsForm.email = this.person.email;
-    this.personDetailsForm.role = this.person.role;
   }
 
   onSubmit = (personData): void => {
-    console.log(personData);
+    console.log(personData.value);
+    this.personService.updatePerson(personData.value).subscribe(savedPerson => {
+      this.person = savedPerson;
+      this.setFormDetails();
+    });
   }
 
-  onClick() {
-    console.log('click');
+  deletePerson = (): void => {
+    this.personService.deletePerson(this.person.id).subscribe(() => {
+      this.router.navigate(['/admin']);
+    });
+  }
+
+  setFormDetails = (): void => {
+    this.personDetailsForm.get('id').value = this.person.id;
+    this.personDetailsForm.get('firstName').value = this.person.firstName;
+    this.personDetailsForm.get('lastName').value = this.person.lastName;
+    this.personDetailsForm.get('email').value = this.person.email;
+    this.personDetailsForm.get('role').value = this.person.role;
+    this.personDetailsForm.get('password').value = this.person.password;
   }
 }

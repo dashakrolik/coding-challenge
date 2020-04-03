@@ -40,4 +40,5 @@ export class PersonTableComponent implements AfterViewInit, OnInit {
   onClick = (person: Person) => {
     this.router.navigate(['/admin/profile/' + person.id], { state: { person } });
   }
+
 }

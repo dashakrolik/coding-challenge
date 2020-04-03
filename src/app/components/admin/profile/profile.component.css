@@ -24,11 +24,8 @@ label, input{
     color: black;
 }
 
-input[type=button]{
-    margin: 1em;
-    background-color: #99ccd3;
-}
-
-input[type=button].del{
-    background-color: red;
+input[type=button].del.del{
+    background-color: #ff0000;
+    border: black;
+    border-radius: 5px;
 }
