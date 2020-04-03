@@ -1,8 +1,7 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTable } from '@angular/material/table';
-import { PersonTableDataSource } from './person-table-datasource';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { PersonService } from 'src/app/service/person/person.service';
 import { Router } from '@angular/router';
 import { Person } from 'src/app/types/Person.d';
@@ -12,11 +11,11 @@ import { Person } from 'src/app/types/Person.d';
   templateUrl: './person-table.component.html',
   styleUrls: ['./person-table.component.css']
 })
-export class PersonTableComponent implements AfterViewInit, OnInit {
+export class PersonTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<Person>;
-  dataSource: PersonTableDataSource;
+  dataSource: MatTableDataSource<Person>;
 
   constructor(
     private personService: PersonService,
@@ -27,14 +26,12 @@ export class PersonTableComponent implements AfterViewInit, OnInit {
   displayedColumns = ['id', 'firstName', 'lastName', 'email'];
 
   ngOnInit() {
-    this.dataSource = new PersonTableDataSource();
-    this.personService.getAllPersons().subscribe(persons => this.dataSource.data = persons);
+    // this.dataSource = new PersonTableDataSource();
+    this.personService.getAllPersons().toPromise().then(persons => this.setDataSource(persons));
   }
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
+  setDataSource = (data: Person[]) => {
+    this.dataSource = new MatTableDataSource(data);
   }
 
   onClick = (person: Person) => {
