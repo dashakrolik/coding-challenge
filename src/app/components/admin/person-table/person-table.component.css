@@ -10,3 +10,7 @@
   background: #99ccd3;
   cursor: pointer;
 }
+
+.mat-cell{
+  padding: 0 .5em;
+}

@@ -31,12 +31,21 @@ input[type=button].del.del{
 }
 
 .admin-button{
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     background-color: #f58220;
     border: none;
     padding: 1em;
+    margin: 1em;
     font-size: large;
     font-weight: 600;
+}
+
+button, input[type=button]{
+    margin: 1em;
+}
+
+.submission-table{
+    margin: 1.25em;
 }

@@ -20,4 +20,7 @@
     <input type="button" class="del" (click)="deletePerson()" value="Delete person">
 </form>
 
-<app-submission-table [personId]='person.id'></app-submission-table>
+<div class="submission-table">
+    <app-submission-table [personId]='person.id'>
+    </app-submission-table>
+</div>
