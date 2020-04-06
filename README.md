@@ -6,7 +6,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 Ordina needs a tool to help with the onboarding of new recruits. Now, measuring the recruit's coding skill is done via an assignment which they need to complete. This is then checked manually for code quality.
 The CodeChallenge tool's goal is to automate this process. The general flow is the following:
 1. A recruit first goes to the CodeChallenge app and completes a few assignments. 
-2. These assignments are automatically checked on code readability, complexity and execution speed
+2. These assignments are automatically checked on code complexity and execution speed
 3. If the recruit completes with a certain positive percentage of the CodeChallenge score (let's say: 80%), they are automatically invited for an interview. Maybe they also need to complete a custom challenge, but the idea is to filter out the coders that are not qualified.
 
 ### Another goal: internal competition
