@@ -46,6 +46,8 @@ export class CodeEditorComponent implements OnInit {
   text = '';
   language = this.selectedLanguage;
 
+  codeResult: String
+
   ngOnInit() {
     this.route.paramMap.subscribe(language =>
       this.selectedLanguage = language.get('language')
@@ -55,6 +57,7 @@ export class CodeEditorComponent implements OnInit {
     this.selectedLanguageIsPython = this.selectedLanguage === 'python';
     this.selectedLanguageIsJava = this.selectedLanguage === 'java';
     this.loadJavaScriptTask = this.selectedLanguageIsJavascript;
+    this.codeResult = "";
 
     // We load the task based on the exerciseId
     this.getTask();
@@ -163,8 +166,12 @@ export class CodeEditorComponent implements OnInit {
   };
 
   handleSuccessfulResponseCreateSubmission = (response): void => {
-    // TODO: do something with a successful response
+    this.codeResult = "";
     console.log('successful post message create submission');
+    response.forEach(element => {
+      this.codeResult += element.contentValue;
+      console.log(element);
+    });
   };
 
   getTaskDescription = () => this.taskDescription;
