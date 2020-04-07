@@ -6,11 +6,36 @@
   transition: .5s;
 }
 
-.mat-row:hover{
-  background: #99ccd3;
-  cursor: pointer;
+.mat-cell, .mat-header-cell{
+  padding: 0 .5em;
 }
 
-.mat-cell{
-  padding: 0 .5em;
+tr.answer-row {
+  height: 0;
+}
+
+tr.submission-row:hover {
+  background: #99ccd3;
+}
+
+tr.submission-row:not(.with-expanded-row):active {
+  background: #efefef;
+}
+
+.submission-row td {
+  border-bottom-width: 0;
+}
+
+.answer-container {
+  display: flex;
+  height: fit-content;
+  white-space: normal;
+}
+
+th, td{
+  width: fit-content;
+  max-width: 10em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
