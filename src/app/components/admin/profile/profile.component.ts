@@ -33,9 +33,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     let personId: number;
-    this.route.params.subscribe(event => {
-      personId = event.id;
-    });
+    this.route.params.subscribe(event => personId = event.id);
     if (history.state.person === undefined) {
       this.personService.getPersonById(personId).subscribe(person => {
         this.person = person;
@@ -45,9 +43,7 @@ export class ProfileComponent implements OnInit {
       this.person = history.state.person;
       this.setFormDetails();
     }
-    this.submissionsService.getAllSubmissionsFromPerson(personId).subscribe(submissions => {
-      this.submissions = submissions;
-    });
+    this.submissionsService.getAllSubmissionsFromPerson(personId).subscribe(submissions => this.submissions = submissions);
   }
 
   onSubmit = (personData): void => {

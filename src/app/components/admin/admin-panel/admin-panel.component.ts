@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { TaskService } from '../../../service/task/task.service';
-import { PersonService } from 'src/app/service/person/person.service';
+import { TaskService } from '@service/task/task.service';
+import { PersonService } from '@service/person/person.service';
 
 @Component({
   selector: 'app-admin-panel',
