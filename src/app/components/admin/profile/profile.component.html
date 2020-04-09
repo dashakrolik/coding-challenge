@@ -1,21 +1,25 @@
-<button class="admin-button" (click)="toAdminPanel()">Admin panel</button>
+<button class="admin-button" (click)="navigateToAdminPanel()">Admin panel</button>
+
 <ng-container *ngIf="person">
     <h1>{{person.firstName}}'s Profile</h1>
-    <form class="personDetails" [formGroup]="personDetailsForm" (ngSubmit)="onSubmit(personDetailsForm)">
-        <label for="id">ID</label>
-        <input type="text" name="id" id="id" value={{person.id}} disabled>
+    <form class="personDetails" [formGroup]="personDetailsForm" (ngSubmit)="savePerson(personDetailsForm)">
+        <label>ID</label>
+        <input type="text" formControlName="id">
 
-        <label for="firstName">First name</label>
-        <input type="text" formControlName="firstName" id="firstName" placeholder={{person.firstName}} size="30">
+        <label>First name</label>
+        <input type="text" formControlName="firstName" size="30">
 
-        <label for="lastName">Last name</label>
-        <input type="text" formControlName="lastName" id="lastName" placeholder={{person.lastName}} size="30">
+        <label>Last name</label>
+        <input type="text" formControlName="lastName" size="30">
 
-        <label for="email">Email address</label>
-        <input type="text" formControlName="email" id="email" placeholder={{person.email}} size="30">
+        <label>Email address</label>
+        <input type="text" formControlName="email" size="30">
 
-        <label for="role">Role</label>
-        <input type="text" formControlName="role" id="role" placeholder={{person.role}} size="30">
+        <label>Role</label>
+        <input type="text" formControlName="role" size="30">
+
+        <label>Password</label>
+        <input type="password" formControlName="password" size="30">
 
         <button class="button" type="submit">Save changes</button>
         <input type="button" class="del" (click)="deletePerson()" value="Delete person">
