@@ -4,7 +4,7 @@
 <h2>
     tasks
 </h2>
-<div class="tasks">
+<div class="tasks" *ngIf=" tasks$ | async as tasks">
     <app-task *ngFor="let task of tasks" [task]="task">
     </app-task>
 </div>

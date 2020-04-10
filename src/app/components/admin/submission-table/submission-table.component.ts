@@ -4,12 +4,14 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { SubmissionService } from '@service/submission/submission.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-submission-table',
   templateUrl: './submission-table.component.html',
   styleUrls: ['./submission-table.component.css'],
   animations: [
+    // TODO: use an ngIf to do this.
     trigger('expandAnswer', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
@@ -30,11 +32,11 @@ export class SubmissionTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<Submission>;
-  @Input() personId: number;
+  @Input('personId') personId: number;
   dataSource: MatTableDataSource<Submission>;
 
   ngOnInit() {
-    this.submissionService.getAllSubmissionsFromPerson(this.personId).subscribe(submissions => {
+    this.submissionService.getAllSubmissionsFromPerson(this.personId).pipe(take(1)).subscribe(submissions => {
       this.setDataSource(submissions);
       this.dataSource.sort = this.sort;
     });

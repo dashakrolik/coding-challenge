@@ -6,8 +6,9 @@
   transition: .5s;
 }
 
-.mat-cell, .mat-header-cell{
-  padding: 0 .5em;
+/* TODO: fix table sizing  */
+.mat-cell{
+  width: fit-content;
 }
 
 tr.answer-row {
@@ -18,10 +19,6 @@ tr.submission-row:hover {
   background: #99ccd3;
 }
 
-tr.submission-row:not(.with-expanded-row):active {
-  background: #efefef;
-}
-
 .submission-row td {
   border-bottom-width: 0;
 }
@@ -30,11 +27,13 @@ tr.submission-row:not(.with-expanded-row):active {
   display: flex;
   height: fit-content;
   white-space: normal;
+  overflow: auto;
+  text-overflow: clip;
 }
 
-th, td{
+.mat-column-answer.cdk-column-answer{
   width: fit-content;
-  max-width: 10em;
+  max-width: 3em;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

@@ -1,20 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PersonService } from '@service/person/person.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit, OnDestroy {
+export class ProfileComponent implements OnInit {
   person: Person;
   personDetailsForm: FormGroup;
-  getPersonSubscription: Subscription;
-  savePersonSubscription: Subscription;
-  deletePersonSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,7 +23,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.createForm();
     const id = parseInt(this.route.snapshot.params.id);
-    this.getPersonSubscription = this.personService.getPersonById(id).subscribe(person => {
+    this.personService.getPersonById(id).pipe(take(1)).subscribe(person => {
       this.person = person;
       this.fillForm();
     });
@@ -44,31 +41,23 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   fillForm = (): void => {
-    this.personDetailsForm.get('id').setValue(this.person.id);
-    this.personDetailsForm.get('firstName').setValue(this.person.firstName);
-    this.personDetailsForm.get('lastName').setValue(this.person.lastName);
-    this.personDetailsForm.get('email').setValue(this.person.email);
-    this.personDetailsForm.get('role').setValue(this.person.role);
+    this.personDetailsForm.patchValue({ ...this.person });
+    this.personDetailsForm.get('password').setValue('');
   }
 
   savePerson = (personData): void => {
-    this.savePersonSubscription = this.personService.updatePerson(personData.value).subscribe(savedPerson => {
+    this.personService.updatePerson(personData.value).pipe(take(1)).subscribe(savedPerson => {
       this.person = savedPerson;
     });
   }
 
   deletePerson = (): void => {
-    this.deletePersonSubscription = this.personService.deletePerson(this.person.id).subscribe(() => {
+    this.personService.deletePerson(this.person.id).pipe(take(1)).subscribe(() => {
       this.navigateToAdminPanel();
     });
   }
 
   navigateToAdminPanel = () => this.router.navigate(['/admin']);
 
-  ngOnDestroy = () => {
-    this.getPersonSubscription.unsubscribe();
-    this.savePersonSubscription.unsubscribe();
-    this.deletePersonSubscription.unsubscribe();
-  }
 }
 

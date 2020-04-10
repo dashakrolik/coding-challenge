@@ -4,11 +4,12 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { PersonService } from '@service/person/person.service';
 import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-person-table',
   templateUrl: './person-table.component.html',
-  styleUrls: ['./person-table.component.css']
+  styleUrls: ['./person-table.component.scss']
 })
 export class PersonTableComponent implements OnInit {
 
@@ -26,7 +27,7 @@ export class PersonTableComponent implements OnInit {
   displayedColumns = ['id', 'firstName', 'lastName', 'email'];
 
   ngOnInit() {
-    this.personService.getAllPersons().toPromise().then(persons => {
+    this.personService.getAllPersons().pipe(take(1)).subscribe(persons => {
       this.setDataSource(persons);
       this.dataSource.sort = this.sort;
     });

@@ -4,11 +4,9 @@
     grid-template-columns: auto auto;
     justify-content: start;
     margin: 1em;
-}
-
-.personDetails > label:nth-of-type(even),
-.personDetails > input:nth-of-type(even){
-    background-color: #99ccd3;
+    > input:nth-of-type(even), > label:nth-of-type(even){
+        background-color: #99ccd3;
+    }
 }
 
 input{
@@ -24,7 +22,7 @@ label, input{
     color: black;
 }
 
-input[type=button].del.del{
+input[type=button].del{
     background-color: #ff0000;
     border: black;
     border-radius: 5px;
