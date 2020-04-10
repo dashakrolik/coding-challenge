@@ -22,7 +22,7 @@ import { CandidateComponent } from './components/candidate/candidate.component';
 
 import { OverlayComponent } from './components/overlay/overlay/overlay.component';
 import { SubscribeComponent } from './components/overlay/subscribe/subscribe.component';
-import { DropdownComponent } from './dropdown/dropdown.component';
+import { DropdownComponent } from '@components/dropdown/dropdown.component';
 
 @NgModule({
   declarations: [
