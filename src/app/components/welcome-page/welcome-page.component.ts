@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { LanguageService } from '@service/language/language.service';
 import { MatSelectChange } from '@angular/material/select';
 
-@Component({
+@Component({ 
   selector: 'app-welcome-page',
   templateUrl: './welcome-page.component.html',
   styleUrls: ['./welcome-page.component.css']
@@ -39,7 +39,7 @@ export class WelcomePageComponent implements OnInit {
   getForm = () => this.form = this.formBuilder.group({});
 
   getLanguages = () => {
-    this.languageService.getLanguages().subscribe(
+    this.languages$ = this.languageService.getLanguages().subscribe(
       response => this.languages = response
     );
   }
