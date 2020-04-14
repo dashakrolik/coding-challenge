@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { MyOverlayRef } from 'src/app/service/overlay/myoverlay-ref';
 
@@ -8,20 +8,24 @@ import { MyOverlayRef } from 'src/app/service/overlay/myoverlay-ref';
   templateUrl: './subscribe.component.html',
   styleUrls: ['./subscribe.component.scss']
 })
-export class SubscribeComponent {
-  frmSubscribe = this.fb.group({
-    firstName: 'Sander',
-    lastName: 'Kools',
-    email: [
-      'Sander.Kools@Ordina.nl',
-      Validators.compose([Validators.email, Validators.required])
-    ]
-  });
+export class SubscribeComponent implements OnInit {
+  form: FormGroup;
 
-  // @TODO use Material Design Dialogue instead
-  constructor(private fb: FormBuilder, private ref: MyOverlayRef) {}
+  // TODO use Material Design Dialogue instead
+  constructor(private fb: FormBuilder, private overlayRef: MyOverlayRef) {}
 
-  submit = () => this.ref.close(this.frmSubscribe.value);
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      firstName: 'Sander',
+      lastName: 'Kools',
+      email: [
+        'Sander.Kools@Ordina.nl',
+        Validators.compose([Validators.email, Validators.required])
+      ]
+    });
+  }
 
-  cancel = () => this.ref.close(null);
+  submit = () => this.overlayRef.close(this.form.value);
+
+  cancel = () => this.overlayRef.close(null);
 }
