@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LanguageService } from '@service/language/language.service';
 import { MatSelectChange } from '@angular/material/select';
+import { Subscription, Observable } from 'rxjs';
 
 @Component({ 
   selector: 'app-welcome-page',
   templateUrl: './welcome-page.component.html',
   styleUrls: ['./welcome-page.component.css']
 })
-export class WelcomePageComponent implements OnInit {
+export class WelcomePageComponent implements OnInit, OnDestroy {
   email: string;
   form: FormGroup;
   squareMargin = 'margin-left: 20px';
@@ -22,8 +23,9 @@ export class WelcomePageComponent implements OnInit {
       exerciseId: 1
     }
   };
-  taskId: number;
   selectedLanguage: string;
+  languages$: Observable<Language[]>;
+  languagesSubscription: Subscription;
   
   constructor(
     private formBuilder: FormBuilder,
@@ -32,38 +34,26 @@ export class WelcomePageComponent implements OnInit {
   ) {
   }
   ngOnInit() {
-    this.getForm();
-    this.getLanguages();
-  }
-
-  getForm = () => this.form = this.formBuilder.group({});
-
-  getLanguages = () => {
-    this.languages$ = this.languageService.getLanguages().subscribe(
-      response => this.languages = response
+    this.createForm();
+    this.languagesSubscription = this.languageService.getLanguages().subscribe(languages => 
+      this.languages = languages
     );
   }
-  setLanguage = () => this.languages.map(item => item.language);
 
-  setExercise() {
-    const { progressId } = this.user.exercise;
+  getLanguagesStrs = (): string[] => this.languages.map((item: Language) => item.language);
 
-    if (progressId === 0) {
-      this.taskId = 1;
-      if (progressId === 0) {
-        this.taskId = 1;
-      } else {
-        this.taskId = progressId;
-      }
-    }
-  }
+  createForm = () => this.form = this.formBuilder.group({});
 
   submit = () => {
-    this.setExercise();
-    this.router.navigateByUrl('challenge/' + this.selectedLanguage + '/' + this.taskId);
+    const { progressId } = this.user.exercise;
+    const taskId = progressId || 1;
+
+    this.router.navigateByUrl(`challenge/${this.selectedLanguage}/${taskId}`);
   }
 
-  getLanguage = () => this.languages === undefined;
-
   onSelect = (event: MatSelectChange) => this.selectedLanguage = event.value;
+
+  ngOnDestroy(): void {
+    this.languagesSubscription.unsubscribe();
+  }
 }

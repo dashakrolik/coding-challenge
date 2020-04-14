@@ -1,11 +1,10 @@
 <p>Please enter your email to proceed to the coding challenge</p>
 
-
 <app-dropdown
-    [inputValue]="setLanguage()"
+    [inputValue]="getLanguagesStrs()"
     labelText="Select a Language"
     (valueOutput)="onSelect($event)"
 ></app-dropdown>
 <br>
 
-<button [disabled]="getLanguage()" (click)="submit()" mat-raised-button color="warn">Submit</button>
+<button [disabled]="!languages?.length" (click)="submit()" mat-raised-button color="warn">Submit</button>
