@@ -46,7 +46,7 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
     PersonTableComponent,
     ProfileComponent,
     SubmissionTableComponent,
-    DropdownComponent
+    DropdownComponent,
   ],
   imports: [
     BrowserModule,
