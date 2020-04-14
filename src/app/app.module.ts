@@ -26,6 +26,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { ProfileComponent } from './components/admin/profile/profile.component';
 import { SubmissionTableComponent } from './components/admin/submission-table/submission-table.component';
 import { DropdownComponent } from './dropdown/dropdown.component';
+import { authInterceptorProviders } from './service/auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,7 @@ import { DropdownComponent } from './dropdown/dropdown.component';
     MatPaginatorModule,
     MatSortModule
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent],
   entryComponents: [OverlayComponent, SubscribeComponent],
   schemas: [NO_ERRORS_SCHEMA]

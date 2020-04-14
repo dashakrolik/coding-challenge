@@ -46,7 +46,6 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
 
   // These variables are used to create the submission object
   submissionLanguageId: number;
-  submissionCandidateId: number;
   submissionTaskId: number;
   submission: Submission;
 
@@ -56,6 +55,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   language = this.selectedLanguage;
 
   paramMapSubscription: Subscription;
+  codeResult: String
 
   ngOnInit() {
     this.paramMapSubscription = this.route.paramMap.subscribe(params => {
@@ -67,6 +67,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
     this.selectedLanguageIsPython = this.selectedLanguage === 'python';
     this.selectedLanguageIsJava = this.selectedLanguage === 'java';
     this.loadJavaScriptTask = this.selectedLanguageIsJavascript;
+    this.codeResult = "";
 
     // We load the task based on the exerciseId
     this.getTask();
@@ -127,37 +128,41 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   }
 
   getTask = (): void => {
+    // TODO: the params fails and the exciseid is not filled. Fix this. Fow now we set this explicitally.
+    this.exerciseId = 1;
     this.taskService.getTask(this.exerciseId).subscribe(
       response => this.handleSuccessfulResponseGetTask(response),
     );
   }
 
-  getLanguage = (): void => {
-    this.languageService.getLanguages().subscribe(
-      response => this.handleSuccessfulResponseGetLanguage(response),
-    );
-  }
+  // TODO: This is not called anymore. Why? We need the language id.
+  // getLanguage = (): void => {
+  //   this.languageService.getLanguages().subscribe(
+  //     response => this.handleSuccessfulResponseGetLanguage(response),
+  //   );
+  // }
+
+  // handleSuccessfulResponseGetLanguage = (response): void => {
+  //   const { id } = response;
+  //   this.submissionLanguageId = id;
+  //   // Finally we want to find the task that candidate has performed to create the final submission to send.
+  //   this.createSubmission();
+  // }
 
   createSubmission = (): void => {
+    // TODO: The language id is not retrieved, not sure why. Figure it out. (2 is python)
+    this.submissionLanguageId = 2;
     // When creating a new Submission we give id null so it creates a new entry. It will determine the id by itself.
     this.submission = {
-      id: null,
       answer: this.codeSnippet,
       correct: false,
-      personId: this.submissionCandidateId,
-      languageId: this.submissionLanguageId,
+      languageId: this.submissionLanguageId,  
       taskId: this.submissionTaskId
     };
 
     this.submissionService.createSubmission(this.submission).subscribe(
       response => this.handleSuccessfulResponseCreateSubmission(response),
     );
-  }
-
-
-  handleSuccessfulResponseCreateCandidate = (response): void => {
-    const { id } = response;
-    this.submissionCandidateId = id;
   }
 
   handleSuccessfulResponseGetTask = (response): void => {
@@ -167,16 +172,13 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
     this.taskDescription = description;
   }
 
-  handleSuccessfulResponseGetLanguage = (response): void => {
-    const { id } = response;
-    this.submissionLanguageId = id;
-    // Finally we want to find the task that candidate has performed to create the final submission to send.
-    this.createSubmission();
-  }
-
   handleSuccessfulResponseCreateSubmission = (response): void => {
-    // TODO: do something with a successful response
+    this.codeResult = "";
     console.log('successful post message create submission');
+    response.forEach(element => {
+      this.codeResult += element.contentValue;
+      console.log(element);
+    });
   }
 
   ngOnDestroy() {
@@ -185,7 +187,13 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
 
   getTaskDescription = () => this.taskDescription;
 
-  submitCode = (): void => console.log('submit code');
+  submitCode = (): void => {
+    // This code is called when it is confirmed that the user is logged in
+    // We should have the language id. quick test to see if a language id is set.
+    if (this.submissionLanguageId !== null) {
+      this.createSubmission();
+    }
+  }
 
   checkLogin = (): boolean => this.tokenStorageService.isUserLoggedIn();
 
