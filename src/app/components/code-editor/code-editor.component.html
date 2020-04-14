@@ -1,14 +1,14 @@
 <!-- We load the task and show the description -->
 {{taskDescription}}
 
-<ace-editor editor [(text)]="text" [mode]="setLanguageOptions('mode')" [theme]="setLanguageOptions('theme')"
+<ace-editor editor [(text)]="text" [mode]="selectedLanguage" [theme]="getTheme()"
   (textChanged)="onChange($event)" [readOnly]="false" class="ace-editor"></ace-editor>
 
 
 <br>
 
-<button (click)="runCode()" mat-raised-button color="warn">Run</button>
-<app-javascript-task *ngIf="loadJavaScriptTask"></app-javascript-task>
+<button (click)="evaluateCode()" mat-raised-button color="warn">Run</button>
+<app-javascript-task *ngIf="selectedLanguageIsJavascript"></app-javascript-task>
 
 <div>
   <button (click)="openModal(subscribeComponent)" mat-raised-button color="warn">

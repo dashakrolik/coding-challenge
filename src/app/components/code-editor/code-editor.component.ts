@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { Component, TemplateRef, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ComponentType } from '@angular/cdk/portal';
 
@@ -22,20 +22,10 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./code-editor.component.css']
 })
 
-export class CodeEditorComponent implements OnInit, OnDestroy {
-  public constructor(
-    private route: ActivatedRoute,
-    private overlayService: OverlayService,
-    private candidateService: CandidateService,
-    private taskService: TaskService,
-    private languageService: LanguageService,
-    private submissionService: SubmissionService
-  ) {
-    this.route = route;
-  }
-
+export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
+  
   @ViewChild('editor') editor: AceEditorComponent;
-
+  
   selectedLanguage: string;
   exerciseId: number;
   codeSnippet = '';
@@ -43,37 +33,54 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   selectedLanguageIsPython: boolean;
   selectedLanguageIsJava: boolean;
   evaluationResult: boolean;
-  loadJavaScriptTask: any;
-
+  
   // These variables are used to create the submission object
   submissionLanguageId: number;
   submissionCandidateId: number;
   submissionTaskId: number;
   submission: Submission;
-
+  
   taskDescription: string;
-  subscribeComponent = SubscribeComponent;
   text = '';
-  language = this.selectedLanguage;
-
+  
   paramMapSubscription: Subscription;
+  candidateSubscription: Subscription;
+  taskSubscription: Subscription;
+  languageSubscription: Subscription;
+  submissionSubscription: Subscription;
+  
+  constructor(
+    private route: ActivatedRoute,
+    private overlayService: OverlayService,
+    private candidateService: CandidateService,
+    private taskService: TaskService,
+    private languageService: LanguageService,
+    private submissionService: SubmissionService,
+  ) {
+    this.route = route;
+  }
 
   ngOnInit() {
     this.paramMapSubscription = this.route.paramMap.subscribe(params => {
-      this.selectedLanguage = params.get('language');
-      this.exerciseId = parseInt(params.get('id'));
+      this.selectedLanguage = params.get('language') || 'javascript';
+      
+      try {
+        this.exerciseId = parseInt(params.get('id'));
+      } catch (e) {
+        this.exerciseId = 1; // simply assign it the value of 1
+      }
+
     });
     
     this.selectedLanguageIsJavascript = this.selectedLanguage === 'javascript';
     this.selectedLanguageIsPython = this.selectedLanguage === 'python';
     this.selectedLanguageIsJava = this.selectedLanguage === 'java';
-    this.loadJavaScriptTask = this.selectedLanguageIsJavascript;
 
     // We load the task based on the exerciseId
     this.getTask();
   }
 
-  ngAftterViewInit() {
+  ngAfterViewInit() {
     this.editor.setOptions({
       animatedScroll: true,
       showPrintMargin: false,
@@ -84,44 +91,24 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
 
   onChange = (event: any) => this.codeSnippet = event;
 
-  // @TODO refactor the code below
-  setLanguageOptions = (option: string): string => {
-    const isJavascriptMode = option === 'mode' && this.selectedLanguageIsJavascript;
-    const isPythonMode = option === 'mode' && this.selectedLanguageIsPython;
-    const isJavaMode = option === 'mode' && this.selectedLanguageIsJava;
-    const isJavascriptTheme = option === 'theme' && this.selectedLanguageIsJavascript;
-    const isPythonTheme = option === 'theme' && this.selectedLanguageIsPython;
-    const isJavaTheme = option === 'theme' && this.selectedLanguageIsJava;
-
-    switch (true) {
-      case (isJavascriptMode):
-        return 'javascript';
-      case (isPythonMode):
-        return 'python';
-      case (isJavaMode):
-        return 'java';
-      case (isJavascriptTheme):
-        return 'dracula';
-      case (isPythonTheme):
-        return 'monokai';
-      case (isJavaTheme):
-        return 'eclipse';
+  getTheme = (): string => {
+    if (this.selectedLanguageIsJavascript) {
+      return 'dracula';
+    }
+    if (this.selectedLanguageIsPython) {
+      return 'monokai';
+    }
+    if (this.selectedLanguageIsJava) {
+      return 'eclipse';
     }
   }
 
-  runCode = (): boolean => {
-    switch (true) {
-      case this.selectedLanguageIsJavascript:
-        return this.evaluateCode('javascript');
-      case this.selectedLanguageIsPython:
-        return this.evaluateCode('python');
-      case this.selectedLanguageIsJava:
-        return this.evaluateCode('java');
-    }
-  }
+  evaluateCode = (): boolean => {
+    // TODO: Implement Jupyter connection
+    // use this.selectedLanguage
 
-  // TODO: Implement Jupyter connection
-  evaluateCode = (language: string): boolean => this.evaluationResult = true;
+    return this.evaluationResult = true;
+  }
 
   openModal = (content: TemplateRef<any> | ComponentType<any> | string): void => {
     const ref = this.overlayService.open(content, null);
@@ -143,9 +130,10 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
           email: res.data.email
         };
 
-        this.candidateService.createCandidate(candidate).subscribe(
-          response => this.handleSuccessfulResponseCreateCandidate(response),
-        );
+        this.candidateSubscription = this.candidateService.createCandidate(candidate).subscribe(response => {
+          const { id } = response;
+          this.submissionCandidateId = id;
+        });
       } else {
         console.log('Check fields and code');
       }
@@ -153,14 +141,24 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   }
 
   getTask = (): void => {
-    this.taskService.getTask(this.exerciseId).subscribe(
-      response => this.handleSuccessfulResponseGetTask(response),
+    this.taskSubscription = this.taskService.getTask(this.exerciseId).subscribe(
+      (response: any) => {
+        //We receive the task object from the backend and we need the id and the description.
+        const { id, description } = response;
+        this.submissionTaskId = id;
+        this.taskDescription = description;
+      }
     );
   }
 
   getLanguage = (): void => {
-    this.languageService.getLanguages().subscribe(
-      response => this.handleSuccessfulResponseGetLanguage(response),
+    this.languageSubscription = this.languageService.getLanguages().subscribe(
+      (response: any) => {
+        const { id } = response;
+        this.submissionLanguageId = id;
+        // Finally we want to find the task that candidate has performed to create the final submission to send.
+        this.createSubmission();
+      },
     );
   }
 
@@ -175,37 +173,19 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
       taskId: this.submissionTaskId
     };
 
-    this.submissionService.createSubmission(this.submission).subscribe(
-      response => this.handleSuccessfulResponseCreateSubmission(response),
+    this.submissionSubscription = this.submissionService.createSubmission(this.submission).subscribe(
+      response => {
+        // TODO: do something with a successful response
+        console.log('successful post message create submission');
+      }
     );
-  }
-
-
-  handleSuccessfulResponseCreateCandidate = (response): void => {
-    const { id } = response;
-    this.submissionCandidateId = id;
-  }
-
-  handleSuccessfulResponseGetTask = (response): void => {
-    // We receive the task object from the backend and we need the id and the description.
-    const { id, description } = response;
-    this.submissionTaskId = id;
-    this.taskDescription = description;
-  }
-
-  handleSuccessfulResponseGetLanguage = (response): void => {
-    const { id } = response;
-    this.submissionLanguageId = id;
-    // Finally we want to find the task that candidate has performed to create the final submission to send.
-    this.createSubmission();
-  }
-
-  handleSuccessfulResponseCreateSubmission = (response): void => {
-    // TODO: do something with a successful response
-    console.log('successful post message create submission');
   }
 
   ngOnDestroy() {
     this.paramMapSubscription.unsubscribe();
+    this.candidateSubscription.unsubscribe();
+    this.taskSubscription.unsubscribe();
+    this.languageSubscription.unsubscribe();
+    this.submissionSubscription.unsubscribe();
   }
 }
