@@ -38,7 +38,6 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
   submissionLanguageId: number;
   submissionCandidateId: number;
   submissionTaskId: number;
-  submission: Submission;
   
   taskDescription: string;
   text = '';
@@ -81,16 +80,25 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.editor.setOptions({
-      animatedScroll: true,
-      showPrintMargin: false,
-      tabSize: 2,
-      useSoftTabs: true,
-    });
+    // TODO check if necessary
+    // this.editor.setOptions({
+    //   animatedScroll: true,
+    //   showPrintMargin: false,
+    //   tabSize: 2,
+    //   useSoftTabs: true,
+    // });
   }
 
   onChange = (event: any) => this.codeSnippet = event;
 
+  /**
+   * Get the mode for the editor to run in
+   */
+  getMode = (): string => this.selectedLanguage;
+
+  /**
+   * Get the theme for the editor to display
+   */
   getTheme = (): string => {
     if (this.selectedLanguageIsJavascript) {
       return 'dracula';
@@ -123,7 +131,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
         // TODO: Now we retrieve the task and the language. Later this should be retrieved already,
         //  remove this at that point.
 
-        const candidate = {
+        const candidate: Candidate = {
           id: null,
           firstName: res.data.firstName,
           lastName: res.data.lastName,
@@ -164,7 +172,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
 
   createSubmission = (): void => {
     // When creating a new Submission we give id null so it creates a new entry. It will determine the id by itself.
-    this.submission = {
+    const submission: Submission = {
       id: null,
       answer: this.codeSnippet,
       correct: false,
@@ -173,7 +181,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
       taskId: this.submissionTaskId
     };
 
-    this.submissionSubscription = this.submissionService.createSubmission(this.submission).subscribe(
+    this.submissionSubscription = this.submissionService.createSubmission(submission).subscribe(
       response => {
         // TODO: do something with a successful response
         console.log('successful post message create submission');

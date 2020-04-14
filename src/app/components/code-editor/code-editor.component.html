@@ -1,8 +1,8 @@
 <!-- We load the task and show the description -->
 {{taskDescription}}
 
-<ace-editor editor [(text)]="text" [mode]="selectedLanguage" [theme]="getTheme()"
-  (textChanged)="onChange($event)" [readOnly]="false" class="ace-editor"></ace-editor>
+<ace-editor editor [(text)]="text" [mode]="getMode()" [theme]="getTheme()"
+  (textChanged)="ònChange($event)" [readOnly]="false" class="ace-editor"></ace-editor>
 
 
 <br>
