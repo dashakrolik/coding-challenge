@@ -111,10 +111,6 @@ export class CodeEditorComponent implements OnInit {
 
   loginWindow(content: ComponentType<SubscribeComponent>) {
     const ref = this.overlayService.open(content, null);
-
-    ref.afterClosed$.subscribe(res => {
-      // The user clicked away, so don't do anything.
-    })
   };
 
   getTask = (): void => {

@@ -4,9 +4,9 @@
   <!-- possibly add Ordina logo -->
   <div class="navbar-brand">
     <!-- If the user is logged in we want to show the button for his account, otherwise we show the login button -->
-    <button *ngIf="!checkLogin()" (click)="loginWindow(subscribeComponent)" type="button" class="button is-primary">Login</button>
-    <button *ngIf="checkLogin()" (click)="myAccount()" type="button" class="button is-primary">My Account</button>
-    <button *ngIf="checkLogin()" (click)="logout()" type="button" class="button is-info">Logout</button>
+    <button *ngIf="!checkLogin()" (click)="loginWindow(subscribeComponent)" mat-raised-button color="primary" style="position: absolute; top: 10px; right: 20px; font-size: 18px;">Login</button>
+    <button *ngIf="checkLogin()" (click)="myAccount()" type="button" mat-raised-button color="primary" style="position: absolute; top: 10px; right: 20px; font-size: 18px;">My Account</button>
+    <button *ngIf="checkLogin()" (click)="logout()" type="button" mat-raised-button color="primary" style="position: absolute; top: 10px; right: 160px; font-size: 18px;">Logout</button>
   </div>
 </nav>
 

@@ -20,7 +20,6 @@ export class ProfileComponent implements OnInit {
     if (this.tokenStorageService.isUserLoggedIn()) {
       const user = this.tokenStorageService.getUser();
       const roles = user.roles;
-      console.log(user);
       if (user.firstname == null && user.lastname == null) {
         this.content = "Hello " + user.username + "\nRole: " + roles;
       } else {
@@ -31,7 +30,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  goHome() {
+  goHome = (): void => {
     this.router.navigate(['/']);
   }
 

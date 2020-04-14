@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayModule } from '@angular/cdk/overlay';
 
 import { AceEditorModule } from 'ng2-ace-editor';
@@ -23,7 +23,6 @@ import { OverlayComponent } from './components/overlay/overlay/overlay.component
 import { SubscribeComponent } from './components/overlay/subscribe/subscribe.component';
 import { DropdownComponent } from './dropdown/dropdown.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { authInterceptorProviders } from './service/auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -36,7 +35,7 @@ import { authInterceptorProviders } from './service/auth/auth.interceptor';
     SubscribeComponent,
     SubscribeComponent,
     DropdownComponent,
-    ProfileComponent
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,9 +49,9 @@ import { authInterceptorProviders } from './service/auth/auth.interceptor';
     MatInputModule,
     HttpClientModule,
     OverlayModule,
-    FormsModule
+    FormsModule,
   ],
-  providers: [authInterceptorProviders],
+  providers: [],
   bootstrap: [AppComponent],
   entryComponents: [OverlayComponent, SubscribeComponent],
   schemas: [NO_ERRORS_SCHEMA]

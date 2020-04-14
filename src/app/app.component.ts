@@ -12,10 +12,6 @@ import { Router } from "@angular/router";
 })
 export class AppComponent implements OnInit {
 
-  // these can be used to show information not accessible for normal users
-  showAdminBoard = false;
-  showModeratorBoard = false;
-
   constructor(
     private overlayService: OverlayService,
     private tokenStorageService: TokenStorageService,
@@ -25,35 +21,23 @@ export class AppComponent implements OnInit {
   title = 'code-challenge';
 
   ngOnInit() {
-    if (this.tokenStorageService.isUserLoggedIn()) {
-      console.log("user logged in");
-      const user = this.tokenStorageService.getUser();
-      const roles = user.roles;
-
-      this.showAdminBoard = roles.includes('ROLE_ADMIN');
-      this.showModeratorBoard = roles.includes('ROLE_MODERATOR');
-    }
   }
 
   subscribeComponent = SubscribeComponent;
   loginWindow(content: ComponentType<SubscribeComponent>) {
     const ref = this.overlayService.open(content, null);
-
-    ref.afterClosed$.subscribe(res => {
-      // The user clicked away, so don't do anything.
-    });
   }
 
-  logout() {
+  logout = (): void => {
     this.tokenStorageService.logOut()
     window.location.reload();
   }
 
-  myAccount() {
+  myAccount = (): void => {
     this.router.navigate(['/profile']);
   }
 
-  checkLogin() {
+  checkLogin = (): boolean => {
     return this.tokenStorageService.isUserLoggedIn();
   }
 }

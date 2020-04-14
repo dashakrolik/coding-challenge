@@ -5,6 +5,7 @@ import { CodeEditorComponent } from './components/code-editor/code-editor.compon
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
 import { CandidateComponent } from './components/candidate/candidate.component';
 import { ProfileComponent } from "./components/profile/profile.component";
+import { AuthGuardService } from '@service/auth/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -18,7 +19,8 @@ const routes: Routes = [
   {
     // you have to be logged in to see this page
     path: 'candidates',
-    component: CandidateComponent
+    component: CandidateComponent,
+    canActivate:[AuthGuardService]
   },
   {
     path: 'challenge/:language',

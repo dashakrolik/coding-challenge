@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { OverlayService } from "../../service/overlay/overlay.service";
+import { OverlayService } from "@service/overlay/overlay.service";
 import { ComponentType } from "@angular/cdk/portal";
 import { SubscribeComponent } from "../overlay/subscribe/subscribe.component";
 import { HttpClientService } from '@service/http/http-client.service';
