@@ -22,6 +22,14 @@ import { CandidateComponent } from './components/candidate/candidate.component';
 
 import { OverlayComponent } from './components/overlay/overlay/overlay.component';
 import { SubscribeComponent } from './components/overlay/subscribe/subscribe.component';
+import { AdminPanelComponent } from './components/admin/admin-panel/admin-panel.component';
+import { TaskComponent } from './components/admin/task/task.component';
+import { PersonTableComponent } from './components/admin/person-table/person-table.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { ProfileComponent } from './components/admin/profile/profile.component';
+import { SubmissionTableComponent } from './components/admin/submission-table/submission-table.component';
 import { DropdownComponent } from './dropdown/dropdown.component';
 
 @NgModule({
@@ -33,6 +41,11 @@ import { DropdownComponent } from './dropdown/dropdown.component';
     CandidateComponent,
     OverlayComponent,
     SubscribeComponent,
+    AdminPanelComponent,
+    TaskComponent,
+    PersonTableComponent,
+    ProfileComponent,
+    SubmissionTableComponent,
     DropdownComponent
   ],
   imports: [
@@ -46,7 +59,10 @@ import { DropdownComponent } from './dropdown/dropdown.component';
     MatFormFieldModule,
     MatInputModule,
     HttpClientModule,
-    OverlayModule
+    OverlayModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent],

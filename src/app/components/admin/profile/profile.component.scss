@@ -1,0 +1,49 @@
+.personDetails{
+    display: grid;
+    grid-column-gap: 1em;
+    grid-template-columns: auto auto;
+    justify-content: start;
+    margin: 1em;
+    > input:nth-of-type(even), > label:nth-of-type(even){
+        background-color: #99ccd3;
+    }
+}
+
+input{
+    border:none;
+}
+
+:disabled{
+    background-color: white;
+}
+
+label, input{
+    font: 300 12pt Roboto Light;
+    color: black;
+}
+
+input[type=button].del{
+    background-color: #ff0000;
+    border: black;
+    border-radius: 5px;
+}
+
+.admin-button{
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: #f58220;
+    border: none;
+    padding: 1em;
+    margin: 1em;
+    font-size: large;
+    font-weight: 600;
+}
+
+button, input[type=button]{
+    margin: 1em;
+}
+
+.submission-table{
+    margin: 1.25em;
+}

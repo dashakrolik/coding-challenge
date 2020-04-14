@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CandidateService } from '@service/candidate/candidate.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-candidate',
@@ -7,7 +8,7 @@ import { CandidateService } from '@service/candidate/candidate.service';
   styleUrls: ['./candidate.component.css']
 })
 export class CandidateComponent implements OnInit {
-  candidates: Candidate[];
+  candidates$: Observable<Candidate[]>;
 
   constructor(
     private candidateService: CandidateService
@@ -15,8 +16,6 @@ export class CandidateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.candidateService.getCandidates().subscribe(
-      response => this.candidates = response
-    );
+    this.candidates$ = this.candidateService.getCandidates();
   }
 }

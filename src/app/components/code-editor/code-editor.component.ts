@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild, OnInit } from '@angular/core';
+import { Component, TemplateRef, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ComponentType } from '@angular/cdk/portal';
 
@@ -11,6 +11,7 @@ import { LanguageService } from '@service/language/language.service';
 import { OverlayService } from '@service/overlay/overlay.service';
 
 import { SubscribeComponent } from '../overlay/subscribe/subscribe.component';
+import { Subscription } from 'rxjs';
 // @TODO: There are A LOT of things going on here (too many for just one component)
 // We need to split this up thats one
 // Two, a lot of this code is not necessary, let's refactor
@@ -21,7 +22,7 @@ import { SubscribeComponent } from '../overlay/subscribe/subscribe.component';
   styleUrls: ['./code-editor.component.css']
 })
 
-export class CodeEditorComponent implements OnInit {
+export class CodeEditorComponent implements OnInit, OnDestroy {
   public constructor(
     private route: ActivatedRoute,
     private overlayService: OverlayService,
@@ -55,11 +56,14 @@ export class CodeEditorComponent implements OnInit {
   text = '';
   language = this.selectedLanguage;
 
+  paramMapSubscription: Subscription;
+
   ngOnInit() {
-    this.route.paramMap.subscribe(language =>
-      this.selectedLanguage = language.get('language')
-    );
-    this.exerciseId = this.route.firstChild.snapshot.params.id;
+    this.paramMapSubscription = this.route.paramMap.subscribe(params => {
+      this.selectedLanguage = params.get('language');
+      this.exerciseId = parseInt(params.get('id'));
+    });
+    
     this.selectedLanguageIsJavascript = this.selectedLanguage === 'javascript';
     this.selectedLanguageIsPython = this.selectedLanguage === 'python';
     this.selectedLanguageIsJava = this.selectedLanguage === 'java';
@@ -166,7 +170,7 @@ export class CodeEditorComponent implements OnInit {
       id: null,
       answer: this.codeSnippet,
       correct: false,
-      candidateId: this.submissionCandidateId,
+      personId: this.submissionCandidateId,
       languageId: this.submissionLanguageId,
       taskId: this.submissionTaskId
     };
@@ -201,4 +205,7 @@ export class CodeEditorComponent implements OnInit {
     console.log('successful post message create submission');
   }
 
+  ngOnDestroy() {
+    this.paramMapSubscription.unsubscribe();
+  }
 }

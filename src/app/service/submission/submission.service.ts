@@ -11,5 +11,7 @@ export class SubmissionService {
     private http: HttpClientService
   ) { }
 
+  getAllSubmissionsFromPerson = (personId: number): Observable<Submission[]> => this.http.get('submission/' + personId);
+
   createSubmission = (submission: Submission): Observable<Submission> => this.http.post<Submission>('submission', submission);
 }
