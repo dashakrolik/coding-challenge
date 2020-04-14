@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { MyOverlayRef } from 'src/app/service/overlay/myoverlay-ref';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { HttpClientService } from "../../../service/http/http-client.service";
-import { TokenStorageService } from "../../../service/token/token-storage.service";
+import { HttpClientService } from "@service/http/http-client.service";
+import { TokenStorageService } from "@service/token/token-storage.service";
+import { MyOverlayRef } from 'src/app/service/overlay/myoverlay-ref';
+import { LoginService } from '@service/login/login.service';
 
 @Component({
   selector: 'app-subscribe',
@@ -28,10 +29,11 @@ export class SubscribeComponent {
     password: ''
   });
 
+  // @TODO use Material Design Dialogue instead
   constructor(
     private fb: FormBuilder,
     private ref: MyOverlayRef,
-    private httpClientService: HttpClientService,
+    private loginService: LoginService,
     private tokenStorageService: TokenStorageService
   ) {
   }
@@ -45,7 +47,7 @@ export class SubscribeComponent {
 
     const { firstName, lastName, email, password } = this.frmSubscribe.value;
 
-    this.httpClientService.getRegister(firstName, lastName, email, password).subscribe(
+    this.loginService.getRegister(firstName, lastName, email, password).subscribe(
       response => this.handleSuccessfulResponseGetRegister(response, email, password),
       err => {
         // TODO: show error message on screen
@@ -58,7 +60,7 @@ export class SubscribeComponent {
 
   handleSuccessfulResponseGetRegister = (response, email, password): void => {
     // The user successfully registered. We will log him in.
-    this.httpClientService.getLogin(email, password).subscribe(
+    this.loginService.getLogin(email, password).subscribe(
       response => this.handleSuccessfulResponseGetLogin(response),
       err => {
         // TODO: show error message on screen
@@ -72,7 +74,7 @@ export class SubscribeComponent {
     console.log(this.frmLogin.value);
 
     const { email, password } = this.frmLogin.value;
-    this.httpClientService.getLogin(email, password).subscribe(
+    this.loginService.getLogin(email, password).subscribe(
       response => this.handleSuccessfulResponseGetLogin(response),
       err => {
         // TODO: show error message on screen

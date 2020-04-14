@@ -1,4 +1,5 @@
 {{errorMessage}}
+<!-- @TODO replace this with a Material Design table -->
 <table>
   <thead></thead>
   <tr>
@@ -9,11 +10,11 @@
   </tr>
 
   <tbody>
-  <tr *ngFor="let candidate of candidates">
-    <td>{{candidate.id}}</td>
-    <td>{{candidate.firstName}}</td>
-    <td>{{candidate.lastName}}</td>
-    <td>{{candidate.email}}</td>
-  </tr>
+    <tr *ngFor="let candidate of candidates">
+      <td>{{candidate.id}}</td>
+      <td>{{candidate.firstName}}</td>
+      <td>{{candidate.lastName}}</td>
+      <td>{{candidate.email}}</td>
+    </tr>
   </tbody>
 </table>

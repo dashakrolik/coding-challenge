@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { baseUrl } from '@shared/constants';
+import { Observable } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -12,44 +13,20 @@ const httpOptions = {
 export class HttpClientService {
 
   constructor(
-    private httpClient: HttpClient
+    private http: HttpClient
   ) { }
 
-  getCandidates = () => this.httpClient.get<Candidate[]>(`${baseUrl}/person`);
+  get = (path: string): Observable<any> => this.http.get(`${baseUrl}/${path}`);
 
-  createSubmission = (submission: Submission) => this.httpClient.post<Submission>(`${baseUrl}/submission`, submission);
-
-  // The call to the backend. Linked to the endpoint to get all candidates.
-  getLanguage = () => this.httpClient.get<string>(`${baseUrl}/language`);
-
-  getLanguages = (language: string) => this.httpClient.post<string>(`${baseUrl}/language`, language);
-
-  getTask(subTaskNumber: number) {
-    return this.httpClient.get<number>(`${baseUrl}/task/get/` + subTaskNumber + '/');
+  post<T>(path: string, payload: T): Observable<any> {
+    return this.http.post(`${baseUrl}/${path}`, payload);
   }
 
-  getLogin(email: string, password: string) {
-    console.log("going to login");
-    return this.httpClient.post(`${baseUrl}/auth/signin/`, {
-      username: email,
-      password: password
-    }, httpOptions);
+  put<T>(path: string, payload: T): Observable<any> {
+    return this.http.put(`${baseUrl}/${path}`, payload);
   }
 
-  getRegister(firstName: string, lastName: string, username: string, password: string) {
-    console.log("going to register");
-    if (firstName != null && lastName != null) {
-      return this.httpClient.post(`${baseUrl}/auth/signup/`, {
-        firstname: firstName,
-        lastname: lastName,
-        username: username,
-        password: password
-      }, httpOptions);
-    } else {
-      return this.httpClient.post(`${baseUrl}/auth/signup`, {
-        username: username,
-        password: password
-      }, httpOptions);
-    }
+  delete = (path: string): Observable<any> => {
+    return this.http.delete(`${baseUrl}/${path}`);
   }
 }
