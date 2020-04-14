@@ -24,7 +24,6 @@ export class WelcomePageComponent implements OnInit, OnDestroy {
     }
   };
   selectedLanguage: string;
-  languages$: Observable<Language[]>;
   languagesSubscription: Subscription;
   
   constructor(
