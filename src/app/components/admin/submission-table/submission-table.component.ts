@@ -9,7 +9,7 @@ import { take } from 'rxjs/operators';
 @Component({
   selector: 'app-submission-table',
   templateUrl: './submission-table.component.html',
-  styleUrls: ['./submission-table.component.css'],
+  styleUrls: ['./submission-table.component.scss'],
   animations: [
     // TODO: use an ngIf to do this.
     trigger('expandAnswer', [
