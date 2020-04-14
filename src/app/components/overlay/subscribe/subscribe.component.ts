@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { HttpClientService } from "@service/http/http-client.service";
-import { TokenStorageService } from "@service/token/token-storage.service";
+import { HttpClientService } from '@service/http/http-client.service';
+import { TokenStorageService } from '@service/token/token-storage.service';
 import { MyOverlayRef } from 'src/app/service/overlay/myoverlay-ref';
 import { LoginService } from '@service/login/login.service';
 
@@ -10,7 +10,7 @@ import { LoginService } from '@service/login/login.service';
   templateUrl: './subscribe.component.html',
   styleUrls: ['./subscribe.component.scss']
 })
-export class SubscribeComponent {
+export class SubscribeComponent implements OnInit {
   frmSubscribe = this.fb.group({
     firstName: '',
     lastName: '',
@@ -42,7 +42,7 @@ export class SubscribeComponent {
   }
 
   submitRegister() {
-    console.log("submit register");
+    console.log('submit register');
     console.log(this.frmSubscribe.value);
 
     const { firstName, lastName, email, password } = this.frmSubscribe.value;
@@ -58,19 +58,19 @@ export class SubscribeComponent {
     this.ref.close(this.frmSubscribe.value);
   }
 
-  handleSuccessfulResponseGetRegister = (response, email, password): void => {
+  handleSuccessfulResponseGetRegister = (response: any, email: string, password: string): void => {
     // The user successfully registered. We will log him in.
     this.loginService.getLogin(email, password).subscribe(
-      response => this.handleSuccessfulResponseGetLogin(response),
+      registerResponse => this.handleSuccessfulResponseGetLogin(response),
       err => {
         // TODO: show error message on screen
         console.log(err.error.message);
       }
     );
-  };
+  }
 
   submitLogin() {
-    console.log("submit login");
+    console.log('submit login');
     console.log(this.frmLogin.value);
 
     const { email, password } = this.frmLogin.value;
@@ -90,27 +90,27 @@ export class SubscribeComponent {
     this.tokenStorageService.saveUser(response);
 
     window.location.reload();
-  };
+  }
 
   openTab(tabName) {
-    console.log("opening new tab " + tabName);
+    console.log('opening new tab ' + tabName);
     // We get both tab elements and we turn them off. Then we immediately turn the tab on that the user clicked on.
-    let signIn = document.getElementById('Sign-in');
-    let signUp = document.getElementById('Sign-up');
-    signIn.style.display = "none";
-    signUp.style.display = "none";
+    const signIn = document.getElementById('Sign-in');
+    const signUp = document.getElementById('Sign-up');
+    signIn.style.display = 'none';
+    signUp.style.display = 'none';
 
-    let signInTab = document.getElementById("tab-sign-in");
-    let signUpTab = document.getElementById("tab-sign-up");
-    signInTab.className = "tab";
-    signUpTab.className = "tab";
+    const signInTab = document.getElementById('tab-sign-in');
+    const signUpTab = document.getElementById('tab-sign-up');
+    signInTab.className = 'tab';
+    signUpTab.className = 'tab';
 
-    if (tabName == "Sign-in") {
-      signIn.style.display = "block";
-      signInTab.className = "tab is-active";
-    } else if (tabName == "Sign-up") {
-      signUp.style.display = "block";
-      signUpTab.className = "tab is-active";
+    if (tabName === 'Sign-in') {
+      signIn.style.display = 'block';
+      signInTab.className = 'tab is-active';
+    } else if (tabName === 'Sign-up') {
+      signUp.style.display = 'block';
+      signUpTab.className = 'tab is-active';
     }
   }
 

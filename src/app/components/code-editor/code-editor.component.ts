@@ -9,7 +9,7 @@ import { TaskService } from '@service/task/task.service';
 import { SubmissionService } from '@service/submission/submission.service';
 import { LanguageService } from '@service/language/language.service';
 import { OverlayService } from '@service/overlay/overlay.service';
-import { TokenStorageService } from "@service/token/token-storage.service";
+import { TokenStorageService } from '@service/token/token-storage.service';
 import { Subscription } from 'rxjs';
 // @TODO: There are A LOT of things going on here (too many for just one component)
 // We need to split this up thats one
@@ -25,7 +25,6 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   public constructor(
     private route: ActivatedRoute,
     private overlayService: OverlayService,
-    private candidateService: CandidateService,
     private taskService: TaskService,
     private languageService: LanguageService,
     private submissionService: SubmissionService,
@@ -118,26 +117,26 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
       case this.selectedLanguageIsJava:
         return this.evaluateCode('java');
     }
-  };
+  }
 
   // TODO: Implement Jupyter connection
   evaluateCode = (language: string): boolean => this.evaluationResult = true;
 
   loginWindow(content: ComponentType<SubscribeComponent>) {
     const ref = this.overlayService.open(content, null);
-  };
+  }
 
   getTask = (): void => {
     this.taskService.getTask(this.exerciseId).subscribe(
       response => this.handleSuccessfulResponseGetTask(response),
     );
-  };
+  }
 
   getLanguage = (): void => {
     this.languageService.getLanguages().subscribe(
       response => this.handleSuccessfulResponseGetLanguage(response),
     );
-  };
+  }
 
   createSubmission = (): void => {
     // When creating a new Submission we give id null so it creates a new entry. It will determine the id by itself.
@@ -153,32 +152,32 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
     this.submissionService.createSubmission(this.submission).subscribe(
       response => this.handleSuccessfulResponseCreateSubmission(response),
     );
-  };
+  }
 
 
   handleSuccessfulResponseCreateCandidate = (response): void => {
     const { id } = response;
     this.submissionCandidateId = id;
-  };
+  }
 
   handleSuccessfulResponseGetTask = (response): void => {
     // We receive the task object from the backend and we need the id and the description.
     const { id, description } = response;
     this.submissionTaskId = id;
     this.taskDescription = description;
-  };
+  }
 
   handleSuccessfulResponseGetLanguage = (response): void => {
     const { id } = response;
     this.submissionLanguageId = id;
     // Finally we want to find the task that candidate has performed to create the final submission to send.
     this.createSubmission();
-  };
+  }
 
   handleSuccessfulResponseCreateSubmission = (response): void => {
     // TODO: do something with a successful response
     console.log('successful post message create submission');
-  };
+  }
 
   ngOnDestroy() {
     this.paramMapSubscription.unsubscribe();
@@ -186,11 +185,8 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
 
   getTaskDescription = () => this.taskDescription;
 
-  submitCode = (): void => {
-    console.log("submit code");
-  };
+  submitCode = (): void => console.log('submit code');
 
-  checkLogin = (): boolean => {
-    return this.tokenStorageService.isUserLoggedIn();
-  };
+  checkLogin = (): boolean => this.tokenStorageService.isUserLoggedIn();
+
 }

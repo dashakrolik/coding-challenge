@@ -1,12 +1,8 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { OverlayService } from "@service/overlay/overlay.service";
-import { ComponentType } from "@angular/cdk/portal";
-import { SubscribeComponent } from "../overlay/subscribe/subscribe.component";
-import { HttpClientService } from '@service/http/http-client.service';
-import { LanguageService } from '@service/language/language.service';
 import { MatSelectChange } from '@angular/material/select';
+import { LanguageService } from '@service/language/language.service';
 
 @Component({
   selector: 'app-welcome-page',
@@ -43,10 +39,11 @@ export class WelcomePageComponent implements OnInit {
   getForm = () => this.form = this.formBuilder.group({});
 
   getLanguages = () => {
-    this.languages$ = this.languageService.getLanguages().subscribe(
+    this.languageService.getLanguages().subscribe(
       response => this.languages = response
     );
   }
+
   setLanguage = () => this.languages.map(item => item.language);
 
   setExercise() {

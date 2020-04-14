@@ -7,10 +7,12 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 })
 export class AuthGuardService implements CanActivate {
 
-  constructor(private router: Router,
-    private tokenStorageService: TokenStorageService) { }
+  constructor(
+    private router: Router,
+    private tokenStorageService: TokenStorageService
+  ) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  canActivate = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
     if (this.tokenStorageService.isUserLoggedIn()) {
       return true;
     }

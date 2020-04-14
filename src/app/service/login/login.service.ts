@@ -17,7 +17,7 @@ export class LoginService {
     ) { }
 
   getLogin(email: string, password: string) {
-    console.log("going to login");
+    console.log('going to login');
     return this.httpClient.post(AUTH_API + 'signin', {
       username: email,
       password: password
@@ -25,7 +25,7 @@ export class LoginService {
   }
 
   getRegister(firstName: string, lastName: string, username: string, password: string) {
-    console.log("going to register");
+    console.log('going to register');
     if (firstName != null && lastName != null) {
       return this.httpClient.post(AUTH_API + 'signup', {
         firstname: firstName,
