@@ -63,10 +63,9 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
     this.paramMapSubscription = this.route.paramMap.subscribe(params => {
       this.selectedLanguage = params.get('language') || 'javascript';
       
-      try {
-        this.exerciseId = parseInt(params.get('id'));
-      } catch (e) {
-        this.exerciseId = 1; // simply assign it the value of 1
+      this.exerciseId = parseInt(params.get('id'));
+      if(isNaN(this.exerciseId)) {
+        this.exerciseId = 1; // simply assign  if there's a problem
       }
 
     });
