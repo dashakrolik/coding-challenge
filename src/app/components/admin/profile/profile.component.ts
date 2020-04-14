@@ -46,8 +46,10 @@ export class ProfileComponent implements OnInit {
   }
 
   savePerson = (personData): void => {
+    this.personDetailsForm.get('id').enable();
     this.personService.updatePerson(personData.value).pipe(take(1)).subscribe(savedPerson => {
       this.person = savedPerson;
+      this.personDetailsForm.get('id').disable();
     });
   }
 
