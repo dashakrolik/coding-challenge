@@ -14,14 +14,6 @@ import { MatSelectChange } from '@angular/material/select';
   styleUrls: ['./welcome-page.component.css']
 })
 export class WelcomePageComponent implements OnInit {
-  constructor(
-    private formBuilder: FormBuilder,
-    private overlayService: OverlayService,
-    private routing: Router,
-    private languageService: LanguageService
-  ) {
-  }
-
   email: string;
   form: FormGroup;
   squareMargin = 'margin-left: 20px';
@@ -37,6 +29,12 @@ export class WelcomePageComponent implements OnInit {
   taskId: number;
   selectedLanguage: string;
 
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private languageService: LanguageService
+  ) {
+  }
   ngOnInit() {
     this.getForm();
     this.getLanguages();
@@ -45,7 +43,7 @@ export class WelcomePageComponent implements OnInit {
   getForm = () => this.form = this.formBuilder.group({});
 
   getLanguages = () => {
-    this.languageService.getLanguages().subscribe(
+    this.languages$ = this.languageService.getLanguages().subscribe(
       response => this.languages = response
     );
   }
@@ -66,7 +64,7 @@ export class WelcomePageComponent implements OnInit {
 
   submit = () => {
     this.setExercise();
-    this.routing.navigateByUrl('challenge/' + this.selectedLanguage + '/' + this.taskId);
+    this.router.navigateByUrl('challenge/' + this.selectedLanguage + '/' + this.taskId);
   }
 
   getLanguage = () => this.languages === undefined;

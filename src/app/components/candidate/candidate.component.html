@@ -1,4 +1,3 @@
-{{errorMessage}}
 <!-- @TODO replace this with a Material Design table -->
 <table>
   <thead></thead>
@@ -10,7 +9,7 @@
   </tr>
 
   <tbody>
-    <tr *ngFor="let candidate of candidates">
+    <tr *ngFor="let candidate of (candidates$ | async)">
       <td>{{candidate.id}}</td>
       <td>{{candidate.firstName}}</td>
       <td>{{candidate.lastName}}</td>

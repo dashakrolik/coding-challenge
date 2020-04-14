@@ -18,7 +18,10 @@
       "es2018",
       "dom"
     ],
-    "types": ["node", "jasmine"],
+    "types": [
+      "node",
+      "jasmine"
+    ],
     "paths": {
       "@service/*": [
         "./src/app/service/*"

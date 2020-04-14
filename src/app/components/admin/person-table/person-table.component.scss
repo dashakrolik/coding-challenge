@@ -1,0 +1,16 @@
+.data-table{
+  width: fit-content;
+}
+
+.mat-row{
+  transition: .5s;
+  &:hover{
+    background: #99ccd3;
+    cursor: pointer;
+  }
+}
+
+
+.mat-cell{
+  padding: 0 .5em;
+}

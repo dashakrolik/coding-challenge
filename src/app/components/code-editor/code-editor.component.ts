@@ -1,4 +1,6 @@
-import { Component, TemplateRef, ViewChild, OnInit } from '@angular/core';
+import { Component, TemplateRef, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { ComponentType } from '@angular/cdk/portal';
+
 import { AceEditorComponent } from 'ng2-ace-editor';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SubscribeComponent } from '../overlay/subscribe/subscribe.component';
@@ -7,9 +9,8 @@ import { TaskService } from '@service/task/task.service';
 import { SubmissionService } from '@service/submission/submission.service';
 import { LanguageService } from '@service/language/language.service';
 import { OverlayService } from '@service/overlay/overlay.service';
-import { ComponentType } from '@angular/cdk/portal';
-import { HttpClientService } from '@service/http/http-client.service';
 import { TokenStorageService } from "@service/token/token-storage.service";
+import { Subscription } from 'rxjs';
 // @TODO: There are A LOT of things going on here (too many for just one component)
 // We need to split this up thats one
 // Two, a lot of this code is not necessary, let's refactor
@@ -20,8 +21,7 @@ import { TokenStorageService } from "@service/token/token-storage.service";
   styleUrls: ['./code-editor.component.css']
 })
 
-export class CodeEditorComponent implements OnInit {
-
+export class CodeEditorComponent implements OnInit, OnDestroy {
   public constructor(
     private route: ActivatedRoute,
     private overlayService: OverlayService,
@@ -56,11 +56,14 @@ export class CodeEditorComponent implements OnInit {
   text = '';
   language = this.selectedLanguage;
 
+  paramMapSubscription: Subscription;
+
   ngOnInit() {
-    this.route.paramMap.subscribe(language =>
-      this.selectedLanguage = language.get('language')
-    );
-    this.exerciseId = this.route.firstChild.snapshot.params.id;
+    this.paramMapSubscription = this.route.paramMap.subscribe(params => {
+      this.selectedLanguage = params.get('language');
+      this.exerciseId = parseInt(params.get('id'));
+    });
+
     this.selectedLanguageIsJavascript = this.selectedLanguage === 'javascript';
     this.selectedLanguageIsPython = this.selectedLanguage === 'python';
     this.selectedLanguageIsJava = this.selectedLanguage === 'java';
@@ -142,7 +145,7 @@ export class CodeEditorComponent implements OnInit {
       id: null,
       answer: this.codeSnippet,
       correct: false,
-      candidateId: this.submissionCandidateId,
+      personId: this.submissionCandidateId,
       languageId: this.submissionLanguageId,
       taskId: this.submissionTaskId
     };
@@ -150,40 +153,44 @@ export class CodeEditorComponent implements OnInit {
     this.submissionService.createSubmission(this.submission).subscribe(
       response => this.handleSuccessfulResponseCreateSubmission(response),
     );
-  }
+  };
 
 
   handleSuccessfulResponseCreateCandidate = (response): void => {
     const { id } = response;
     this.submissionCandidateId = id;
-  }
+  };
 
   handleSuccessfulResponseGetTask = (response): void => {
     // We receive the task object from the backend and we need the id and the description.
     const { id, description } = response;
     this.submissionTaskId = id;
     this.taskDescription = description;
-  }
+  };
 
   handleSuccessfulResponseGetLanguage = (response): void => {
     const { id } = response;
     this.submissionLanguageId = id;
     // Finally we want to find the task that candidate has performed to create the final submission to send.
     this.createSubmission();
-  }
+  };
 
   handleSuccessfulResponseCreateSubmission = (response): void => {
     // TODO: do something with a successful response
     console.log('successful post message create submission');
+  };
+
+  ngOnDestroy() {
+    this.paramMapSubscription.unsubscribe();
   }
 
   getTaskDescription = () => this.taskDescription;
 
-  submitCode() {
+  submitCode = (): void => {
     console.log("submit code");
-  }
+  };
 
-  checkLogin() {
+  checkLogin = (): boolean => {
     return this.tokenStorageService.isUserLoggedIn();
-  }
+  };
 }
