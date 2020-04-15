@@ -16,7 +16,9 @@
         <input type="text" formControlName="email" size="30">
 
         <label>Role</label>
-        <input type="text" formControlName="role" size="30">
+        <mat-select formControlName="role">
+            <mat-option [value]="role" *ngFor="let role of roles" disableRipple>{{role}}</mat-option>
+        </mat-select>
 
         <label>Password</label>
         <input type="password" formControlName="password" size="30">
