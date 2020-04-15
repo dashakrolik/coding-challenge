@@ -4,7 +4,8 @@
     [inputValue]="getLanguagesStrs()"
     labelText="Select a Language"
     (valueOutput)="onSelect($event)"
-></app-dropdown>
-<br>
+>
+</app-dropdown>
+
 
 <button [disabled]="!languages?.length" (click)="submit()" mat-raised-button color="warn">Submit</button>

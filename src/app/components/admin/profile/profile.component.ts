@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PersonService } from '@service/person/person.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+
 import { take } from 'rxjs/operators';
+
+import { PersonService } from '@service/person/person.service';
 
 @Component({
   selector: 'app-profile',

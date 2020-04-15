@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LanguageService } from '@service/language/language.service';
 import { MatSelectChange } from '@angular/material/select';
 import { Subscription, Observable } from 'rxjs';
 
-@Component({ 
+@Component({
   selector: 'app-welcome-page',
   templateUrl: './welcome-page.component.html',
   styleUrls: ['./welcome-page.component.css']
@@ -25,7 +24,7 @@ export class WelcomePageComponent implements OnInit, OnDestroy {
   };
   selectedLanguage: string;
   languagesSubscription: Subscription;
-  
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -38,6 +37,7 @@ export class WelcomePageComponent implements OnInit, OnDestroy {
       this.languages = languages
     );
   }
+
 
   getLanguagesStrs = (): string[] => this.languages.map((item: Language) => item.language);
 
