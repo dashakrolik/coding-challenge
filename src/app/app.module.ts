@@ -1,17 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
-
 import { AceEditorModule } from 'ng2-ace-editor';
-
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -41,12 +38,12 @@ import { DropdownComponent } from '@components/dropdown/dropdown.component';
     CandidateComponent,
     OverlayComponent,
     SubscribeComponent,
+    DropdownComponent,
+    ProfileComponent,
     AdminPanelComponent,
     TaskComponent,
     PersonTableComponent,
-    ProfileComponent,
     SubmissionTableComponent,
-    DropdownComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +57,7 @@ import { DropdownComponent } from '@components/dropdown/dropdown.component';
     MatInputModule,
     HttpClientModule,
     OverlayModule,
+    FormsModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule

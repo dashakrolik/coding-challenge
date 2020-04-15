@@ -1,10 +1,13 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { SubmissionService } from '@service/submission/submission.service';
+
 import { take } from 'rxjs/operators';
+
+import { SubmissionService } from '@service/submission/submission.service';
 
 @Component({
   selector: 'app-submission-table',
@@ -32,6 +35,7 @@ export class SubmissionTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<Submission>;
+  // TODO: add rule to the  tsconfig to disable the error below
   @Input('personId') personId: number;
   dataSource: MatTableDataSource<Submission>;
 
