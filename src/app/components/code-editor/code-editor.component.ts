@@ -54,14 +54,16 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   text = '';
   language = this.selectedLanguage;
 
-  paramMapSubscription: Subscription;
+  paramSubscription: Subscription;
   codeResult: String
 
   ngOnInit() {
-    this.paramMapSubscription = this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe(params => {
       this.selectedLanguage = params.get('language');
-      this.exerciseId = parseInt(params.get('id'));
     });
+    this.route.firstChild.paramMap.subscribe(params => {
+      this.exerciseId = parseInt(params.get("id"));
+    })
 
     this.selectedLanguageIsJavascript = this.selectedLanguage === 'javascript';
     this.selectedLanguageIsPython = this.selectedLanguage === 'python';
@@ -154,8 +156,8 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   }
 
   getTask = (): void => {
-    // TODO: the params fails and the exciseid is not filled. Fix this. Fow now we set this explicitally.
-    this.exerciseId = 1;
+    console.log('quick task check');
+    console.log(this.exerciseId);
     this.taskService.getTask(this.exerciseId).subscribe(
       response => this.handleSuccessfulResponseGetTask(response),
     );
@@ -194,6 +196,8 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   handleSuccessfulResponseGetTask = (response): void => {
     // We receive the task object from the backend and we need the id and the description.
     const { id, description } = response;
+    console.log('task check');
+    console.log(response);
     this.submissionTaskId = id;
     this.taskDescription = description;
   }
@@ -207,7 +211,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.paramMapSubscription.unsubscribe();
+    this.paramSubscription.unsubscribe();
   }
 
   getTaskDescription = () => this.taskDescription;
