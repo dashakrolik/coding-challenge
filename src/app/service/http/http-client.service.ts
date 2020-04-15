@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { baseUrl } from '@shared/constants';
 import { Observable } from 'rxjs';
 
@@ -22,11 +22,7 @@ export class HttpClientService {
     return this.http.put(`${baseUrl}/${path}`, payload);
   }
 
-  delete<T>(path: string, payload: T): Observable<any> {
-    const options = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-      body: payload
-    };
-    return this.http.delete(`${baseUrl}/${path}`, options);
+  delete = (path: string): Observable<any> => {
+    return this.http.delete(`${baseUrl}/${path}`);
   }
 }

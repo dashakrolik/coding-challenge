@@ -15,7 +15,7 @@ export class PersonService {
 
   getPersonById = (id: number): Observable<Person> => this.http.get('person/' + id);
 
-  updatePerson = (person: Person): Observable<Person> => this.http.put<Person>('person', person);
+  updatePerson = (person: Person): Observable<Person> => this.http.put('person', person);
 
-  deletePerson = (person: Person): Observable<Person> => this.http.delete<Person>('person', person);
+  deletePerson = (id: number): Observable<Person> => this.http.delete('person/' + id);
 }

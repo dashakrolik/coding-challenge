@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PersonService } from '@service/person/person.service';
-import { FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { take } from 'rxjs/operators';
 
 @Component({
@@ -12,8 +12,6 @@ import { take } from 'rxjs/operators';
 export class ProfileComponent implements OnInit {
   person: Person;
   personDetailsForm: FormGroup;
-  // TODO: get roles from backend
-  roles: string[] = ['USER', 'ADMIN'];
 
   constructor(
     private route: ActivatedRoute,
@@ -47,23 +45,17 @@ export class ProfileComponent implements OnInit {
     this.personDetailsForm.get('password').setValue('');
   }
 
-  // TODO: Give a response to the user if save or delete succeeded or failed
   savePerson = (): void => {
-    const idControl: AbstractControl = this.personDetailsForm.get('id');
-    idControl.enable();
+    this.personDetailsForm.get('id').enable();
     this.personService.updatePerson(this.personDetailsForm.value).pipe(take(1)).subscribe(savedPerson => {
       this.person = savedPerson;
-      idControl.disable();
+      this.personDetailsForm.get('id').disable();
     });
   }
 
   deletePerson = (): void => {
-    const idControl: AbstractControl = this.personDetailsForm.get('id');
-    idControl.enable();
-    console.log(this.personDetailsForm.value);
-    this.personService.deletePerson(this.personDetailsForm.value).pipe(take(1)).subscribe(() => {
+    this.personService.deletePerson(this.person.id).pipe(take(1)).subscribe(() => {
       this.navigateToAdminPanel();
-      idControl.disable();
     });
   }
 
