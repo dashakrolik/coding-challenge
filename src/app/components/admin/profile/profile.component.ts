@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PersonService } from '@service/person/person.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 import { take } from 'rxjs/operators';
 
 @Component({
@@ -46,10 +46,11 @@ export class ProfileComponent implements OnInit {
   }
 
   savePerson = (): void => {
-    this.personDetailsForm.get('id').enable();
+    const idControl: AbstractControl = this.personDetailsForm.get('id');
+    idControl.enable();
     this.personService.updatePerson(this.personDetailsForm.value).pipe(take(1)).subscribe(savedPerson => {
       this.person = savedPerson;
-      this.personDetailsForm.get('id').disable();
+      idControl.disable();
     });
   }
 
