@@ -6,8 +6,6 @@ import { FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 
 import { take } from 'rxjs/operators';
 
-import { PersonService } from '@service/person/person.service';
-
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
