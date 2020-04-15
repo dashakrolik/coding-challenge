@@ -5,8 +5,9 @@ import { CodeEditorComponent } from './components/code-editor/code-editor.compon
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
 import { JavascriptTaskComponent } from './components/output/javascript-task/javascript-task.component';
 import { CandidateComponent } from './components/candidate/candidate.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { AuthGuardService } from '@service/auth/auth-guard.service';
 import { AdminPanelComponent } from './components/admin/admin-panel/admin-panel.component';
-import { ProfileComponent } from './components/admin/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -14,8 +15,14 @@ const routes: Routes = [
     component: WelcomePageComponent
   },
   {
+    path: 'profile',
+    component: ProfileComponent
+  },
+  {
+    // you have to be logged in to see this page
     path: 'candidates',
-    component: CandidateComponent
+    component: CandidateComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: 'challenge/:language',
