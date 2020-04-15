@@ -9,13 +9,11 @@ import { MyOverlayRef } from '@service/overlay/myoverlay-ref';
 export class OverlayComponent implements OnInit {
   contentType: 'template' | 'string' | 'component';
   content: string | TemplateRef<any> | Type<any>;
-  context;
+  context: { close: any; };
 
   constructor(private ref: MyOverlayRef) {}
 
-  close() {
-    this.ref.close(null);
-  }
+  close = () => this.ref.close(null);
 
   ngOnInit() {
     this.content = this.ref.content;
