@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
 
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';
+import { TokenStorageService } from '@service/token/token-storage.service';
 // @TODO: There are A LOT of things going on here (too many for just one component)
 // We need to split this up thats one
 // Two, a lot of this code is not necessary, let's refactor
@@ -57,6 +58,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
     private taskService: TaskService,
     private languageService: LanguageService,
     private submissionService: SubmissionService,
+    private tokenStorageService: TokenStorageService,
     public dialog: MatDialog,
   ) {
     this.route = route;
@@ -209,4 +211,9 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
     this.languageSubscription.unsubscribe();
     this.submissionSubscription.unsubscribe();
   }
+
+  getTaskDescription = () => this.taskDescription;
+
+  checkLogin = (): boolean => this.tokenStorageService.isUserLoggedIn();
+
 }

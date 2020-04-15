@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CandidateService } from '@service/candidate/candidate.service';
+
 import { Observable } from 'rxjs';
+
+import { CandidateService } from '@service/candidate/candidate.service';
 
 @Component({
   selector: 'app-candidate',
@@ -8,7 +10,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./candidate.component.css']
 })
 export class CandidateComponent implements OnInit {
-  candidates$: Observable<Candidate[]>;
+  candidates: Observable<Candidate[]>;
 
   constructor(
     private candidateService: CandidateService
@@ -16,6 +18,6 @@ export class CandidateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.candidates$ = this.candidateService.getCandidates();
+    this.candidates = this.candidateService.getCandidates();
   }
 }
