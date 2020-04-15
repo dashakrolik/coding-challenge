@@ -10,8 +10,10 @@ import { SubmissionService } from '@service/submission/submission.service';
 import { LanguageService } from '@service/language/language.service';
 import { OverlayService } from '@service/overlay/overlay.service';
 
-import { SubscribeComponent } from '../overlay/subscribe/subscribe.component';
 import { Subscription } from 'rxjs';
+
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';
 // @TODO: There are A LOT of things going on here (too many for just one component)
 // We need to split this up thats one
 // Two, a lot of this code is not necessary, let's refactor
@@ -55,6 +57,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
     private taskService: TaskService,
     private languageService: LanguageService,
     private submissionService: SubmissionService,
+    public dialog: MatDialog,
   ) {
     this.route = route;
   }
@@ -115,6 +118,17 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
     // use this.selectedLanguage
 
     return this.evaluationResult = true;
+  }
+
+  submitCode = () => {
+    const dialogRef = this.dialog.open(SubmitDialogComponent, {
+      // width: '250px',
+      // data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
   openModal = (content: TemplateRef<any> | ComponentType<any> | string): void => {

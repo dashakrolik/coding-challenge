@@ -31,6 +31,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { ProfileComponent } from './components/admin/profile/profile.component';
 import { SubmissionTableComponent } from './components/admin/submission-table/submission-table.component';
 import { DropdownComponent } from './dropdown/dropdown.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { DropdownComponent } from './dropdown/dropdown.component';
     PersonTableComponent,
     ProfileComponent,
     SubmissionTableComponent,
-    DropdownComponent
+    DropdownComponent,
+    SubmitDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +65,8 @@ import { DropdownComponent } from './dropdown/dropdown.component';
     OverlayModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent],

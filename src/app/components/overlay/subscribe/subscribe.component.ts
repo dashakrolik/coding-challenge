@@ -12,9 +12,8 @@ export class SubscribeComponent implements OnInit {
   form: FormGroup;
 
   // TODO use Material Design Dialogue instead
-  constructor(private fb: FormBuilder, private overlayRef: MyOverlayRef) {}
-
-  ngOnInit(): void {
+  constructor(private fb: FormBuilder, private overlayRef: MyOverlayRef) {
+    console.log('test subscribe omponent')
     this.form = this.fb.group({
       firstName: 'Sander',
       lastName: 'Kools',
@@ -23,6 +22,9 @@ export class SubscribeComponent implements OnInit {
         Validators.compose([Validators.email, Validators.required])
       ]
     });
+  }
+
+  ngOnInit(): void {
   }
 
   submit = () => this.overlayRef.close(this.form.value);
