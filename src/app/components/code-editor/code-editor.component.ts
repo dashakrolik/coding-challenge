@@ -67,7 +67,9 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
     this.selectedLanguageIsPython = this.selectedLanguage === 'python';
     this.selectedLanguageIsJava = this.selectedLanguage === 'java';
     this.loadJavaScriptTask = this.selectedLanguageIsJavascript;
-    this.codeResult = "";
+    this.codeResult = '';
+    // Give a initial text in the code editor for the user to modify.
+    this.text = 'def calculate_highest_frequency(ordina_input):\n	"""calculate_highest_frequency should return the highest frequency in the text (several words might actually have this frequency)"""\n    # finish the function logic\n	return 0\n\nif __name__ == "__main__":\n    ordina_input = "This is the input"\n    result = calculate_highest_frequency(ordina_input)\n    print(result)';
 
     // We load the task based on the exerciseId
     this.getTask();
@@ -121,7 +123,31 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   }
 
   // TODO: Implement Jupyter connection
-  evaluateCode = (language: string): boolean => this.evaluationResult = true;
+  evaluateCode = (language: string): boolean => {
+    // TODO: The language id is not retrieved, not sure why. Figure it out. (2 is python)
+    this.submissionLanguageId = 2;
+    
+    const runCodeSubmission: Submission = {
+      answer: this.codeSnippet,
+      correct: false,
+      languageId: this.submissionLanguageId,  
+      taskId: this.submissionTaskId
+    };
+    this.submissionService.runCode(runCodeSubmission).subscribe(
+      response => this.handleSuccessfulResponseRunCode(response),
+    );
+
+    this.evaluationResult = true;
+    return this.evaluationResult;
+  }
+
+  handleSuccessfulResponseRunCode = (response): void => {
+    console.log('succesfully ran code with jupyter');
+    response.forEach(element => {
+      this.codeResult += element.contentValue;
+      console.log(element);
+    });
+  }
 
   loginWindow(content: ComponentType<SubscribeComponent>) {
     const ref = this.overlayService.open(content, null);
@@ -176,7 +202,6 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
     this.codeResult = "";
     console.log('successful post message create submission');
     response.forEach(element => {
-      this.codeResult += element.contentValue;
       console.log(element);
     });
   }

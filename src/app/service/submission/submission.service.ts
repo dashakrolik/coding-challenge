@@ -14,4 +14,6 @@ export class SubmissionService {
   getAllSubmissionsFromPerson = (personId: number): Observable<Submission[]> => this.http.get('submission/' + personId);
 
   createSubmission = (submission: Submission): Observable<Submission> => this.http.post<Submission>('submission', submission);
+
+  runCode = (submission: Submission): Observable<Submission> => this.http.post<Submission>('runcode', submission);
 }
