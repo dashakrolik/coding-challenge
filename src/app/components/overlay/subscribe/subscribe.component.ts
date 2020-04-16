@@ -86,7 +86,7 @@ export class SubscribeComponent implements OnInit {
   }
 
   handleSuccessfulResponseGetLogin = (response): void => {
-    this.tokenStorageService.saveToken(response.accessToken);
+    this.tokenStorageService.saveToken(response.token);
     this.tokenStorageService.saveUser(response);
 
     window.location.reload();
