@@ -161,7 +161,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   }
 
   handleSuccessfulResponseGetTask = (response): void => {
-    // We receive the task object from the backend and we need the id and the description.
+    // We receive the task object from the backend and we need the id and the description. 
     const { id, description } = response;
     this.submissionTaskId = id;
     this.taskDescription = description;
