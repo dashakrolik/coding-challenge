@@ -204,6 +204,8 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
 
+  checkIsLoggedIn = (): boolean => this.tokenStorageService.isUserLoggedIn();
+
   ngOnDestroy() {
     this.paramMapSubscription.unsubscribe();
     this.candidateSubscription.unsubscribe();
@@ -211,9 +213,5 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
     this.languageSubscription.unsubscribe();
     this.submissionSubscription.unsubscribe();
   }
-
-  getTaskDescription = () => this.taskDescription;
-
-  checkLogin = (): boolean => this.tokenStorageService.isUserLoggedIn();
 
 }

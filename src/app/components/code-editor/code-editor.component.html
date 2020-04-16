@@ -12,10 +12,10 @@
 
 <div>
   <!-- We create the same button twice, if the user is not logged in the functionality will be that of logging in rather than submitting -->
-  <button *ngIf="!checkLogin()" (click)="loginWindow(subscribeComponent)" mat-raised-button color="warn">
+  <button *ngIf="!checkIsLoggedIn()" (click)="loginWindow(subscribeComponent)" mat-raised-button color="warn">
     Submit Code
   </button>
-  <button *ngIf="checkLogin()" (click)="submitCode()" mat-raised-button color="warn">
+  <button *ngIf="checkIsLoggedIn()" (click)="submitCode()" mat-raised-button color="warn">
     Submit Code
   </button>
 </div>
