@@ -133,6 +133,17 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+  openLoginModal = () => {
+    const dialogRef = this.dialog.open(SubmitDialogComponent, {
+      // width: '250px',
+      // data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
   openModal = (content: TemplateRef<any> | ComponentType<any> | string): void => {
     const ref = this.overlayService.open(content, null);
 
