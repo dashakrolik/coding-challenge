@@ -28,6 +28,7 @@ import { PersonTableComponent } from '@components/admin/person-table/person-tabl
 import { ProfileComponent } from '@components/admin/profile/profile.component';
 import { SubmissionTableComponent } from '@components/admin/submission-table/submission-table.component';
 import { DropdownComponent } from '@components/dropdown/dropdown.component';
+import { authInterceptorProviders } from '@service/auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,7 @@ import { DropdownComponent } from '@components/dropdown/dropdown.component';
     MatSortModule,
     MatDialogModule
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent],
   entryComponents: [OverlayComponent, SubscribeComponent],
   schemas: [NO_ERRORS_SCHEMA]
