@@ -12,4 +12,6 @@ export class LanguageService {
   ) { }
 
   getLanguages = (): Observable<Language[]> => this.http.get('language');
+
+  getLanguageId = (language: string): Observable<string> => this.http.post('language', language);
 }

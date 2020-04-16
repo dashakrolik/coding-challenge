@@ -19,4 +19,15 @@
     Submit Code
   </button>
 </div>
+<div>
 {{this.codeResult}}
+</div>
+<div>
+<span id="test1" class="dot"></span>
+<span id="test2" class="dot"></span>
+</div>
+<div>
+  <button *ngIf="completeTask(1)" (click)="goToTask(2)" mat-raised-button color="warn">
+    Next Task
+  </button>
+</div>

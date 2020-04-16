@@ -56,6 +56,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
 
   paramSubscription: Subscription;
   codeResult: String
+  tests: boolean[]
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -72,9 +73,10 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
     this.codeResult = '';
     // Give a initial text in the code editor for the user to modify.
     this.text = 'def calculate_highest_frequency(ordina_input):\n	"""calculate_highest_frequency should return the highest frequency in the text (several words might actually have this frequency)"""\n    # finish the function logic\n	return 0\n\nif __name__ == "__main__":\n    ordina_input = "This is the input"\n    result = calculate_highest_frequency(ordina_input)\n    print(result)';
-
+    this.tests = [false, false, false, false, false, false, false, false, false, false, false];
     // We load the task based on the exerciseId
     this.getTask();
+    this.getLanguage();
   }
 
   ngAftterViewInit() {
@@ -123,12 +125,8 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
         return this.evaluateCode('java');
     }
   }
-
-  // TODO: Implement Jupyter connection
+  
   evaluateCode = (language: string): boolean => {
-    // TODO: The language id is not retrieved, not sure why. Figure it out. (2 is python)
-    this.submissionLanguageId = 2;
-    
     const runCodeSubmission: Submission = {
       answer: this.codeSnippet,
       correct: false,
@@ -144,7 +142,9 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   }
 
   handleSuccessfulResponseRunCode = (response): void => {
-    console.log('succesfully ran code with jupyter');
+    // First we clear the current output for the new input
+    // TODO: check if there is an error and print that instead of the normal contentvalue.
+    this.codeResult = "";
     response.forEach(element => {
       this.codeResult += element.contentValue;
       console.log(element);
@@ -156,31 +156,22 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   }
 
   getTask = (): void => {
-    console.log('quick task check');
-    console.log(this.exerciseId);
     this.taskService.getTask(this.exerciseId).subscribe(
       response => this.handleSuccessfulResponseGetTask(response),
     );
   }
 
-  // TODO: This is not called anymore. Why? We need the language id.
-  // getLanguage = (): void => {
-  //   this.languageService.getLanguages().subscribe(
-  //     response => this.handleSuccessfulResponseGetLanguage(response),
-  //   );
-  // }
+  getLanguage = (): void => {
+    this.languageService.getLanguageId(this.selectedLanguage).subscribe(
+      response => this.handleSuccessfulResponseGetLanguage(response),
+    );
+  }
 
-  // handleSuccessfulResponseGetLanguage = (response): void => {
-  //   const { id } = response;
-  //   this.submissionLanguageId = id;
-  //   // Finally we want to find the task that candidate has performed to create the final submission to send.
-  //   this.createSubmission();
-  // }
-
+  handleSuccessfulResponseGetLanguage = (response): void => {
+    this.submissionLanguageId = response.id;
+  }
+  
   createSubmission = (): void => {
-    // TODO: The language id is not retrieved, not sure why. Figure it out. (2 is python)
-    this.submissionLanguageId = 2;
-    // When creating a new Submission we give id null so it creates a new entry. It will determine the id by itself.
     this.submission = {
       answer: this.codeSnippet,
       correct: false,
@@ -196,8 +187,6 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   handleSuccessfulResponseGetTask = (response): void => {
     // We receive the task object from the backend and we need the id and the description.
     const { id, description } = response;
-    console.log('task check');
-    console.log(response);
     this.submissionTaskId = id;
     this.taskDescription = description;
   }
@@ -205,8 +194,18 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   handleSuccessfulResponseCreateSubmission = (response): void => {
     this.codeResult = "";
     console.log('successful post message create submission');
+    let index = 1;
     response.forEach(element => {
-      console.log(element);
+      const elementName = 'test' + index;
+      let testDot = document.getElementById(elementName);
+      if (element) {
+        testDot.style.backgroundColor="green"
+        this.tests[index] = true;
+      } else {
+        testDot.style.backgroundColor="red"
+        this.tests[index] = false;
+      }
+      index += 1
     });
   }
 
@@ -226,4 +225,23 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
 
   checkLogin = (): boolean => this.tokenStorageService.isUserLoggedIn();
 
+  completeTask = (taskNumber): boolean => {
+    // TODO: implement the complete task check
+    // Now it just check if the 2 tests I have added are correct. change this with the final test implementation
+    let completedTests = 0;
+    this.tests.forEach( test => {
+      if (test) {
+        completedTests += 1
+      }
+    })
+    if (completedTests >= 2) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  goToTask = (taskNumber) => {
+    console.log("going to task number " + taskNumber);
+  }
 }
