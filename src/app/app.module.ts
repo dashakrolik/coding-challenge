@@ -29,6 +29,8 @@ import { ProfileComponent } from '@components/admin/profile/profile.component';
 import { SubmissionTableComponent } from '@components/admin/submission-table/submission-table.component';
 import { DropdownComponent } from '@components/dropdown/dropdown.component';
 import { authInterceptorProviders } from '@service/auth/auth.interceptor';
+import { AppComponent } from './app.component';
+import { CodeEditorComponent } from '@components/code-editor/code-editor.component';
 
 @NgModule({
   declarations: [
