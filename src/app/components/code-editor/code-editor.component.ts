@@ -15,6 +15,7 @@ import { Subscription } from 'rxjs';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';
 import { TokenStorageService } from '@service/token/token-storage.service';
+import { take } from 'rxjs/operators';
 // @TODO: There are A LOT of things going on here (too many for just one component)
 // We need to split this up thats one
 // Two, a lot of this code is not necessary, let's refactor
@@ -46,7 +47,6 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
   text = '';
   
   paramMapSubscription: Subscription;
-  candidateSubscription: Subscription;
   taskSubscription: Subscription;
   languageSubscription: Subscription;
   submissionSubscription: Subscription;
@@ -59,10 +59,8 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
     private languageService: LanguageService,
     private submissionService: SubmissionService,
     private tokenStorageService: TokenStorageService,
-    public dialog: MatDialog,
-  ) {
-    this.route = route;
-  }
+    private dialog: MatDialog,
+  ) { }
 
   ngOnInit() {
     this.paramMapSubscription = this.route.paramMap.subscribe(params => {
@@ -139,8 +137,33 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
       // data: {name: this.name, animal: this.animal}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+    dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
+      const { data } = result;
+
+      // simple check to see if the user cancelled the form and code is evaluated
+      if (data != null && this.evaluationResult) {
+        // We will create a submission. To do this we must first create the new candidate and retrieve other data
+        // Create a new candidate, for now it has a placeholder for first name and last name.
+        // Id should be null. It will create an id automatically in the backend if it is null.
+        // TODO: instead of creating it and retrieving it we want to add a user login possibility
+        // TODO: Now we retrieve the task and the language. Later this should be retrieved already,
+        //  remove this at that point.
+
+        const candidate: Candidate = {
+          id: null,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email
+        };
+
+        this.candidateService.createCandidate(candidate)
+          .pipe(take(1))
+          .subscribe((candi: Candidate) => {
+            this.submissionCandidateId = candi.id;
+          });
+      } else {
+        console.log('Check fields and code');
+      }
     });
   }
 
@@ -157,19 +180,21 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
         // TODO: Now we retrieve the task and the language. Later this should be retrieved already,
         //  remove this at that point.
 
-        const candidate: Candidate = {
-          id: null,
-          firstName: res.data.firstName,
-          lastName: res.data.lastName,
-          email: res.data.email
-        };
+      //   const candidate: Candidate = {
+      //     id: null,
+      //     firstName: res.data.firstName,
+      //     lastName: res.data.lastName,
+      //     email: res.data.email
+      //   };
 
-        this.candidateSubscription = this.candidateService.createCandidate(candidate).subscribe(response => {
-          const { id } = response;
-          this.submissionCandidateId = id;
-        });
-      } else {
-        console.log('Check fields and code');
+      //   this.candidateService.createCandidate(candidate)
+      //     .pipe(take(1))
+      //     .subscribe(response => {
+      //     const { id } = response;
+      //     this.submissionCandidateId = id;
+      //   });
+      // } else {
+      //   console.log('Check fields and code');
       }
     });
   }
@@ -219,7 +244,6 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     this.paramMapSubscription.unsubscribe();
-    this.candidateSubscription.unsubscribe();
     this.taskSubscription.unsubscribe();
     this.languageSubscription.unsubscribe();
     this.submissionSubscription.unsubscribe();
