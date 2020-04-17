@@ -1,0 +1,42 @@
+import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MessageDialogComponent } from '@components/dialog/message-dialog/message-dialog.component';
+import { take } from 'rxjs/operators';
+import { OkCancelDialogComponent } from '@components/dialog/ok-cancel-dialog/ok-cancel-dialog.component';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DialogService {
+  constructor(
+    private dialog: MatDialog,
+  ) { }
+
+  openMessageDialog = (data) => {
+    return new Promise((resolve, reject) => {
+      const dialogRef = this.dialog.open(MessageDialogComponent, {
+        width: '300px',
+        data
+      });
+      dialogRef.afterClosed().pipe(take(1)).subscribe(() => {
+        resolve();
+      });
+    });
+  }
+
+  openOkCancelDialog = (data) => {
+    return new Promise((resolve, reject) => {
+      const dialogRef = this.dialog.open(OkCancelDialogComponent, {
+        width: '300px',
+        data
+      });
+      dialogRef.afterClosed().pipe(take(1)).subscribe((answerBool) => {
+        if (answerBool) {
+          resolve();
+        } else {
+          reject();
+        }
+      });
+    });
+  }
+}

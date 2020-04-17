@@ -4,5 +4,5 @@ interface Person {
     lastName: string;
     email: string;
     password: string;
-    role: string;
+    roles: Role[];
 }

@@ -12,6 +12,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -28,6 +29,10 @@ import { PersonTableComponent } from '@components/admin/person-table/person-tabl
 import { ProfileComponent } from '@components/admin/profile/profile.component';
 import { SubmissionTableComponent } from '@components/admin/submission-table/submission-table.component';
 import { DropdownComponent } from '@components/dropdown/dropdown.component';
+import { authInterceptorProviders } from '@service/auth/auth.interceptor';
+import { MatDialogProvider } from '@shared/constants';
+import { OkCancelDialogComponent } from './components/dialog/ok-cancel-dialog/ok-cancel-dialog.component';
+import { MessageDialogComponent } from './components/dialog/message-dialog/message-dialog.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +49,8 @@ import { DropdownComponent } from '@components/dropdown/dropdown.component';
     TaskComponent,
     PersonTableComponent,
     SubmissionTableComponent,
+    OkCancelDialogComponent,
+    MessageDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,11 +67,20 @@ import { DropdownComponent } from '@components/dropdown/dropdown.component';
     FormsModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatDialogModule,
   ],
-  providers: [],
+  providers: [
+    authInterceptorProviders,
+    MatDialogProvider,
+  ],
   bootstrap: [AppComponent],
-  entryComponents: [OverlayComponent, SubscribeComponent],
+  entryComponents: [
+    OverlayComponent,
+    SubscribeComponent,
+    MessageDialogComponent,
+    OkCancelDialogComponent,
+  ],
   schemas: [NO_ERRORS_SCHEMA]
 })
 export class AppModule {
