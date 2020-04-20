@@ -16,7 +16,8 @@ export class ProfileComponent implements OnInit {
   person: Person;
   personDetailsForm: FormGroup;
   // TODO: get roles from backend
-  roles: Role[] = [
+  roles: string[] = ['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN'];
+  allRoles: Role[] = [
     { id: 1, name: 'ROLE_USER' },
     { id: 2, name: 'ROLE_MODERATOR' },
     { id: 3, name: 'ROLE_ADMIN' }
@@ -53,14 +54,27 @@ export class ProfileComponent implements OnInit {
 
   fillForm = (): void => {
     this.personDetailsForm.patchValue({ ...this.person });
+    this.personDetailsForm.get('roles').setValue(this.person.roles.map(role => role.name));
     this.personDetailsForm.get('password').setValue('');
-    console.log(this.personDetailsForm.value);
+  }
+
+  /**
+   * Returns array of strings
+   */
+  getRolesStrs = (person: Person): string[] => {
+    return person.roles.map(role => role.name);
   }
 
   savePerson = (): void => {
+    this.person = this.personDetailsForm.value;
+    this.person.roles = this.allRoles.filter(role => {
+      return this.person.roles.includes(role.name as string) as boolean;
+    }
+    );
+    console.log(this.person);
     const idControl: AbstractControl = this.personDetailsForm.get('id');
     idControl.enable();
-    this.personService.updatePerson(this.personDetailsForm.value).pipe(take(1)).subscribe(savedPerson => {
+    this.personService.updatePerson(this.person).pipe(take(1)).subscribe(savedPerson => {
       this.person = savedPerson;
       idControl.disable();
     });
@@ -82,7 +96,7 @@ export class ProfileComponent implements OnInit {
       title: 'Alert!',
       message: 'Are you agreed?'
     };
-    this.dialogService.openMessageDialog(data)
+    this.dialogService.openOkCancelDialog(data)
       .then((value) => {
         console.log(value);
       })

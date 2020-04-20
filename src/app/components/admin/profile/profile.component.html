@@ -18,19 +18,20 @@
         <label>Role</label>
         <mat-select formControlName="roles" multiple>
             <mat-select-trigger>
-                {{personDetailsForm.get('roles').value[0] ? personDetailsForm.get('roles').value[0].name : ''}}
+                {{personDetailsForm.get('roles').value[0] ? personDetailsForm.get('roles').value[0] : ''}}
                 <span *ngIf="personDetailsForm.get('roles').value?.length >1">
                     (+{{personDetailsForm.get('roles').value?.length - 1}} others)
                 </span>
             </mat-select-trigger>
-            <mat-option *ngFor="let role of roles" value="role">{{role.name}}</mat-option>
+            <mat-option *ngFor="let role of roles" [value]="role">{{role}}
+            </mat-option>
         </mat-select>
 
         <label>Password</label>
         <input type="password" formControlName="password" size="30">
 
         <button type="submit">Save changes</button>
-        <input type="button" class="del" (click)="deletePerson()" value="Delete person">
+        <input type="button" class="del" (click)="openDialog()" value="Delete person">
     </form>
 
     <div class="submission-table">

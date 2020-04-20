@@ -27,7 +27,7 @@ export class PersonTableComponent implements OnInit {
   dataSource: MatTableDataSource<Person>;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'firstName', 'lastName', 'email'];
+  displayedColumns = ['id', 'firstName', 'lastName', 'username'];
 
   ngOnInit() {
     this.personService.getAllPersons().pipe(take(1)).subscribe(persons => {
