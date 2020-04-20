@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PersonService } from '@service/person/person.service';
 import { FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 import { take } from 'rxjs/operators';
-import { MessageDialogComponent } from '@components/dialog/message-dialog/message-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogService } from '@service/dialog/dialog.service';
 
@@ -29,7 +28,6 @@ export class ProfileComponent implements OnInit {
     private personService: PersonService,
     private formBuilder: FormBuilder,
     private router: Router,
-    public dialog: MatDialog,
     private dialogService: DialogService,
   ) { }
 
