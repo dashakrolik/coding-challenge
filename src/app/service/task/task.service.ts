@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClientService } from '../http/http-client.service';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class TaskService {
     private http: HttpClientService
   ) { }
 
-  getTask = (subTaskNumber: number): Observable<string[]> => this.http.get('task/' + subTaskNumber);
+  getTask = (subTaskNumber: number): Observable<Task> => this.http.get('task/' + subTaskNumber);
 
   getAllTasks = (): Observable<Task[]> => this.http.get('task');
 }

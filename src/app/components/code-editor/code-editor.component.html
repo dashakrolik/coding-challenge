@@ -1,21 +1,23 @@
 <!-- We load the task and show the description -->
-{{taskDescription}}
-
-<ace-editor editor [(text)]="text" [mode]="getMode()" [theme]="getTheme()"
+<ng-container *ngIf="selectedLanguage && task">
+  {{task.description}}
+  <ace-editor editor [(editorText)]="editorText" [mode]="selectedLanguage.language" [theme]="selectedLanguage.editorTheme"
   (textChanged)="onChange($event)" [readOnly]="false" class="ace-editor"></ace-editor>
-
-
-<br>
-
-<button (click)="evaluateCode()" mat-raised-button color="warn">Run</button>
-<app-javascript-task *ngIf="selectedLanguageIsJavascript"></app-javascript-task>
-
-<div>
-  <!-- We create the same button twice, if the user is not logged in the functionality will be that of logging in rather than submitting -->
-  <button *ngIf="!checkIsLoggedIn()" (click)="openLoginModal()" mat-raised-button color="warn">
-    Submit Code
-  </button>
-  <button *ngIf="checkIsLoggedIn()" (click)="submitCode()" mat-raised-button color="warn">
-    Submit Code
-  </button>
-</div>
+  
+  <br>
+  
+  <button (click)="evaluateCode()" mat-raised-button color="warn">Run</button>
+  <!-- TODO why a special behavior for javascript? -->
+  <app-javascript-task *ngIf="selectedLanguage.language === 'javascript'"></app-javascript-task>
+  
+  <div>
+    <!-- We create the same button twice, if the user is not logged in the functionality will be that of logging in rather than submitting -->
+    <button *ngIf="!checkIsLoggedIn()" (click)="openLoginModal()" mat-raised-button color="warn">
+      Submit Code
+    </button>
+    <button *ngIf="checkIsLoggedIn()" (click)="submitCode()" mat-raised-button color="warn">
+      Submit Code
+    </button>
+  </div>
+  
+</ng-container>

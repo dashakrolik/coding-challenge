@@ -1,6 +1,5 @@
 import { Component, TemplateRef, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ComponentType } from '@angular/cdk/portal';
 
 import { AceEditorComponent } from 'ng2-ace-editor';
 
@@ -8,14 +7,13 @@ import { CandidateService } from '@service/candidate/candidate.service';
 import { TaskService } from '@service/task/task.service';
 import { SubmissionService } from '@service/submission/submission.service';
 import { LanguageService } from '@service/language/language.service';
-import { OverlayService } from '@service/overlay/overlay.service';
 
 import { Subscription } from 'rxjs';
 
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';
 import { TokenStorageService } from '@service/token/token-storage.service';
-import { take } from 'rxjs/operators';
+import { take, switchMap } from 'rxjs/operators';
 // @TODO: There are A LOT of things going on here (too many for just one component)
 // We need to split this up thats one
 // Two, a lot of this code is not necessary, let's refactor
@@ -30,30 +28,20 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
   
   @ViewChild('editor') editor: AceEditorComponent;
   
-  selectedLanguage: string;
-  exerciseId: number;
+  selectedLanguage: Language;
   codeSnippet = '';
-  selectedLanguageIsJavascript: boolean;
-  selectedLanguageIsPython: boolean;
-  selectedLanguageIsJava: boolean;
   evaluationResult: boolean;
-  
-  // These variables are used to create the submission object
-  submissionLanguageId: number;
-  submissionCandidateId: number;
-  submissionTaskId: number;
-  
-  taskDescription: string;
-  text = '';
-  
-  paramMapSubscription: Subscription;
+
+  editorText: string;
+
   taskSubscription: Subscription;
   languageSubscription: Subscription;
   submissionSubscription: Subscription;
+  task: Task;
+  candidate: Candidate;
   
   constructor(
     private route: ActivatedRoute,
-    private overlayService: OverlayService,
     private candidateService: CandidateService,
     private taskService: TaskService,
     private languageService: LanguageService,
@@ -63,22 +51,8 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.paramMapSubscription = this.route.paramMap.subscribe(params => {
-      this.selectedLanguage = params.get('language') || 'javascript';
-      
-      this.exerciseId = parseInt(params.get('id'));
-      if(isNaN(this.exerciseId)) {
-        this.exerciseId = 1; // simply assign  if there's a problem
-      }
-
-    });
-    
-    this.selectedLanguageIsJavascript = this.selectedLanguage === 'javascript';
-    this.selectedLanguageIsPython = this.selectedLanguage === 'python';
-    this.selectedLanguageIsJava = this.selectedLanguage === 'java';
-
-    // We load the task based on the exerciseId
-    this.getTask();
+    this.retrieveAndSetLanguage();
+    this.retrieveAndSetTask();
   }
 
   ngAfterViewInit() {
@@ -93,26 +67,6 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onChange = (event: any) => this.codeSnippet = event;
 
-  /**
-   * Get the mode for the editor to run in
-   */
-  getMode = (): string => this.selectedLanguage;
-
-  /**
-   * Get the theme for the editor to display
-   */
-  getTheme = (): string => {
-    if (this.selectedLanguageIsJavascript) {
-      return 'dracula';
-    }
-    if (this.selectedLanguageIsPython) {
-      return 'monokai';
-    }
-    if (this.selectedLanguageIsJava) {
-      return 'eclipse';
-    }
-  }
-
   evaluateCode = (): boolean => {
     // TODO: Implement Jupyter connection
     // use this.selectedLanguage
@@ -126,11 +80,14 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
       // data: {name: this.name, animal: this.animal}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
       console.log('The dialog was closed');
+      console.log("submitCode subscription", result);
     });
   }
 
+  // TODO align this with the dialog service created by Richard
+  // TODO also, this doesn't belong in this component
   openLoginModal = () => {
     const dialogRef = this.dialog.open(SubmitDialogComponent, {
       // width: '250px',
@@ -158,8 +115,8 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.candidateService.createCandidate(candidate)
           .pipe(take(1))
-          .subscribe((candi: Candidate) => {
-            this.submissionCandidateId = candi.id;
+          .subscribe((candi) => {
+            this.candidate = candi;
           });
       } else {
         console.log('Check fields and code');
@@ -167,58 +124,29 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  openModal = (content: TemplateRef<any> | ComponentType<any> | string): void => {
-    const ref = this.overlayService.open(content, null);
+  retrieveAndSetLanguage = (): void => {
+    const languageParam = this.route.snapshot.paramMap.get('language'); // default
+    
+    this.languageSubscription = this.languageService.getLanguagesMap().subscribe((languagesMap) => {
+      this.selectedLanguage = languagesMap.get(languageParam);
 
-    ref.afterClosed$.subscribe(res => {
-      // simple check to see if the user cancelled the form and code is evaluated
-      if (res.data != null && this.evaluationResult) {
-        // We will create a submission. To do this we must first create the new candidate and retrieve other data
-        // Create a new candidate, for now it has a placeholder for first name and last name.
-        // Id should be null. It will create an id automatically in the backend if it is null.
-        // TODO: instead of creating it and retrieving it we want to add a user login possibility
-        // TODO: Now we retrieve the task and the language. Later this should be retrieved already,
-        //  remove this at that point.
-
-      //   const candidate: Candidate = {
-      //     id: null,
-      //     firstName: res.data.firstName,
-      //     lastName: res.data.lastName,
-      //     email: res.data.email
-      //   };
-
-      //   this.candidateService.createCandidate(candidate)
-      //     .pipe(take(1))
-      //     .subscribe(response => {
-      //     const { id } = response;
-      //     this.submissionCandidateId = id;
-      //   });
-      // } else {
-      //   console.log('Check fields and code');
+      if (!this.selectedLanguage) {
+        throw new Error(`No such language: ${languageParam}.`);
       }
     });
   }
+  retrieveAndSetTask = (): void => {
+    this.taskSubscription = this.route.paramMap.pipe(
+      switchMap(params => {
+        let exerciseId = parseInt(params.get('id'));
+        if (isNaN(exerciseId)) {
+          exerciseId = 1; // simply assign 1 if there's a problem
+        }
 
-  getTask = (): void => {
-    this.taskSubscription = this.taskService.getTask(this.exerciseId).subscribe(
-      (response: any) => {
-        //We receive the task object from the backend and we need the id and the description.
-        const { id, description } = response;
-        this.submissionTaskId = id;
-        this.taskDescription = description;
-      }
-    );
-  }
-
-  getLanguage = (): void => {
-    this.languageSubscription = this.languageService.getLanguages().subscribe(
-      (response: any) => {
-        const { id } = response;
-        this.submissionLanguageId = id;
-        // Finally we want to find the task that candidate has performed to create the final submission to send.
-        this.createSubmission();
-      },
-    );
+        // get the task with this id and switch to that Observable
+        return this.taskService.getTask(exerciseId);
+      })
+    ).subscribe(task => this.task = task);
   }
 
   createSubmission = (): void => {
@@ -227,9 +155,9 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
       id: null,
       answer: this.codeSnippet,
       correct: false,
-      personId: this.submissionCandidateId,
-      languageId: this.submissionLanguageId,
-      taskId: this.submissionTaskId
+      personId: this.candidate.id,
+      languageId: this.selectedLanguage.id,
+      taskId: this.task.id
     };
 
     this.submissionSubscription = this.submissionService.createSubmission(submission).subscribe(
@@ -243,7 +171,6 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
   checkIsLoggedIn = (): boolean => this.tokenStorageService.isUserLoggedIn();
 
   ngOnDestroy() {
-    this.paramMapSubscription.unsubscribe();
     this.taskSubscription.unsubscribe();
     this.languageSubscription.unsubscribe();
     this.submissionSubscription.unsubscribe();
