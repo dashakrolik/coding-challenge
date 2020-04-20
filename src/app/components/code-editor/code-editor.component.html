@@ -1,6 +1,5 @@
 <!-- We load the task and show the description -->
-{{taskDescription}}
-
+<div [innerHTML]="taskDescription"></div>
 <ace-editor editor [(text)]="text" [mode]="setLanguageOptions('mode')" [theme]="setLanguageOptions('theme')"
   (textChanged)="onChange($event)" [readOnly]="false" class="ace-editor"></ace-editor>
 
@@ -15,19 +14,28 @@
   <button *ngIf="!checkLogin()" (click)="loginWindow(subscribeComponent)" mat-raised-button color="warn">
     Submit Code
   </button>
+</div>
+<div>
+Your Output:
+{{this.codeResult}}
+</div>
+<div>
+  <br>
+  Submit your code and try to turn on all the lights to complete the task.
+  <br>
   <button *ngIf="checkLogin()" (click)="submitCode()" mat-raised-button color="warn">
     Submit Code
   </button>
 </div>
 <div>
-{{this.codeResult}}
-</div>
-<div>
-<span id="test1" class="dot"></span>
-<span id="test2" class="dot"></span>
+  <br>
+  <span id="test1" class="dot"></span>
+  <span id="test2" class="dot"></span>
+  <span id="test3" class="dot"></span>
 </div>
 <div>
   <button *ngIf="completeTask(1)" (click)="goToTask(2)" mat-raised-button color="warn">
     Next Task
   </button>
 </div>
+<br>

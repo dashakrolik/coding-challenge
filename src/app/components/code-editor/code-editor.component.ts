@@ -71,12 +71,24 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
     this.selectedLanguageIsJava = this.selectedLanguage === 'java';
     this.loadJavaScriptTask = this.selectedLanguageIsJavascript;
     this.codeResult = '';
-    // Give a initial text in the code editor for the user to modify.
-    this.text = 'def calculate_highest_frequency(ordina_input):\n	"""calculate_highest_frequency should return the highest frequency in the text (several words might actually have this frequency)"""\n    # finish the function logic\n	return 0\n\nif __name__ == "__main__":\n    ordina_input = "This is the input"\n    result = calculate_highest_frequency(ordina_input)\n    print(result)';
-    this.tests = [false, false, false, false, false, false, false, false, false, false, false];
+
     // We load the task based on the exerciseId
     this.getTask();
     this.getLanguage();
+
+    // Give a initial text in the code editor for the user to modify.
+    const task1 = 'def calculate_highest_frequency(ordina_input):\n	"""\n	calculate_highest_frequency should return the highest frequency \n	in the text (several words might actually have this frequency)\n	"""\n    # finish the function logic\n	return 0\n\nif __name__ == "__main__":\n    ordina_input = "The sun shines over the lake"\n    result = calculate_highest_frequency(ordina_input)\n    print(result)\n';
+    const task2 = 'def calculate_frequency_for_word(ordina_input, ordina_word):\n    """\n    return the frequency of the specified word\n    """\n    # finish the function logic\n    return 0\n\nif __name__ == "__main__":\n    ordina_input = "The sun shines over the lake"\n    ordina_word = "sun"\n    result = calculate_frequency_for_word(ordina_input, ordina_word)\n    print(result)\n'
+    const task3 = 'def calculate_most_frequent_n_words(ordina_input):\n    """\n    return a list of the most frequent "n" words in the input text, all the \n    words returned in lower case. If several words have the same frequency, \n    this method should return them in ascendant alphabetical order \n    (for input text "The sun shines over the lake" and n = 3, \n    it should return the list [("the", 2), ("lake", 1), ("over", 1)]\n    """\n    # finish the function logic\n    return []\n\nif __name__ == "__main__":\n    ordina_input = "The sun shines over the lake"\n    result = calculate_most_frequent_n_words(ordina_input)\n    print(result)\n'
+    if (this.exerciseId == 1 ) {
+      this.text = task1
+    } else if (this.exerciseId == 2) {
+      this.text = task2
+    } else {
+      this.text = task3
+    }
+    this.codeSnippet = this.text;
+    this.tests = [false, false, false, false, false, false, false, false, false, false, false];
   }
 
   ngAftterViewInit() {
@@ -84,7 +96,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
       animatedScroll: true,
       showPrintMargin: false,
       tabSize: 2,
-      useSoftTabs: true,
+      useSoftTabs: true
     });
   }
 
@@ -170,7 +182,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   handleSuccessfulResponseGetLanguage = (response): void => {
     this.submissionLanguageId = response.id;
   }
-  
+
   createSubmission = (): void => {
     this.submission = {
       answer: this.codeSnippet,
@@ -234,7 +246,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
         completedTests += 1
       }
     })
-    if (completedTests >= 2) {
+    if (completedTests >= 3) {
       return true;
     } else {
       return false;
