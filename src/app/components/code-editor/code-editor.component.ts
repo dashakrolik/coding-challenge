@@ -74,6 +74,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.evaluationResult = true;
   }
 
+  // TODO implement this functionality
   submitCode = () => {
     const dialogRef = this.dialog.open(SubmitDialogComponent, {
       // width: '250px',
@@ -135,6 +136,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
+
   retrieveAndSetTask = (): void => {
     this.taskSubscription = this.route.paramMap.pipe(
       switchMap(params => {
