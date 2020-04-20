@@ -15,7 +15,7 @@ export class DialogService {
   openMessageDialog = (data) => {
     return new Promise((resolve, reject) => {
       const dialogRef = this.dialog.open(MessageDialogComponent, {
-        width: '300px',
+        width: '500px',
         data
       });
       dialogRef.afterClosed().pipe(take(1)).subscribe(() => {
@@ -27,7 +27,7 @@ export class DialogService {
   openOkCancelDialog = (data) => {
     return new Promise((resolve, reject) => {
       const dialogRef = this.dialog.open(OkCancelDialogComponent, {
-        width: '300px',
+        width: '500px',
         data
       });
       dialogRef.afterClosed().pipe(take(1)).subscribe((answerBool) => {

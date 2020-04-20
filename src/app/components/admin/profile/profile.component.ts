@@ -12,6 +12,7 @@ import { DialogService } from '@service/dialog/dialog.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
+
 export class ProfileComponent implements OnInit {
   person: Person;
   personDetailsForm: FormGroup;
@@ -65,19 +66,40 @@ export class ProfileComponent implements OnInit {
     return person.roles.map(role => role.name);
   }
 
+  confirmToSavePerson = () => {
+    const data = {
+      title: 'Save personDetails',
+      message: 'Are you sure you want to save these changes?'
+    };
+    this.dialogService.openOkCancelDialog(data)
+      .then(() => {
+        this.savePerson();
+      }).catch(() => { });
+  }
+
   savePerson = (): void => {
     this.person = this.personDetailsForm.value;
     this.person.roles = this.allRoles.filter(role => {
       return this.person.roles.includes(role.name as string) as boolean;
     }
     );
-    console.log(this.person);
     const idControl: AbstractControl = this.personDetailsForm.get('id');
     idControl.enable();
     this.personService.updatePerson(this.person).pipe(take(1)).subscribe(savedPerson => {
       this.person = savedPerson;
       idControl.disable();
     });
+  }
+
+  confirmToDeletePerson = () => {
+    const data = {
+      title: 'Delete person',
+      message: 'Are you sure you want to delete this person?<br/>This also deletes all their submissions.'
+    };
+    this.dialogService.openOkCancelDialog(data)
+      .then(() => {
+        this.deletePerson();
+      }).catch(() => { });
   }
 
   deletePerson = (): void => {
@@ -91,17 +113,4 @@ export class ProfileComponent implements OnInit {
 
   navigateToAdminPanel = () => this.router.navigate(['/admin']);
 
-  openDialog() {
-    const data = {
-      title: 'Alert!',
-      message: 'Are you agreed?'
-    };
-    this.dialogService.openOkCancelDialog(data)
-      .then((value) => {
-        console.log(value);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
 }
