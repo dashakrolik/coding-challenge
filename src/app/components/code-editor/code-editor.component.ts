@@ -71,8 +71,8 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
     this.selectedLanguageIsPython = this.selectedLanguage === 'python';
     this.selectedLanguageIsJava = this.selectedLanguage === 'java';
     this.codeResult = '';
-    this.tests = [false, false, false, false, false, false, false, false, false, false];
-
+    this.resetTests();
+    
     // We load the task based on the exerciseId
     this.getTask();
     this.getLanguage();
@@ -277,6 +277,17 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   goToTask = (taskNumber: number) => {
     console.log("going to task number " + taskNumber);
     this.router.navigateByUrl('challenge/' + this.selectedLanguage + '/' + taskNumber);
+    this.resetTests();
+    this.exerciseId = taskNumber;
+    this.getTask();
+    this.getLanguage();
+  }
+
+  finishedCodeChallenge = () => {
+    console.log("The code challenge is completed");
+  }
+
+  resetTests = () => {
     // reset the test array
     this.tests = [false, false, false, false, false, false, false, false, false, false];
     // refreshing the objects.
@@ -287,12 +298,5 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
       testDot.style.backgroundColor="#bbb";
       index += 1
     });
-    this.exerciseId = taskNumber;
-    this.getTask();
-    this.getLanguage();
-  }
-
-  finishedCodeChallenge = () => {
-    console.log("The code challenge is completed");
   }
 }

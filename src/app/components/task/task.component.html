@@ -1,7 +1,7 @@
 <!-- We load the task and show the description -->
 <ng-container *ngIf="selectedLanguage && task">
-  {{task.description}}
-  <ace-editor editor [(editorText)]="editorText" [mode]="selectedLanguage.language" [theme]="selectedLanguage.editorTheme"
+  <div [innerHTML]="task.description"></div>
+  <ace-editor editor [(text)]="text" [mode]="selectedLanguage.language" [theme]="selectedLanguage.editorTheme"
   (textChanged)="onChange($event)" [readOnly]="false" class="ace-editor"></ace-editor>
   
   <br>
@@ -11,13 +11,47 @@
   <app-javascript-task *ngIf="selectedLanguage.language === 'javascript'"></app-javascript-task>
   
   <div>
+  </div>
+  <div>
+    Your Output:
+    {{this.codeResult}}
+  </div>
     <!-- We create the same button twice, if the user is not logged in the functionality will be that of logging in rather than submitting -->
-    <button *ngIf="!checkIsLoggedIn()" (click)="openLoginModal()" mat-raised-button color="warn">
+    <button *ngIf="!checkIsLoggedIn()" (click)="loginWindow(subscribeComponent)" mat-raised-button color="warn">
       Submit Code
     </button>
+    <div>
+    <br>
+      Submit your code and try to turn on all the lights to complete the task.
+    <br>
     <button *ngIf="checkIsLoggedIn()" (click)="submitCode()" mat-raised-button color="warn">
       Submit Code
     </button>
   </div>
+  <div>
+    <br>
+    <span *ngIf="isTest(1)" id="test1" class="dot"></span>
+    <span *ngIf="isTest(2)" id="test2" class="dot"></span>
+    <span *ngIf="isTest(3)" id="test3" class="dot"></span>
+    <span *ngIf="isTest(4)" id="test4" class="dot"></span>
+    <span *ngIf="isTest(5)" id="test5" class="dot"></span>
+    <span *ngIf="isTest(6)" id="test6" class="dot"></span>
+    <span *ngIf="isTest(7)" id="test7" class="dot"></span>
+    <span *ngIf="isTest(8)" id="test8" class="dot"></span>
+    <span *ngIf="isTest(9)" id="test9" class="dot"></span>
+    <span *ngIf="isTest(10)" id="test10" class="dot"></span>
+  </div>
+  <div>
+    <button *ngIf="completeTask(1)" (click)="goToTask(2)" mat-raised-button color="warn">
+      Next Task
+    </button>
+    <button *ngIf="completeTask(2)" (click)="goToTask(3)" mat-raised-button color="warn">
+      Next Task
+    </button>
+    <button *ngIf="completeTask(3)" (click)="finishedCodeChallenge()" mat-raised-button color="warn">
+      Finish code challenge!
+    </button>
+  </div>
+  <br>
   
 </ng-container>

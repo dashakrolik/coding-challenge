@@ -14,6 +14,10 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';
 import { TokenStorageService } from '@service/token/token-storage.service';
 import { take, switchMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { OverlayService } from '@service/overlay/overlay.service';
+import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.component';
+import { ComponentType } from '@angular/cdk/portal';
 // @TODO: There are A LOT of things going on here (too many for just one component)
 // We need to split this up thats one
 // Two, a lot of this code is not necessary, let's refactor
@@ -32,15 +36,19 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   codeSnippet = '';
   evaluationResult: boolean;
 
-  editorText: string;
+  text: string;
 
   taskSubscription: Subscription;
   languageSubscription: Subscription;
-  submissionSubscription: Subscription;
   task: Task;
   candidate: Candidate;
+  codeResult: string;
+  tests: boolean[];
+  subscribeComponent = SubscribeComponent;
   
   constructor(
+    private router: Router,
+    private overlayService: OverlayService,
     private route: ActivatedRoute,
     private candidateService: CandidateService,
     private taskService: TaskService,
@@ -51,8 +59,9 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.retrieveAndSetLanguage();
+    this.resetTests();
     this.retrieveAndSetTask();
+    this.retrieveAndSetLanguage();
   }
 
   ngAfterViewInit() {
@@ -67,62 +76,66 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onChange = (event: any) => this.codeSnippet = event;
 
-  evaluateCode = (): boolean => {
-    // TODO: Implement Jupyter connection
-    // use this.selectedLanguage
-
-    return this.evaluationResult = true;
+  evaluateCode = (): void => {
+    const runCodeSubmission: Submission = {
+      answer: this.codeSnippet,
+      languageId: this.selectedLanguage.id,
+      taskId: this.task.id
+    };
+    this.submissionService.runCode(runCodeSubmission).subscribe(
+      response => this.handleSuccessfulResponseRunCode(response),
+    );
   }
 
-  // TODO implement this functionality
-  submitCode = () => {
-    const dialogRef = this.dialog.open(SubmitDialogComponent, {
-      // width: '250px',
-      // data: {name: this.name, animal: this.animal}
-    });
-
-    dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
-      console.log('The dialog was closed');
-      console.log("submitCode subscription", result);
-    });
-  }
-
-  // TODO align this with the dialog service created by Richard
-  // TODO also, this doesn't belong in this component
-  openLoginModal = () => {
-    const dialogRef = this.dialog.open(SubmitDialogComponent, {
-      // width: '250px',
-      // data: {name: this.name, animal: this.animal}
-    });
-
-    dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
-      const { data } = result;
-
-      // simple check to see if the user cancelled the form and code is evaluated
-      if (data != null && this.evaluationResult) {
-        // We will create a submission. To do this we must first create the new candidate and retrieve other data
-        // Create a new candidate, for now it has a placeholder for first name and last name.
-        // Id should be null. It will create an id automatically in the backend if it is null.
-        // TODO: instead of creating it and retrieving it we want to add a user login possibility
-        // TODO: Now we retrieve the task and the language. Later this should be retrieved already,
-        //  remove this at that point.
-
-        const candidate: Candidate = {
-          id: null,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.email
-        };
-
-        this.candidateService.createCandidate(candidate)
-          .pipe(take(1))
-          .subscribe((candi) => {
-            this.candidate = candi;
-          });
+  handleSuccessfulResponseRunCode = (response): void => {
+    // First we clear the current output for the new input
+    this.codeResult = '';
+    response.forEach(element => {
+      // We check if it is not an error than we show the output, otherwise we show the error.
+      console.log(element);
+      if (element.errorType === null) {
+        this.codeResult += element.contentValue;
       } else {
-        console.log('Check fields and code');
+        this.codeResult += element.errorType;
+        this.codeResult += '\n';
+        this.codeResult += element.errorValue;
       }
     });
+  }
+
+  loginWindow(content: ComponentType<SubscribeComponent>) {
+    const ref = this.overlayService.open(content, null);
+  }
+
+  submitCode = () => {
+    // A Submission on the frontend has no id, correct array and personId. 
+    // This is because these elements will be determined on the backend.
+    const submission: Submission = {
+      answer: this.codeSnippet,
+      languageId: this.selectedLanguage.id,
+      taskId: this.task.id
+    };
+
+    this.submissionService.createSubmission(submission).subscribe(
+      response => {
+        this.codeResult = '';
+        this.tests = response;
+        console.log('successful post message create submission');
+
+        let index = 1;
+        response.forEach(element => {
+          const elementName = 'test' + index;
+          const testDot = document.getElementById(elementName);
+
+          if (element) {
+            testDot.style.backgroundColor = 'green';
+          } else {
+            testDot.style.backgroundColor = 'red';
+          }
+          index += 1
+        });
+      }
+    );
   }
 
   retrieveAndSetLanguage = (): void => {
@@ -133,12 +146,14 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
       if (!this.selectedLanguage) {
         throw new Error(`No such language: ${languageParam}.`);
+      } else {
+        this.setBoilerPlateCode();
       }
     });
   }
 
   retrieveAndSetTask = (): void => {
-    this.taskSubscription = this.route.paramMap.pipe(
+    this.taskSubscription = this.route.firstChild.paramMap.pipe(
       switchMap(params => {
         let exerciseId = parseInt(params.get('id'));
         if (isNaN(exerciseId)) {
@@ -148,34 +163,90 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         // get the task with this id and switch to that Observable
         return this.taskService.getTask(exerciseId);
       })
-    ).subscribe(task => this.task = task);
+    ).subscribe(task => {
+      this.task = task;
+      this.setBoilerPlateCode();
+    });
   }
 
-  createSubmission = (): void => {
-    // When creating a new Submission we give id null so it creates a new entry. It will determine the id by itself.
-    const submission: Submission = {
-      id: null,
-      answer: this.codeSnippet,
-      correct: false,
-      personId: this.candidate.id,
-      languageId: this.selectedLanguage.id,
-      taskId: this.task.id
-    };
-
-    this.submissionSubscription = this.submissionService.createSubmission(submission).subscribe(
-      response => {
-        // TODO: do something with a successful response
-        console.log('successful post message create submission');
+  setBoilerPlateCode = (): void => {
+    let boilerplate: string = '';
+    if (this.selectedLanguage && this.task) {
+      // If both objects are filled we will set the boilerplate code
+      if (this.selectedLanguage.language === 'java') {
+        boilerplate = this.task.boilerplateJava;
+      } else if (this.selectedLanguage.language === 'python') {
+        boilerplate = this.task.boilerplatePython;
+      } else if (this.selectedLanguage.language === 'javascript') {
+        boilerplate = this.task.boilerplateJavascript;
       }
-    );
+    }
+    const lines = boilerplate.split('\\n');
+    this.text = '\n';
+    lines.forEach(line => {
+      this.text += line;
+      this.text += '\n';
+    });
+    this.codeSnippet = this.text;
+  }
+
+  goToTask = (taskNumber: number) => {
+    console.log("going to task number " + taskNumber);
+    this.router.navigateByUrl('challenge/' + this.selectedLanguage.language + '/' + taskNumber);
+    this.resetTests();
+    // there is no need to set the task and language again. I believe because of the subscription construction.
+    // this.retrieveAndSetTask();
+    // this.retrieveAndSetLanguage();
+  }
+
+  isTest = (testNumber): boolean => {
+    // simple function to see how many tests should be displayed on the screen.
+    if (this.task.taskNumber === 1) {
+      // if it's the first task we want to show the first 5 test dots
+      return testNumber <= 5;
+    } else if (this.task.taskNumber === 2) {
+      return testNumber <= 6;
+    } else if (this.task.taskNumber === 3) {
+      return testNumber <= 8;
+    } else {
+      return false;
+    }
+  }
+
+  completeTask = (taskNumber): boolean => {
+    if (this.task.taskNumber === 1 && taskNumber === 1) {
+      // all 5 tests of the first task should be successful
+      return this.tests[0] && this.tests[1] && this.tests[2] && this.tests[3] && this.tests[4];
+    } else {
+      // TODO: implement the progression for the second and third task.
+      return false;
+    }
+  }
+
+  finishedCodeChallenge = () => {
+    console.log("The code challenge is completed");
   }
 
   checkIsLoggedIn = (): boolean => this.tokenStorageService.isUserLoggedIn();
 
+  resetTests = () => {
+    // reset the test array
+    this.tests = [false, false, false, false, false, false, false, false, false, false];
+    // refreshing the objects.
+    let index = 1;
+    this.tests.forEach(element => {
+      const elementName = 'test' + index;
+      let testDot = document.getElementById(elementName);
+      if (testDot !== null) {
+        testDot.style.backgroundColor="#bbb";
+      }
+      index += 1
+    });
+  }
+  
   ngOnDestroy() {
     this.taskSubscription.unsubscribe();
     this.languageSubscription.unsubscribe();
-    this.submissionSubscription.unsubscribe();
   }
 
 }
