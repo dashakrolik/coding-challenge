@@ -1,11 +1,12 @@
 <p>Please enter your email to proceed to the coding challenge</p>
-
-<app-dropdown
-    [inputValue]="getLanguagesStrs()"
-    labelText="Select a Language"
-    (valueOutput)="onSelect($event)"
->
-</app-dropdown>
-
-
-<button [disabled]="!languages?.length" (click)="submit()" mat-raised-button color="warn">Submit</button>
+<ng-container *ngIf="(languageNames$ | async) as languageNames">
+    <app-dropdown
+        [inputValue]="languageNames"
+        labelText="Select a Language"
+        (valueOutput)="onSelect($event)"
+    >
+    </app-dropdown>
+    
+    
+    <button [disabled]="!languageNames?.length" (click)="submit()" mat-raised-button color="warn">Submit</button>
+</ng-container>
