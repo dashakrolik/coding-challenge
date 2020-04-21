@@ -1,10 +1,10 @@
-import { Component, TemplateRef, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { ComponentType } from '@angular/cdk/portal';
 
 import { AceEditorComponent } from 'ng2-ace-editor';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SubscribeComponent } from '../overlay/subscribe/subscribe.component';
-import { CandidateService } from '@service/candidate/candidate.service';
+
 import { TaskService } from '@service/task/task.service';
 import { SubmissionService } from '@service/submission/submission.service';
 import { LanguageService } from '@service/language/language.service';
@@ -62,7 +62,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
       this.selectedLanguage = params.get('language');
     });
     this.route.firstChild.paramMap.subscribe(params => {
-      this.exerciseId = parseInt(params.get("id"));
+      this.exerciseId = parseInt(params.get('id'));
     });
 
     this.selectedLanguageIsJavascript = this.selectedLanguage === 'javascript';
@@ -126,7 +126,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   evaluateCode = (language: string): boolean => {
     const runCodeSubmission: Submission = {
       answer: this.codeSnippet,
-      languageId: this.submissionLanguageId,  
+      languageId: this.submissionLanguageId,
       taskId: this.submissionTaskId
     };
     this.submissionService.runCode(runCodeSubmission).subscribe(
@@ -140,7 +140,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   handleSuccessfulResponseRunCode = (response): void => {
     // First we clear the current output for the new input
     // TODO: check if there is an error and print that instead of the normal contentvalue.
-    this.codeResult = "";
+    this.codeResult = '';
     response.forEach(element => {
       this.codeResult += element.contentValue;
       console.log(element);
@@ -205,17 +205,20 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   }
 
   handleSuccessfulResponseCreateSubmission = (response): void => {
-    this.codeResult = "";
+    this.codeResult = '';
     console.log('successful post message create submission');
     let index = 1;
+
     response.forEach(element => {
       const elementName = 'test' + index;
-      let testDot = document.getElementById(elementName);
+
+      const testDot = document.getElementById(elementName);
+
       if (element) {
-        testDot.style.backgroundColor="green"
+        testDot.style.backgroundColor = 'green';
         this.tests[index] = true;
       } else {
-        testDot.style.backgroundColor="red"
+        testDot.style.backgroundColor = 'red';
         this.tests[index] = false;
       }
       index += 1
@@ -225,8 +228,6 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.paramSubscription.unsubscribe();
   }
-
-  getTaskDescription = () => this.taskDescription;
 
   submitCode = (): void => {
     // This code is called when it is confirmed that the user is logged in
@@ -254,7 +255,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
     }
   }
 
-  goToTask = (taskNumber) => {
+  goToTask = (taskNumber: number) => {
     console.log('going to task number ' + taskNumber);
   }
 }
