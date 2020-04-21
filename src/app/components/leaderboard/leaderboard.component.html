@@ -1,0 +1,13 @@
+<div class="mat-elevation-z8 data-table">
+    <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
+        <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column}}</th>
+            <td mat-cell *matCellDef="let person">{{person[column]}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="submission-row"></tr>
+    </table>
+    <mat-paginator #paginator [length]="dataSource?.data?.length" [pageIndex]="0" [pageSize]="50"
+        [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+</div>

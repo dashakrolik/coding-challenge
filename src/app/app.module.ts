@@ -31,6 +31,7 @@ import { DropdownComponent } from '@components/dropdown/dropdown.component';
 import { authInterceptorProviders } from '@service/auth/auth.interceptor';
 import { AppComponent } from './app.component';
 import { TaskComponent } from '@components/task/task.component';
+import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { TaskComponent } from '@components/task/task.component';
     SubmissionTableComponent,
     DropdownComponent,
     SubmitDialogComponent,
+    LeaderboardComponent,
   ],
   imports: [
     BrowserModule,
