@@ -54,8 +54,8 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   language = this.selectedLanguage;
 
   paramSubscription: Subscription;
-  codeResult: String
-  tests: boolean[]
+  codeResult: string;
+  tests: boolean[];
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -184,7 +184,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
     const lines = boilerplate.split('\\n');
     this.text = '\n';
     lines.forEach(line => {
-      this.text += line
+      this.text += line;
       this.text += '\n';
     });
     this.codeSnippet = this.text;
@@ -244,10 +244,10 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
     let completedTests = 0;
     this.tests.forEach( test => {
       if (test) {
-        completedTests += 1
+        completedTests += 1;
       }
-    })
-    if (completedTests == 5) {
+    });
+    if (completedTests === 5) {
       return true;
     } else {
       return false;
@@ -255,6 +255,6 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   }
 
   goToTask = (taskNumber) => {
-    console.log("going to task number " + taskNumber);
+    console.log('going to task number ' + taskNumber);
   }
 }
