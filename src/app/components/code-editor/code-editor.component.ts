@@ -42,7 +42,6 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   selectedLanguageIsPython: boolean;
   selectedLanguageIsJava: boolean;
   evaluationResult: boolean;
-  loadJavaScriptTask: any;
 
   // These variables are used to create the submission object
   submissionLanguageId: number;
@@ -64,12 +63,11 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
     });
     this.route.firstChild.paramMap.subscribe(params => {
       this.exerciseId = parseInt(params.get("id"));
-    })
+    });
 
     this.selectedLanguageIsJavascript = this.selectedLanguage === 'javascript';
     this.selectedLanguageIsPython = this.selectedLanguage === 'python';
     this.selectedLanguageIsJava = this.selectedLanguage === 'java';
-    this.loadJavaScriptTask = this.selectedLanguageIsJavascript;
     this.codeResult = '';
 
     // We load the task based on the exerciseId
@@ -124,7 +122,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
         return this.evaluateCode('java');
     }
   }
-  
+
   evaluateCode = (language: string): boolean => {
     const runCodeSubmission: Submission = {
       answer: this.codeSnippet,
