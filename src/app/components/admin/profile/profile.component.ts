@@ -70,7 +70,7 @@ export class ProfileComponent implements OnInit {
       title: 'Save personDetails',
       message: 'Are you sure you want to save these changes?'
     };
-    this.dialogService.openOkCancelDialog(data)
+    this.dialogService.openOkCancel(data)
       .then(() => {
         this.savePersonToBackend();
       }).catch(() => { });
@@ -94,7 +94,7 @@ export class ProfileComponent implements OnInit {
       title: 'Delete person',
       message: 'Are you sure you want to delete this person?<br/>This also deletes all their submissions.'
     };
-    this.dialogService.openOkCancelDialog(data)
+    this.dialogService.openOkCancel(data)
       .then(() => {
         this.deletePersonOnBackend();
       }).catch(() => { });
