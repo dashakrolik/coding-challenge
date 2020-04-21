@@ -2,13 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSelectChange } from '@angular/material/select';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { LanguageService } from '@service/language/language.service';
 
 @Component({
   selector: 'app-welcome-page',
   templateUrl: './welcome-page.component.html',
-  styleUrls: ['./welcome-page.component.css']
+  styleUrls: ['./welcome-page.component.scss']
 })
 export class WelcomePageComponent implements OnInit, OnDestroy {
   email: string;
@@ -34,7 +34,7 @@ export class WelcomePageComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.createForm();
-    this.languagesSubscription = this.languageService.getLanguages().subscribe(languages => 
+    this.languagesSubscription = this.languageService.getLanguages().subscribe(languages =>
       this.languages = languages
     );
   }
