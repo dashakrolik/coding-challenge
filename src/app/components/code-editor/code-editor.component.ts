@@ -75,19 +75,6 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
     // We load the task based on the exerciseId
     this.getTask();
     this.getLanguage();
-
-    // Give a initial text in the code editor for the user to modify.
-    const task1 = 'def calculate_highest_frequency(ordina_input):\n	"""\n	calculate_highest_frequency should return the highest frequency \n	in the text (several words might actually have this frequency)\n	"""\n    # finish the function logic\n	return 0\n\nif __name__ == "__main__":\n    ordina_input = "The sun shines over the lake"\n    result = calculate_highest_frequency(ordina_input)\n    print(result)\n';
-    const task2 = 'def calculate_frequency_for_word(ordina_input, ordina_word):\n    """\n    return the frequency of the specified word\n    """\n    # finish the function logic\n    return 0\n\nif __name__ == "__main__":\n    ordina_input = "The sun shines over the lake"\n    ordina_word = "sun"\n    result = calculate_frequency_for_word(ordina_input, ordina_word)\n    print(result)\n'
-    const task3 = 'def calculate_most_frequent_n_words(ordina_input):\n    """\n    return a list of the most frequent "n" words in the input text, all the \n    words returned in lower case. If several words have the same frequency, \n    this method should return them in ascendant alphabetical order \n    (for input text "The sun shines over the lake" and n = 3, \n    it should return the list [("the", 2), ("lake", 1), ("over", 1)]\n    """\n    # finish the function logic\n    return []\n\nif __name__ == "__main__":\n    ordina_input = "The sun shines over the lake"\n    result = calculate_most_frequent_n_words(ordina_input)\n    print(result)\n'
-    if (this.exerciseId == 1 ) {
-      this.text = task1
-    } else if (this.exerciseId == 2) {
-      this.text = task2
-    } else {
-      this.text = task3
-    }
-    this.codeSnippet = this.text;
     this.tests = [false, false, false, false, false, false, false, false, false, false, false];
   }
 
@@ -141,7 +128,6 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   evaluateCode = (language: string): boolean => {
     const runCodeSubmission: Submission = {
       answer: this.codeSnippet,
-      correct: false,
       languageId: this.submissionLanguageId,  
       taskId: this.submissionTaskId
     };
@@ -186,7 +172,6 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   createSubmission = (): void => {
     this.submission = {
       answer: this.codeSnippet,
-      correct: false,
       languageId: this.submissionLanguageId,  
       taskId: this.submissionTaskId
     };
@@ -196,9 +181,27 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
     );
   }
 
+  parseNewLinesFromText = (boilerplate): void => {
+    // The newlines are not correctly taken over by the regex. We will loop over each line to ensure a correct syntax
+    const lines = boilerplate.split('\\n');
+    this.text = '\n';
+    lines.forEach(line => {
+      this.text += line
+      this.text += '\n';
+    });
+    this.codeSnippet = this.text;
+  }
+
   handleSuccessfulResponseGetTask = (response): void => {
-    // We receive the task object from the backend and we need the id and the description.
-    const { id, description } = response;
+    // We receive the task object from the backend and we need the id, the description and the boilerplate for the code.
+    const { id, description, boilerplateJava, boilerplatePython, boilerplateJavascript } = response;
+    if (this.selectedLanguage === 'java') {
+      this.parseNewLinesFromText(boilerplateJava);
+    } else if (this.selectedLanguage === 'python') {
+      this.parseNewLinesFromText(boilerplatePython);
+    } else if (this.selectedLanguage === 'javascript') {
+      this.parseNewLinesFromText(boilerplateJavascript);
+    }
     this.submissionTaskId = id;
     this.taskDescription = description;
   }
@@ -246,7 +249,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
         completedTests += 1
       }
     })
-    if (completedTests >= 3) {
+    if (completedTests == 5) {
       return true;
     } else {
       return false;
