@@ -19,7 +19,7 @@ export class LanguageService {
       case 'javascript': return 'dracula';
       case 'python': return 'monokai';
       case 'java': return 'eclipse'; // java theme
-      default: throw new Error(`No editor theme specified for this language: ${languageName}.`)
+      default: throw new Error(`No editor theme specified for this language: ${languageName}.`);
     }
   }
 
