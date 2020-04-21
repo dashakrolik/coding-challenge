@@ -11,11 +11,11 @@ export class PersonService {
     private http: HttpClientService
   ) { }
 
-  getAllPersons = (): Observable<Person[]> => this.http.get('person');
+  getAllPersons = (): Observable<IPerson[]> => this.http.get('person');
 
-  getPersonById = (id: number): Observable<Person> => this.http.get('person/' + id);
+  getPersonById = (id: number): Observable<IPerson> => this.http.get('person/' + id);
 
-  updatePerson = (person: Person): Observable<Person> => this.http.put('person', person);
+  updatePerson = (person: IPerson): Observable<IPerson> => this.http.put('person', person);
 
-  deletePerson = (id: number): Observable<Person> => this.http.delete('person/' + id);
+  deletePerson = (id: number): Observable<IPerson> => this.http.delete('person/' + id);
 }

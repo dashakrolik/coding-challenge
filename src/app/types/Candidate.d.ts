@@ -1,4 +1,4 @@
-interface Candidate {
+interface ICandidate {
   id: number;
   firstName: string;
   lastName: string;

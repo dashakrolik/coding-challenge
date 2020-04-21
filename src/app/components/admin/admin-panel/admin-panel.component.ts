@@ -11,7 +11,7 @@ import { TaskService } from '@service/task/task.service';
 })
 
 export class AdminPanelComponent implements OnInit {
-  tasks$: Observable<Task[]>;
+  tasks$: Observable<ITask[]>;
 
   constructor(
     private taskService: TaskService,

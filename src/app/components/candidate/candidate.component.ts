@@ -10,7 +10,7 @@ import { CandidateService } from '@service/candidate/candidate.service';
   styleUrls: ['./candidate.component.css']
 })
 export class CandidateComponent implements OnInit {
-  candidates: Observable<Candidate[]>;
+  candidates: Observable<ICandidate[]>;
 
   constructor(
     private candidateService: CandidateService

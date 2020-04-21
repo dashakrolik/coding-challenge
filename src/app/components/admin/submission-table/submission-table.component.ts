@@ -26,7 +26,7 @@ export class SubmissionTableComponent implements OnInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'answer', 'taskId', 'languageId', 'correct'];
 
-  expandedAnswer: Submission | null;
+  expandedAnswer: ISubmission | null;
 
   constructor(
     private submissionService: SubmissionService
@@ -34,11 +34,11 @@ export class SubmissionTableComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild(MatTable) table: MatTable<Submission>;
+  @ViewChild(MatTable) table: MatTable<ISubmission>;
   // TODO: add rule to the  tsconfig to disable the error below
   // tslint:disable-next-line: no-input-rename
   @Input('personId') personId: number;
-  dataSource: MatTableDataSource<Submission>;
+  dataSource: MatTableDataSource<ISubmission>;
 
   ngOnInit() {
     this.submissionService.getAllSubmissionsFromPerson(this.personId).pipe(take(1)).subscribe(submissions => {
@@ -47,7 +47,7 @@ export class SubmissionTableComponent implements OnInit {
     });
   }
 
-  setDataSource = (data: Submission[]) => {
+  setDataSource = (data: ISubmission[]) => {
     this.dataSource = new MatTableDataSource(data);
   }
 }

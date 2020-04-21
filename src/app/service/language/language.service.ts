@@ -23,8 +23,8 @@ export class LanguageService {
     }
   }
 
-  getLanguages = (): Observable<Language[]> => this.http.get('language').pipe(
-    map((languages: Language[]) =>
+  getLanguages = (): Observable<ILanguage[]> => this.http.get('language').pipe(
+    map((languages: ILanguage[]) =>
       languages.map(lang => {
         lang.editorTheme = this.getTheme(lang.language);
         return lang;
@@ -36,8 +36,8 @@ export class LanguageService {
    * Get a map of the languages. This is much faster than looping » O(1)
    * this.languagesMap.get('javascript'); // { id: 1, language: 'javascript', ...}
    */
-  getLanguagesMap = (): Observable<Map<string, Language>> => {
-    const hashMap = new Map<string, Language>();
+  getLanguagesMap = (): Observable<Map<string, ILanguage>> => {
+    const hashMap = new Map<string, ILanguage>();
     return this.getLanguages()
       .pipe(
         map(languages => {

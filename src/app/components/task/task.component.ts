@@ -29,7 +29,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('editor') editor: AceEditorComponent;
 
-  selectedLanguage: Language;
+  selectedLanguage: ILanguage;
   codeSnippet = '';
   evaluationResult: boolean;
 
@@ -38,8 +38,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   taskSubscription: Subscription;
   languageSubscription: Subscription;
   submissionSubscription: Subscription;
-  task: Task;
-  candidate: Candidate;
+  task: ITask;
+  candidate: ICandidate;
 
   constructor(
     private route: ActivatedRoute,
@@ -108,7 +108,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         // TODO: Now we retrieve the task and the language. Later this should be retrieved already,
         //  remove this at that point.
 
-        const candidate: Candidate = {
+        const candidate: ICandidate = {
           id: null,
           firstName: data.firstName,
           lastName: data.lastName,
@@ -154,7 +154,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   createSubmission = (): void => {
     // When creating a new Submission we give id null so it creates a new entry. It will determine the id by itself.
-    const submission: Submission = {
+    const submission: ISubmission = {
       id: null,
       answer: this.codeSnippet,
       correct: false,

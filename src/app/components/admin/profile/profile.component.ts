@@ -12,7 +12,7 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  person: Person;
+  person: IPerson;
   personDetailsForm: FormGroup;
 
   constructor(
