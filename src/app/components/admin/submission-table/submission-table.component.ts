@@ -12,7 +12,7 @@ import { SubmissionService } from '@service/submission/submission.service';
 @Component({
   selector: 'app-submission-table',
   templateUrl: './submission-table.component.html',
-  styleUrls: ['./submission-table.component.css'],
+  styleUrls: ['./submission-table.component.scss'],
   animations: [
     // TODO: use an ngIf to do this.
     trigger('expandAnswer', [

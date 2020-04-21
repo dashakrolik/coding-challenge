@@ -1,10 +1,10 @@
-import { Component, TemplateRef, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { ComponentType } from '@angular/cdk/portal';
 
 import { AceEditorComponent } from 'ng2-ace-editor';
 import { ActivatedRoute } from '@angular/router';
 import { SubscribeComponent } from '../overlay/subscribe/subscribe.component';
-import { CandidateService } from '@service/candidate/candidate.service';
+
 import { TaskService } from '@service/task/task.service';
 import { SubmissionService } from '@service/submission/submission.service';
 import { LanguageService } from '@service/language/language.service';
@@ -44,7 +44,6 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   selectedLanguageIsPython: boolean;
   selectedLanguageIsJava: boolean;
   evaluationResult: boolean;
-  loadJavaScriptTask: any;
 
   // These variables are used to create the submission object
   submissionLanguageId: number;
@@ -57,21 +56,20 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   language = this.selectedLanguage;
 
   paramSubscription: Subscription;
-  codeResult: String
-  tests: boolean[]
+  codeResult: string;
+  tests: boolean[];
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.selectedLanguage = params.get('language');
     });
     this.route.firstChild.paramMap.subscribe(params => {
-      this.exerciseId = parseInt(params.get("id"));
-    })
+      this.exerciseId = parseInt(params.get('id'));
+    });
 
     this.selectedLanguageIsJavascript = this.selectedLanguage === 'javascript';
     this.selectedLanguageIsPython = this.selectedLanguage === 'python';
     this.selectedLanguageIsJava = this.selectedLanguage === 'java';
-    this.loadJavaScriptTask = this.selectedLanguageIsJavascript;
     this.codeResult = '';
     this.tests = [false, false, false, false, false, false, false, false, false, false];
 
@@ -126,11 +124,11 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
         return this.evaluateCode('java');
     }
   }
-  
+
   evaluateCode = (language: string): boolean => {
     const runCodeSubmission: Submission = {
       answer: this.codeSnippet,
-      languageId: this.submissionLanguageId,  
+      languageId: this.submissionLanguageId,
       taskId: this.submissionTaskId
     };
     this.submissionService.runCode(runCodeSubmission).subscribe(
@@ -143,7 +141,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
 
   handleSuccessfulResponseRunCode = (response): void => {
     // First we clear the current output for the new input
-    this.codeResult = "";
+    this.codeResult = '';
     response.forEach(element => {
       // We check if it is not an error than we show the output, otherwise we show the error.
       console.log(element);
@@ -180,7 +178,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   createSubmission = (): void => {
     this.submission = {
       answer: this.codeSnippet,
-      languageId: this.submissionLanguageId,  
+      languageId: this.submissionLanguageId,
       taskId: this.submissionTaskId
     };
 
@@ -194,7 +192,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
     const lines = boilerplate.split('\\n');
     this.text = '\n';
     lines.forEach(line => {
-      this.text += line
+      this.text += line;
       this.text += '\n';
     });
     this.codeSnippet = this.text;
@@ -215,19 +213,22 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   }
 
   handleSuccessfulResponseCreateSubmission = (response): void => {
-    this.codeResult = "";
+    this.codeResult = '';
     console.log('successful post message create submission');
     // The response will be a boolean array of the tests and if they failed or not.
     this.tests = response;
     let index = 1;
+
     this.tests.forEach(element => {
       const elementName = 'test' + index;
-      let testDot = document.getElementById(elementName);
+
+      const testDot = document.getElementById(elementName);
+
       if (element) {
-        testDot.style.backgroundColor="green"
+        testDot.style.backgroundColor = 'green';
         this.tests[index] = true;
       } else {
-        testDot.style.backgroundColor="red"
+        testDot.style.backgroundColor = 'red';
         this.tests[index] = false;
       }
       index += 1
@@ -237,8 +238,6 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.paramSubscription.unsubscribe();
   }
-
-  getTaskDescription = () => this.taskDescription;
 
   submitCode = (): void => {
     // This code is called when it is confirmed that the user is logged in
@@ -275,7 +274,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
     }
   }
 
-  goToTask = (taskNumber) => {
+  goToTask = (taskNumber: number) => {
     console.log("going to task number " + taskNumber);
     this.router.navigateByUrl('challenge/' + this.selectedLanguage + '/' + taskNumber);
     // reset the test array

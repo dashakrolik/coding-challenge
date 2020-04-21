@@ -1,0 +1,34 @@
+version: '3'
+services:
+  #DATABASE
+  database:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=codechallengedb
+    volumes:
+      - "./data:/var/lib/postgresql/data"
+    restart: unless-stopped
+
+  # BACK-END
+  back-end:
+    depends_on:
+      - database
+    image: coding-challenge-backend_springbootapp
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+
+  # FRONT-END
+  angular-service:
+    depends_on:
+      - back-end
+    build: .
+    volumes:
+      - ".:/app"
+    ports:
+      - 4200:4200
+    restart: unless-stopped
