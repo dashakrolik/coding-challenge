@@ -1,5 +1,5 @@
 interface ILanguage {
-    id: number,
-    language: string,
-    editorTheme: string,
+    id: number;
+    language: string;
+    editorTheme: string;
 }
