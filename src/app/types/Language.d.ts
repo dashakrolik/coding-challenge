@@ -1,4 +1,5 @@
 interface Language {
     id: number,
-    language: string
+    language: string,
+    editorTheme: string,
 }
