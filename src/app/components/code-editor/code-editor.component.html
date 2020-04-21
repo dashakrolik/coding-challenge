@@ -29,15 +29,26 @@ Your Output:
 </div>
 <div>
   <br>
-  <span id="test1" class="dot"></span>
-  <span id="test2" class="dot"></span>
-  <span id="test3" class="dot"></span>
-  <span id="test4" class="dot"></span>
-  <span id="test5" class="dot"></span>
+  <span *ngIf="isTest(1)" id="test1" class="dot"></span>
+  <span *ngIf="isTest(2)" id="test2" class="dot"></span>
+  <span *ngIf="isTest(3)" id="test3" class="dot"></span>
+  <span *ngIf="isTest(4)" id="test4" class="dot"></span>
+  <span *ngIf="isTest(5)" id="test5" class="dot"></span>
+  <span *ngIf="isTest(6)" id="test6" class="dot"></span>
+  <span *ngIf="isTest(7)" id="test7" class="dot"></span>
+  <span *ngIf="isTest(8)" id="test8" class="dot"></span>
+  <span *ngIf="isTest(9)" id="test9" class="dot"></span>
+  <span *ngIf="isTest(10)" id="test10" class="dot"></span>
 </div>
 <div>
   <button *ngIf="completeTask(1)" (click)="goToTask(2)" mat-raised-button color="warn">
     Next Task
+  </button>
+  <button *ngIf="completeTask(2)" (click)="goToTask(3)" mat-raised-button color="warn">
+    Next Task
+  </button>
+  <button *ngIf="completeTask(3)" (click)="finishedCodeChallenge()" mat-raised-button color="warn">
+    Finish code challenge!
   </button>
 </div>
 <br>

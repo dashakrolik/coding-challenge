@@ -2,7 +2,7 @@ import { Component, TemplateRef, ViewChild, OnInit, OnDestroy } from '@angular/c
 import { ComponentType } from '@angular/cdk/portal';
 
 import { AceEditorComponent } from 'ng2-ace-editor';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SubscribeComponent } from '../overlay/subscribe/subscribe.component';
 import { CandidateService } from '@service/candidate/candidate.service';
 import { TaskService } from '@service/task/task.service';
@@ -11,6 +11,7 @@ import { LanguageService } from '@service/language/language.service';
 import { OverlayService } from '@service/overlay/overlay.service';
 import { TokenStorageService } from '@service/token/token-storage.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 // @TODO: There are A LOT of things going on here (too many for just one component)
 // We need to split this up thats one
 // Two, a lot of this code is not necessary, let's refactor
@@ -24,6 +25,7 @@ import { Subscription } from 'rxjs';
 export class CodeEditorComponent implements OnInit, OnDestroy {
   public constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private overlayService: OverlayService,
     private taskService: TaskService,
     private languageService: LanguageService,
@@ -71,11 +73,11 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
     this.selectedLanguageIsJava = this.selectedLanguage === 'java';
     this.loadJavaScriptTask = this.selectedLanguageIsJavascript;
     this.codeResult = '';
+    this.tests = [false, false, false, false, false, false, false, false, false, false];
 
     // We load the task based on the exerciseId
     this.getTask();
     this.getLanguage();
-    this.tests = [false, false, false, false, false, false, false, false, false, false, false];
   }
 
   ngAftterViewInit() {
@@ -141,11 +143,17 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
 
   handleSuccessfulResponseRunCode = (response): void => {
     // First we clear the current output for the new input
-    // TODO: check if there is an error and print that instead of the normal contentvalue.
     this.codeResult = "";
     response.forEach(element => {
-      this.codeResult += element.contentValue;
+      // We check if it is not an error than we show the output, otherwise we show the error.
       console.log(element);
+      if (element.errorType === null) {
+        this.codeResult += element.contentValue;
+      } else {
+        this.codeResult += element.errorType;
+        this.codeResult += '\n';
+        this.codeResult += element.errorValue;
+      }
     });
   }
 
@@ -209,8 +217,10 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   handleSuccessfulResponseCreateSubmission = (response): void => {
     this.codeResult = "";
     console.log('successful post message create submission');
+    // The response will be a boolean array of the tests and if they failed or not.
+    this.tests = response;
     let index = 1;
-    response.forEach(element => {
+    this.tests.forEach(element => {
       const elementName = 'test' + index;
       let testDot = document.getElementById(elementName);
       if (element) {
@@ -241,16 +251,25 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   checkLogin = (): boolean => this.tokenStorageService.isUserLoggedIn();
 
   completeTask = (taskNumber): boolean => {
-    // TODO: implement the complete task check
     // Now it just check if the 2 tests I have added are correct. change this with the final test implementation
-    let completedTests = 0;
-    this.tests.forEach( test => {
-      if (test) {
-        completedTests += 1
-      }
-    })
-    if (completedTests == 5) {
-      return true;
+    if (this.exerciseId === taskNumber) {
+      // all 5 tests of the first task should be successful
+      return this.tests[0] && this.tests[1] && this.tests[2] && this.tests[3] && this.tests[4];
+    } else {
+      // TODO: implement the progression for the second and third task.
+      return false;
+    }
+  }
+
+  isTest = (testNumber): boolean => {
+    // simple function to see how many tests should be displayed on the screen.
+    if (this.exerciseId === 1) {
+      // if it's the first task we want to show the first 5 test dots
+      return testNumber <= 5;
+    } else if (this.exerciseId === 2) {
+      return testNumber <= 6;
+    } else if (this.exerciseId === 3) {
+      return testNumber <= 8;
     } else {
       return false;
     }
@@ -258,5 +277,23 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
 
   goToTask = (taskNumber) => {
     console.log("going to task number " + taskNumber);
+    this.router.navigateByUrl('challenge/' + this.selectedLanguage + '/' + taskNumber);
+    // reset the test array
+    this.tests = [false, false, false, false, false, false, false, false, false, false];
+    // refreshing the objects.
+    let index = 1;
+    this.tests.forEach(element => {
+      const elementName = 'test' + index;
+      let testDot = document.getElementById(elementName);
+      testDot.style.backgroundColor="#bbb";
+      index += 1
+    });
+    this.exerciseId = taskNumber;
+    this.getTask();
+    this.getLanguage();
+  }
+
+  finishedCodeChallenge = () => {
+    console.log("The code challenge is completed");
   }
 }
