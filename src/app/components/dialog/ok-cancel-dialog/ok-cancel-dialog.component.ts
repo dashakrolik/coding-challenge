@@ -11,7 +11,10 @@ export class OkCancelDialogComponent {
     public dialogRef: MatDialogRef<OkCancelDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-  closeDialog = (okOrCancel: boolean): void => {
-    this.dialogRef.close(okOrCancel);
+  dismiss = (): void => {
+    this.dialogRef.close(false);
+  }
+  accept = (): void => {
+    this.dialogRef.close(true);
   }
 }

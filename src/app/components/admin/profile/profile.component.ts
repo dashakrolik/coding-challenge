@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PersonService } from '@service/person/person.service';
 import { FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 import { take } from 'rxjs/operators';
-import { MatDialog } from '@angular/material/dialog';
 import { DialogService } from '@service/dialog/dialog.service';
+import { RoleService } from '@service/role/role.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,12 +16,8 @@ export class ProfileComponent implements OnInit {
   person: Person;
   personDetailsForm: FormGroup;
   // TODO: get roles from backend
-  roles: string[] = ['ROLE_USER', 'ROLE_MODERATOR', 'ROLE_ADMIN'];
-  allRoles: Role[] = [
-    { id: 1, name: 'ROLE_USER' },
-    { id: 2, name: 'ROLE_MODERATOR' },
-    { id: 3, name: 'ROLE_ADMIN' }
-  ];
+  roles: string[];
+  allRoles: Role[];
 
   constructor(
     private route: ActivatedRoute,
@@ -29,6 +25,7 @@ export class ProfileComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private dialogService: DialogService,
+    private roleService: RoleService,
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +34,10 @@ export class ProfileComponent implements OnInit {
     this.personService.getPersonById(id).pipe(take(1)).subscribe(person => {
       this.person = person;
       this.fillForm();
+    });
+    this.roleService.getRoles().pipe(take(1)).subscribe(allRoles => {
+      this.allRoles = allRoles;
+      this.roles = allRoles.map(role => role.name);
     });
   }
 
@@ -64,43 +65,42 @@ export class ProfileComponent implements OnInit {
     return person.roles.map(role => role.name);
   }
 
-  confirmToSavePerson = () => {
+  SavePerson = () => {
     const data = {
       title: 'Save personDetails',
       message: 'Are you sure you want to save these changes?'
     };
     this.dialogService.openOkCancelDialog(data)
       .then(() => {
-        this.savePerson();
+        this.savePersonToBackend();
       }).catch(() => { });
   }
 
-  savePerson = (): void => {
+  savePersonToBackend = (): void => {
+    const personId = this.person.id;
     this.person = this.personDetailsForm.value;
+    this.person.id = personId;
     this.person.roles = this.allRoles.filter(role => {
       return this.person.roles.includes(role.name as string) as boolean;
     }
     );
-    const idControl: AbstractControl = this.personDetailsForm.get('id');
-    idControl.enable();
     this.personService.updatePerson(this.person).pipe(take(1)).subscribe(savedPerson => {
       this.person = savedPerson;
-      idControl.disable();
     });
   }
 
-  confirmToDeletePerson = () => {
+  deletePerson = () => {
     const data = {
       title: 'Delete person',
       message: 'Are you sure you want to delete this person?<br/>This also deletes all their submissions.'
     };
     this.dialogService.openOkCancelDialog(data)
       .then(() => {
-        this.deletePerson();
+        this.deletePersonOnBackend();
       }).catch(() => { });
   }
 
-  deletePerson = (): void => {
+  deletePersonOnBackend = (): void => {
     const idControl: AbstractControl = this.personDetailsForm.get('id');
     idControl.enable();
     this.personService.deletePerson(this.personDetailsForm.value).pipe(take(1)).subscribe(() => {

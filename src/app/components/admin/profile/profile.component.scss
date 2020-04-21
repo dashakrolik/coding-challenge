@@ -49,11 +49,11 @@ button, input[type=button]{
 }
 
 .mat-option{
-    &.mat-active{
-        background-color: rgba(0,0,0,.1);
-    }
     &:hover{
        background-color: #99ccd3;
+    }
+    &.mat-active{
+        background-color: rgba(0,0,0,.1);
     }
 
 }

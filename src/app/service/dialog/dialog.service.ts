@@ -12,26 +12,24 @@ export class DialogService {
     private dialog: MatDialog,
   ) { }
 
-  openMessageDialog = (data) => {
+  openMessage = (data) => {
     return new Promise((resolve, reject) => {
       const dialogRef = this.dialog.open(MessageDialogComponent, {
         width: '500px',
         data
       });
-      dialogRef.afterClosed().pipe(take(1)).subscribe(() => {
-        resolve();
-      });
+      dialogRef.afterClosed().pipe(take(1)).subscribe(resolve);
     });
   }
 
-  openOkCancelDialog = (data) => {
+  openOkCancel = (data) => {
     return new Promise((resolve, reject) => {
       const dialogRef = this.dialog.open(OkCancelDialogComponent, {
         width: '500px',
         data
       });
-      dialogRef.afterClosed().pipe(take(1)).subscribe((answerBool) => {
-        if (answerBool) {
+      dialogRef.afterClosed().pipe(take(1)).subscribe((isAccepted: boolean) => {
+        if (isAccepted) {
           resolve();
         } else {
           reject();
