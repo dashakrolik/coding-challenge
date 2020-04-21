@@ -48,7 +48,7 @@ import { TaskComponent } from '@components/task/task.component';
     PersonTableComponent,
     SubmissionTableComponent,
     DropdownComponent,
-    SubmitDialogComponent
+    SubmitDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,7 +66,7 @@ import { TaskComponent } from '@components/task/task.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent],
