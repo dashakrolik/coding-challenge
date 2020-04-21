@@ -1,4 +1,4 @@
-interface Person {
+interface IPerson {
     id: number;
     firstName: string;
     lastName: string;

@@ -28,7 +28,7 @@ import { PersonTableComponent } from '@components/admin/person-table/person-tabl
 import { ProfileComponent } from '@components/admin/profile/profile.component';
 import { SubmissionTableComponent } from '@components/admin/submission-table/submission-table.component';
 import { DropdownComponent } from '@components/dropdown/dropdown.component';
-import { authInterceptorProviders } from '@service/auth/auth.interceptor';
+import { authInterceptorProviders } from './guards/auth/auth.interceptor';
 import { AppComponent } from './app.component';
 import { TaskComponent } from '@components/task/task.component';
 
@@ -66,7 +66,7 @@ import { TaskComponent } from '@components/task/task.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatDialogModule,
+    MatDialogModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent],

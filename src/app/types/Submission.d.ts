@@ -1,4 +1,4 @@
-interface Submission {
+interface ISubmission {
   id: number;
   answer: string;
   taskId: number;

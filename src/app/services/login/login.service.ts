@@ -20,7 +20,7 @@ export class LoginService {
     console.log('going to login');
     return this.httpClient.post(AUTH_API + 'signin', {
       username: email,
-      password: password
+      password
     }, httpOptions);
   }
 
@@ -30,13 +30,13 @@ export class LoginService {
       return this.httpClient.post(AUTH_API + 'signup', {
         firstname: firstName,
         lastname: lastName,
-        username: username,
-        password: password
+        username,
+        password
       }, httpOptions);
     } else {
       return this.httpClient.post(AUTH_API + 'signup', {
-        username: username,
-        password: password
+        username,
+        password
       }, httpOptions);
     }
   }

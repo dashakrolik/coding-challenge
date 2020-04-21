@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
-import { PersonService } from '@service/person/person.service';
 import { FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
+
+import { PersonService } from '@services/person/person.service';
 
 import { take } from 'rxjs/operators';
 
@@ -12,7 +12,7 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  person: Person;
+  person: IPerson;
   personDetailsForm: FormGroup;
 
   constructor(
