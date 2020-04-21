@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSelectChange } from '@angular/material/select';
+import { Subscription, Observable } from 'rxjs';
 import { LanguageService } from '@service/language/language.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-welcome-page',
@@ -13,7 +15,6 @@ export class WelcomePageComponent implements OnInit {
   email: string;
   form: FormGroup;
   squareMargin = 'margin-left: 20px';
-  languages: Language[] = [];
   user = {
     email: 'test@test.nl',
     language: 'java',
@@ -22,8 +23,8 @@ export class WelcomePageComponent implements OnInit {
       exerciseId: 1
     }
   };
-  taskId: number;
   selectedLanguage: string;
+  languageNames$: Observable<string[]>;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,40 +32,27 @@ export class WelcomePageComponent implements OnInit {
     private languageService: LanguageService
   ) {
   }
+
   ngOnInit() {
-    this.getForm();
-    this.getLanguages();
-  }
+    this.createForm();
 
-  getForm = () => this.form = this.formBuilder.group({});
-
-  getLanguages = () => {
-    this.languageService.getLanguages().subscribe(
-      response => this.languages = response
+    // get just the names of the languages
+    this.languageNames$ = this.languageService.getLanguages().pipe(
+      map(languages =>
+        languages.map(lang => lang.language)
+      )
     );
   }
 
-  setLanguage = () => this.languages.map(item => item.language);
-
-  setExercise() {
-    const { progressId } = this.user.exercise;
-
-    if (progressId === 0) {
-      this.taskId = 1;
-      if (progressId === 0) {
-        this.taskId = 1;
-      } else {
-        this.taskId = progressId;
-      }
-    }
-  }
+  createForm = () => this.form = this.formBuilder.group({});
 
   submit = () => {
-    this.setExercise();
-    this.router.navigateByUrl('challenge/' + this.selectedLanguage + '/' + this.taskId);
+    const { progressId } = this.user.exercise;
+    const taskId = progressId || 1;
+
+    this.router.navigateByUrl(`challenge/${this.selectedLanguage}/${taskId}`);
   }
 
-  getLanguage = () => this.languages === undefined;
-
   onSelect = (event: MatSelectChange) => this.selectedLanguage = event.value;
+
 }
