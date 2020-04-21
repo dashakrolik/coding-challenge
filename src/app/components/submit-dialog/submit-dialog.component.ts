@@ -28,17 +28,16 @@ export class SubmitDialogComponent implements OnInit {
     });
 
     // if there's data, fill the formgroup with it
-    if(this.data) {
+    if (this.data) {
       this.formGroup.patchValue({ ...this.data });
     }
-    
   }
 
-  cancel() {
+  cancel = () => {
     // TODO implement cancellation
   }
 
-  submit() {
+  submit = () => {
     // TODO implement submit
   }
 

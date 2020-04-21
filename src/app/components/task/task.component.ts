@@ -1,5 +1,9 @@
-import { Component, TemplateRef, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+
+import { Subscription } from 'rxjs';
+import { take, switchMap } from 'rxjs/operators';
 
 import { AceEditorComponent } from 'ng2-ace-editor';
 
@@ -7,13 +11,10 @@ import { CandidateService } from '@service/candidate/candidate.service';
 import { TaskService } from '@service/task/task.service';
 import { SubmissionService } from '@service/submission/submission.service';
 import { LanguageService } from '@service/language/language.service';
-
-import { Subscription } from 'rxjs';
-
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';
 import { TokenStorageService } from '@service/token/token-storage.service';
-import { take, switchMap } from 'rxjs/operators';
+
+import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';
+
 // @TODO: There are A LOT of things going on here (too many for just one component)
 // We need to split this up thats one
 // Two, a lot of this code is not necessary, let's refactor
@@ -25,9 +26,9 @@ import { take, switchMap } from 'rxjs/operators';
 })
 
 export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
-  
+
   @ViewChild('editor') editor: AceEditorComponent;
-  
+
   selectedLanguage: Language;
   codeSnippet = '';
   evaluationResult: boolean;
@@ -39,7 +40,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   submissionSubscription: Subscription;
   task: Task;
   candidate: Candidate;
-  
+
   constructor(
     private route: ActivatedRoute,
     private candidateService: CandidateService,
@@ -83,7 +84,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
       console.log('The dialog was closed');
-      console.log("submitCode subscription", result);
+      console.log('submitCode subscription', result);
     });
   }
 

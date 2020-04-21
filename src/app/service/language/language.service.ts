@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
-import { HttpClientService } from '@service/http/http-client.service';
+
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+import { HttpClientService } from '@service/http/http-client.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LanguageService {
-
   constructor(
     private http: HttpClientService
   ) { }
-  
-  getTheme = (languageName): string => {
+
+  getTheme = (languageName: string): string => {
     // TODO store the theme in the database as well
-    switch(languageName) {
+    switch (languageName) {
       case 'javascript': return 'dracula';
       case 'python': return 'monokai';
       case 'java': return 'eclipse'; // java theme
@@ -29,7 +30,7 @@ export class LanguageService {
         return lang;
       })
     )
-  );
+  )
 
   /**
    * Get a map of the languages. This is much faster than looping » O(1)
