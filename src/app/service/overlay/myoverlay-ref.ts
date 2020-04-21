@@ -4,14 +4,14 @@ import { OverlayRef } from '@angular/cdk/overlay';
 
 import { TemplateRef, Type } from '@angular/core';
 
-export interface OverlayCloseEvent<R> {
+export interface IOverlayCloseEvent<R> {
   type: 'backdropClick' | 'close';
   data: R;
 }
 
 // R = Response Data Type, T = Data passed to Modal Type
 export class MyOverlayRef<R = any, T = any> {
-  afterClosed$ = new Subject<OverlayCloseEvent<R>>();
+  afterClosed$ = new Subject<IOverlayCloseEvent<R>>();
 
   constructor(
     public overlay: OverlayRef,
