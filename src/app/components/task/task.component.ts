@@ -19,12 +19,12 @@ import { take, switchMap } from 'rxjs/operators';
 // Two, a lot of this code is not necessary, let's refactor
 
 @Component({
-  selector: 'app-code-editor',
-  templateUrl: './code-editor.component.html',
-  styleUrls: ['./code-editor.component.css']
+  selector: 'app-task',
+  templateUrl: './task.component.html',
+  styleUrls: ['./task.component.css']
 })
 
-export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
+export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   
   @ViewChild('editor') editor: AceEditorComponent;
   
@@ -126,8 +126,8 @@ export class CodeEditorComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   retrieveAndSetLanguage = (): void => {
-    const languageParam = this.route.snapshot.paramMap.get('language'); // default
-    
+    const languageParam = this.route.snapshot.paramMap.get('language'); 
+
     this.languageSubscription = this.languageService.getLanguagesMap().subscribe((languagesMap) => {
       this.selectedLanguage = languagesMap.get(languageParam);
 

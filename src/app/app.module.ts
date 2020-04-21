@@ -23,19 +23,19 @@ import { CandidateComponent } from '@components/candidate/candidate.component';
 import { OverlayComponent } from '@components/overlay/overlay/overlay.component';
 import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.component';
 import { AdminPanelComponent } from '@components/admin/admin-panel/admin-panel.component';
-import { TaskComponent } from '@components/admin/task/task.component';
+import { TaskComponent as AdminTaskComponent } from '@components/admin/task/task.component';
 import { PersonTableComponent } from '@components/admin/person-table/person-table.component';
 import { ProfileComponent } from '@components/admin/profile/profile.component';
 import { SubmissionTableComponent } from '@components/admin/submission-table/submission-table.component';
 import { DropdownComponent } from '@components/dropdown/dropdown.component';
 import { authInterceptorProviders } from '@service/auth/auth.interceptor';
 import { AppComponent } from './app.component';
-import { CodeEditorComponent } from '@components/code-editor/code-editor.component';
+import { TaskComponent } from '@components/task/task.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CodeEditorComponent,
+    TaskComponent,
     WelcomePageComponent,
     JavascriptTaskComponent,
     CandidateComponent,
@@ -44,7 +44,7 @@ import { CodeEditorComponent } from '@components/code-editor/code-editor.compone
     DropdownComponent,
     ProfileComponent,
     AdminPanelComponent,
-    TaskComponent,
+    AdminTaskComponent,
     PersonTableComponent,
     SubmissionTableComponent,
     DropdownComponent,

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CodeEditorComponent } from './code-editor.component';
+import { TaskComponent } from '@components/task/task.component';
 
 describe('CodeEditorComponent', () => {
-  let component: CodeEditorComponent;
-  let fixture: ComponentFixture<CodeEditorComponent>;
+  let component: TaskComponent;
+  let fixture: ComponentFixture<TaskComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CodeEditorComponent ]
+      declarations: [ TaskComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CodeEditorComponent);
+    fixture = TestBed.createComponent(TaskComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
