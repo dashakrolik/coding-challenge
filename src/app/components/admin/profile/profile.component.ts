@@ -65,7 +65,7 @@ export class ProfileComponent implements OnInit {
     return person.roles.map(role => role.name);
   }
 
-  SavePerson = () => {
+  savePerson = () => {
     const data = {
       title: 'Save personDetails',
       message: 'Are you sure you want to save these changes?'

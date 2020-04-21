@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +14,6 @@ export class RoleService {
 
   constructor() { }
 
-  getRoles = (): Observable<Role[]> => {
-    return new Observable(subscriber => {
-      subscriber.next(this.allRoles);
-    });
-  }
+  getRoles = (): Observable<Role[]> => of(this.allRoles);
 
 }
