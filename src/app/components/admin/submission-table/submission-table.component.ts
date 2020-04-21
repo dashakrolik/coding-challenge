@@ -36,6 +36,7 @@ export class SubmissionTableComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<Submission>;
   // TODO: add rule to the  tsconfig to disable the error below
+  // tslint:disable-next-line: no-input-rename
   @Input('personId') personId: number;
   dataSource: MatTableDataSource<Submission>;
 

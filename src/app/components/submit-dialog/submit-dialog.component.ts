@@ -12,7 +12,7 @@ export class SubmitDialogComponent implements OnInit {
   formGroup: FormGroup;
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     public dialogRef: MatDialogRef<SubmitDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data: Candidate
   ) { }
