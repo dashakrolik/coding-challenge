@@ -32,8 +32,7 @@ export class LanguageService {
   );
 
   /**
-   * Get a map of the languages
-   * @example // Get Observable output and store it in this.languagesMap
+   * Get a map of the languages. This is much faster than looping » O(1)
    * this.languagesMap.get('javascript'); // { id: 1, language: 'javascript', ...}
    */
   getLanguagesMap = (): Observable<Map<string, Language>> => {
