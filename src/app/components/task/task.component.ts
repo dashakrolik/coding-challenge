@@ -7,11 +7,11 @@ import { take, switchMap } from 'rxjs/operators';
 
 import { AceEditorComponent } from 'ng2-ace-editor';
 
-import { CandidateService } from '@service/candidate/candidate.service';
-import { TaskService } from '@service/task/task.service';
-import { SubmissionService } from '@service/submission/submission.service';
-import { LanguageService } from '@service/language/language.service';
-import { TokenStorageService } from '@service/token/token-storage.service';
+import { CandidateService } from '@services/candidate/candidate.service';
+import { TaskService } from '@services/task/task.service';
+import { SubmissionService } from '@services/submission/submission.service';
+import { LanguageService } from '@services/language/language.service';
+import { TokenStorageService } from '@services/token/token-storage.service';
 
 import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';
 

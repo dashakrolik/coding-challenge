@@ -7,7 +7,7 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 
 import { take } from 'rxjs/operators';
 
-import { PersonService } from '@service/person/person.service';
+import { PersonService } from '@services/person/person.service';
 
 @Component({
   selector: 'app-person-table',

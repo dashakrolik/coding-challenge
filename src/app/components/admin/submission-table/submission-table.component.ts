@@ -7,7 +7,7 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 
 import { take } from 'rxjs/operators';
 
-import { SubmissionService } from '@service/submission/submission.service';
+import { SubmissionService } from '@services/submission/submission.service';
 
 @Component({
   selector: 'app-submission-table',

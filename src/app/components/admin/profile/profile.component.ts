@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 
-import { PersonService } from '@service/person/person.service';
+import { PersonService } from '@services/person/person.service';
 
 import { take } from 'rxjs/operators';
 
