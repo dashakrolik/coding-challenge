@@ -127,7 +127,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   retrieveAndSetLanguage = (): void => {
-    const languageParam = this.route.snapshot.paramMap.get('language'); 
+    const languageParam = this.route.snapshot.paramMap.get('language');
 
     this.languageSubscription = this.languageService.getLanguagesMap().subscribe((languagesMap) => {
       this.selectedLanguage = languagesMap.get(languageParam);
