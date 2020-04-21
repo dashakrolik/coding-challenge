@@ -15,7 +15,7 @@ import { TokenStorageService } from '@services/token/token-storage.service';
 
 import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';
 
-// @TODO: There are A LOT of things going on here (too many for just one component)
+// TODO: There are A LOT of things going on here (too many for just one component)
 // We need to split this up thats one
 // Two, a lot of this code is not necessary, let's refactor
 
