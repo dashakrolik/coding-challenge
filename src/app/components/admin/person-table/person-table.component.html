@@ -17,9 +17,9 @@
       <td mat-cell *matCellDef="let person" class="tableRow">{{person.lastName}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="email">
+    <ng-container matColumnDef="username">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Email address</th>
-      <td mat-cell *matCellDef="let person" class="tableRow">{{person.email}}</td>
+      <td mat-cell *matCellDef="let person" class="tableRow">{{person.username}}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

@@ -12,9 +12,9 @@ export class SubmitDialogComponent implements OnInit {
   formGroup: FormGroup;
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     public dialogRef: MatDialogRef<SubmitDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: Candidate
+    @Inject(MAT_DIALOG_DATA) private data: ICandidate
   ) { }
 
   ngOnInit(): void {
@@ -28,17 +28,16 @@ export class SubmitDialogComponent implements OnInit {
     });
 
     // if there's data, fill the formgroup with it
-    if(this.data) {
+    if (this.data) {
       this.formGroup.patchValue({ ...this.data });
     }
-    
   }
 
-  cancel() {
+  cancel = () => {
     // TODO implement cancellation
   }
 
-  submit() {
+  submit = () => {
     // TODO implement submit
   }
 

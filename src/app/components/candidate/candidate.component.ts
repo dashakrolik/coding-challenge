@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { CandidateService } from '@service/candidate/candidate.service';
+import { CandidateService } from '@services/candidate/candidate.service';
 
 @Component({
   selector: 'app-candidate',
@@ -10,7 +10,7 @@ import { CandidateService } from '@service/candidate/candidate.service';
   styleUrls: ['./candidate.component.css']
 })
 export class CandidateComponent implements OnInit {
-  candidates: Observable<Candidate[]>;
+  candidates: Observable<ICandidate[]>;
 
   constructor(
     private candidateService: CandidateService

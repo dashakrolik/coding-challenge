@@ -1,24 +1,24 @@
-import { Component, TemplateRef, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { ComponentType } from '@angular/cdk/portal';
+
+import { Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 import { AceEditorComponent } from 'ng2-ace-editor';
 
-import { CandidateService } from '@service/candidate/candidate.service';
-import { TaskService } from '@service/task/task.service';
-import { SubmissionService } from '@service/submission/submission.service';
-import { LanguageService } from '@service/language/language.service';
+import { CandidateService } from '@services/candidate/candidate.service';
+import { TaskService } from '@services/task/task.service';
+import { SubmissionService } from '@services/submission/submission.service';
+import { LanguageService } from '@services/language/language.service';
+import { TokenStorageService } from '@services/token/token-storage.service';
+import { OverlayService } from '@services/overlay/overlay.service';
 
-import { Subscription } from 'rxjs';
-
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';
-import { TokenStorageService } from '@service/token/token-storage.service';
-import { take, switchMap } from 'rxjs/operators';
-import { Router } from '@angular/router';
-import { OverlayService } from '@service/overlay/overlay.service';
 import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.component';
-import { ComponentType } from '@angular/cdk/portal';
-// @TODO: There are A LOT of things going on here (too many for just one component)
+
+// TODO: There are A LOT of things going on here (too many for just one component)
 // We need to split this up thats one
 // Two, a lot of this code is not necessary, let's refactor
 
@@ -29,10 +29,10 @@ import { ComponentType } from '@angular/cdk/portal';
 })
 
 export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
-  
+
   @ViewChild('editor') editor: AceEditorComponent;
-  
-  selectedLanguage: Language;
+
+  selectedLanguage: ILanguage;
   codeSnippet = '';
   evaluationResult: boolean;
 
@@ -40,12 +40,14 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   taskSubscription: Subscription;
   languageSubscription: Subscription;
-  task: Task;
-  candidate: Candidate;
   codeResult: string;
   tests: boolean[];
   subscribeComponent = SubscribeComponent;
   
+  submissionSubscription: Subscription;
+  task: ITask;
+  candidate: ICandidate;
+
   constructor(
     private router: Router,
     private overlayService: OverlayService,
@@ -74,10 +76,15 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     // });
   }
 
+  ngOnDestroy() {
+    this.taskSubscription.unsubscribe();
+    this.languageSubscription.unsubscribe();
+  }
+
   onChange = (event: any) => this.codeSnippet = event;
 
    evaluateCode = async () => {
-    const runCodeSubmission: Submission = {
+    const runCodeSubmission: ISubmission = {
       answer: this.codeSnippet,
       languageId: this.selectedLanguage.id,
       taskId: this.task.id,
@@ -111,7 +118,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   submitCode = () => {
     // A Submission on the frontend has no id, correct array and personId. 
     // This is because these elements will be determined on the backend.
-    const submission: Submission = {
+    const submission: ISubmission = {
       answer: this.codeSnippet,
       languageId: this.selectedLanguage.id,
       taskId: this.task.id,
@@ -134,14 +141,14 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
           } else {
             testDot.style.backgroundColor = 'red';
           }
-          index += 1
+          index += 1;
         });
       }
     );
   }
 
   retrieveAndSetLanguage = (): void => {
-    const languageParam = this.route.snapshot.paramMap.get('language'); 
+    const languageParam = this.route.snapshot.paramMap.get('language');
 
     this.languageSubscription = this.languageService.getLanguagesMap().subscribe((languagesMap) => {
       this.selectedLanguage = languagesMap.get(languageParam);
@@ -165,8 +172,9 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         // get the task with this id and switch to that Observable
         return this.taskService.getTask(exerciseId);
       })
-    ).subscribe(task => {
+    ).subscribe((task: ITask) => {
       this.task = task;
+      
       this.setBoilerPlateCode();
     });
   }
@@ -195,7 +203,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   goToTask = (taskNumber: number) => {
-    console.log("going to task number " + taskNumber);
+    console.log('going to task number ' + taskNumber);
     this.router.navigateByUrl('challenge/' + this.selectedLanguage.language + '/' + taskNumber);
     this.resetTests();
     // there is no need to set the task and language again. I believe because of the subscription construction.
@@ -217,6 +225,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  // Map over this instead of hard coding, this is not readable
   completeTask = (taskNumber): boolean => {
     if (this.task.taskNumber === 1 && taskNumber === 1) {
       // all 5 tests of the first task should be successful
@@ -233,7 +242,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   finishedCodeChallenge = () => {
-    console.log("The code challenge is completed");
+    console.log('The code challenge is completed');
   }
 
   checkIsLoggedIn = (): boolean => this.tokenStorageService.isUserLoggedIn();
@@ -245,17 +254,12 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     let index = 1;
     this.tests.forEach(element => {
       const elementName = 'test' + index;
-      let testDot = document.getElementById(elementName);
+      const testDot = document.getElementById(elementName);
       if (testDot !== null) {
-        testDot.style.backgroundColor="#bbb";
+        testDot.style.backgroundColor = '#bbb';
       }
-      index += 1
+      index += 1;
     });
-  }
-  
-  ngOnDestroy() {
-    this.taskSubscription.unsubscribe();
-    this.languageSubscription.unsubscribe();
   }
 
 }

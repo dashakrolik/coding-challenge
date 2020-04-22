@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSelectChange } from '@angular/material/select';
 import { Subscription, Observable } from 'rxjs';
-import { LanguageService } from '@service/language/language.service';
+import { LanguageService } from '@services/language/language.service';
 import { map } from 'rxjs/operators';
 
 @Component({
