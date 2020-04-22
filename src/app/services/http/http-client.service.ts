@@ -3,10 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { baseUrl } from '@shared/constants';
 import { Observable } from 'rxjs';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
-
 @Injectable({
   providedIn: 'root'
 })
@@ -26,7 +22,11 @@ export class HttpClientService {
     return this.http.put(`${baseUrl}/${path}`, payload);
   }
 
-  delete = (path: string): Observable<any> => {
-    return this.http.delete(`${baseUrl}/${path}`);
+  delete<T>(path: string, payload: T): Observable<any> {
+    const options = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      body: payload
+    };
+    return this.http.delete(`${baseUrl}/${path}`, options);
   }
 }

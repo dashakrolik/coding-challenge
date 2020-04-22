@@ -2,7 +2,7 @@ interface IPerson {
     id: number;
     firstName: string;
     lastName: string;
-    email: string;
+    username: string;
     password: string;
-    role: string;
+    roles: IRole[];
 }

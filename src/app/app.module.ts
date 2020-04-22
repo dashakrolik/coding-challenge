@@ -8,14 +8,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';
 import { WelcomePageComponent } from '@components/welcome-page/welcome-page.component';
 import { JavascriptTaskComponent } from '@components/output/javascript-task/javascript-task.component';
@@ -25,12 +25,17 @@ import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.comp
 import { AdminPanelComponent } from '@components/admin/admin-panel/admin-panel.component';
 import { TaskComponent as AdminTaskComponent } from '@components/admin/task/task.component';
 import { PersonTableComponent } from '@components/admin/person-table/person-table.component';
-import { ProfileComponent } from '@components/admin/profile/profile.component';
+import { ProfileComponent } from '@components/profile/profile.component';
+import { ProfileComponent as AdminProfileComponent } from '@components/admin/profile/profile.component';
 import { SubmissionTableComponent } from '@components/admin/submission-table/submission-table.component';
 import { DropdownComponent } from '@components/dropdown/dropdown.component';
+
 import { authInterceptorProviders } from './guards/auth/auth.interceptor';
 import { AppComponent } from './app.component';
 import { TaskComponent } from '@components/task/task.component';
+import { MatDialogProvider } from '@shared/constants';
+import { OkCancelDialogComponent } from './components/dialog/ok-cancel-dialog/ok-cancel-dialog.component';
+import { MessageDialogComponent } from './components/dialog/message-dialog/message-dialog.component';
 
 @NgModule({
   declarations: [
@@ -45,8 +50,11 @@ import { TaskComponent } from '@components/task/task.component';
     ProfileComponent,
     AdminPanelComponent,
     AdminTaskComponent,
+    AdminProfileComponent,
     PersonTableComponent,
     SubmissionTableComponent,
+    OkCancelDialogComponent,
+    MessageDialogComponent,
     DropdownComponent,
     SubmitDialogComponent,
   ],
@@ -66,11 +74,20 @@ import { TaskComponent } from '@components/task/task.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatDialogModule,
+  ],
+  providers: [
+    authInterceptorProviders,
+    MatDialogProvider,
     MatDialogModule
   ],
-  providers: [authInterceptorProviders],
   bootstrap: [AppComponent],
-  entryComponents: [OverlayComponent, SubscribeComponent],
+  entryComponents: [
+    OverlayComponent,
+    SubscribeComponent,
+    MessageDialogComponent,
+    OkCancelDialogComponent,
+  ],
   schemas: [NO_ERRORS_SCHEMA]
 })
 export class AppModule {
