@@ -55,7 +55,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     private languageService: LanguageService,
     private submissionService: SubmissionService,
     private tokenStorageService: TokenStorageService,
-    private dialog: MatDialog,
+
   ) { }
 
   ngOnInit() {
@@ -76,20 +76,21 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onChange = (event: any) => this.codeSnippet = event;
 
-  evaluateCode = (): void => {
+   evaluateCode = async () => {
     const runCodeSubmission: Submission = {
       answer: this.codeSnippet,
       languageId: this.selectedLanguage.id,
-      taskId: this.task.id
+      taskId: this.task.id,
+      candidateId: 1
     };
-    this.submissionService.runCode(runCodeSubmission).subscribe(
-      response => this.handleSuccessfulResponseRunCode(response),
-    );
+    await this.submissionService.runCode(runCodeSubmission).toPromise().then((response => 
+      console.log(response)))
   }
 
   handleSuccessfulResponseRunCode = (response): void => {
     // First we clear the current output for the new input
     this.codeResult = '';
+    console.log(response);
     response.forEach(element => {
       // We check if it is not an error than we show the output, otherwise we show the error.
       console.log(element);
@@ -113,7 +114,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     const submission: Submission = {
       answer: this.codeSnippet,
       languageId: this.selectedLanguage.id,
-      taskId: this.task.id
+      taskId: this.task.id,
+      candidateId: 1
     };
 
     this.submissionService.createSubmission(submission).subscribe(
@@ -144,11 +146,11 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     this.languageSubscription = this.languageService.getLanguagesMap().subscribe((languagesMap) => {
       this.selectedLanguage = languagesMap.get(languageParam);
 
-      if (!this.selectedLanguage) {
-        throw new Error(`No such language: ${languageParam}.`);
-      } else {
-        this.setBoilerPlateCode();
-      }
+      // if (!this.selectedLanguage) {
+      //   throw new Error(`No such language: ${languageParam}.`);
+      // } else {
+      //   this.setBoilerPlateCode();
+      // }
     });
   }
 
@@ -170,7 +172,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   setBoilerPlateCode = (): void => {
-    let boilerplate: string = '';
+    let boilerplate = '';
+
     if (this.selectedLanguage && this.task) {
       // If both objects are filled we will set the boilerplate code
       if (this.selectedLanguage.language === 'java') {
@@ -182,6 +185,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     const lines = boilerplate.split('\\n');
+
     this.text = '\n';
     lines.forEach(line => {
       this.text += line;
