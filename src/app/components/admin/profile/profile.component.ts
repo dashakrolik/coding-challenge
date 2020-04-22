@@ -81,8 +81,10 @@ export class ProfileComponent implements OnInit {
     const personId = this.person.id;
     this.person = this.personDetailsForm.value;
     this.person.id = personId;
+
+    // What is this? Don't use type assersions (read the docs)
     this.person.roles = this.allRoles.filter(role => {
-      return this.person.roles.includes(role.name as string) as boolean;
+      // return this.person.roles.includes(role.name as string) as boolean;
     }
     );
     this.personService.updatePerson(this.person).pipe(take(1)).subscribe(savedPerson => {
