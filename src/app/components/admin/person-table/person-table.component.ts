@@ -7,7 +7,7 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 
 import { take } from 'rxjs/operators';
 
-import { PersonService } from '@service/person/person.service';
+import { PersonService } from '@services/person/person.service';
 
 @Component({
   selector: 'app-person-table',
@@ -23,8 +23,8 @@ export class PersonTableComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild(MatTable) table: MatTable<Person>;
-  dataSource: MatTableDataSource<Person>;
+  @ViewChild(MatTable) table: MatTable<IPerson>;
+  dataSource: MatTableDataSource<IPerson>;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'firstName', 'lastName', 'username'];
@@ -36,11 +36,11 @@ export class PersonTableComponent implements OnInit {
     });
   }
 
-  setDataSource = (data: Person[]) => {
+  setDataSource = (data: IPerson[]) => {
     this.dataSource = new MatTableDataSource(data);
   }
 
-  toProfile = (person: Person) => {
+  toProfile = (person: IPerson) => {
     this.router.navigate(['/admin/profile/' + person.id], { state: { person } });
   }
 

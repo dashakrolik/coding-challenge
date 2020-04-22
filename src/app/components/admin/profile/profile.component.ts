@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PersonService } from '@service/person/person.service';
 import { FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 import { take } from 'rxjs/operators';
-import { DialogService } from '@service/dialog/dialog.service';
-import { RoleService } from '@service/role/role.service';
+
+import { PersonService } from '@services/person/person.service';
+import { DialogService } from '@services/dialog/dialog.service';
+import { RoleService } from '@services/role/role.service';
 
 @Component({
   selector: 'app-profile',
@@ -13,11 +14,11 @@ import { RoleService } from '@service/role/role.service';
 })
 
 export class ProfileComponent implements OnInit {
-  person: Person;
+  person: IPerson;
   personDetailsForm: FormGroup;
   // TODO: get roles from backend
   roles: string[];
-  allRoles: Role[];
+  allRoles: IRole[];
 
   constructor(
     private route: ActivatedRoute,
@@ -61,7 +62,7 @@ export class ProfileComponent implements OnInit {
   /**
    * Returns array of strings
    */
-  getRolesStrs = (person: Person): string[] => {
+  getRolesStrs = (person: IPerson): string[] => {
     return person.roles.map(role => role.name);
   }
 

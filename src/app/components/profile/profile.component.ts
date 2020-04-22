@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { TokenStorageService } from '../../service/token/token-storage.service';
 import { Router } from '@angular/router';
+
+import { TokenStorageService } from '@services/token/token-storage.service';
 
 @Component({
   selector: 'app-profile',
@@ -8,7 +9,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-
   content = '';
 
   constructor(
@@ -30,8 +30,6 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  goHome = (): void => {
-    this.router.navigate(['/']);
-  }
+  goHome = (): Promise<boolean> => this.router.navigate(['/']);
 
 }
