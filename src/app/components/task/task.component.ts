@@ -220,8 +220,10 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     } else if (this.task.taskNumber === 2 && taskNumber === 2) {
       // all 6 tests of the second task should be successful
       return this.tests[0] && this.tests[1] && this.tests[2] && this.tests[3] && this.tests[4] && this.tests[5];
+    } else if (this.task.taskNumber === 3 && taskNumber === 3) {
+      // all 8 tests of the third task should be successful
+      return this.tests[0] && this.tests[1] && this.tests[2] && this.tests[3] && this.tests[4] && this.tests[5] && this.tests[6] && this.tests[7];
     } else {
-      // TODO: implement the progression for the second and third task.
       return false;
     }
   }
