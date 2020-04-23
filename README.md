@@ -16,7 +16,7 @@ Perhaps a link to an assignment could also be passed around on other platforms f
 2. We are using TSLint heavily, and it might be best to also download a few (VSCode) extensions:
     - [TS Import Sorter](https://marketplace.visualstudio.com/items?itemName=mike-co.import-sorter) to auto-sort your imports (preferably run this on save).
     - [TSLint](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-tslint-plugin) to make sure you follow the tslint rules (preferably also run this on save).
-
+ 
 # mvp
 A working prototype in which:
 - Developers can submit their code,
