@@ -3,6 +3,8 @@
     "sortConfiguration.removeUnusedDefaultImports": true,
     "sortConfiguration.removeUnusedImports": true,
     "sortConfiguration.customOrderingRules.defaultNumberOfEmptyLinesAfterGroup": 1,
+    "importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count": 100,
+    "importStringConfiguration.trailingComma": "multiLine",
     "sortConfiguration.customOrderingRules.rules": [
         {
             "type": "importMember",
