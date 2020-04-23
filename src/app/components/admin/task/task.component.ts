@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-task',
+  selector: 'app-admin-task',
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.css']
 })
