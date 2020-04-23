@@ -1,8 +1,6 @@
-import { Subject } from 'rxjs';
-
 import { OverlayRef } from '@angular/cdk/overlay';
-
 import { TemplateRef, Type } from '@angular/core';
+import { Subject } from 'rxjs';
 
 export interface IOverlayCloseEvent<R> {
   type: 'backdropClick' | 'close';
