@@ -1,0 +1,6 @@
+<mat-card>
+    <p>Name: {{person?.firstName}}</p>
+    <p>Points: {{person?.points}}</p>
+    <p *ngIf="person?.username">Contact this amazing programmer:
+        <a href="'mailto:{{person?.username}}?subject=Hello from the code challenge.'">{{person?.username }}</a> </p>
+</mat-card>

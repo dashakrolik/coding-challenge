@@ -12,6 +12,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatCardModule } from '@angular/material/card';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -31,7 +32,8 @@ import { DropdownComponent } from '@components/dropdown/dropdown.component';
 import { authInterceptorProviders } from '@service/auth/auth.interceptor';
 import { AppComponent } from './app.component';
 import { TaskComponent } from '@components/task/task.component';
-import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
+import { LeaderboardComponent } from './components/leaderboard/table/leaderboard.component';
+import { CardComponent } from './components/leaderboard/card/card.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { LeaderboardComponent } from './components/leaderboard/leaderboard.compo
     DropdownComponent,
     SubmitDialogComponent,
     LeaderboardComponent,
+    CardComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,6 +72,7 @@ import { LeaderboardComponent } from './components/leaderboard/leaderboard.compo
     MatPaginatorModule,
     MatSortModule,
     MatDialogModule,
+    MatCardModule,
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent],
