@@ -18,6 +18,11 @@ Next to streamlining the onboarding process, the CodeChallenge app will be used 
 
 Perhaps a link to an assignment could also be passed around on other platforms for recruitment purposes. 
 
+# Add
+auto import sort 
+designs
+
+
 # mvp
 A working prototype in which:
 - Developers can submit their code,
