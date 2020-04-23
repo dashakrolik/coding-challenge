@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { TokenStorageService } from "../../service/token/token-storage.service";
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
+
+import { TokenStorageService } from '@services/token/token-storage.service';
 
 @Component({
   selector: 'app-profile',
@@ -8,7 +9,6 @@ import { Router } from "@angular/router";
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-
   content = '';
 
   constructor(
@@ -21,17 +21,15 @@ export class ProfileComponent implements OnInit {
       const user = this.tokenStorageService.getUser();
       const roles = user.roles;
       if (user.firstname == null && user.lastname == null) {
-        this.content = "Hello " + user.username + "\nRole: " + roles;
+        this.content = 'Hello ' + user.username + '\nRole: ' + roles;
       } else {
-        this.content = "Hello " + user.firstname + " " + user.lastname + "  Role: " + roles;
+        this.content = 'Hello ' + user.firstname + ' ' + user.lastname + '  Role: ' + roles;
       }
     } else {
-      this.content = "nobody is logged in, please log in or create an account"
+      this.content = 'nobody is logged in, please log in or create an account';
     }
   }
 
-  goHome = (): void => {
-    this.router.navigate(['/']);
-  }
+  goHome = (): Promise<boolean> => this.router.navigate(['/']);
 
 }

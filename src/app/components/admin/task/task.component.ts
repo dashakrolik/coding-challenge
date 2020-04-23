@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./task.component.css']
 })
 export class TaskComponent {
-  @Input() task: Task;
+  @Input() task: ITask;
 }

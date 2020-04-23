@@ -1,20 +1,20 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSelectChange } from '@angular/material/select';
 import { Subscription, Observable } from 'rxjs';
-import { LanguageService } from '@service/language/language.service';
+import { LanguageService } from '@services/language/language.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-welcome-page',
   templateUrl: './welcome-page.component.html',
   styleUrls: ['./welcome-page.component.css']
 })
-export class WelcomePageComponent implements OnInit, OnDestroy {
+export class WelcomePageComponent implements OnInit {
   email: string;
   form: FormGroup;
   squareMargin = 'margin-left: 20px';
-  languages: Language[] = [];
   user = {
     email: 'test@test.nl',
     language: 'java',
@@ -24,7 +24,7 @@ export class WelcomePageComponent implements OnInit, OnDestroy {
     }
   };
   selectedLanguage: string;
-  languagesSubscription: Subscription;
+  languageNames$: Observable<string[]>;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,15 +32,17 @@ export class WelcomePageComponent implements OnInit, OnDestroy {
     private languageService: LanguageService
   ) {
   }
+
   ngOnInit() {
     this.createForm();
-    this.languagesSubscription = this.languageService.getLanguages().subscribe(languages => 
-      this.languages = languages
+
+    // get just the names of the languages
+    this.languageNames$ = this.languageService.getLanguages().pipe(
+      map(languages =>
+        languages.map(lang => lang.language)
+      )
     );
   }
-
-
-  getLanguagesStrs = (): string[] => this.languages.map((item: Language) => item.language);
 
   createForm = () => this.form = this.formBuilder.group({});
 
@@ -53,7 +55,4 @@ export class WelcomePageComponent implements OnInit, OnDestroy {
 
   onSelect = (event: MatSelectChange) => this.selectedLanguage = event.value;
 
-  ngOnDestroy(): void {
-    this.languagesSubscription.unsubscribe();
-  }
 }
