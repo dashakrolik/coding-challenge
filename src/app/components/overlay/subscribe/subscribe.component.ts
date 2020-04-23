@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MyOverlayRef } from 'src/app/service/overlay/myoverlay-ref';
 import { FormBuilder, Validators } from '@angular/forms';
-import { HttpClientService } from "../../../service/http/http-client.service";
-import { TokenStorageService } from "../../../service/token/token-storage.service";
-import { LoginService } from '@service/login/login.service';
+import { TokenStorageService } from '@services/token/token-storage.service';
+import { MyOverlayRef } from '@services/overlay/myoverlay-ref';
+import { LoginService } from '@services/login/login.service';
 
 @Component({
   selector: 'app-subscribe',
@@ -29,15 +28,13 @@ export class SubscribeComponent {
     password: ''
   });
 
+  // TODO use Material Design Dialogue instead
   constructor(
     private fb: FormBuilder,
     private ref: MyOverlayRef,
     private loginService: LoginService,
     private tokenStorageService: TokenStorageService
   ) {
-  }
-
-  ngOnInit() {
   }
 
   submitRegister() {
@@ -83,8 +80,9 @@ export class SubscribeComponent {
     this.tokenStorageService.saveUser(response);
 
     window.location.reload();
-  };
+  }
 
+  // USE TSLINT GUIDELINES!!
   openTab(tabName) {
     console.log("opening new tab " + tabName);
     // We get both tab elements and we turn them off. Then we immediately turn the tab on that the user clicked on.

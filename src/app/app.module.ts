@@ -25,12 +25,17 @@ import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.comp
 import { AdminPanelComponent } from '@components/admin/admin-panel/admin-panel.component';
 import { TaskComponent as AdminTaskComponent } from '@components/admin/task/task.component';
 import { PersonTableComponent } from '@components/admin/person-table/person-table.component';
-import { ProfileComponent } from '@components/admin/profile/profile.component';
+import { ProfileComponent } from '@components/profile/profile.component';
+import { ProfileComponent as AdminProfileComponent } from '@components/admin/profile/profile.component';
 import { SubmissionTableComponent } from '@components/admin/submission-table/submission-table.component';
 import { DropdownComponent } from '@components/dropdown/dropdown.component';
-import { authInterceptorProviders } from '@service/auth/auth.interceptor';
+
+import { authInterceptorProviders } from './guards/auth/auth.interceptor';
 import { AppComponent } from './app.component';
 import { TaskComponent } from '@components/task/task.component';
+import { MatDialogProvider } from '@shared/constants';
+import { OkCancelDialogComponent } from './components/dialog/ok-cancel-dialog/ok-cancel-dialog.component';
+import { MessageDialogComponent } from './components/dialog/message-dialog/message-dialog.component';
 
 @NgModule({
   declarations: [
@@ -45,8 +50,11 @@ import { TaskComponent } from '@components/task/task.component';
     ProfileComponent,
     AdminPanelComponent,
     AdminTaskComponent,
+    AdminProfileComponent,
     PersonTableComponent,
     SubmissionTableComponent,
+    OkCancelDialogComponent,
+    MessageDialogComponent,
     DropdownComponent,
     SubmitDialogComponent,
   ],
@@ -68,9 +76,18 @@ import { TaskComponent } from '@components/task/task.component';
     MatSortModule,
     MatDialogModule,
   ],
-  providers: [authInterceptorProviders],
+  providers: [
+    authInterceptorProviders,
+    MatDialogProvider,
+    MatDialogModule
+  ],
   bootstrap: [AppComponent],
-  entryComponents: [OverlayComponent, SubscribeComponent],
+  entryComponents: [
+    OverlayComponent,
+    SubscribeComponent,
+    MessageDialogComponent,
+    OkCancelDialogComponent,
+  ],
   schemas: [NO_ERRORS_SCHEMA]
 })
 export class AppModule {

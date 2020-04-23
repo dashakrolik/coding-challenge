@@ -30,7 +30,7 @@ input[type=button].del{
 
 .admin-button{
     position: fixed;
-    top: 0;
+    top: auto;
     right: 0;
     background-color: #f58220;
     border: none;
@@ -46,4 +46,14 @@ button, input[type=button]{
 
 .submission-table{
     margin: 1.25em;
+}
+
+.mat-option{
+    &:hover{
+       background-color: #99ccd3;
+    }
+    &.mat-active{
+        background-color: rgba(0,0,0,.1);
+    }
+
 }
