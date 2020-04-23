@@ -17,18 +17,6 @@
 
         <label>Role</label>
         <mat-select formControlName="roles" multiple>
-            <!-- <mat-select-trigger>
-                {{personDetailsForm.get('roles').value[0] || ''}}
-                <span *ngIf="personDetailsForm.get('roles').value?.length >1">
-                    (+{{personDetailsForm.get('roles').value?.length - 1}} others)
-                </span>
-            </mat-select-trigger> -->
-            <mat-option *ngFor="let role of allRoles" [value]="role.name">{{role.name}}
-            </mat-option>
-        </mat-select>
-
-        
-        <mat-select formControlName="roles" multiple>
             <mat-select-trigger>
                 {{personDetailsForm.get('roles').value[0] || ''}}
                 <span *ngIf="personDetailsForm.get('roles').value?.length >1">
