@@ -44,8 +44,8 @@ export class LeaderboardComponent implements OnInit {
     this.personOnCard = person;
     console.log(event);
     this.state = this.state === 'collapsed' ? 'large' : 'collapsed';
-    this.top = event.y;
-    this.left = event.x;
+    this.top = event.y + 10;
+    this.left = event.x + 10;
   }
 
   ngOnInit(): void {

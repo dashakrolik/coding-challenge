@@ -1,5 +1,10 @@
 .data-table{
     width: fit-content;
+    .mat-column-firstName{
+        &:hover{
+            background-color: #f5bd00;
+        }
+    }
 }
 app-card{
     position: fixed;
