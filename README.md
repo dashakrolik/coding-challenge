@@ -1,23 +1,35 @@
 # CodeChallenge
+To make working with a team a treat, we have introduced a few tools.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.3.
+1. We have [a Trello board](https://trello.com/b/HkQxdEbU) to which you will receive an invite (ask for it if you haven't received one yet).
+2. We have [a Slack group](https://codechallenge-group.slack.com) which we use to communicate.
 
-## The goal
-Ordina needs a tool to help with the onboarding of new recruits. Now, measuring the recruit's coding skill is done via an assignment which they need to complete. This is then checked manually for code quality.
-The CodeChallenge tool's goal is to automate this process. The general flow is the following:
-1. A recruit first goes to the CodeChallenge app and completes a few assignments. 
-2. These assignments are automatically checked on code complexity and execution speed
-3. If the recruit completes with a certain positive percentage of the CodeChallenge score (let's say: 80%), they are automatically invited for an interview. Maybe they also need to complete a custom challenge, but the idea is to filter out the coders that are not qualified.
+Great that you're joining the team!
 
-### Another goal: internal competition
-Next to streamlining the onboarding process, the CodeChallenge app could also be used as an internal competition tool. The idea would be to upload a new assignment each month and to compete with your colleagues for a place on the leaderboard. This leaderboard would be based on the same requirements as the onboarding process and maybe also the time. 
+## The goal of this project
+The CodeChallenge app will be used as an (internal) competition tool. The idea would be to compete with your colleagues for a place on the leaderboard. This leaderboard would be based on things like code execution speed and maybe readability.
 
 Perhaps a link to an assignment could also be passed around on other platforms for recruitment purposes. 
 
+# Getting started
+1. _The designs for this project_ [can be viewed via this Dropbox folder](https://www.dropbox.com/sh/y29tjign13yg90k/AABhVezrI8vZJFgGI9hjUTNda?dl=0). 
+2. We are using TSLint heavily, and it might be best to also download a few (VSCode) extensions:
+    - [TS Import Sorter](https://marketplace.visualstudio.com/items?itemName=mike-co.import-sorter) to auto-sort your imports (preferably run this on save).
+    - [TSLint](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-tslint-plugin) to make sure you follow the tslint rules (preferably also run this on save).
+ 
 # mvp
-Only Java and Python need to be checked. 
+A working prototype in which:
+- Developers can submit their code,
+- The code should be checked on functionality (not on speed etc.),
+- Admins should be able to:
+    - View submitted code,
+    - Change the assignments,
+    - View the submissions,
+- There should be a game-element.
 
 # Running the project
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.3.
+
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
