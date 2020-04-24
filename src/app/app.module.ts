@@ -1,41 +1,51 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { OverlayModule } from '@angular/cdk/overlay';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AceEditorModule } from 'ng2-ace-editor';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { HttpClientModule } from '@angular/common/http';
-import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AceEditorModule } from 'ng2-ace-editor';
 
-import { AppRoutingModule } from './app-routing.module';
+import { MatDialogProvider } from '@shared/constants';
 
-import { MatDialogModule } from '@angular/material/dialog';
-import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';
-import { WelcomePageComponent } from '@components/welcome-page/welcome-page.component';
-import { JavascriptTaskComponent } from '@components/output/javascript-task/javascript-task.component';
+import { AdminPanelComponent } from '@components/admin/admin-panel/admin-panel.component';
+import { PersonTableComponent } from '@components/admin/person-table/person-table.component';
+import {
+    ProfileComponent as AdminProfileComponent
+} from '@components/admin/profile/profile.component';
+import {
+    SubmissionTableComponent
+} from '@components/admin/submission-table/submission-table.component';
+import { TaskComponent as AdminTaskComponent } from '@components/admin/task/task.component';
 import { CandidateComponent } from '@components/candidate/candidate.component';
+import { DropdownComponent } from '@components/dropdown/dropdown.component';
+import {
+    JavascriptTaskComponent
+} from '@components/output/javascript-task/javascript-task.component';
 import { OverlayComponent } from '@components/overlay/overlay/overlay.component';
 import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.component';
-import { AdminPanelComponent } from '@components/admin/admin-panel/admin-panel.component';
-import { TaskComponent as AdminTaskComponent } from '@components/admin/task/task.component';
-import { PersonTableComponent } from '@components/admin/person-table/person-table.component';
 import { ProfileComponent } from '@components/profile/profile.component';
-import { ProfileComponent as AdminProfileComponent } from '@components/admin/profile/profile.component';
-import { SubmissionTableComponent } from '@components/admin/submission-table/submission-table.component';
-import { DropdownComponent } from '@components/dropdown/dropdown.component';
-
-import { authInterceptorProviders } from './guards/auth/auth.interceptor';
-import { AppComponent } from './app.component';
+import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';
 import { TaskComponent } from '@components/task/task.component';
-import { MatDialogProvider } from '@shared/constants';
-import { OkCancelDialogComponent } from './components/dialog/ok-cancel-dialog/ok-cancel-dialog.component';
-import { MessageDialogComponent } from './components/dialog/message-dialog/message-dialog.component';
+import { WelcomePageComponent } from '@components/welcome-page/welcome-page.component';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import {
+    MessageDialogComponent
+} from './components/dialog/message-dialog/message-dialog.component';
+import {
+    OkCancelDialogComponent
+} from './components/dialog/ok-cancel-dialog/ok-cancel-dialog.component';
+import { authInterceptorProviders } from './guards/auth/auth.interceptor';
 
 @NgModule({
   declarations: [

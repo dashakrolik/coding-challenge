@@ -1,16 +1,14 @@
-import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-
-import { Subscription } from 'rxjs';
-import { take, switchMap } from 'rxjs/operators';
-
+import { ActivatedRoute } from '@angular/router';
 import { AceEditorComponent } from 'ng2-ace-editor';
+import { Subscription } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
 
 import { CandidateService } from '@services/candidate/candidate.service';
-import { TaskService } from '@services/task/task.service';
-import { SubmissionService } from '@services/submission/submission.service';
 import { LanguageService } from '@services/language/language.service';
+import { SubmissionService } from '@services/submission/submission.service';
+import { TaskService } from '@services/task/task.service';
 import { TokenStorageService } from '@services/token/token-storage.service';
 
 import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';

@@ -7,7 +7,6 @@ import { map } from 'rxjs/operators';
 
 import { LanguageService } from '@services/language/language.service';
 
-
 @Component({
   selector: 'app-welcome-page',
   templateUrl: './welcome-page.component.html',
