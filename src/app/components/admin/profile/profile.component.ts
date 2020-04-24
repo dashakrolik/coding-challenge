@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 import { take } from 'rxjs/operators';
 
-import { PersonService } from '@services/person/person.service';
 import { DialogService } from '@services/dialog/dialog.service';
+import { PersonService } from '@services/person/person.service';
 import { RoleService } from '@services/role/role.service';
 
 @Component({

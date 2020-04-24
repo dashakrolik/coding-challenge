@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MessageDialogComponent } from '@components/dialog/message-dialog/message-dialog.component';
 import { take } from 'rxjs/operators';
-import { OkCancelDialogComponent } from '@components/dialog/ok-cancel-dialog/ok-cancel-dialog.component';
+
+import { MessageDialogComponent } from '@components/dialog/message-dialog/message-dialog.component';
+import {
+    OkCancelDialogComponent
+} from '@components/dialog/ok-cancel-dialog/ok-cancel-dialog.component';
 
 @Injectable({
   providedIn: 'root'
