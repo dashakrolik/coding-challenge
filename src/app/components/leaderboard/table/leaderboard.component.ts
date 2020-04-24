@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { PersonService } from '@service/person/person.service';
 import { take } from 'rxjs/operators';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { PersonService } from '@services/person/person.service';
 
 @Component({
   selector: 'app-leaderboard',
@@ -30,17 +30,17 @@ export class LeaderboardComponent implements OnInit {
     private personService: PersonService,
   ) { }
   displayedColumns = ['firstName', 'points'];
-  dataSource: MatTableDataSource<Person>;
+  dataSource: MatTableDataSource<IPerson>;
   state: string;
   top: number;
   left: number;
-  personOnCard: Person;
+  personOnCard: IPerson;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild(MatTable) table: MatTable<Person>;
+  @ViewChild(MatTable) table: MatTable<IPerson>;
 
-  showCard = (event: MouseEvent, person: Person) => {
+  showCard = (event: MouseEvent, person: IPerson) => {
     this.personOnCard = person;
     console.log(event);
     this.state = this.state === 'collapsed' ? 'large' : 'collapsed';
@@ -59,7 +59,7 @@ export class LeaderboardComponent implements OnInit {
       this.dataSource.sort = this.sort;
     });
   }
-  setDataSource(data: Person[]) {
+  setDataSource(data: IPerson[]) {
     this.dataSource = new MatTableDataSource(data);
   }
 

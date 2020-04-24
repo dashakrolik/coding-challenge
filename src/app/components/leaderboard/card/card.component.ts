@@ -7,7 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./card.component.scss']
 })
 export class CardComponent {
-  @Input('person') person: Person;
+  @Input('person') person: IPerson;
   getMailLink = () => {
     const url = 'mailto:' + this.person.username + '?subject=Hello from the coding challenge.';
     return this.sanitizer.bypassSecurityTrustUrl(url);
