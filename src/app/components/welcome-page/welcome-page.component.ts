@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { MatSelectChange } from '@angular/material/select';
-import { Subscription, Observable } from 'rxjs';
-import { LanguageService } from '@services/language/language.service';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+import { LanguageService } from '@services/language/language.service';
 
 @Component({
   selector: 'app-welcome-page',

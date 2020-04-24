@@ -1,0 +1,28 @@
+
+{
+    "sortConfiguration.removeUnusedDefaultImports": true,
+    "sortConfiguration.removeUnusedImports": true,
+    "sortConfiguration.customOrderingRules.defaultNumberOfEmptyLinesAfterGroup": 1,
+    "importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count": 100,
+    "importStringConfiguration.trailingComma": "multiLine",
+    "sortConfiguration.customOrderingRules.rules": [
+        {
+            "type": "importMember",
+            "regex": "^$",
+            "orderLevel": 100,
+            "disableSort": true
+        },
+        {
+            "regex": "^[@]s",
+            "orderLevel": 300
+        },
+        {
+            "regex": "^[@]c",
+            "orderLevel": 400
+        },
+        {
+            "regex": "^[.]",
+            "orderLevel": 500
+        }
+    ]
+}

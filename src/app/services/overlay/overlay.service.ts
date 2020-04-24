@@ -1,8 +1,10 @@
 import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
 import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 import { Injectable, Injector, TemplateRef, Type } from '@angular/core';
-import { MyOverlayRef } from './myoverlay-ref';
+
 import { OverlayComponent } from '@components/overlay/overlay/overlay.component';
+
+import { MyOverlayRef } from './myoverlay-ref';
 
 @Injectable({
   providedIn: 'root'
