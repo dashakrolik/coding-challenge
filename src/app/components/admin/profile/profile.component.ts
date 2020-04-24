@@ -7,6 +7,28 @@ import { DialogService } from '@services/dialog/dialog.service';
 import { PersonService } from '@services/person/person.service';
 import { RoleService } from '@services/role/role.service';
 
+/**
+ * We need the interface IPersonFormValues to extend IPerson. 
+ * However, the IRole[] doesn't work with the mat-select, 
+ * so we need to overwrite the roles field for further typesafety #rulesaremadetobebroken
+ */
+// @ts-ignore 
+interface IPersonFormValues extends IPerson {
+  roles: string[]; // override of IRole[]
+}
+
+interface IPersonFormGroup extends FormGroup {
+  value: IPersonFormValues;
+  controls: {
+    id: AbstractControl;
+    firstName: AbstractControl;
+    lastName: AbstractControl;
+    username: AbstractControl;
+    roles: AbstractControl;
+    password: AbstractControl;
+  };
+}
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -15,10 +37,9 @@ import { RoleService } from '@services/role/role.service';
 
 export class ProfileComponent implements OnInit {
   person: IPerson;
-  personDetailsForm: FormGroup;
+  form: IPersonFormGroup;
   allRoles: IRole[];
   roles: IRole[];
-  selectedRoles: string[];
 
   constructor(
     private route: ActivatedRoute,
@@ -35,10 +56,6 @@ export class ProfileComponent implements OnInit {
     const id = parseInt(this.route.snapshot.params.id);
     this.personService.getPersonById(id).pipe(take(1)).subscribe(person => {
       this.person = person;
-
-      // mat-select only allows a string-array to pre-select values. Ugly, but yeah ¯\_(ツ)_/¯
-      this.selectedRoles = this.person.roles.map(role => role.name);
-
       this.fillForm();
     });
 
@@ -48,23 +65,28 @@ export class ProfileComponent implements OnInit {
   }
 
   createForm = (): void => {
-    this.personDetailsForm = this.formBuilder.group({
+    this.form = this.formBuilder.group({
       id: [{ value: 0, disabled: true }],
       firstName: [''],
       lastName: [''],
       username: [''],
       roles: [''],
       password: ['']
-    });
+    }) as IPersonFormGroup;
   }
 
   fillForm = (): void => {
-    this.personDetailsForm.patchValue({ ...this.person });
-    this.personDetailsForm.get('roles').setValue(this.selectedRoles); // set the roles which should be selected
-    this.personDetailsForm.get('password').setValue('');
+    this.form.patchValue({
+      ...this.person,
+      password: '', // reset this field
+
+      // mat-select only allows a string-array to pre-select values. Ugly, but yeah ¯\_(ツ)_/¯
+      roles: this.person.roles.map(role => role.name)
+    } as IPersonFormValues);
   }
 
   savePerson = () => {
+    console.log(this.getPersonFromFormValue());
     const data = {
       title: 'Save personDetails',
       message: 'Are you sure you want to save these changes?'
@@ -74,14 +96,7 @@ export class ProfileComponent implements OnInit {
   }
 
   savePersonToBackend = (): void => {
-    Object.assign(this.person, this.personDetailsForm.value);
-
-    // Retrieve the right roles by checking the mat-select result
-    this.person.roles = this.allRoles.filter(role => {
-      return this.selectedRoles.includes(role.name);
-    });
-
-    this.personService.updatePerson(this.person).pipe(take(1)).subscribe(savedPerson => {
+    this.personService.updatePerson(this.getPersonFromFormValue()).pipe(take(1)).subscribe(savedPerson => {
       this.person = savedPerson;
     });
   }
@@ -98,12 +113,31 @@ export class ProfileComponent implements OnInit {
   }
 
   deletePersonOnBackend = (): void => {
-    const idControl: AbstractControl = this.personDetailsForm.get('id');
+    const idControl = this.form.controls.id;
     idControl.enable();
-    this.personService.deletePerson(this.personDetailsForm.value).pipe(take(1)).subscribe(() => {
+    this.personService.deletePerson(this.getPersonFromFormValue()).pipe(
+      take(1)
+    ).subscribe(() => {
       this.navigateToAdminPanel();
       idControl.disable();
     });
+  }
+
+  /**
+   * Get the person in the correct format from the form.
+   * Overwrite just the roles because IPersonFormValues has { roles: string[] } instead of { roles: IRole[] }
+   */
+  getPersonFromFormValue = (): IPerson => {
+    // Retrieve the right roles by checking the mat-select result
+    const roles: IRole[] = this.allRoles.filter(role => {
+      return this.form.value.roles.includes(role.name);
+    });
+
+    return {
+      ...this.form.value,
+      id: this.person.id, // we can't change the id 
+      roles // and overwrite the roles
+    };
   }
 
   navigateToAdminPanel = () => this.router.navigate(['/admin']);

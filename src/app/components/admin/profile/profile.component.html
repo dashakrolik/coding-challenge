@@ -1,42 +1,42 @@
 <button class="admin-button" (click)="navigateToAdminPanel()">Admin panel</button>
 
 <ng-container *ngIf="person">
-    <h1>{{person.firstName}}'s Profile</h1>
-    <form class="personDetails" [formGroup]="personDetailsForm" (ngSubmit)="savePerson()">
-        <label>ID</label>
-        <input type="text" formControlName="id">
+  <h1>{{person.firstName}}'s Profile</h1>
+  <form class="personDetails" [formGroup]="form" (ngSubmit)="savePerson()">
+    <label>ID</label>
+    <input type="text" formControlName="id">
 
-        <label>First name</label>
-        <input type="text" formControlName="firstName" size="30">
+    <label>First name</label>
+    <input type="text" formControlName="firstName" size="30">
 
-        <label>Last name</label>
-        <input type="text" formControlName="lastName" size="30">
+    <label>Last name</label>
+    <input type="text" formControlName="lastName" size="30">
 
-        <label>Email address</label>
-        <input type="text" formControlName="username" size="30">
+    <label>Email address</label>
+    <input type="text" formControlName="username" size="30">
 
-        <label>Role</label>
-        <mat-select formControlName="roles" multiple>
-            <mat-select-trigger>
-                {{personDetailsForm.get('roles').value[0] || ''}}
-                <span *ngIf="personDetailsForm.get('roles').value?.length >1">
-                    (+{{personDetailsForm.get('roles').value?.length - 1}} others)
-                </span>
-            </mat-select-trigger>
-            <mat-option *ngFor="let role of allRoles" [value]="role.name">{{role.name}}
-            </mat-option>
-        </mat-select>
+    <label>Role</label>
+    <mat-select formControlName="roles" multiple>
+      <mat-select-trigger *ngIf="form.controls.roles as roles">
+        {{roles.value[0] || ''}}
+        <span *ngIf="roles.value?.length > 1">
+          (+{{roles.value.length - 1}} others)
+        </span>
+      </mat-select-trigger>
+      <mat-option *ngFor="let role of allRoles" [value]="role.name">{{role.name}}
+      </mat-option>
+    </mat-select>
 
-        <label>Password</label>
-        <input type="password" formControlName="password" size="30">
+    <label>Password</label>
+    <input type="password" formControlName="password" size="30">
 
-        <button type="submit">Save changes</button>
-        <input type="button" class="del" (click)="deletePerson()" value="Delete person">
-    </form>
+    <button type="submit">Save changes</button>
+    <input type="button" class="del" (click)="deletePerson()" value="Delete person">
+  </form>
 
-    <div class="submission-table">
-        <app-submission-table [personId]='person.id'>
-        </app-submission-table>
-    </div>
+  <div class="submission-table">
+    <app-submission-table [personId]='person.id'>
+    </app-submission-table>
+  </div>
 
 </ng-container>
