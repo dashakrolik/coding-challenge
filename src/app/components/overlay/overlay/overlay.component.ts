@@ -1,5 +1,6 @@
 import { Component, OnInit, TemplateRef, Type } from '@angular/core';
-import { MyOverlayRef } from '@service/overlay/myoverlay-ref';
+
+import { MyOverlayRef } from '@services/overlay/myoverlay-ref';
 
 @Component({
   selector: 'app-overlay',

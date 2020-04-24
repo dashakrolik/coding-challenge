@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { HttpClientService } from '@service/http/http-client.service';
-import { TokenStorageService } from '@service/token/token-storage.service';
-import { MyOverlayRef } from 'src/app/service/overlay/myoverlay-ref';
-import { LoginService } from '@service/login/login.service';
+
+import { LoginService } from '@services/login/login.service';
+import { MyOverlayRef } from '@services/overlay/myoverlay-ref';
+import { TokenStorageService } from '@services/token/token-storage.service';
 
 @Component({
   selector: 'app-subscribe',
@@ -29,7 +29,7 @@ export class SubscribeComponent implements OnInit {
     password: ''
   });
 
-  // @TODO use Material Design Dialogue instead
+  // TODO use Material Design Dialogue instead
   constructor(
     private fb: FormBuilder,
     private ref: MyOverlayRef,

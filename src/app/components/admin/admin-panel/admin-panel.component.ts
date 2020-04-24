@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Observable } from 'rxjs';
 
-import { TaskService } from '@service/task/task.service';
+import { TaskService } from '@services/task/task.service';
 
 @Component({
   selector: 'app-admin-panel',
@@ -11,7 +10,7 @@ import { TaskService } from '@service/task/task.service';
 })
 
 export class AdminPanelComponent implements OnInit {
-  tasks$: Observable<Task[]>;
+  tasks$: Observable<ITask[]>;
 
   constructor(
     private taskService: TaskService,

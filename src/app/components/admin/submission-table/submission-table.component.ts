@@ -1,13 +1,11 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-
 import { take } from 'rxjs/operators';
 
-import { SubmissionService } from '@service/submission/submission.service';
+import { SubmissionService } from '@services/submission/submission.service';
 
 @Component({
   selector: 'app-submission-table',
@@ -26,7 +24,7 @@ export class SubmissionTableComponent implements OnInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'answer', 'taskId', 'languageId', 'correct'];
 
-  expandedAnswer: Submission | null;
+  expandedAnswer: ISubmission | null;
 
   constructor(
     private submissionService: SubmissionService
@@ -34,10 +32,11 @@ export class SubmissionTableComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild(MatTable) table: MatTable<Submission>;
+  @ViewChild(MatTable) table: MatTable<ISubmission>;
   // TODO: add rule to the  tsconfig to disable the error below
+  // tslint:disable-next-line: no-input-rename
   @Input('personId') personId: number;
-  dataSource: MatTableDataSource<Submission>;
+  dataSource: MatTableDataSource<ISubmission>;
 
   ngOnInit() {
     this.submissionService.getAllSubmissionsFromPerson(this.personId).pipe(take(1)).subscribe(submissions => {
@@ -46,7 +45,7 @@ export class SubmissionTableComponent implements OnInit {
     });
   }
 
-  setDataSource = (data: Submission[]) => {
+  setDataSource = (data: ISubmission[]) => {
     this.dataSource = new MatTableDataSource(data);
   }
 }

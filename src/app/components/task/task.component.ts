@@ -1,20 +1,19 @@
-import { Component, TemplateRef, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-
 import { AceEditorComponent } from 'ng2-ace-editor';
-
-import { CandidateService } from '@service/candidate/candidate.service';
-import { TaskService } from '@service/task/task.service';
-import { SubmissionService } from '@service/submission/submission.service';
-import { LanguageService } from '@service/language/language.service';
-
 import { Subscription } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
 
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CandidateService } from '@services/candidate/candidate.service';
+import { LanguageService } from '@services/language/language.service';
+import { SubmissionService } from '@services/submission/submission.service';
+import { TaskService } from '@services/task/task.service';
+import { TokenStorageService } from '@services/token/token-storage.service';
+
 import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';
-import { TokenStorageService } from '@service/token/token-storage.service';
-import { take, switchMap } from 'rxjs/operators';
-// @TODO: There are A LOT of things going on here (too many for just one component)
+
+// TODO: There are A LOT of things going on here (too many for just one component)
 // We need to split this up thats one
 // Two, a lot of this code is not necessary, let's refactor
 
@@ -25,10 +24,10 @@ import { take, switchMap } from 'rxjs/operators';
 })
 
 export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
-  
+
   @ViewChild('editor') editor: AceEditorComponent;
-  
-  selectedLanguage: Language;
+
+  selectedLanguage: ILanguage;
   codeSnippet = '';
   evaluationResult: boolean;
 
@@ -37,9 +36,9 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   taskSubscription: Subscription;
   languageSubscription: Subscription;
   submissionSubscription: Subscription;
-  task: Task;
-  candidate: Candidate;
-  
+  task: ITask;
+  candidate: ICandidate;
+
   constructor(
     private route: ActivatedRoute,
     private candidateService: CandidateService,
@@ -83,7 +82,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
       console.log('The dialog was closed');
-      console.log("submitCode subscription", result);
+      console.log('submitCode subscription', result);
     });
   }
 
@@ -107,7 +106,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         // TODO: Now we retrieve the task and the language. Later this should be retrieved already,
         //  remove this at that point.
 
-        const candidate: Candidate = {
+        const candidate: ICandidate = {
           id: null,
           firstName: data.firstName,
           lastName: data.lastName,
@@ -126,7 +125,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   retrieveAndSetLanguage = (): void => {
-    const languageParam = this.route.snapshot.paramMap.get('language'); 
+    const languageParam = this.route.snapshot.paramMap.get('language');
 
     this.languageSubscription = this.languageService.getLanguagesMap().subscribe((languagesMap) => {
       this.selectedLanguage = languagesMap.get(languageParam);
@@ -153,7 +152,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   createSubmission = (): void => {
     // When creating a new Submission we give id null so it creates a new entry. It will determine the id by itself.
-    const submission: Submission = {
+    const submission: ISubmission = {
       id: null,
       answer: this.codeSnippet,
       correct: false,

@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
 import { ComponentType } from '@angular/cdk/portal';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { OverlayService,  } from '@service/overlay/overlay.service';
-import { TokenStorageService } from '@service/token/token-storage.service';
+import { TokenStorageService } from '@services/token/token-storage.service';
 
 import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.component';
 
-@Component({
-  selector: 'app-root',
+import { OverlayService } from './services/overlay/overlay.service';
+
+@Component({ 
+  selector: 'app-root', 
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })

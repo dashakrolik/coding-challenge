@@ -23,8 +23,11 @@
       "jasmine"
     ],
     "paths": {
-      "@service/*": [
-        "./src/app/service/*"
+      "@services/*": [
+        "./src/app/services/*"
+      ],
+      "@guards/*": [
+        "./src/app/guards/*"
       ],
       "@components/*": [
         "./src/app/components/*"
