@@ -72,17 +72,19 @@ export class ProfileComponent implements OnInit {
       username: [''],
       roles: [''],
       password: ['']
-    }) as IPersonFormGroup;
+    }) as IPersonFormGroup; // shut up and trust me. Make sure to double-check this list
   }
 
   fillForm = (): void => {
-    this.form.patchValue({
+    const values: IPersonFormValues = {
       ...this.person,
       password: '', // reset this field
 
       // mat-select only allows a string-array to pre-select values. Ugly, but yeah ¯\_(ツ)_/¯
       roles: this.person.roles.map(role => role.name)
-    } as IPersonFormValues);
+    };
+
+    this.form.patchValue(values);
   }
 
   savePerson = () => {
