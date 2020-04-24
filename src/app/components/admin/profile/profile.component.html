@@ -23,7 +23,7 @@
                     (+{{personDetailsForm.get('roles').value?.length - 1}} others)
                 </span>
             </mat-select-trigger>
-            <mat-option *ngFor="let role of roles" [value]="role">{{role}}
+            <mat-option *ngFor="let role of allRoles" [value]="role.name">{{role.name}}
             </mat-option>
         </mat-select>
 
