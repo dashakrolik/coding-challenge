@@ -40,7 +40,6 @@ export class ProfileComponent implements OnInit {
   form: IPersonFormGroup;
   allRoles: IRole[];
   roles: IRole[];
-  selectedRoles: string[];
 
   constructor(
     private route: ActivatedRoute,
@@ -57,10 +56,6 @@ export class ProfileComponent implements OnInit {
     const id = parseInt(this.route.snapshot.params.id);
     this.personService.getPersonById(id).pipe(take(1)).subscribe(person => {
       this.person = person;
-
-      // mat-select only allows a string-array to pre-select values. Ugly, but yeah ¯\_(ツ)_/¯
-      this.selectedRoles = this.person.roles.map(role => role.name);
-
       this.fillForm();
     });
 
@@ -83,12 +78,15 @@ export class ProfileComponent implements OnInit {
   fillForm = (): void => {
     this.form.patchValue({
       ...this.person,
-      password: '',
-      roles: this.selectedRoles
+      password: '', // reset this field
+
+      // mat-select only allows a string-array to pre-select values. Ugly, but yeah ¯\_(ツ)_/¯
+      roles: this.person.roles.map(role => role.name)
     } as IPersonFormValues);
   }
 
   savePerson = () => {
+    console.log(this.getPersonFromFormValue());
     const data = {
       title: 'Save personDetails',
       message: 'Are you sure you want to save these changes?'
@@ -132,10 +130,14 @@ export class ProfileComponent implements OnInit {
   getPersonFromFormValue = (): IPerson => {
     // Retrieve the right roles by checking the mat-select result
     const roles: IRole[] = this.allRoles.filter(role => {
-      return this.selectedRoles.includes(role.name);
+      return this.form.value.roles.includes(role.name);
     });
 
-    return { ...this.form.value, roles };
+    return {
+      ...this.form.value,
+      id: this.person.id, // we can't change the id 
+      roles // and overwrite the roles
+    };
   }
 
   navigateToAdminPanel = () => this.router.navigate(['/admin']);
