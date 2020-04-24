@@ -6,18 +6,21 @@
         intricate problems. These points decide your place on the leaderboard where you can see how your skills stack
         up!<br>
         This challenge is made for fun. It is for you to see how high up the leaderboard your skills place you and not
-        for anyone else (except for bragging rights for me, because obviously the #1 spot is mine).
+        for anyone else.
     </p>
 </div>
 
 <div class="start">
     <p>Please enter your email to proceed to the coding challenge</p>
+
     <ng-container *ngIf="(languageNames$ | async) as languageNames">
+
         <app-dropdown [inputValue]="languageNames" labelText="Select a Language" (valueOutput)="onSelect($event)">
         </app-dropdown>
 
         <button [disabled]="!languageNames?.length" (click)="submit()" mat-raised-button color="warn">
             Submit</button>
+
     </ng-container>
 
 </div>
