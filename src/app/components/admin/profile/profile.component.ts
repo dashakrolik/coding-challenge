@@ -1,11 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 import { take } from 'rxjs/operators';
 
-import { PersonService } from '@services/person/person.service';
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DialogService } from '@services/dialog/dialog.service';
+import { PersonService } from '@services/person/person.service';
 import { RoleService } from '@services/role/role.service';
+
+interface IPersonFormGroup extends FormGroup {
+  value: IPerson;
+  controls: {
+    id: AbstractControl;
+    firstName: AbstractControl;
+    lastName: AbstractControl;
+    username: AbstractControl;
+    roles: AbstractControl;
+    password: AbstractControl;
+  };
+}
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +27,7 @@ import { RoleService } from '@services/role/role.service';
 
 export class ProfileComponent implements OnInit {
   person: IPerson;
-  personDetailsForm: FormGroup;
+  form: IPersonFormGroup;
   allRoles: IRole[];
   roles: IRole[];
   selectedRoles: string[];
@@ -48,20 +60,21 @@ export class ProfileComponent implements OnInit {
   }
 
   createForm = (): void => {
-    this.personDetailsForm = this.formBuilder.group({
+    this.form = this.formBuilder.group({
       id: [{ value: 0, disabled: true }],
       firstName: [''],
       lastName: [''],
       username: [''],
       roles: [''],
       password: ['']
-    });
+    }) as IPersonFormGroup;
   }
 
   fillForm = (): void => {
-    this.personDetailsForm.patchValue({ ...this.person });
-    this.personDetailsForm.get('roles').setValue(this.selectedRoles); // set the roles which should be selected
-    this.personDetailsForm.get('password').setValue('');
+    this.form.patchValue({
+      ...this.person,
+      password: ''
+    } as IPerson);
   }
 
   savePerson = () => {
@@ -74,7 +87,7 @@ export class ProfileComponent implements OnInit {
   }
 
   savePersonToBackend = (): void => {
-    Object.assign(this.person, this.personDetailsForm.value);
+    Object.assign(this.person, this.form.value);
 
     // Retrieve the right roles by checking the mat-select result
     this.person.roles = this.allRoles.filter(role => {
@@ -98,12 +111,12 @@ export class ProfileComponent implements OnInit {
   }
 
   deletePersonOnBackend = (): void => {
-    const idControl: AbstractControl = this.personDetailsForm.get('id');
+    const idControl = this.form.controls.id;
     idControl.enable();
-    this.personService.deletePerson(this.personDetailsForm.value).pipe(take(1)).subscribe(() => {
-      this.navigateToAdminPanel();
-      idControl.disable();
-    });
+    // this.personService.deletePerson(this.form.value).pipe(take(1)).subscribe(() => {
+    //   this.navigateToAdminPanel();
+    //   idControl.disable();
+    // });
   }
 
   navigateToAdminPanel = () => this.router.navigate(['/admin']);
