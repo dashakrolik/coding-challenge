@@ -16,7 +16,8 @@
         <app-dropdown [inputValue]="languageNames" labelText="Select a Language" (valueOutput)="onSelect($event)">
         </app-dropdown>
 
-
-        <button [disabled]="!languageNames?.length" (click)="submit()" mat-raised-button color="warn">Submit</button>
+        <button [disabled]="!languageNames?.length" (click)="submit()" mat-raised-button color="warn">
+            Submit</button>
     </ng-container>
+
 </div>
