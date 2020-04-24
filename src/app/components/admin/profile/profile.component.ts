@@ -72,7 +72,7 @@ export class ProfileComponent implements OnInit {
       username: [''],
       roles: [''],
       password: ['']
-    }) as IPersonFormGroup; // shut up and trust me. Make sure to double-check this list
+    }) as IPersonFormGroup; // make sure to double-check this list with the interface
   }
 
   fillForm = (): void => {
