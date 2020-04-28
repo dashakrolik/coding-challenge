@@ -84,11 +84,11 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   onChange = (event: any) => this.codeSnippet = event;
 
    evaluateCode = async () => {
+    // Fill the 'codeResult' in the 'evaluateCode' function.
     const runCodeSubmission: ISubmission = {
       answer: this.codeSnippet,
       languageId: this.selectedLanguage.id,
-      taskId: this.task.id,
-      candidateId: 1
+      taskId: this.task.id
     };
     await this.submissionService.runCode(runCodeSubmission).toPromise().then((response => 
       console.log(response)))
@@ -96,6 +96,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   handleSuccessfulResponseRunCode = (response): void => {
     // First we clear the current output for the new input
+    // TODO This is not called anymore. fill the 'codeResult' in the 'evaluateCode' function
     this.codeResult = '';
     console.log(response);
     response.forEach(element => {
@@ -121,8 +122,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     const submission: ISubmission = {
       answer: this.codeSnippet,
       languageId: this.selectedLanguage.id,
-      taskId: this.task.id,
-      candidateId: 1
+      taskId: this.task.id
     };
 
     this.submissionService.createSubmission(submission).subscribe(
