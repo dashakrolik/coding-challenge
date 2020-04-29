@@ -18,7 +18,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';
 import { WelcomePageComponent } from '@components/welcome-page/welcome-page.component';
-import { JavascriptTaskComponent } from '@components/output/javascript-task/javascript-task.component';
 import { CandidateComponent } from '@components/candidate/candidate.component';
 import { OverlayComponent } from '@components/overlay/overlay/overlay.component';
 import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.component';
@@ -42,7 +41,6 @@ import { MessageDialogComponent } from './components/dialog/message-dialog/messa
     AppComponent,
     TaskComponent,
     WelcomePageComponent,
-    JavascriptTaskComponent,
     CandidateComponent,
     OverlayComponent,
     SubscribeComponent,

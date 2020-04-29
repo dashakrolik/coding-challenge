@@ -7,14 +7,15 @@
   <br>
   
   <button (click)="evaluateCode()" mat-raised-button color="warn">Run</button>
-  <!-- TODO why a special behavior for javascript? -->
-  <app-javascript-task *ngIf="selectedLanguage.language === 'javascript'"></app-javascript-task>
+ 
   
   <div>
   </div>
   <div>
     Your Output:
+    <div *ngIf=codeResult>
     {{this.codeResult}}
+  </div>
   </div>
     <!-- We create the same button twice, if the user is not logged in the functionality will be that of logging in rather than submitting -->
     <button *ngIf="!checkIsLoggedIn()" (click)="loginWindow(subscribeComponent)" mat-raised-button color="warn">

@@ -40,13 +40,14 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   taskSubscription: Subscription;
   languageSubscription: Subscription;
-  codeResult: string;
+  codeResult: any;
   tests: boolean[];
   subscribeComponent = SubscribeComponent;
   
   submissionSubscription: Subscription;
   task: ITask;
   candidate: ICandidate;
+  output: any;
 
   constructor(
     private router: Router,
@@ -90,15 +91,25 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       languageId: this.selectedLanguage.id,
       taskId: this.task.id
     };
-    await this.submissionService.runCode(runCodeSubmission).toPromise().then((response => 
-      console.log(response)))
+    await this.submissionService.runCode(runCodeSubmission).toPromise().then((response =>
+      this.codeResult = response
+        // We check if it is not an error than we show the output, otherwise we show the error.
+        // if (response.errorType === null) {
+        //   this.codeResult += response.contentValue;
+        // } else {
+        //   this.codeResult += response.errorType;
+        //   this.codeResult += '\n';
+        //   this.codeResult += response.errorValue;
+        // }
+      ))
+      console.log(this.codeResult);
   }
 
   handleSuccessfulResponseRunCode = (response): void => {
     // First we clear the current output for the new input
     // TODO This is not called anymore. fill the 'codeResult' in the 'evaluateCode' function
     this.codeResult = '';
-    console.log(response);
+    console.log('run2', response);
     response.forEach(element => {
       // We check if it is not an error than we show the output, otherwise we show the error.
       console.log(element);
@@ -152,7 +163,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.languageSubscription = this.languageService.getLanguagesMap().subscribe((languagesMap) => {
       this.selectedLanguage = languagesMap.get(languageParam);
-
+      this.setBoilerPlateCode();
       // if (!this.selectedLanguage) {
       //   throw new Error(`No such language: ${languageParam}.`);
       // } else {
@@ -175,13 +186,12 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     ).subscribe((task: ITask) => {
       this.task = task;
       
-      this.setBoilerPlateCode();
+      // this.setBoilerPlateCode();
     });
   }
 
   setBoilerPlateCode = (): void => {
     let boilerplate = '';
-
     if (this.selectedLanguage && this.task) {
       // If both objects are filled we will set the boilerplate code
       if (this.selectedLanguage.language === 'java') {
