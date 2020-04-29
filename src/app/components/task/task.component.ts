@@ -44,6 +44,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   tests: boolean[];
   subscribeComponent = SubscribeComponent;
   
+  taskSpecificDescription: string;
   submissionSubscription: Subscription;
   task: ITask;
   candidate: ICandidate;
@@ -152,6 +153,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.languageSubscription = this.languageService.getLanguagesMap().subscribe((languagesMap) => {
       this.selectedLanguage = languagesMap.get(languageParam);
+      
+      this.setBoilerPlateCode();
 
       // if (!this.selectedLanguage) {
       //   throw new Error(`No such language: ${languageParam}.`);
@@ -186,10 +189,13 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       // If both objects are filled we will set the boilerplate code
       if (this.selectedLanguage.language === 'java') {
         boilerplate = this.task.boilerplateJava;
+        this.taskSpecificDescription = this.task.descriptionJava;
       } else if (this.selectedLanguage.language === 'python') {
         boilerplate = this.task.boilerplatePython;
+        this.taskSpecificDescription = this.task.descriptionPython;
       } else if (this.selectedLanguage.language === 'javascript') {
         boilerplate = this.task.boilerplateJavascript;
+        this.taskSpecificDescription = this.task.descriptionJavascript;
       }
     }
     const lines = boilerplate.split('\\n');
