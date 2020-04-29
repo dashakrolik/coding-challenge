@@ -2,14 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSelectChange } from '@angular/material/select';
-import { Subscription, Observable } from 'rxjs';
-import { LanguageService } from '@services/language/language.service';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+import { LanguageService } from '@services/language/language.service';
 
 @Component({
   selector: 'app-welcome-page',
   templateUrl: './welcome-page.component.html',
-  styleUrls: ['./welcome-page.component.css']
+  styleUrls: ['./welcome-page.component.scss']
 })
 export class WelcomePageComponent implements OnInit {
   email: string;

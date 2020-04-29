@@ -16,5 +16,5 @@ export class SubmissionService {
 
   createSubmission = (submission: ISubmission): Observable<boolean[]> => this.http.post<ISubmission>('submission', submission);
 
-  runCode = (submission: ISubmission): Observable<ISubmission> => this.http.post<ISubmission>('runcode', submission);
+  runCode = (submission: ISubmission): Observable<ISubmission> => this.http.post<ISubmission>('submission/runcode', submission);
 }

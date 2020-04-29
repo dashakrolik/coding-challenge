@@ -1,16 +1,16 @@
 import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { ComponentType } from '@angular/cdk/portal';
 
-import { Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-
 import { AceEditorComponent } from 'ng2-ace-editor';
+import { Subscription } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
 
 import { CandidateService } from '@services/candidate/candidate.service';
-import { TaskService } from '@services/task/task.service';
 import { SubmissionService } from '@services/submission/submission.service';
+import { TaskService } from '@services/task/task.service';
 import { LanguageService } from '@services/language/language.service';
 import { TokenStorageService } from '@services/token/token-storage.service';
 import { OverlayService } from '@services/overlay/overlay.service';
@@ -43,7 +43,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   codeResult: any;
   tests: boolean[];
   subscribeComponent = SubscribeComponent;
-  
+
   taskSpecificDescription: string;
   submissionSubscription: Subscription;
   task: ITask;
@@ -129,7 +129,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   submitCode = () => {
-    // A Submission on the frontend has no id, correct array and personId. 
+    // A Submission on the frontend has no id, correct array and personId.
     // This is because these elements will be determined on the backend.
     const submission: ISubmission = {
       answer: this.codeSnippet,
@@ -186,7 +186,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       })
     ).subscribe((task: ITask) => {
       this.task = task;
-      
+
       this.setBoilerPlateCode();
     });
   }

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { TokenStorageService } from '@services/token/token-storage.service';
-import { MyOverlayRef } from '@services/overlay/myoverlay-ref';
+
 import { LoginService } from '@services/login/login.service';
+import { MyOverlayRef } from '@services/overlay/myoverlay-ref';
+import { TokenStorageService } from '@services/token/token-storage.service';
 
 @Component({
   selector: 'app-subscribe',

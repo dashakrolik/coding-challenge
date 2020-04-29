@@ -6,8 +6,8 @@
     tasks
 </h2>
 <div class="tasks" *ngIf=" tasks$ | async as tasks">
-    <app-task *ngFor="let task of tasks" [task]="task">
-    </app-task>
+    <app-admin-task *ngFor="let task of tasks" [task]="task">
+    </app-admin-task>
 </div>
 <h2>
     persons
