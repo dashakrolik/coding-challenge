@@ -58,44 +58,71 @@ export class ProfileComponent implements OnInit {
 
     this.submissionService.getAllSubmissionsProfile().pipe(take(1)).subscribe(submissions => {
 
+      console.log("checking submissions");
       submissions.forEach(submission => {
         // For each submission we will check which language it is for and for which task. 
         // We will than count the number of correct tests that submission has. 
         // The highest will count for the score that will be displayed on the screen.
+        let amountCorrect = submission.correct.filter(Boolean).length;
         if (submission.languageId === 1) {
           // Java
           if (submission.taskId === 1) {
-            // First task
+            // First task Java
+            if (amountCorrect > this.JavaTask1Correct) {
+              this.JavaTask1Correct = amountCorrect;
+            }
+          } else if (submission.taskId === 2) {
+            // Second task Java
+            if (amountCorrect > this.JavaTask2Correct) {
+              this.JavaTask2Correct = amountCorrect;
+            }
+          } else if (submission.taskId === 3) {
+            // Third task Java
+            if (amountCorrect > this.JavaTask3Correct) {
+              this.JavaTask3Correct = amountCorrect;
+            }
           }
         } else if (submission.languageId === 2) {
+          // Python
           if (submission.taskId === 1) {
             // First task Python
-            // TODO: store the highest amount of tests succeeded.
-            this.PythonTask1Correct = submission.correct.filter(Boolean).length;
+            if (amountCorrect > this.PythonTask1Correct) {
+              this.PythonTask1Correct = amountCorrect;
+            }
           } else if (submission.taskId === 2) {
             // Second task Python
-            this.PythonTask2Correct = submission.correct.filter(Boolean).length;
+            if (amountCorrect > this.PythonTask2Correct) {
+              this.PythonTask2Correct = amountCorrect;
+            }
           } else if (submission.taskId === 3) {
             // Third task Python
-            this.PythonTask3Correct = submission.correct.filter(Boolean).length;
+            if (amountCorrect > this.PythonTask2Correct) {
+              this.PythonTask3Correct = amountCorrect;
+            }
           }
-          // Python
         } else if (submission.languageId === 3) {
           // Javascript
           if (submission.taskId === 1) {
-            // First task Python
-            this.JavascriptTask1Correct = submission.correct.filter(Boolean).length;
+            // First task Javascript
+            if (amountCorrect > this.JavascriptTask1Correct) {
+              this.JavascriptTask1Correct = amountCorrect;
+            }
           } else if (submission.taskId === 2) {
-            // Second task Python
-            this.JavascriptTask2Correct = submission.correct.filter(Boolean).length;
+            // Second task Javascript
+            if (amountCorrect > this.JavascriptTask2Correct) {
+              this.JavascriptTask2Correct = amountCorrect;
+            }
           } else if (submission.taskId === 3) {
-            // Third task Python
-            this.JavascriptTask3Correct = submission.correct.filter(Boolean).length;
+            // Third task Javascript
+            if (amountCorrect > this.JavascriptTask3Correct) {
+              this.JavascriptTask3Correct = amountCorrect;
+            }
           }
         }
       })
-      console.log("checking submissions");
     });
+
+    // TODO: get the score of the languages from the person table
     
     // get just the names of the languages
     this.languageNames$ = this.languageService.getLanguages().pipe(
