@@ -44,6 +44,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   tests: boolean[];
   subscribeComponent = SubscribeComponent;
   
+  taskSpecificDescription: string;
   submissionSubscription: Subscription;
   task: ITask;
   candidate: ICandidate;
@@ -186,7 +187,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     ).subscribe((task: ITask) => {
       this.task = task;
       
-      // this.setBoilerPlateCode();
+      this.setBoilerPlateCode();
     });
   }
 
@@ -196,10 +197,13 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       // If both objects are filled we will set the boilerplate code
       if (this.selectedLanguage.language === 'java') {
         boilerplate = this.task.boilerplateJava;
+        this.taskSpecificDescription = this.task.descriptionJava;
       } else if (this.selectedLanguage.language === 'python') {
         boilerplate = this.task.boilerplatePython;
+        this.taskSpecificDescription = this.task.descriptionPython;
       } else if (this.selectedLanguage.language === 'javascript') {
         boilerplate = this.task.boilerplateJavascript;
+        this.taskSpecificDescription = this.task.descriptionJavascript;
       }
     }
     const lines = boilerplate.split('\\n');

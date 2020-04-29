@@ -1,6 +1,8 @@
+<meta charset="utf-8"/>
 <!-- We load the task and show the description -->
 <ng-container *ngIf="selectedLanguage && task">
   <div [innerHTML]="task.description"></div>
+  <div [innerHTML]="taskSpecificDescription"></div>
   <ace-editor editor [(text)]="text" [mode]="selectedLanguage.language" [theme]="selectedLanguage.editorTheme"
   (textChanged)="onChange($event)" [readOnly]="false" class="ace-editor"></ace-editor>
   
@@ -49,9 +51,9 @@
     <button *ngIf="completeTask(2)" (click)="goToTask(3)" mat-raised-button color="warn">
       Next Task
     </button>
-    <button *ngIf="completeTask(3)" (click)="finishedCodeChallenge()" mat-raised-button color="warn">
-      Finish code challenge!
-    </button>
+    <div *ngIf="completeTask(3)">
+      <b>Congratulations!</b> you finished the code challenge!
+    </div>
   </div>
   <br>
   
