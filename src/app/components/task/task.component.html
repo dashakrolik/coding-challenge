@@ -1,4 +1,3 @@
-<meta charset="utf-8"/>
 <!-- We load the task and show the description -->
 <ng-container *ngIf="selectedLanguage && task">
   <div [innerHTML]="task.description"></div>
@@ -9,15 +8,14 @@
   <br>
   
   <button (click)="evaluateCode()" mat-raised-button color="warn">Run</button>
- 
+  <!-- TODO why a special behavior for javascript? -->
+  <app-javascript-task *ngIf="selectedLanguage.language === 'javascript'"></app-javascript-task>
   
   <div>
   </div>
   <div>
     Your Output:
-    <div *ngIf=codeResult>
     {{this.codeResult}}
-  </div>
   </div>
     <!-- We create the same button twice, if the user is not logged in the functionality will be that of logging in rather than submitting -->
     <button *ngIf="!checkIsLoggedIn()" (click)="loginWindow(subscribeComponent)" mat-raised-button color="warn">
@@ -25,7 +23,7 @@
     </button>
     <div>
     <br>
-      Submit your code and try to turn on all the lights to complete the task.
+      Submit your code and try to turn on all the lights to complete the task. (This can take a few seconds)
     <br>
     <button *ngIf="checkIsLoggedIn()" (click)="submitCode()" mat-raised-button color="warn">
       Submit Code

@@ -90,10 +90,24 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     const runCodeSubmission: ISubmission = {
       answer: this.codeSnippet,
       languageId: this.selectedLanguage.id,
-      taskId: this.task.id
+      taskId: this.task.id,
+      correct: [],
+      runningTime: 0
     };
-    await this.submissionService.runCode(runCodeSubmission).toPromise().then((response =>
-      this.codeResult = response
+    console.log("evaluating code");
+    await this.submissionService.runCode(runCodeSubmission).toPromise().then(response => {
+      this.codeResult = "";
+      response.forEach(line => {
+        console.log(line);
+        if (line.errorType === null ) {
+          this.codeResult += line.contentValue;
+        } else {
+          this.codeResult += line.errorType;
+          this.codeResult += '\n';
+          this.codeResult += line.errorValue;
+        }
+      })
+    }
         // We check if it is not an error than we show the output, otherwise we show the error.
         // if (response.errorType === null) {
         //   this.codeResult += response.contentValue;
@@ -102,7 +116,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         //   this.codeResult += '\n';
         //   this.codeResult += response.errorValue;
         // }
-      ))
+      )
       console.log(this.codeResult);
   }
 
@@ -134,7 +148,9 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     const submission: ISubmission = {
       answer: this.codeSnippet,
       languageId: this.selectedLanguage.id,
-      taskId: this.task.id
+      taskId: this.task.id,
+      correct: [],
+      runningTime: 0
     };
 
     this.submissionService.createSubmission(submission).subscribe(

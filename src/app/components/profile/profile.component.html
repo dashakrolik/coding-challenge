@@ -1,8 +1,75 @@
-<meta charset="utf-8"/>
 <div class="container">
   <header class="jumbotron">
     <p>{{ content }}</p>
   </header>
 </div>
+<br>
+
+<ng-container *ngIf="(languageNames$ | async) as languageNames">
+
+  <app-dropdown [inputValue]="languageNames" labelText="Select a Language" (valueOutput)="onSelect($event)">
+  </app-dropdown>
+  
+</ng-container>
+
+<ng-container *ngIf="selectedLanguage==='java'">
+<div>
+  Java:
+</div>
+<div>
+  progress task 1: {{JavaTask1Correct}} / 5 tests completed
+</div>
+<button (click)="goToTask1Java()" type="button" mat-raised-button color="primary">Go to task 1 Java</button>
+<div>
+  progress task 2: {{JavaTask2Correct}} / 6 tests completed
+</div>
+<button (click)="goToTask2Java()" type="button" mat-raised-button color="primary">Go to task 2 Java</button>
+<div>
+  progress task 3: {{JavaTask3Correct}} / 8 tests completed
+</div>
+<button (click)="goToTask3Java()" type="button" mat-raised-button color="primary">Go to task 3 Java</button>
+<div>Total score Java: {{scoreJava}}</div>
+</ng-container>
+
+<ng-container *ngIf="selectedLanguage==='python'">
+<div>
+  Python:
+</div>
+<div>
+  progress task 1: {{PythonTask1Correct}} / 5 tests completed
+</div>
+<button (click)="goToTask1Python()" type="button" mat-raised-button color="primary">Go to task 1 Python</button>
+<div>
+  progress task 2: {{PythonTask2Correct}} / 6 tests completed
+</div>
+<button (click)="goToTask2Python()" type="button" mat-raised-button color="primary">Go to task 2 Python</button>
+<div>
+  progress task 3: {{PythonTask3Correct}} / 8 tests completed
+</div>
+<button (click)="goToTask3Python()" type="button" mat-raised-button color="primary">Go to task 3 Python</button>
+<div>Total score Python: {{scorePython}}</div>
+</ng-container>
+
+<ng-container *ngIf="selectedLanguage==='javascript'">
+<div>
+  Javascript:
+</div>
+<div>
+  progress task 1: {{JavascriptTask1Correct}} / 5 tests completed
+</div>
+<button (click)="goToTask1Javascript()" type="button" mat-raised-button color="primary">Go to task 1 Javascript</button>
+<div>
+  progress task 2: {{JavascriptTask2Correct}} / 6 tests completed
+</div>
+<button (click)="goToTask2Javascript()" type="button" mat-raised-button color="primary">Go to task 2 Javascript</button>
+<div>
+  progress task 3: {{JavascriptTask3Correct}} / 8 tests completed
+</div>
+<button (click)="goToTask3Javascript()" type="button" mat-raised-button color="primary">Go to task 3 Javascript</button>
+<div>Total score Javascript: {{scoreJavascript}}</div>
+</ng-container>
+<br>
+<br>
+
 <button (click)="goHome()" type="button" mat-raised-button color="primary">Home</button>
 

@@ -13,8 +13,10 @@ export class SubmissionService {
   ) { }
 
   getAllSubmissionsFromPerson = (personId: number): Observable<ISubmission[]> => this.http.get('submission/' + personId);
+  
+  getAllSubmissionsProfile = (): Observable<ISubmission[]> => this.http.get('submission/person');
 
   createSubmission = (submission: ISubmission): Observable<boolean[]> => this.http.post<ISubmission>('submission', submission);
 
-  runCode = (submission: ISubmission): Observable<ISubmission> => this.http.post<ISubmission>('submission/runcode', submission);
+  runCode = (submission: ISubmission): any => this.http.post<ISubmission>('submission/runcode', submission);
 }
