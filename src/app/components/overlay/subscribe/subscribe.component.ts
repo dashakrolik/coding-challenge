@@ -78,8 +78,6 @@ export class SubscribeComponent {
   handleSuccessfulResponseGetLogin = (response): void => {
     this.tokenStorageService.saveToken(response.token);
     this.tokenStorageService.saveUser(response);
-
-    window.location.reload();
   }
 
   // USE TSLINT GUIDELINES!!

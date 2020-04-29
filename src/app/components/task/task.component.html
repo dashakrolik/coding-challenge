@@ -50,9 +50,9 @@
     <button *ngIf="completeTask(2)" (click)="goToTask(3)" mat-raised-button color="warn">
       Next Task
     </button>
-    <button *ngIf="completeTask(3)" (click)="finishedCodeChallenge()" mat-raised-button color="warn">
-      Finish code challenge!
-    </button>
+    <div *ngIf="completeTask(3)">
+      <b>Congratulations!</b> you finished the code challenge!
+    </div>
   </div>
   <br>
   
