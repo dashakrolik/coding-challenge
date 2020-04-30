@@ -10,6 +10,9 @@ a{
 table{
     margin-left: 1rem;
     width: 80%;
+    ::first-letter{
+        text-transform: capitalize;
+    }
     th{
         text-align: right;
     }

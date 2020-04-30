@@ -14,15 +14,10 @@ import { LanguageService } from '@services/language/language.service';
   styleUrls: ['./leaderboard.component.scss'],
   animations: [
     trigger('trigger', [
-      state('collapsed', style({
+      state('*', style({
         top: '{{top}}px',
         left: '{{left}}px',
         display: 'block',
-      }), { params: { top: 1, left: 1 } }),
-      state('large', style({
-        top: '{{top}}px',
-        display: 'block',
-        left: '{{left}}px',
       }), { params: { top: 1, left: 1 } }),
       transition('* <=> *', animate('250ms'))
     ])
@@ -50,8 +45,6 @@ export class LeaderboardComponent implements OnInit {
 
   showCard = (event: MouseEvent, person: IPerson) => {
     this.personOnCard = person;
-    console.log(event);
-    this.state = this.state === 'collapsed' ? 'large' : 'collapsed';
     this.top = event.y + 10;
     this.left = event.x + 10;
   }

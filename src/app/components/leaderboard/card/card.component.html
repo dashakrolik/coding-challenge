@@ -2,18 +2,11 @@
     <h2>{{person.firstName}}</h2>
     <p>Points:</p>
     <table>
-        <tr>
-            <th>Java:</th>
-            <th>{{person.javaPoints}}</th>
+        <tr *ngFor="let language of (language$ | async)">
+            <th>{{language.language}}:</th>
+            <th>{{person[language.language + 'Points']}}</th>
         </tr>
-        <tr>
-            <th>Javascript:</th>
-            <th>{{person.javascriptPoints}}</th>
-        </tr>
-        <tr>
-            <th>python:</th>
-            <th>{{person.pythonPoints}}</th>
-        </tr>
+
     </table>
     <p>
         <a [href]="getMailLink()">Get in contact with {{person.firstName}}</a>
