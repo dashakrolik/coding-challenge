@@ -16,6 +16,8 @@ export class PersonService {
 
   getPersonById = (id: number): Observable<IPerson> => this.http.get('person/' + id);
 
+  getPersonPoints = (): Observable<IPerson> => this.http.get('person/points');
+
   updatePerson = (person: IPerson): Observable<IPerson> => this.http.put('person', person);
 
   deletePerson = (person: IPerson): Observable<IPerson> => this.http.delete('person/' + person.id, person);

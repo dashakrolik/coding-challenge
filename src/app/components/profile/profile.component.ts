@@ -6,6 +6,7 @@ import { LanguageService } from '@services/language/language.service';
 import { map } from 'rxjs/operators';
 import { MatSelectChange } from '@angular/material/select';
 import { SubmissionService } from '@services/submission/submission.service';
+import { PersonService } from '@services/person/person.service';
 import { take } from 'rxjs/operators';
 
 @Component({
@@ -37,7 +38,8 @@ export class ProfileComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     private router: Router,
     private languageService: LanguageService,
-    private submissionService: SubmissionService
+    private submissionService: SubmissionService,
+    private personService: PersonService
   ) { }
 
   ngOnInit(): void {
@@ -51,10 +53,6 @@ export class ProfileComponent implements OnInit {
     this.JavascriptTask1Correct = 0
     this.JavascriptTask2Correct = 0
     this.JavascriptTask3Correct = 0
-    
-    this.scoreJava = 0
-    this.scorePython = 0
-    this.scoreJavascript = 0
 
     this.submissionService.getAllSubmissionsProfile().pipe(take(1)).subscribe(submissions => {
 
@@ -96,7 +94,7 @@ export class ProfileComponent implements OnInit {
             }
           } else if (submission.taskId === 3) {
             // Third task Python
-            if (amountCorrect > this.PythonTask2Correct) {
+            if (amountCorrect > this.PythonTask3Correct) {
               this.PythonTask3Correct = amountCorrect;
             }
           }
@@ -120,6 +118,13 @@ export class ProfileComponent implements OnInit {
           }
         }
       })
+    });
+
+    this.personService.getPersonPoints().pipe(take(1)).subscribe(person => {
+      console.log("result of getting person points");
+      this.scoreJava = person.javaPoints;
+      this.scorePython = person.pythonPoints;
+      this.scoreJavascript = person.javascriptPoints;
     });
 
     // TODO: get the score of the languages from the person table
