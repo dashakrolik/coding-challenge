@@ -1,6 +1,21 @@
-<mat-card>
-    <p>Name: {{person?.firstName}}</p>
-    <p>Points: {{person?.points}}</p>
-    <p *ngIf="person?.username">Contact this amazing programmer:
-        <a [href]="getMailLink()">{{person?.username }}</a> </p>
+<mat-card *ngIf="person">
+    <h2>{{person.firstName}}</h2>
+    <p>Points:</p>
+    <table>
+        <tr>
+            <th>Java:</th>
+            <th>{{person.javaPoints}}</th>
+        </tr>
+        <tr>
+            <th>Javascript:</th>
+            <th>{{person.javascriptPoints}}</th>
+        </tr>
+        <tr>
+            <th>python:</th>
+            <th>{{person.pythonPoints}}</th>
+        </tr>
+    </table>
+    <p>
+        <a [href]="getMailLink()">Get in contact with {{person.firstName}}</a>
+    </p>
 </mat-card>

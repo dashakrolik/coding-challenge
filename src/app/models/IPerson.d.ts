@@ -4,6 +4,8 @@ interface IPerson {
     lastName: string;
     username: string;
     password: string;
-    points: number;
+    javaPoints: number;
+    javascriptPoints: number;
+    pythonPoints: number;
     roles: IRole[];
 }

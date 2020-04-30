@@ -9,8 +9,9 @@ import { TaskComponent } from '@components/task/task.component';
 import { WelcomePageComponent } from '@components/welcome-page/welcome-page.component';
 
 import {
-    ProfileComponent as AdminProfileComponent
+  ProfileComponent as AdminProfileComponent
 } from './components/admin/profile/profile.component';
+import { LeaderboardComponent } from '@components/leaderboard/table/leaderboard.component';
 
 const routes: Routes = [
   {
@@ -44,7 +45,13 @@ const routes: Routes = [
   {
     path: 'admin/profile/:id',
     component: AdminProfileComponent
-  }
+  },
+  {
+    // you have to be logged in to see this page
+    path: 'leaderboard',
+    component: LeaderboardComponent,
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

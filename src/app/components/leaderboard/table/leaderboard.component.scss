@@ -1,11 +1,35 @@
 .data-table{
     width: fit-content;
+    margin: 0.5em;
     .mat-column-firstName{
         &:hover{
             background-color: #f5bd00;
         }
     }
+    h1{
+        text-align: center;
+        width: 100%;
+    }
+    .mat-cell{
+        font-size: 11pt;
+    }
+    .mat-header-cell{
+        font-size: large;
+    }
 }
 app-card{
     position: fixed;
+    display: none;
+}
+
+h1{
+    margin: 0.5em;
+    font-size: 1.5em;
+    font-weight: 700;
+    display: inline-block;
+}
+
+mat-form-field{
+    display: inline-block;
+    width: min-content;
 }
