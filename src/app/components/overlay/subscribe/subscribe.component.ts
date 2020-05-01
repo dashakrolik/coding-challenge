@@ -55,18 +55,22 @@ export class SubscribeComponent {
   handleSuccessfulResponseGetRegister = (response, email, password): void => {
     // The user successfully registered. We will log him in.
     this.loginService.getLogin(email, password).subscribe(
-      response => this.handleSuccessfulResponseGetLogin(response),
+      responseLogin => {
+        this.handleSuccessfulResponseGetLogin(responseLogin);
+      },
       err => {
         // TODO: show error message on screen
         console.log(err.error.message);
       }
     );
-  };
+  }
 
   submitLogin() {
     const { email, password } = this.frmLogin.value;
     this.loginService.getLogin(email, password).subscribe(
-      response => this.handleSuccessfulResponseGetLogin(response),
+      response => {
+        this.handleSuccessfulResponseGetLogin(response);
+      },
       err => {
         // TODO: show error message on screen
         console.log(err.error.message);
@@ -83,24 +87,24 @@ export class SubscribeComponent {
 
   // USE TSLINT GUIDELINES!!
   openTab(tabName) {
-    console.log("opening new tab " + tabName);
+    console.log('opening new tab ' + tabName);
     // We get both tab elements and we turn them off. Then we immediately turn the tab on that the user clicked on.
-    let signIn = document.getElementById('Sign-in');
-    let signUp = document.getElementById('Sign-up');
-    signIn.style.display = "none";
-    signUp.style.display = "none";
+    const signIn = document.getElementById('Sign-in');
+    const signUp = document.getElementById('Sign-up');
+    signIn.style.display = 'none';
+    signUp.style.display = 'none';
 
-    let signInTab = document.getElementById("tab-sign-in");
-    let signUpTab = document.getElementById("tab-sign-up");
-    signInTab.className = "tab";
-    signUpTab.className = "tab";
+    const signInTab = document.getElementById('tab-sign-in');
+    const signUpTab = document.getElementById('tab-sign-up');
+    signInTab.className = 'tab';
+    signUpTab.className = 'tab';
 
-    if (tabName == "Sign-in") {
-      signIn.style.display = "block";
-      signInTab.className = "tab is-active";
-    } else if (tabName == "Sign-up") {
-      signUp.style.display = "block";
-      signUpTab.className = "tab is-active";
+    if (tabName === 'Sign-in') {
+      signIn.style.display = 'block';
+      signInTab.className = 'tab is-active';
+    } else if (tabName === 'Sign-up') {
+      signUp.style.display = 'block';
+      signUpTab.className = 'tab is-active';
     }
   }
 
