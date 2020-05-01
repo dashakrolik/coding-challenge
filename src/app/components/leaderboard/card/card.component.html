@@ -2,8 +2,8 @@
     <h2>{{person.firstName}}</h2>
     <p>Points:</p>
     <table>
-        <tr *ngFor="let language of (language$ | async)">
-            <th>{{language.language}}:</th>
+        <tr *ngFor="let language of (languages$ | async)">
+            <th class="u-capitalize">{{language.language}}:</th>
             <th>{{person[language.language + 'Points']}}</th>
         </tr>
 

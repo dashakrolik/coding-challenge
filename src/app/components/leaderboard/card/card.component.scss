@@ -10,7 +10,7 @@ a{
 table{
     margin-left: 1rem;
     width: 80%;
-    ::first-letter{
+    .u-capitalize:first-letter{
         text-transform: capitalize;
     }
     th{

@@ -10,13 +10,13 @@ import { Observable } from 'rxjs';
 })
 export class CardComponent {
   @Input('person') person: IPerson;
-  language$: Observable<ILanguage[]>;
+  languages$: Observable<ILanguage[]>;
 
   constructor(
     private sanitizer: DomSanitizer,
     private languageService: LanguageService,
   ) {
-    this.language$ = languageService.getLanguages();
+    this.languages$ = languageService.getLanguages();
   }
 
   getMailLink = () => {
