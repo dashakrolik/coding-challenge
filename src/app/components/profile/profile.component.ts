@@ -43,25 +43,24 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // Initialize the scores to zero
-    this.JavaTask1Correct = 0
-    this.JavaTask2Correct = 0
-    this.JavaTask3Correct = 0
-    this.PythonTask1Correct = 0
-    this.PythonTask2Correct = 0
-    this.PythonTask3Correct = 0
-    this.JavascriptTask1Correct = 0
-    this.JavascriptTask2Correct = 0
-    this.JavascriptTask3Correct = 0
+    // Initialize the test scores to zero
+    this.JavaTask1Correct = 0;
+    this.JavaTask2Correct = 0;
+    this.JavaTask3Correct = 0;
+    this.PythonTask1Correct = 0;
+    this.PythonTask2Correct = 0;
+    this.PythonTask3Correct = 0;
+    this.JavascriptTask1Correct = 0;
+    this.JavascriptTask2Correct = 0;
+    this.JavascriptTask3Correct = 0;
 
     this.submissionService.getAllSubmissionsProfile().pipe(take(1)).subscribe(submissions => {
 
-      console.log("checking submissions");
       submissions.forEach(submission => {
         // For each submission we will check which language it is for and for which task. 
         // We will than count the number of correct tests that submission has. 
         // The highest will count for the score that will be displayed on the screen.
-        let amountCorrect = submission.correct.filter(Boolean).length;
+        const amountCorrect = submission.correct.filter(Boolean).length;
         if (submission.languageId === 1) {
           // Java
           if (submission.taskId === 1) {
@@ -117,11 +116,10 @@ export class ProfileComponent implements OnInit {
             }
           }
         }
-      })
+      });
     });
 
     this.personService.getPersonPoints().pipe(take(1)).subscribe(person => {
-      console.log("result of getting person points");
       this.scoreJava = person.javaPoints;
       this.scorePython = person.pythonPoints;
       this.scoreJavascript = person.javascriptPoints;

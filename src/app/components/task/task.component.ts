@@ -94,9 +94,9 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       correct: [],
       runningTime: 0
     };
-    console.log("evaluating code");
+    console.log('evaluating code');
     await this.submissionService.runCode(runCodeSubmission).toPromise().then(response => {
-      this.codeResult = "";
+      this.codeResult = '';
       response.forEach(line => {
         console.log(line);
         if (line.errorType === null ) {
@@ -106,18 +106,9 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
           this.codeResult += '\n';
           this.codeResult += line.errorValue;
         }
-      })
-    }
-        // We check if it is not an error than we show the output, otherwise we show the error.
-        // if (response.errorType === null) {
-        //   this.codeResult += response.contentValue;
-        // } else {
-        //   this.codeResult += response.errorType;
-        //   this.codeResult += '\n';
-        //   this.codeResult += response.errorValue;
-        // }
-      )
-      console.log(this.codeResult);
+      });
+    });
+    console.log(this.codeResult);
   }
 
   handleSuccessfulResponseRunCode = (response): void => {
@@ -265,7 +256,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       return this.tests[0] && this.tests[1] && this.tests[2] && this.tests[3] && this.tests[4] && this.tests[5];
     } else if (this.task.taskNumber === 3 && taskNumber === 3) {
       // all 8 tests of the third task should be successful
-      return this.tests[0] && this.tests[1] && this.tests[2] && this.tests[3] && this.tests[4] && this.tests[5] && this.tests[6] && this.tests[7];
+      return this.tests[0] && this.tests[1] && this.tests[2] && this.tests[3] 
+      && this.tests[4] && this.tests[5] && this.tests[6] && this.tests[7];
     } else {
       return false;
     }
