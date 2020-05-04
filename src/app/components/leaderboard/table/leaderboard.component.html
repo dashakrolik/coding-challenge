@@ -1,7 +1,7 @@
 <h1>
     <mat-form-field>
         <mat-label>Select a leaderboard</mat-label>
-        <mat-select [(ngModel)]="selectedLanguage" (ngModelChange)="hello()">
+        <mat-select [(ngModel)]="selectedLanguage" (ngModelChange)="selectLanguage()">
             <mat-option *ngFor="let lang of allLanguages" [value]="lang.language">{{lang.language}}
             </mat-option>
         </mat-select>

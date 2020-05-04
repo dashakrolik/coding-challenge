@@ -63,9 +63,8 @@ export class LeaderboardComponent implements OnInit {
     this.dataSource = new MatTableDataSource(data);
   }
 
-  hello = () => {
+  selectLanguage = () => {
     this.displayedColumns[1] = this.selectedLanguage + 'Points';
-    // this.dataSource.sort.sort(({ id: this.displayedColumns[1], start: 'desc', disableClear: false }));
   }
 
 }
