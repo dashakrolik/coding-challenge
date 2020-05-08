@@ -7,9 +7,7 @@
     justify-content: space-between;
 }
 .button{
-    background-color: $ordinaOrange;
     align-self: center;
-    margin: 1rem;
     &.logout_button{
         background-color: $ontdekkingBright;
     }
