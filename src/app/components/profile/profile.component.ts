@@ -20,19 +20,13 @@ export class ProfileComponent implements OnInit {
   selectedLanguage: string;
   languageNames$: Observable<string[]>;
 
-  JavaTask1Correct: number;
-  JavaTask2Correct: number;
-  JavaTask3Correct: number;
-  PythonTask1Correct: number;
-  PythonTask2Correct: number;
-  PythonTask3Correct: number;
-  JavascriptTask1Correct: number;
-  JavascriptTask2Correct: number;
-  JavascriptTask3Correct: number;
+  tasksCorrect = [];
+  lang: number;
 
   scoreJava: number;
   scorePython: number;
   scoreJavascript: number;
+  taskTests: number[];
 
   constructor(
     private tokenStorageService: TokenStorageService,
@@ -43,16 +37,13 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // Initialize the test scores to zero
-    this.JavaTask1Correct = 0;
-    this.JavaTask2Correct = 0;
-    this.JavaTask3Correct = 0;
-    this.PythonTask1Correct = 0;
-    this.PythonTask2Correct = 0;
-    this.PythonTask3Correct = 0;
-    this.JavascriptTask1Correct = 0;
-    this.JavascriptTask2Correct = 0;
-    this.JavascriptTask3Correct = 0;
+    // the amount of tests that each task has.
+    this.taskTests = [5, 6, 8]
+    // Initialize the test scores to zero. For 3 languages we initialize 3 tasks to 0
+    this.tasksCorrect = [];
+    this.tasksCorrect.push([0, 0, 0]);
+    this.tasksCorrect.push([0, 0, 0]);
+    this.tasksCorrect.push([0, 0, 0]);
 
     this.submissionService.getAllSubmissionsProfile().pipe(take(1)).subscribe(submissions => {
 
@@ -61,58 +52,14 @@ export class ProfileComponent implements OnInit {
         // We will than count the number of correct tests that submission has. 
         // The highest will count for the score that will be displayed on the screen.
         const amountCorrect = submission.correct.filter(Boolean).length;
-        if (submission.languageId === 1) {
-          // Java
-          if (submission.taskId === 1) {
-            // First task Java
-            if (amountCorrect > this.JavaTask1Correct) {
-              this.JavaTask1Correct = amountCorrect;
-            }
-          } else if (submission.taskId === 2) {
-            // Second task Java
-            if (amountCorrect > this.JavaTask2Correct) {
-              this.JavaTask2Correct = amountCorrect;
-            }
-          } else if (submission.taskId === 3) {
-            // Third task Java
-            if (amountCorrect > this.JavaTask3Correct) {
-              this.JavaTask3Correct = amountCorrect;
-            }
-          }
-        } else if (submission.languageId === 2) {
-          // Python
-          if (submission.taskId === 1) {
-            // First task Python
-            if (amountCorrect > this.PythonTask1Correct) {
-              this.PythonTask1Correct = amountCorrect;
-            }
-          } else if (submission.taskId === 2) {
-            // Second task Python
-            if (amountCorrect > this.PythonTask2Correct) {
-              this.PythonTask2Correct = amountCorrect;
-            }
-          } else if (submission.taskId === 3) {
-            // Third task Python
-            if (amountCorrect > this.PythonTask3Correct) {
-              this.PythonTask3Correct = amountCorrect;
-            }
-          }
-        } else if (submission.languageId === 3) {
-          // Javascript
-          if (submission.taskId === 1) {
-            // First task Javascript
-            if (amountCorrect > this.JavascriptTask1Correct) {
-              this.JavascriptTask1Correct = amountCorrect;
-            }
-          } else if (submission.taskId === 2) {
-            // Second task Javascript
-            if (amountCorrect > this.JavascriptTask2Correct) {
-              this.JavascriptTask2Correct = amountCorrect;
-            }
-          } else if (submission.taskId === 3) {
-            // Third task Javascript
-            if (amountCorrect > this.JavascriptTask3Correct) {
-              this.JavascriptTask3Correct = amountCorrect;
+        for (var languageNumber = 1; languageNumber <= 3; languageNumber++) {
+          for (var taskNumber = 1; taskNumber <= 3; taskNumber++) {
+            if (submission.languageId == languageNumber) {
+              if (submission.taskId == taskNumber) {
+                if (amountCorrect > this.tasksCorrect[languageNumber-1][taskNumber-1]) {
+                  this.tasksCorrect[languageNumber-1][taskNumber-1] = amountCorrect;
+                }
+              }
             }
           }
         }
@@ -148,19 +95,21 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  onSelect = (event: MatSelectChange) => this.selectedLanguage = event.value;
+  onSelect = (event: MatSelectChange) => {
+    this.selectedLanguage = event.value;
+    console.log(event.value);
+    if (this.selectedLanguage==='java') {
+      this.lang = 0;
+    } else if (this.selectedLanguage==='python') {
+      this.lang = 1;
+    } else if (this.selectedLanguage==='javascript') {
+      this.lang = 2;
+    } else {
+      this.lang = null;
+    }
+  }
 
   goHome = (): Promise<boolean> => this.router.navigate(['/']);
 
-  goToTask1Python = (): Promise<boolean> => this.router.navigate(['challenge/python/1']);
-  goToTask2Python = (): Promise<boolean> => this.router.navigate(['challenge/python/2']);
-  goToTask3Python = (): Promise<boolean> => this.router.navigate(['challenge/python/3']);
-
-  goToTask1Java = (): Promise<boolean> => this.router.navigate(['challenge/java/1']);
-  goToTask2Java = (): Promise<boolean> => this.router.navigate(['challenge/java/2']);
-  goToTask3Java = (): Promise<boolean> => this.router.navigate(['challenge/java/3']);
-
-  goToTask1Javascript = (): Promise<boolean> => this.router.navigate(['challenge/javascript/1']);
-  goToTask2Javascript = (): Promise<boolean> => this.router.navigate(['challenge/javascript/2']);
-  goToTask3Javascript = (): Promise<boolean> => this.router.navigate(['challenge/javascript/3']);
+  goToTask = (taskNumber: number): Promise<boolean> => this.router.navigate(['challenge/' + this.selectedLanguage + '/' + (taskNumber+1)])
 }

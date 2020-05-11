@@ -55,10 +55,7 @@ export class SubscribeComponent {
   handleSuccessfulResponseGetRegister = (response, email, password): void => {
     // The user successfully registered. We will log him in.
     this.loginService.getLogin(email, password).subscribe(
-      responseLogin => {
-        this.handleSuccessfulResponseGetLogin(responseLogin);
-      },
-      err => {
+      this.handleSuccessfulResponseGetLogin, err => {
         // TODO: show error message on screen
         console.log(err.error.message);
       }
