@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import './sass/variables';
-@import './sass/mixins';
+@import 'variables.scss';
+@import 'mixins.scss';
 
 @import '~bulma/bulma.sass';
 
@@ -47,4 +47,26 @@
 
 .ul {
   margin: 4px;
+}
+
+h1{
+  font: 600 2rem 'Roboto Condensed Light',arial,sans-serif;
+  padding: 1rem;
+}
+
+h2{
+  font: 700 1.5rem 'Roboto Condensed',arial,sans-serif;
+  padding: 0.75rem;
+}
+
+p, a, label, input{
+  font: 300 12pt 'Roboto Light';
+}
+
+.button{
+  background-color: $ordinaOrange;
+  margin: 1rem;
+  &.mat-raised-button{
+    margin: 1rem;
+  }
 }

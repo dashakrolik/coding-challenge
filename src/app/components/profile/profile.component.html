@@ -19,6 +19,15 @@
       <button (click)="goToTask(i)" type="button" mat-raised-button color="primary">Go to task</button>
     </li>
   </ul>
+  <div *ngIf="scorePython > 0">
+    Score for Python: {{scorePython}}
+  </div>
+  <div *ngIf="scoreJava > 0">
+    Score for Java:
+  </div>
+  <div *ngIf="scoreJavascript > 0">
+    Score for Javascript:
+  </div>
 </div>
 <br>
 

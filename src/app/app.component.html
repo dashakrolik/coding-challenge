@@ -1,12 +1,13 @@
 <!-- header example -->
 <nav class="navbar">
-
+  <img class="ordinaLogo" src="../assets/sprites/OrdinaLogoWithWhitePayoff.png">
   <!-- possibly add Ordina logo -->
   <div class="navbar-brand">
     <!-- If the user is logged in we want to show the button for his account, otherwise we show the login button -->
-    <button *ngIf="!checkLogin()" (click)="loginWindow(subscribeComponent)" mat-raised-button color="primary" style="position: absolute; top: 10px; right: 20px; font-size: 18px;">Login</button>
-    <button *ngIf="checkLogin()" (click)="myAccount()" type="button" mat-raised-button color="primary" style="position: absolute; top: 10px; right: 20px; font-size: 18px;">My Account</button>
-    <button *ngIf="checkLogin()" (click)="logout()" type="button" mat-raised-button color="primary" style="position: absolute; top: 10px; right: 160px; font-size: 18px;">Logout</button>
+    <button *ngIf="!checkLogin()" class="button" (click)="loginWindow(subscribeComponent)"
+      mat-raised-button>Login</button>
+    <button *ngIf="checkLogin()" class="button" (click)="myAccount()" mat-raised-button>My Account</button>
+    <button *ngIf="checkLogin()" class="button logout_button" (click)="logout()" mat-raised-button>Logout</button>
   </div>
 </nav>
 
