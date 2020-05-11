@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+
 import { TokenStorageService } from '@services/token/token-storage.service';
 import { LanguageService } from '@services/language/language.service';
-import { map } from 'rxjs/operators';
 import { MatSelectChange } from '@angular/material/select';
 import { SubmissionService } from '@services/submission/submission.service';
 import { PersonService } from '@services/person/person.service';
+
 import { take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-profile',

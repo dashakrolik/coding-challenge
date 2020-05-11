@@ -18,5 +18,5 @@ export class SubmissionService {
 
   createSubmission = (submission: ISubmission): Observable<boolean[]> => this.http.post<ISubmission>('submission', submission);
 
-  runCode = (submission: ISubmission): any => this.http.post<ISubmission>('submission/runcode', submission);
+  runCode = (submission: ISubmission): Observable<JupyterResponse[]> => this.http.post<ISubmission>('submission/runcode', submission);
 }
