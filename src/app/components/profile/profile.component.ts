@@ -99,7 +99,6 @@ export class ProfileComponent implements OnInit {
 
   onSelect = (event: MatSelectChange) => {
     this.selectedLanguage = event.value;
-    console.log(event.value);
     if (this.selectedLanguage==='java') {
       this.lang = 0;
     } else if (this.selectedLanguage==='python') {

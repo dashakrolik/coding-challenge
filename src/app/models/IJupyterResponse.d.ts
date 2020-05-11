@@ -1,4 +1,4 @@
-interface JupyterResponse {
+interface IJupyterResponse {
   msgId: string;
   msgType: string;
   contentType: string;
