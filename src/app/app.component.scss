@@ -1,0 +1,19 @@
+@import "variables.scss";
+
+.navbar{
+    background-color: $darkGray;
+    height: 5rem;
+    display: flex;
+    justify-content: space-between;
+}
+.button{
+    align-self: center;
+    &.logout_button{
+        background-color: $ontdekkingBright;
+    }
+}
+.ordinaLogo{
+    align-self: center;
+    height: 4rem;
+    margin: 0.5rem 0
+}
