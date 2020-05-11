@@ -134,36 +134,27 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   submitCode = () => {
-    // A Submission on the frontend has no id, correct array and personId.
-    // This is because these elements will be determined on the backend.
-    const submission: ISubmission = {
-      answer: this.codeSnippet,
-      languageId: this.selectedLanguage.id,
-      taskId: this.task.id,
-      correct: [],
-      runningTime: 0
-    };
+    if (!this.checkIsLoggedIn()) {
+      this.loginWindow(this.subscribeComponent);
+    } else {
+      // A Submission on the frontend has no id, correct array and personId.
+      // This is because these elements will be determined on the backend.
+      const submission: ISubmission = {
+        answer: this.codeSnippet,
+        languageId: this.selectedLanguage.id,
+        taskId: this.task.id,
+        correct: [],
+        runningTime: 0
+      };
 
-    this.submissionService.createSubmission(submission).subscribe(
-      response => {
-        this.codeResult = '';
-        this.tests = response;
-        console.log('successful post message create submission');
-
-        let index = 1;
-        response.forEach(element => {
-          const elementName = 'test' + index;
-          const testDot = document.getElementById(elementName);
-
-          if (element) {
-            testDot.style.backgroundColor = 'green';
-          } else {
-            testDot.style.backgroundColor = 'red';
-          }
-          index += 1;
-        });
-      }
-    );
+      this.submissionService.createSubmission(submission).subscribe(
+        response => {
+          this.codeResult = '';
+          this.tests = response;
+          console.log('successful post message create submission');
+        }
+      );
+    }
   }
 
   retrieveAndSetLanguage = (): void => {
@@ -227,9 +218,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log('going to task number ' + taskNumber);
     this.router.navigateByUrl('challenge/' + this.selectedLanguage.language + '/' + taskNumber);
     this.resetTests();
-    // there is no need to set the task and language again. I believe because of the subscription construction.
-    // this.retrieveAndSetTask();
-    // this.retrieveAndSetLanguage();
   }
 
   isTest = (testNumber): boolean => {
@@ -248,16 +236,9 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // Map over this instead of hard coding, this is not readable
   completeTask = (taskNumber): boolean => {
-    if (this.task.taskNumber === 1 && taskNumber === 1) {
-      // all 5 tests of the first task should be successful
-      return this.tests[0] && this.tests[1] && this.tests[2] && this.tests[3] && this.tests[4];
-    } else if (this.task.taskNumber === 2 && taskNumber === 2) {
-      // all 6 tests of the second task should be successful
-      return this.tests[0] && this.tests[1] && this.tests[2] && this.tests[3] && this.tests[4] && this.tests[5];
-    } else if (this.task.taskNumber === 3 && taskNumber === 3) {
-      // all 8 tests of the third task should be successful
-      return this.tests[0] && this.tests[1] && this.tests[2] && this.tests[3] 
-      && this.tests[4] && this.tests[5] && this.tests[6] && this.tests[7];
+    if (this.task.taskNumber === taskNumber) {
+      let checker = arr => arr.every(v => v === true);
+      return checker(this.tests)
     } else {
       return false;
     }
@@ -270,18 +251,9 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   checkIsLoggedIn = (): boolean => this.tokenStorageService.isUserLoggedIn();
 
   resetTests = () => {
+    console.log("resetting");
     // reset the test array
     this.tests = [false, false, false, false, false, false, false, false, false, false];
-    // refreshing the objects.
-    let index = 1;
-    this.tests.forEach(element => {
-      const elementName = 'test' + index;
-      const testDot = document.getElementById(elementName);
-      if (testDot !== null) {
-        testDot.style.backgroundColor = '#bbb';
-      }
-      index += 1;
-    });
   }
 
 }
