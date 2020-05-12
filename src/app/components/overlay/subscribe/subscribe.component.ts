@@ -10,7 +10,7 @@ import { TokenStorageService } from '@services/token/token-storage.service';
   templateUrl: './subscribe.component.html',
   styleUrls: ['./subscribe.component.scss']
 })
-export class SubscribeComponent implements OnInit {
+export class SubscribeComponent {
   frmSubscribe = this.fb.group({
     firstName: '',
     lastName: '',
@@ -38,13 +38,7 @@ export class SubscribeComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() {
-  }
-
   submitRegister() {
-    console.log('submit register');
-    console.log(this.frmSubscribe.value);
-
     const { firstName, lastName, email, password } = this.frmSubscribe.value;
 
     this.loginService.getRegister(firstName, lastName, email, password).subscribe(
@@ -58,11 +52,10 @@ export class SubscribeComponent implements OnInit {
     this.ref.close(this.frmSubscribe.value);
   }
 
-  handleSuccessfulResponseGetRegister = (response: any, email: string, password: string): void => {
+  handleSuccessfulResponseGetRegister = (response:any, email:string, password:string): void => {
     // The user successfully registered. We will log him in.
     this.loginService.getLogin(email, password).subscribe(
-      registerResponse => this.handleSuccessfulResponseGetLogin(response),
-      err => {
+      this.handleSuccessfulResponseGetLogin, err => {
         // TODO: show error message on screen
         console.log(err.error.message);
       }
@@ -70,12 +63,11 @@ export class SubscribeComponent implements OnInit {
   }
 
   submitLogin() {
-    console.log('submit login');
-    console.log(this.frmLogin.value);
-
     const { email, password } = this.frmLogin.value;
     this.loginService.getLogin(email, password).subscribe(
-      response => this.handleSuccessfulResponseGetLogin(response),
+      response => {
+        this.handleSuccessfulResponseGetLogin(response);
+      },
       err => {
         // TODO: show error message on screen
         console.log(err.error.message);
@@ -88,10 +80,9 @@ export class SubscribeComponent implements OnInit {
   handleSuccessfulResponseGetLogin = (response): void => {
     this.tokenStorageService.saveToken(response.token);
     this.tokenStorageService.saveUser(response);
-
-    window.location.reload();
   }
 
+  // USE TSLINT GUIDELINES!!
   openTab(tabName) {
     console.log('opening new tab ' + tabName);
     // We get both tab elements and we turn them off. Then we immediately turn the tab on that the user clicked on.

@@ -1,13 +1,12 @@
-FROM node:13
+FROM node:alpine AS builder
 
 WORKDIR /app
 
-ENV PATH /app/node_modules/bin:$PATH
+COPY . .
 
-COPY package.json /app/package.json
-RUN npm install
-RUN npm install -g @angular/cli
+RUN npm install && \
+    npm run build
 
-COPY . /app
+FROM nginx:alpine
 
-CMD ng serve --host 0.0.0.0
+COPY --from=builder /app/dist/* /usr/share/nginx/html/

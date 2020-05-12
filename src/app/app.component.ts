@@ -30,7 +30,6 @@ export class AppComponent {
 
   logout = (): void => {
     this.tokenStorageService.logOut();
-    window.location.reload();
   }
 
   myAccount = (): Promise<boolean> => this.router.navigate(['/profile']);

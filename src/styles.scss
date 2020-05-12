@@ -17,6 +17,38 @@
   z-index: -1;
 }
 
+.dot-red {
+  height: 25px;
+  width: 25px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-green {
+  height: 25px;
+  width: 25px;
+  background-color: green;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.assignmentList {
+  padding:20px;
+  list-style: circle;
+}
+
+.assignmentHeader_h1 {
+    font-size: 300%;
+}
+.assignmentHeader_h2 {
+  font-size: 200%;
+}
+
+.ul {
+  margin: 4px;
+}
+
 h1{
   font: 600 2rem 'Roboto Condensed Light',arial,sans-serif;
   padding: 1rem;

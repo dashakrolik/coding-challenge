@@ -8,11 +8,11 @@ import { PersonService } from '@services/person/person.service';
 import { RoleService } from '@services/role/role.service';
 
 /**
- * We need the interface IPersonFormValues to extend IPerson. 
- * However, the IRole[] doesn't work with the mat-select, 
+ * We need the interface IPersonFormValues to extend IPerson.
+ * However, the IRole[] doesn't work with the mat-select,
  * so we need to overwrite the roles field for further typesafety #rulesaremadetobebroken
  */
-// @ts-ignore 
+// @ts-ignore
 interface IPersonFormValues extends IPerson {
   roles: string[]; // override of IRole[]
 }
@@ -137,7 +137,7 @@ export class ProfileComponent implements OnInit {
 
     return {
       ...this.form.value,
-      id: this.person.id, // we can't change the id 
+      id: this.person.id, // we can't change the id
       roles // and overwrite the roles
     };
   }

@@ -1,17 +1,22 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { ComponentType } from '@angular/cdk/portal';
+
 import { AceEditorComponent } from 'ng2-ace-editor';
 import { Subscription } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 
 import { CandidateService } from '@services/candidate/candidate.service';
-import { LanguageService } from '@services/language/language.service';
 import { SubmissionService } from '@services/submission/submission.service';
 import { TaskService } from '@services/task/task.service';
+import { LanguageService } from '@services/language/language.service';
 import { TokenStorageService } from '@services/token/token-storage.service';
+import { OverlayService } from '@services/overlay/overlay.service';
 
 import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';
+import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.component';
 
 // TODO: There are A LOT of things going on here (too many for just one component)
 // We need to split this up thats one
@@ -31,27 +36,36 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   codeSnippet = '';
   evaluationResult: boolean;
 
-  editorText: string;
+  text: string;
 
   taskSubscription: Subscription;
   languageSubscription: Subscription;
+  codeResult: any;
+  tests: boolean[];
+  subscribeComponent = SubscribeComponent;
+
+  taskSpecificDescription: string;
   submissionSubscription: Subscription;
   task: ITask;
   candidate: ICandidate;
+  output: any;
 
   constructor(
+    private router: Router,
+    private overlayService: OverlayService,
     private route: ActivatedRoute,
     private candidateService: CandidateService,
     private taskService: TaskService,
     private languageService: LanguageService,
     private submissionService: SubmissionService,
     private tokenStorageService: TokenStorageService,
-    private dialog: MatDialog,
+
   ) { }
 
   ngOnInit() {
-    this.retrieveAndSetLanguage();
+    this.resetTests();
     this.retrieveAndSetTask();
+    this.retrieveAndSetLanguage();
   }
 
   ngAfterViewInit() {
@@ -64,64 +78,83 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     // });
   }
 
+  ngOnDestroy() {
+    this.taskSubscription.unsubscribe();
+    this.languageSubscription.unsubscribe();
+  }
+
   onChange = (event: any) => this.codeSnippet = event;
 
-  evaluateCode = (): boolean => {
-    // TODO: Implement Jupyter connection
-    // use this.selectedLanguage
-
-    return this.evaluationResult = true;
+   evaluateCode = async () => {
+    // Fill the 'codeResult' in the 'evaluateCode' function.
+    const runCodeSubmission: ISubmission = {
+      answer: this.codeSnippet,
+      languageId: this.selectedLanguage.id,
+      taskId: this.task.id,
+      correct: [],
+      runningTime: 0
+    };
+    console.log('evaluating code');
+    await this.submissionService.runCode(runCodeSubmission).toPromise().then(response => {
+      this.codeResult = '';
+      response.forEach(line => {
+        console.log(line);
+        if (line.errorType === null ) {
+          this.codeResult += line.contentValue;
+        } else {
+          this.codeResult += line.errorType;
+          this.codeResult += '\n';
+          this.codeResult += line.errorValue;
+        }
+      });
+    });
+    console.log(this.codeResult);
   }
 
-  // TODO implement this functionality
-  submitCode = () => {
-    const dialogRef = this.dialog.open(SubmitDialogComponent, {
-      // width: '250px',
-      // data: {name: this.name, animal: this.animal}
-    });
-
-    dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
-      console.log('The dialog was closed');
-      console.log('submitCode subscription', result);
-    });
-  }
-
-  // TODO align this with the dialog service created by Richard
-  // TODO also, this doesn't belong in this component
-  openLoginModal = () => {
-    const dialogRef = this.dialog.open(SubmitDialogComponent, {
-      // width: '250px',
-      // data: {name: this.name, animal: this.animal}
-    });
-
-    dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
-      const { data } = result;
-
-      // simple check to see if the user cancelled the form and code is evaluated
-      if (data != null && this.evaluationResult) {
-        // We will create a submission. To do this we must first create the new candidate and retrieve other data
-        // Create a new candidate, for now it has a placeholder for first name and last name.
-        // Id should be null. It will create an id automatically in the backend if it is null.
-        // TODO: instead of creating it and retrieving it we want to add a user login possibility
-        // TODO: Now we retrieve the task and the language. Later this should be retrieved already,
-        //  remove this at that point.
-
-        const candidate: ICandidate = {
-          id: null,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.email
-        };
-
-        this.candidateService.createCandidate(candidate)
-          .pipe(take(1))
-          .subscribe((candi) => {
-            this.candidate = candi;
-          });
+  handleSuccessfulResponseRunCode = (response): void => {
+    // First we clear the current output for the new input
+    // TODO This is not called anymore. fill the 'codeResult' in the 'evaluateCode' function
+    this.codeResult = '';
+    console.log('run2', response);
+    response.forEach(element => {
+      // We check if it is not an error than we show the output, otherwise we show the error.
+      console.log(element);
+      if (element.errorType === null) {
+        this.codeResult += element.contentValue;
       } else {
-        console.log('Check fields and code');
+        this.codeResult += element.errorType;
+        this.codeResult += '\n';
+        this.codeResult += element.errorValue;
       }
     });
+  }
+
+  loginWindow(content: ComponentType<SubscribeComponent>) {
+    const ref = this.overlayService.open(content, null);
+  }
+
+  submitCode = () => {
+    if (!this.checkIsLoggedIn()) {
+      this.loginWindow(this.subscribeComponent);
+    } else {
+      // A Submission on the frontend has no id, correct array and personId.
+      // This is because these elements will be determined on the backend.
+      const submission: ISubmission = {
+        answer: this.codeSnippet,
+        languageId: this.selectedLanguage.id,
+        taskId: this.task.id,
+        correct: [],
+        runningTime: 0
+      };
+
+      this.submissionService.createSubmission(submission).subscribe(
+        response => {
+          this.codeResult = '';
+          this.tests = response;
+          console.log('successful post message create submission');
+        }
+      );
+    }
   }
 
   retrieveAndSetLanguage = (): void => {
@@ -129,15 +162,17 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.languageSubscription = this.languageService.getLanguagesMap().subscribe((languagesMap) => {
       this.selectedLanguage = languagesMap.get(languageParam);
-
-      if (!this.selectedLanguage) {
-        throw new Error(`No such language: ${languageParam}.`);
-      }
+      this.setBoilerPlateCode();
+      // if (!this.selectedLanguage) {
+      //   throw new Error(`No such language: ${languageParam}.`);
+      // } else {
+      //   this.setBoilerPlateCode();
+      // }
     });
   }
 
   retrieveAndSetTask = (): void => {
-    this.taskSubscription = this.route.paramMap.pipe(
+    this.taskSubscription = this.route.firstChild.paramMap.pipe(
       switchMap(params => {
         let exerciseId = parseInt(params.get('id'));
         if (isNaN(exerciseId)) {
@@ -147,34 +182,78 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         // get the task with this id and switch to that Observable
         return this.taskService.getTask(exerciseId);
       })
-    ).subscribe(task => this.task = task);
+    ).subscribe((task: ITask) => {
+      this.task = task;
+
+      this.setBoilerPlateCode();
+    });
   }
 
-  createSubmission = (): void => {
-    // When creating a new Submission we give id null so it creates a new entry. It will determine the id by itself.
-    const submission: ISubmission = {
-      id: null,
-      answer: this.codeSnippet,
-      correct: false,
-      personId: this.candidate.id,
-      languageId: this.selectedLanguage.id,
-      taskId: this.task.id
-    };
-
-    this.submissionSubscription = this.submissionService.createSubmission(submission).subscribe(
-      response => {
-        // TODO: do something with a successful response
-        console.log('successful post message create submission');
+  setBoilerPlateCode = (): void => {
+    let boilerplate = '';
+    if (this.selectedLanguage && this.task) {
+      // If both objects are filled we will set the boilerplate code
+      if (this.selectedLanguage.language === 'java') {
+        boilerplate = this.task.boilerplateJava;
+        this.taskSpecificDescription = this.task.descriptionJava;
+      } else if (this.selectedLanguage.language === 'python') {
+        boilerplate = this.task.boilerplatePython;
+        this.taskSpecificDescription = this.task.descriptionPython;
+      } else if (this.selectedLanguage.language === 'javascript') {
+        boilerplate = this.task.boilerplateJavascript;
+        this.taskSpecificDescription = this.task.descriptionJavascript;
       }
-    );
+    }
+    const lines = boilerplate.split('\\n');
+
+    this.text = '\n';
+    lines.forEach(line => {
+      this.text += line;
+      this.text += '\n';
+    });
+    this.codeSnippet = this.text;
+  }
+
+  goToTask = (taskNumber: number) => {
+    console.log('going to task number ' + taskNumber);
+    this.router.navigateByUrl('challenge/' + this.selectedLanguage.language + '/' + taskNumber);
+    this.resetTests();
+  }
+
+  isTest = (testNumber): boolean => {
+    // simple function to see how many tests should be displayed on the screen.
+    if (this.task.taskNumber === 1) {
+      // if it's the first task we want to show the first 5 test dots
+      return testNumber <= 5;
+    } else if (this.task.taskNumber === 2) {
+      return testNumber <= 6;
+    } else if (this.task.taskNumber === 3) {
+      return testNumber <= 8;
+    } else {
+      return false;
+    }
+  }
+
+  // Map over this instead of hard coding, this is not readable
+  completeTask = (taskNumber): boolean => {
+    if (this.task.taskNumber === taskNumber) {
+      let checker = arr => arr.every(v => v === true);
+      return checker(this.tests)
+    } else {
+      return false;
+    }
+  }
+
+  finishedCodeChallenge = () => {
+    console.log('The code challenge is completed');
   }
 
   checkIsLoggedIn = (): boolean => this.tokenStorageService.isUserLoggedIn();
 
-  ngOnDestroy() {
-    this.taskSubscription.unsubscribe();
-    this.languageSubscription.unsubscribe();
-    this.submissionSubscription.unsubscribe();
+  resetTests = () => {
+    console.log("resetting");
+    // reset the test array
+    this.tests = [false, false, false, false, false, false, false, false, false, false];
   }
 
 }
