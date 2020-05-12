@@ -35,6 +35,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedLanguage: ILanguage;
   codeSnippet = '';
   evaluationResult: boolean;
+  taskIsAllowed: any;
 
   text: string;
 
@@ -110,6 +111,52 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     console.log(this.codeResult);
   }
+
+  languageToId = (selectedLanguage) :number => {
+    if(selectedLanguage === 'java') {
+      return 1
+    }
+    if(selectedLanguage === 'javascript') {
+      return 2
+    }
+    if(selectedLanguage === 'python') {
+      return 3
+    }
+  }
+
+  taskView = (routeId): void => {
+    let overalCheckArray = []
+    // Get all submissions
+    this.submissionService.getAllSubmissionsProfile().pipe(take(1)).subscribe(submissions => {
+      // Define previous task 
+      let previousTask = routeId -1
+      // It's always allowed to go to the first task
+      if (previousTask < 1) {
+        this.taskIsAllowed = true 
+      } 
+      // Filter out all submissions from previous task
+      let previousTaskSubmissions = submissions.filter(task => 
+        task.taskId === previousTask    
+        )
+        // Check if there are any submissions and a language is selected
+        if (previousTaskSubmissions.length > 0 && this.selectedLanguage) {      
+          // Filter out selectedLanguage
+          let selectedLanguageSubmissions = previousTaskSubmissions.filter(selectedLanguage => 
+            selectedLanguage.languageId === this.languageToId(this.selectedLanguage.language))
+            
+          // Filter out the array of checked answers
+          let isAllowed = selectedLanguageSubmissions.map(submission => submission.correct)
+          
+          isAllowed.forEach(function (submissionSet) {
+            // Return true if all answes of a submission are correct and put those booleans in an Array
+            overalCheckArray.push(submissionSet.every(check => check))
+          })
+          // Check if at least one submission only has correct answers  
+          this.taskIsAllowed = overalCheckArray.includes(true) 
+      }
+    });
+  }
+
 
   handleSuccessfulResponseRunCode = (response): void => {
     // First we clear the current output for the new input
@@ -187,7 +234,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         if (isNaN(exerciseId)) {
           exerciseId = 1; // simply assign 1 if there's a problem
         }
-
+        //Check if user is allowed to view visited task of selected language
+        this.taskView(exerciseId)
         // get the task with this id and switch to that Observable
         return this.taskService.getTask(exerciseId);
       })

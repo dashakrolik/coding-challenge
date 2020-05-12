@@ -1,3 +1,5 @@
+<div *ngIf=!taskIsAllowed> Je hebt de vorige opdracht nog niet voltooid</div>
+<div *ngIf=taskIsAllowed>
 <!-- We load the task and show the description -->
 <ng-container *ngIf="selectedLanguage && task">
   <div [innerHTML]="task.description"></div>
@@ -61,3 +63,4 @@
   <br>
   
 </ng-container>
+</div>
