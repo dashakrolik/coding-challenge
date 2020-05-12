@@ -126,15 +126,16 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   taskView = (routeId): void => {
     let overalCheckArray = []
+
+    // Define previous task 
+    let previousTask = routeId -1
+
+    // It's always allowed to go to the first task
+    if (previousTask < 1) {
+      this.taskIsAllowed = true 
+    } 
     // Get all submissions
     this.submissionService.getAllSubmissionsProfile().pipe(take(1)).subscribe(submissions => {
-      // Define previous task 
-      let previousTask = routeId -1
-     
-      // It's always allowed to go to the first task
-      if (previousTask < 1) {
-        this.taskIsAllowed = true 
-      } 
       // Filter out all submissions from previous task
       let previousTaskSubmissions = submissions.filter(task => 
         task.taskId === previousTask    

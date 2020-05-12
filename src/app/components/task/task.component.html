@@ -1,7 +1,6 @@
 <div *ngIf=!taskIsAllowed> Je hebt de vorige opdracht nog niet voltooid</div>
-<div *ngIf=taskIsAllowed>
 <!-- We load the task and show the description -->
-<ng-container *ngIf="selectedLanguage && task">
+<ng-container *ngIf="selectedLanguage && task && taskIsAllowed">
   <div [innerHTML]="task.description"></div>
   <div [innerHTML]="taskSpecificDescription"></div>
   <ace-editor editor [(text)]="text" [mode]="selectedLanguage.language" [theme]="selectedLanguage.editorTheme"
@@ -58,4 +57,3 @@
   <br>
   
 </ng-container>
-</div>
