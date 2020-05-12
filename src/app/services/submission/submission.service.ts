@@ -8,17 +8,17 @@ import { HttpClientService } from '../http/http-client.service';
 })
 export class SubmissionService {
 
-  submissionEndpoint = 'submission'
+  endpoint = 'submission'
 
   constructor(
     private http: HttpClientService
   ) { }
 
-  getAllSubmissionsFromPerson = (personId: number): Observable<ISubmission[]> => this.http.get(this.submissionEndpoint + "/" + personId);
+  getAllSubmissionsFromPerson = (personId: number): Observable<ISubmission[]> => this.http.get(this.endpoint + "/" + personId);
   
-  getAllSubmissionsProfile = (): Observable<ISubmission[]> => this.http.get(this.submissionEndpoint + '/person');
+  getAllSubmissionsProfile = (): Observable<ISubmission[]> => this.http.get(this.endpoint + '/person');
 
-  createSubmission = (submission: ISubmission): Observable<boolean[]> => this.http.post<ISubmission>(this.submissionEndpoint, submission);
+  createSubmission = (submission: ISubmission): Observable<boolean[]> => this.http.post<ISubmission>(this.endpoint, submission);
 
-  runCode = (submission: ISubmission): Observable<IJupyterResponse[]> => this.http.post<ISubmission>(this.submissionEndpoint + '/runcode', submission);
+  runCode = (submission: ISubmission): Observable<IJupyterResponse[]> => this.http.post<ISubmission>(this.endpoint + '/runcode', submission);
 }

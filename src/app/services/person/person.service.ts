@@ -8,17 +8,19 @@ import { HttpClientService } from '@services/http/http-client.service';
 })
 export class PersonService {
 
+  endpoint = 'person';
+
   constructor(
     private http: HttpClientService
   ) { }
 
-  getAllPersons = (): Observable<IPerson[]> => this.http.get('person');
+  getAllPersons = (): Observable<IPerson[]> => this.http.get(this.endpoint);
 
-  getPersonById = (id: number): Observable<IPerson> => this.http.get('person/' + id);
+  getPersonById = (id: number): Observable<IPerson> => this.http.get(this.endpoint + '/' + id);
 
-  getPersonPoints = (): Observable<IPerson> => this.http.get('person/points');
+  getPersonPoints = (): Observable<IPerson> => this.http.get(this.endpoint + '/points');
 
-  updatePerson = (person: IPerson): Observable<IPerson> => this.http.put('person', person);
+  updatePerson = (person: IPerson): Observable<IPerson> => this.http.put(this.endpoint, person);
 
-  deletePerson = (person: IPerson): Observable<IPerson> => this.http.delete('person/' + person.id, person);
+  deletePerson = (person: IPerson): Observable<IPerson> => this.http.delete(this.endpoint + '/' + person.id, person);
 }
