@@ -35,7 +35,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedLanguage: ILanguage;
   codeSnippet = '';
   evaluationResult: boolean;
-  taskIsAllowed: any;
+  taskIsAllowed: boolean;
 
   text: string;
 
@@ -116,10 +116,10 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     if(selectedLanguage === 'java') {
       return 1
     }
-    if(selectedLanguage === 'javascript') {
+    if(selectedLanguage === 'python') {
       return 2
     }
-    if(selectedLanguage === 'python') {
+    if(selectedLanguage === 'javascript') {
       return 3
     }
   }
@@ -130,6 +130,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     this.submissionService.getAllSubmissionsProfile().pipe(take(1)).subscribe(submissions => {
       // Define previous task 
       let previousTask = routeId -1
+     
       // It's always allowed to go to the first task
       if (previousTask < 1) {
         this.taskIsAllowed = true 
