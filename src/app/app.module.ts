@@ -38,6 +38,7 @@ import { AppComponent } from './app.component';
 import { MessageDialogComponent } from './components/dialog/message-dialog/message-dialog.component';
 import { OkCancelDialogComponent } from './components/dialog/ok-cancel-dialog/ok-cancel-dialog.component';
 import { authInterceptorProviders } from './guards/auth/auth.interceptor';
+import { CanvasComponent } from './components/canvas/canvas.component';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { authInterceptorProviders } from './guards/auth/auth.interceptor';
     SubmitDialogComponent,
     LeaderboardComponent,
     CardComponent,
+    CanvasComponent,
   ],
   imports: [
     BrowserModule,
