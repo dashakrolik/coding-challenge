@@ -111,19 +111,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     console.log(this.codeResult);
   }
-
-  languageToId = (selectedLanguage) :number => {
-    if(selectedLanguage === 'java') {
-      return 1
-    }
-    if(selectedLanguage === 'python') {
-      return 2
-    }
-    if(selectedLanguage === 'javascript') {
-      return 3
-    }
-  }
-
+  
   taskView = (routeId): void => {
     let overalCheckArray = []
 
@@ -144,7 +132,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         if (previousTaskSubmissions.length > 0 && this.selectedLanguage) {      
           // Filter out selectedLanguage
           let selectedLanguageSubmissions = previousTaskSubmissions.filter(selectedLanguage => 
-            selectedLanguage.languageId === this.languageToId(this.selectedLanguage.language))
+            selectedLanguage.languageId === this.selectedLanguage.id)
             
           // Filter out the array of checked answers
           let isAllowed = selectedLanguageSubmissions.map(submission => submission.correct)
@@ -158,7 +146,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
-
 
   handleSuccessfulResponseRunCode = (response): void => {
     // First we clear the current output for the new input
