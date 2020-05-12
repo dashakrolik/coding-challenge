@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import './sass/variables';
-@import './sass/mixins';
+@import 'variables.scss';
+@import 'mixins.scss';
 
 @import '~bulma/bulma.sass';
 
@@ -17,10 +17,18 @@
   z-index: -1;
 }
 
-.dot {
+.dot-red {
   height: 25px;
   width: 25px;
-  background-color: #bbb;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-green {
+  height: 25px;
+  width: 25px;
+  background-color: green;
   border-radius: 50%;
   display: inline-block;
 }
@@ -35,4 +43,30 @@
 }
 .assignmentHeader_h2 {
   font-size: 200%;
+}
+
+.ul {
+  margin: 4px;
+}
+
+h1{
+  font: 600 2rem 'Roboto Condensed Light',arial,sans-serif;
+  padding: 1rem;
+}
+
+h2{
+  font: 700 1.5rem 'Roboto Condensed',arial,sans-serif;
+  padding: 0.75rem;
+}
+
+p, a, label, input{
+  font: 300 12pt 'Roboto Light';
+}
+
+.button{
+  background-color: $ordinaOrange;
+  margin: 1rem;
+  &.mat-raised-button{
+    margin: 1rem;
+  }
 }

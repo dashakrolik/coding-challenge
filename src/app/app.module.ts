@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
+import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,6 +29,8 @@ import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.comp
 import { ProfileComponent } from '@components/profile/profile.component';
 import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';
 import { TaskComponent } from '@components/task/task.component';
+import { LeaderboardComponent } from './components/leaderboard/table/leaderboard.component';
+import { CardComponent } from './components/leaderboard/card/card.component';
 import { WelcomePageComponent } from '@components/welcome-page/welcome-page.component';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -55,6 +58,8 @@ import { authInterceptorProviders } from './guards/auth/auth.interceptor';
     MessageDialogComponent,
     DropdownComponent,
     SubmitDialogComponent,
+    LeaderboardComponent,
+    CardComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,6 +78,7 @@ import { authInterceptorProviders } from './guards/auth/auth.interceptor';
     MatPaginatorModule,
     MatSortModule,
     MatDialogModule,
+    MatCardModule,
   ],
   providers: [
     authInterceptorProviders,

@@ -12,9 +12,7 @@
   <button (click)="evaluateCode()" mat-raised-button color="warn">Run</button>
   <!-- TODO why a special behavior for javascript? -->
   <app-javascript-task *ngIf="selectedLanguage.language === 'javascript'"></app-javascript-task>
-  
-  <div>
-  </div>
+
   <div>
     Your Output:
     <ul>
@@ -25,30 +23,27 @@
   
   </div>
     <!-- We create the same button twice, if the user is not logged in the functionality will be that of logging in rather than submitting -->
-    <button *ngIf="!checkIsLoggedIn()" (click)="loginWindow(subscribeComponent)" mat-raised-button color="warn">
-      Submit Code
-    </button>
+    
     <div>
-    <br>
-      Submit your code and try to turn on all the lights to complete the task. (This can take a few seconds)
-    <br>
-    <button *ngIf="checkIsLoggedIn()" (click)="submitCode()" mat-raised-button color="warn">
+      <br>
+        Submit your code and try to turn on all the lights to complete the task. (This can take a few seconds)
+      <br>
+    </div>
+    
+    <button (click)="submitCode()" mat-raised-button color="warn">
       Submit Code
     </button>
-  </div>
   <div>
     <br>
-    <span *ngIf="isTest(1)" id="test1" class="dot"></span>
-    <span *ngIf="isTest(2)" id="test2" class="dot"></span>
-    <span *ngIf="isTest(3)" id="test3" class="dot"></span>
-    <span *ngIf="isTest(4)" id="test4" class="dot"></span>
-    <span *ngIf="isTest(5)" id="test5" class="dot"></span>
-    <span *ngIf="isTest(6)" id="test6" class="dot"></span>
-    <span *ngIf="isTest(7)" id="test7" class="dot"></span>
-    <span *ngIf="isTest(8)" id="test8" class="dot"></span>
-    <span *ngIf="isTest(9)" id="test9" class="dot"></span>
-    <span *ngIf="isTest(10)" id="test10" class="dot"></span>
+    <li *ngFor="let te of tests; let i = index">
+      <span *ngIf="isTest(i+1)" [ngClass]="{
+        'dot-green' : te,
+        'dot-red' : !te
+     }">
+      </span>
+    </li>
   </div>
+  <!-- TODO: change the ng ifs with something better -->
   <div>
     <button *ngIf="completeTask(1)" (click)="goToTask(2)" mat-raised-button color="warn">
       Next Task
