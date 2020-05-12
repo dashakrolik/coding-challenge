@@ -16,7 +16,7 @@
   <ul>
     <li *ngFor="let item of tasksCorrect[lang]; let i = index">
       {{selectedLanguage}} task {{i+1}} has {{tasksCorrect[lang][i]}} out of {{taskTests[i]}} tests correct 
-      <button (click)="goToTask(i)" type="button" mat-raised-button>Go to task</button>
+      <button class="button" (click)="goToTask(i)" type="button" mat-raised-button>Go to task</button>
     </li>
   </ul>
   <div *ngIf="scorePython > 0">
@@ -31,5 +31,5 @@
 </div>
 <br>
 
-<button (click)="goHome()" type="button" mat-raised-button color="primary">Home</button>
+<button class="button" (click)="goHome()" type="button" mat-raised-button>Home</button>
 
