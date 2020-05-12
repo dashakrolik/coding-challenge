@@ -9,7 +9,7 @@ import { Square } from './square';
 export class CanvasComponent implements OnInit, OnDestroy {
   @ViewChild('canvas', { static: true }) canvas: ElementRef<HTMLCanvasElement>;
   ctx: CanvasRenderingContext2D;
-  requestId;
+  requestId: number;
   interval;
   squares: Square[] = [];
 
@@ -25,7 +25,7 @@ export class CanvasComponent implements OnInit, OnDestroy {
     }, 200);
   }
 
-  tick() {
+  tick = () => {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     this.squares.forEach((square: Square) => {
       square.moveRight();
@@ -33,7 +33,7 @@ export class CanvasComponent implements OnInit, OnDestroy {
     this.requestId = requestAnimationFrame(() => this.tick);
   }
 
-  play() {
+  play = () => {
     const square = new Square(this.ctx);
     this.squares = this.squares.concat(square);
   }
