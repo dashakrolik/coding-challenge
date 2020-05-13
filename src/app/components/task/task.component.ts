@@ -122,27 +122,31 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     if (previousTask < 1) {
       this.taskIsAllowed = true 
     } 
+
+
     // Get all submissions
     this.submissionService.getAllSubmissionsProfile().pipe(take(1)).subscribe(submissions => {
+ 
       // Filter out all submissions from previous task
       let previousTaskSubmissions = submissions.filter(task => 
         task.taskId === previousTask    
         )
+        
         // Check if there are any submissions and a language is selected
         if (previousTaskSubmissions.length > 0 && this.selectedLanguage) {      
-          // Filter out selectedLanguage
-          let selectedLanguageSubmissions = previousTaskSubmissions.filter(selectedLanguage => 
-            selectedLanguage.languageId === this.selectedLanguage.id)
-            
-          // Filter out the array of checked answers
-          let isAllowed = selectedLanguageSubmissions.map(submission => submission.correct)
+        // Filter out selectedLanguage
+        let selectedLanguageSubmissions = previousTaskSubmissions.filter(selectedLanguage => 
+          selectedLanguage.languageId === this.selectedLanguage.id)
           
-          isAllowed.forEach(function (submissionSet) {
-            // Return true if all answes of a submission are correct and put those booleans in an Array
-            overalCheckArray.push(submissionSet.every(check => check))
-          })
-          // Check if at least one submission only has correct answers  
-          this.taskIsAllowed = overalCheckArray.includes(true) 
+        // Filter out the array of checked answers
+        let isAllowed = selectedLanguageSubmissions.map(submission => submission.correct)
+        
+        isAllowed.forEach(function (submissionSet) {
+          // Return true if all answes of a submission are correct and put those booleans in an Array
+          overalCheckArray.push(submissionSet.every(check => check))
+        })
+        // Check if at least one submission only has correct answers  
+        this.taskIsAllowed = overalCheckArray.includes(true) 
       }
     });
   }
