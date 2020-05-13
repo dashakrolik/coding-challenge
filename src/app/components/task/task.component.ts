@@ -94,10 +94,13 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       correct: [],
       runningTime: 0
     };
+    const kernelId = this.tokenStorageService.getKernelId(this.selectedLanguage.language);
     console.log('evaluating code');
-    await this.submissionService.runCode(runCodeSubmission).toPromise().then(response => {
+    await this.submissionService.runCode(runCodeSubmission, kernelId).toPromise().then(response => {
       this.codeResult = '';
-      response.forEach(line => {
+      console.log("kernelId");
+      this.tokenStorageService.setKernelId(response.kernelId, this.selectedLanguage.language);
+      response.jupyterResponses.forEach(line => {
         console.log(line);
         if (line.errorType === null ) {
           this.codeResult += line.contentValue;
