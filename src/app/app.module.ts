@@ -1,26 +1,10 @@
-<<<<<<< HEAD
 import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-=======
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { OverlayModule } from '@angular/cdk/overlay';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { AceEditorModule } from 'ng2-ace-editor';
-
->>>>>>> 9b309be5615c53b0c9502b27c899c2bae32d5531
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-<<<<<<< HEAD
-=======
-import { MatTableModule } from '@angular/material/table';
->>>>>>> 9b309be5615c53b0c9502b27c899c2bae32d5531
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
