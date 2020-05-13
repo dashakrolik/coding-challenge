@@ -17,7 +17,25 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "types": [
+      "node",
+      "jasmine"
+    ],
+    "paths": {
+      "@services/*": [
+        "./src/app/services/*"
+      ],
+      "@guards/*": [
+        "./src/app/guards/*"
+      ],
+      "@components/*": [
+        "./src/app/components/*"
+      ],
+      "@shared/*": [
+        "./src/app/shared/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

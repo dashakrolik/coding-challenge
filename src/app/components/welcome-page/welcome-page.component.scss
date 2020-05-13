@@ -1,0 +1,15 @@
+@import "variables.scss";
+
+
+.welcome{
+    padding: 0 0 4em 2em;
+    background-color: $ordinaOrange;
+    p{
+        max-width: 40%;
+    }
+}
+
+.start{
+    padding: 1em 2em;
+    background-color: $ontdekkingBright;
+}

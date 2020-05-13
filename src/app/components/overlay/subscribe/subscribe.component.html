@@ -1,0 +1,75 @@
+<div class="modal-card">
+  <nav class="tabs is-boxed is-fullwidth is-large">
+    <div class="container">
+      <ul>
+        <li id="tab-sign-in" class="tab is-active" (click)="openTab('Sign-in')"><a>Login</a></li>
+        <li id="tab-sign-up" class="tab" (click)="openTab('Sign-up')"><a>Register</a></li>
+      </ul>
+    </div>
+  </nav>
+  <div id="Sign-in" class="content-tab">
+    <form [formGroup]="frmLogin">
+      <section class="modal-card-body">
+        <div class="field">
+          <label class="label">Email</label>
+          <div class="control">
+            <input formControlName="email" class="input" type="email" placeholder="">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Password</label>
+          <div class="control">
+            <input formControlName="password" class="input" type="password" placeholder="">
+          </div>
+        </div>
+      </section>
+    </form>
+    <footer class="modal-card-foot">
+      <div class="buttons">
+        <button id="button-submit-login" (click)="submitLogin()" type="submit" class="button is-success">Login</button>
+        <button (click)="cancel()" type="button" class="button is-danger">Cancel</button>
+      </div>
+    </footer>
+  </div>
+  <div id="Sign-up" class="content-tab" style="display:none">
+      <form [formGroup]="frmSubscribe">
+        <section class="modal-card-body">
+          <div class="field">
+            <label class="label">First Name</label>
+            <div class="control">
+              <input formControlName="firstName" class="input" type="text" placeholder="">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Last Name</label>
+            <div class="control">
+              <input formControlName="lastName" class="input" type="text" placeholder="">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+              <input formControlName="email" class="input" type="email" placeholder="">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Password</label>
+            <div class="control">
+              <input formControlName="password" class="input" type="password" placeholder="">
+            </div>
+          </div>
+
+        </section>
+        <footer class="modal-card-foot">
+          <div class="buttons">
+            <button id="button-submit-register" (click)="submitRegister()" type="submit" class="button is-success">Register</button>
+            <button (click)="cancel()" type="button" class="button is-danger">Cancel</button>
+          </div>
+        </footer>
+      </form>
+  </div>
+
+</div>
