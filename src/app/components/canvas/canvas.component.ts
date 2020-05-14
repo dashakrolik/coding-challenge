@@ -12,17 +12,15 @@ export class CanvasComponent implements OnInit, OnDestroy {
   requestId: number;
   interval;
   squares: Square[] = [];
-
+  private x = 0;
+  private y = 0;
+  private z = 30;
   constructor(private ngZone: NgZone) { }
 
   ngOnInit() {
     this.ctx = this.canvas.nativeElement.getContext('2d');
-
+    this.play();
     this.ctx.fillStyle = 'red';
-    this.ngZone.runOutsideAngular(() => this.tick());
-    setInterval(() => {
-      this.tick();
-    }, 200);
   }
 
   tick = () => {
@@ -36,10 +34,25 @@ export class CanvasComponent implements OnInit, OnDestroy {
   play = () => {
     const square = new Square(this.ctx);
     this.squares = this.squares.concat(square);
+    
+    this.squares.forEach(() => {
+      this.ctx.fillStyle = 'blue';
+      this.ctx.fillRect(this.z * this.x, this.z * this.y, this.z, this.z);
+      
+    });
+    
   }
 
+  moveRight = () => {
+    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    this.x++;
+    this.ctx.fillStyle = 'blue';
+    this.ctx.fillRect(this.z * this.x, this.z * this.y, this.z, this.z);
+  }
+
+
   ngOnDestroy() {
-    clearInterval(this.interval);
+    // clearInterval(this.interval);
     cancelAnimationFrame(this.requestId);
   }
 }

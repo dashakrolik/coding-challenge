@@ -10,6 +10,7 @@ export class Square {
   moveRight() {
     this.x++;
     this.draw();
+    
   }
 
   private draw() {
