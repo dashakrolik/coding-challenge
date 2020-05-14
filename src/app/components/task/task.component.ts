@@ -1,5 +1,4 @@
 import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { ComponentType } from '@angular/cdk/portal';
@@ -15,7 +14,6 @@ import { LanguageService } from '@services/language/language.service';
 import { TokenStorageService } from '@services/token/token-storage.service';
 import { OverlayService } from '@services/overlay/overlay.service';
 
-import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';
 import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.component';
 
 // TODO: There are A LOT of things going on here (too many for just one component)
@@ -94,11 +92,10 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       correct: [],
       runningTime: 0
     };
-    console.log('evaluating code');
+
     await this.submissionService.runCode(runCodeSubmission).toPromise().then(response => {
       this.codeResult = '';
       response.forEach(line => {
-        console.log(line);
         if (line.errorType === null ) {
           this.codeResult += line.contentValue;
         } else {
@@ -116,10 +113,9 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     // First we clear the current output for the new input
     // TODO This is not called anymore. fill the 'codeResult' in the 'evaluateCode' function
     this.codeResult = '';
-    console.log('run2', response);
+
     response.forEach(element => {
       // We check if it is not an error than we show the output, otherwise we show the error.
-      console.log(element);
       if (element.errorType === null) {
         this.codeResult += element.contentValue;
       } else {
@@ -152,7 +148,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         response => {
           this.codeResult = '';
           this.tests = response;
-          console.log('successful post message create submission');
+          console.log(response);
         }
       );
     }
@@ -238,8 +234,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   // Map over this instead of hard coding, this is not readable
   completeTask = (taskNumber): boolean => {
     if (this.task.taskNumber === taskNumber) {
-      let checker = arr => arr.every(v => v === true);
-      return checker(this.tests)
+      const checker = arr => arr.every(v => v === true);
+      return checker(this.tests);
     } else {
       return false;
     }
@@ -252,7 +248,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   checkIsLoggedIn = (): boolean => this.tokenStorageService.isUserLoggedIn();
 
   resetTests = () => {
-    console.log("resetting");
     // reset the test array
     this.tests = [false, false, false, false, false, false, false, false, false, false];
   }

@@ -8,8 +8,6 @@
   <br>
   
   <button (click)="evaluateCode()" mat-raised-button color="warn">Run</button>
-  <!-- TODO why a special behavior for javascript? -->
-  <app-javascript-task *ngIf="selectedLanguage.language === 'javascript'"></app-javascript-task>
 
   <div>
     Your Output:
@@ -24,7 +22,7 @@
     
     <div>
       <br>
-        Submit your code and try to turn on all the lights to complete the task. (This can take a few seconds)
+        Submit your code and try to turn on all the lights to complete the task (this can take a few seconds).
       <br>
     </div>
     
@@ -55,6 +53,6 @@
   </div>
   <br>
   
-  <app-canvas></app-canvas>
+  <app-canvas [(results)]="tests"></app-canvas>
   
 </ng-container>
