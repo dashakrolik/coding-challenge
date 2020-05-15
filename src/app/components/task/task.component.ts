@@ -149,8 +149,10 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         correct: [],
         runningTime: 0
       };
+      
+      const kernelId = this.tokenStorageService.getKernelId(this.selectedLanguage.language);
 
-      this.submissionService.createSubmission(submission).subscribe(
+      this.submissionService.createSubmission(submission, kernelId).subscribe(
         response => {
           this.codeResult = '';
           this.tests = response;

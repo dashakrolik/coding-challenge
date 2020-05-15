@@ -25,7 +25,16 @@ export class SubmissionService {
 
   getAllSubmissionsProfile = (): Observable<ISubmission[]> => this.http.get(this.endpoint + '/person');
 
-  createSubmission = (submission: ISubmission): Observable<boolean[]> => this.http.post<ISubmission>(this.endpoint, submission);
+  createSubmission = (submission: ISubmission, kernelId: string): any => {
+    console.log('going to submit code');
+
+    return this.httpClient.post(baseUrl + '/submission', {
+      submission,
+      kernelId,
+    }, httpOptions);
+
+    // return this.http.post<ISubmission>(this.endpoint, submission);
+  }
 
   // TODO: set the return type to the new and correct response.
   runCode = (submission: ISubmission, kernelId: string): any => {
