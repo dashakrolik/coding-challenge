@@ -6,16 +6,14 @@ import { ComponentType } from '@angular/cdk/portal';
 
 import { AceEditorComponent } from 'ng2-ace-editor';
 import { Subscription } from 'rxjs';
-import { switchMap, take } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
-import { CandidateService } from '@services/candidate/candidate.service';
 import { SubmissionService } from '@services/submission/submission.service';
 import { TaskService } from '@services/task/task.service';
 import { LanguageService } from '@services/language/language.service';
 import { TokenStorageService } from '@services/token/token-storage.service';
 import { OverlayService } from '@services/overlay/overlay.service';
 
-import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';
 import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.component';
 
 // TODO: There are A LOT of things going on here (too many for just one component)
@@ -54,7 +52,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private overlayService: OverlayService,
     private route: ActivatedRoute,
-    private candidateService: CandidateService,
     private taskService: TaskService,
     private languageService: LanguageService,
     private submissionService: SubmissionService,
@@ -115,10 +112,10 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     // First we clear the current output for the new input
     // TODO This is not called anymore. fill the 'codeResult' in the 'evaluateCode' function
     this.codeResult = '';
-    console.log('run2', response);
+
     response.forEach(element => {
       // We check if it is not an error than we show the output, otherwise we show the error.
-      console.log(element);
+
       if (element.errorType === null) {
         this.codeResult += element.contentValue;
       } else {
@@ -191,6 +188,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   setBoilerPlateCode = (): void => {
     let boilerplate = '';
+
     if (this.selectedLanguage && this.task) {
       // If both objects are filled we will set the boilerplate code
       if (this.selectedLanguage.language === 'java') {
@@ -199,15 +197,21 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         const object = `${this.task.descriptionJava}`;
         const newObject = JSON.parse(object);
 
-        console.log(newObject);
-
-        this.taskSpecificDescription = this.task.descriptionJava;
+        this.taskSpecificDescription = newObject;
       } else if (this.selectedLanguage.language === 'python') {
         boilerplate = this.task.boilerplatePython;
-        this.taskSpecificDescription = this.task.descriptionPython;
+
+        const object = `${this.task.descriptionPython}`;
+        const newObject = JSON.parse(object);
+
+        this.taskSpecificDescription = newObject;
       } else if (this.selectedLanguage.language === 'javascript') {
         boilerplate = this.task.boilerplateJavascript;
-        this.taskSpecificDescription = this.task.descriptionJavascript;
+
+        const object = `${this.task.descriptionJavascript}`;
+        const newObject = JSON.parse(object);
+
+        this.taskSpecificDescription = newObject;
       }
     }
     const lines = boilerplate.split('\\n');
@@ -221,7 +225,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   goToTask = (taskNumber: number) => {
-    console.log('going to task number ' + taskNumber);
     this.router.navigateByUrl('challenge/' + this.selectedLanguage.language + '/' + taskNumber);
     this.resetTests();
   }
@@ -243,8 +246,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   // Map over this instead of hard coding, this is not readable
   completeTask = (taskNumber): boolean => {
     if (this.task.taskNumber === taskNumber) {
-      let checker = arr => arr.every(v => v === true);
-      return checker(this.tests)
+      const checker = arr => arr.every(v => v === true);
+      return checker(this.tests);
     } else {
       return false;
     }
@@ -257,7 +260,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   checkIsLoggedIn = (): boolean => this.tokenStorageService.isUserLoggedIn();
 
   resetTests = () => {
-    console.log("resetting");
     // reset the test array
     this.tests = [false, false, false, false, false, false, false, false, false, false];
   }

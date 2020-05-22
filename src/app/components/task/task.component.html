@@ -24,8 +24,15 @@
       [("the", 2), ("lake", 1), ("over", 1)]</li>
   </ul>
   <p>&nbsp;</p>
-  <!-- <div [innerHTML]="task.description"></div> -->
-  <div [innerHTML]="taskSpecificDescription"></div>
+
+  <ul *ngFor="let item of taskSpecificDescription | keyvalue">
+    <li>
+      {{item.key}}
+    </li>
+    <li>
+      {{item.value}}
+    </li>
+  </ul>
   <ace-editor editor [(text)]="text" [mode]="selectedLanguage.language" [theme]="selectedLanguage.editorTheme"
     (textChanged)="onChange($event)" [readOnly]="false" class="ace-editor"></ace-editor>
 
