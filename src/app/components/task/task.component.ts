@@ -195,6 +195,12 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       // If both objects are filled we will set the boilerplate code
       if (this.selectedLanguage.language === 'java') {
         boilerplate = this.task.boilerplateJava;
+
+        const object = `${this.task.descriptionJava}`;
+        const newObject = JSON.parse(object);
+
+        console.log(newObject);
+
         this.taskSpecificDescription = this.task.descriptionJava;
       } else if (this.selectedLanguage.language === 'python') {
         boilerplate = this.task.boilerplatePython;
