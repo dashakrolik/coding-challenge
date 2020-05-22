@@ -1,19 +1,13 @@
 <!-- We load the task and show the description -->
 <ng-container *ngIf="selectedLanguage && task">
   <h1 class="assignmentHeader_h1">Risk IT Test</h1>
-  <p>Your task is to implement part of a text processing library. The following are assumptions and definitions that
-    limit the scope of the task:</p>
-  <ul class="assignmentList">
-    <li>Word: To simplify, a word is represented by a sequence of one or more characters between "a" and "z" or between
-      "A" and "Z").
-      For example "agdfBh".</li>
-    <li>Letter Case: When counting frequencies, we are interested in the case insensitive frequency (i.e. in the text
-      "The sun shines over the lake", the library should count 2 occurrences for any of the words "the" or "The" or
-      "tHE" etc).</li>
-    <li>Input Text: The input text contains words separated by various separator characters. Note that the characters
-      from "a" and "z" and from "A" and "Z" can only appear within words.</li>
+  <p>{{task.headerOne}}</p>
+
+  <ul class="assignmentList" *ngFor="let item of taskDescriptionOne">
+    <li>{{item}}</li>
   </ul>
-  <p>Implement the three methods defined in this interface</p>
+  
+  <p>{{task.headerTwo}}</p>
   <ul class="assignmentList">
     <li>`Calculate highest frequency` should return the highest frequency in the text (several words might actually have
       this frequency)</li>

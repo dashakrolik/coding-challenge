@@ -43,6 +43,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   subscribeComponent = SubscribeComponent;
 
   taskSpecificDescription: string;
+  taskDescriptionOne;
+  taskDescriptionTwo;
   submissionSubscription: Subscription;
   task: ITask;
   candidate: ICandidate;
@@ -82,7 +84,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onChange = (event: any) => this.codeSnippet = event;
 
-   evaluateCode = async () => {
+  evaluateCode = async () => {
     // Fill the 'codeResult' in the 'evaluateCode' function.
     const runCodeSubmission: ISubmission = {
       answer: this.codeSnippet,
@@ -96,7 +98,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       this.codeResult = '';
       response.forEach(line => {
         console.log(line);
-        if (line.errorType === null ) {
+        if (line.errorType === null) {
           this.codeResult += line.contentValue;
         } else {
           this.codeResult += line.errorType;
@@ -191,6 +193,11 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (this.selectedLanguage && this.task) {
       // If both objects are filled we will set the boilerplate code
+      const descriptionOne = `${this.task.descriptionOne}`;
+      const parsedDescriptionOne = JSON.parse(descriptionOne);
+
+      this.taskDescriptionOne = parsedDescriptionOne;
+
       if (this.selectedLanguage.language === 'java') {
         boilerplate = this.task.boilerplateJava;
 
