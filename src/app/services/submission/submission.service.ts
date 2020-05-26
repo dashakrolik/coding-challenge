@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { baseUrl } from '@shared/constants';
-
-import { HttpClientService } from '../http/http-client.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClientService } from '@services/http/http-client.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -25,23 +24,19 @@ export class SubmissionService {
 
   getAllSubmissionsProfile = (): Observable<ISubmission[]> => this.http.get(this.endpoint + '/person');
 
-  createSubmission = (submission: ISubmission, kernelId: string): any => {
-    console.log('going to submit code');
-
-    return this.httpClient.post(baseUrl + '/submission', {
+  createSubmission = (submission: ISubmission, kernelId: string): Observable<ISubmitCodeResponse> => {
+    
+    return this.http.post('submission', {
       submission,
       kernelId,
-    }, httpOptions);
-
-    // return this.http.post<ISubmission>(this.endpoint, submission);
+    });
   }
 
-  // TODO: set the return type to the new and correct response.
-  runCode = (submission: ISubmission, kernelId: string): any => {
-    console.log('going to run code');
-    return this.httpClient.post(baseUrl + '/submission/runcode', {
+  runCode = (submission: ISubmission, kernelId: string): Observable<IRunCodeResponse> => {
+    
+    return this.http.post('submission/runcode', {
       submission,
       kernelId,
-    }, httpOptions);
+    });
   }
 }
