@@ -1,5 +1,4 @@
 import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { ComponentType } from '@angular/cdk/portal';
@@ -15,10 +14,6 @@ import { TokenStorageService } from '@services/token/token-storage.service';
 import { OverlayService } from '@services/overlay/overlay.service';
 
 import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.component';
-
-// TODO: There are A LOT of things going on here (too many for just one component)
-// We need to split this up thats one
-// Two, a lot of this code is not necessary, let's refactor
 
 @Component({
   selector: 'app-task',
@@ -43,8 +38,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   subscribeComponent = SubscribeComponent;
 
   taskSpecificDescription: string;
-  taskDescriptionOne;
-  taskDescriptionTwo;
+  taskDescriptionOne: string;
+  taskDescriptionTwo: string;
   submissionSubscription: Subscription;
   task: ITask;
   candidate: ICandidate;
@@ -97,7 +92,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     await this.submissionService.runCode(runCodeSubmission).toPromise().then(response => {
       this.codeResult = '';
       response.forEach(line => {
-        console.log(line);
         if (line.errorType === null) {
           this.codeResult += line.contentValue;
         } else {
@@ -107,7 +101,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       });
     });
-    console.log(this.codeResult);
   }
 
   handleSuccessfulResponseRunCode = (response): void => {
@@ -178,7 +171,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
           exerciseId = 1; // simply assign 1 if there's a problem
         }
 
-        // get the task with this id and switch to that Observable
         return this.taskService.getTask(exerciseId);
       })
     ).subscribe((task: ITask) => {
@@ -192,11 +184,14 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     let boilerplate = '';
 
     if (this.selectedLanguage && this.task) {
-      // If both objects are filled we will set the boilerplate code
       const descriptionOne = `${this.task.descriptionOne}`;
+      const descriptionTwo = `${this.task.descriptionTwo}`;
+
       const parsedDescriptionOne = JSON.parse(descriptionOne);
+      const parsedDescriptionTwo = JSON.parse(descriptionTwo);
 
       this.taskDescriptionOne = parsedDescriptionOne;
+      this.taskDescriptionTwo = parsedDescriptionTwo;
 
       if (this.selectedLanguage.language === 'java') {
         boilerplate = this.task.boilerplateJava;
