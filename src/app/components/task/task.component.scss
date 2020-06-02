@@ -1,5 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import "variables.scss";
+
+p {
+    font-family: "Roboto", arial, sans-serif;
+    font-size: 16px;
+    color: #666;
+}
 
 .container {
     // padding: 40px;
@@ -13,26 +20,26 @@
 }
 
 .assignment-header {
-    font-family: 'Roboto Condensed Light', sans-serif;
+    font-family: "Roboto Condensed Light", sans-serif;
     font: 300;
     color: #000000;
     text-align: center;
 }
 
 .header-one {
-    font-family: 'Roboto', arial, sans-serif;
+    font-family: "Roboto", arial, sans-serif;
     font-weight: bold;
     color: #666;
 }
 
 .header-two {
-    font-family: 'Roboto', arial, sans-serif;
+    font-family: "Roboto", arial, sans-serif;
     font-weight: bold;
     color: #666;
 }
 
 .header-three {
-    font-family: 'Roboto', arial, sans-serif;
+    font-family: "Roboto", arial, sans-serif;
     font-weight: bold;
     color: #666;
     margin-bottom: 10px;
@@ -63,4 +70,16 @@
     font-family: "Roboto", arial, sans-serif;
     font-size: 16px;
     color: #666;
+}
+
+.output-container {
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.mat-button {
+    background-color: #f58220;
+    color: white;
+    font-family: "Roboto", arial, sans-serif;
+    font-size: 16px;
 }

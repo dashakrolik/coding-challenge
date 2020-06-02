@@ -33,26 +33,23 @@
     <ace-editor editor [(text)]="text" [mode]="selectedLanguage.language" [theme]="selectedLanguage.editorTheme"
       (textChanged)="onChange($event)" [readOnly]="false" class="ace-editor"></ace-editor>
 
-    <button (click)="evaluateCode()" mat-raised-button color="warn">Run</button>
+    <button (click)="evaluateCode()" mat-button>Run</button>
 
-    <div>
-      Your Output:
+    <div class="output-container">
+      <p>Your Output:</p>
       <ul>
         <li>
           {{this.codeResult}}
         </li>
       </ul>
-
     </div>
     <!-- We create the same button twice, if the user is not logged in the functionality will be that of logging in rather than submitting -->
 
-    <div>
-      <br>
+    <p>
       Submit your code and try to turn on all the lights to complete the task. (This can take a few seconds)
-      <br>
-    </div>
+    </p>
 
-    <button (click)="submitCode()" mat-raised-button color="warn">
+    <button (click)="submitCode()" mat-button>
       Submit Code
     </button>
     <div>
@@ -67,10 +64,10 @@
     </div>
     <!-- TODO: change the ng ifs with something better -->
     <div>
-      <button *ngIf="completeTask(1)" (click)="goToTask(2)" mat-raised-button color="warn">
+      <button *ngIf="completeTask(1)" (click)="goToTask(2)" mat-raised-button>
         Next Task
       </button>
-      <button *ngIf="completeTask(2)" (click)="goToTask(3)" mat-raised-button color="warn">
+      <button *ngIf="completeTask(2)" (click)="goToTask(3)" mat-raised-button>
         Next Task
       </button>
       <div *ngIf="completeTask(3)">
