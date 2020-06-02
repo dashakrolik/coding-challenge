@@ -5,7 +5,7 @@ import { ComponentType } from '@angular/cdk/portal';
 
 import { AceEditorComponent } from 'ng2-ace-editor';
 import { Subscription } from 'rxjs';
-import { switchMap, take } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 import { CandidateService } from '@services/candidate/candidate.service';
 import { SubmissionService } from '@services/submission/submission.service';
@@ -52,7 +52,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private overlayService: OverlayService,
     private route: ActivatedRoute,
-    private candidateService: CandidateService,
     private taskService: TaskService,
     private languageService: LanguageService,
     private submissionService: SubmissionService,
@@ -67,13 +66,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // TODO check if necessary
-    // this.editor.setOptions({
-    //   animatedScroll: true,
-    //   showPrintMargin: false,
-    //   tabSize: 2,
-    //   useSoftTabs: true,
-    // });
   }
 
   ngOnDestroy() {
@@ -92,10 +84,11 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       correct: [],
       runningTime: 0
     };
-
-    await this.submissionService.runCode(runCodeSubmission).toPromise().then(response => {
+    const kernelId = this.tokenStorageService.getKernelId(this.selectedLanguage.language);
+    await this.submissionService.runCode(runCodeSubmission, kernelId).toPromise().then(response => {
       this.codeResult = '';
-      response.forEach(line => {
+      this.tokenStorageService.setKernelId(response.kernelId, this.selectedLanguage.language);
+      response.jupyterResponses.forEach(line => {
         if (line.errorType === null ) {
           this.codeResult += line.contentValue;
         } else {
@@ -107,23 +100,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     })
     .catch((error) => console.warn(error));
     console.log(this.codeResult);
-  }
-
-  handleSuccessfulResponseRunCode = (response): void => {
-    // First we clear the current output for the new input
-    // TODO This is not called anymore. fill the 'codeResult' in the 'evaluateCode' function
-    this.codeResult = '';
-
-    response.forEach(element => {
-      // We check if it is not an error than we show the output, otherwise we show the error.
-      if (element.errorType === null) {
-        this.codeResult += element.contentValue;
-      } else {
-        this.codeResult += element.errorType;
-        this.codeResult += '\n';
-        this.codeResult += element.errorValue;
-      }
-    });
   }
 
   loginWindow(content: ComponentType<SubscribeComponent>) {
@@ -143,12 +119,14 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         correct: [],
         runningTime: 0
       };
+      
+      const kernelId = this.tokenStorageService.getKernelId(this.selectedLanguage.language);
 
-      this.submissionService.createSubmission(submission).subscribe(
+      this.submissionService.createSubmission(submission, kernelId).subscribe(
         response => {
           this.codeResult = '';
-          this.tests = response;
-          console.log(response);
+          this.tokenStorageService.setKernelId(response.kernelId, this.selectedLanguage.language);
+          this.tests = response.testResultsTest;
         }
       );
     }
@@ -160,11 +138,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     this.languageSubscription = this.languageService.getLanguagesMap().subscribe((languagesMap) => {
       this.selectedLanguage = languagesMap.get(languageParam);
       this.setBoilerPlateCode();
-      // if (!this.selectedLanguage) {
-      //   throw new Error(`No such language: ${languageParam}.`);
-      // } else {
-      //   this.setBoilerPlateCode();
-      // }
     });
   }
 
@@ -242,6 +215,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   finishedCodeChallenge = () => {
+    // TODO: add some functionality if the user has finished the code challenge, like showing score or going to leaderboard or profile.
     console.log('The code challenge is completed');
   }
 
