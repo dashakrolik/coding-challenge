@@ -1,0 +1,24 @@
+<!-- We load the task and show the description -->
+{{taskDescription}}
+
+<ace-editor editor [(text)]="text" [mode]="setLanguageOptions('mode')" [theme]="setLanguageOptions('theme')"
+  (textChanged)="onChange($event)" [readOnly]="false" class="ace-editor"></ace-editor>
+
+
+<br>
+
+
+<button (click)="runCode()" mat-raised-button color="warn">Run</button>
+<app-javascript-task *ngIf="loadJavaScriptTask"></app-javascript-task>
+
+<div>
+  <!-- We create the same button twice, if the user is not logged in the functionality will be that of logging in rather than submitting -->
+  <button *ngIf="!checkLogin()" (click)="loginWindow(subscribeComponent)" mat-raised-button color="warn">
+    Submit Code
+  </button>
+  <button *ngIf="checkLogin()" (click)="submitCode()" mat-raised-button color="warn">
+    Submit Code
+  </button>
+</div>
+
+<app-canvas></app-canvas>

@@ -1,12 +1,11 @@
 import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { ComponentType } from '@angular/cdk/portal';
 
 import { AceEditorComponent } from 'ng2-ace-editor';
 import { Subscription } from 'rxjs';
-import { switchMap, take } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 import { CandidateService } from '@services/candidate/candidate.service';
 import { SubmissionService } from '@services/submission/submission.service';
@@ -15,7 +14,6 @@ import { LanguageService } from '@services/language/language.service';
 import { TokenStorageService } from '@services/token/token-storage.service';
 import { OverlayService } from '@services/overlay/overlay.service';
 
-import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';
 import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.component';
 
 // TODO: There are A LOT of things going on here (too many for just one component)
@@ -54,7 +52,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private overlayService: OverlayService,
     private route: ActivatedRoute,
-    private candidateService: CandidateService,
     private taskService: TaskService,
     private languageService: LanguageService,
     private submissionService: SubmissionService,
@@ -92,7 +89,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       this.codeResult = '';
       this.tokenStorageService.setKernelId(response.kernelId, this.selectedLanguage.language);
       response.jupyterResponses.forEach(line => {
-        console.log(line);
         if (line.errorType === null ) {
           this.codeResult += line.contentValue;
         } else {
@@ -101,7 +97,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
           this.codeResult += line.errorValue;
         }
       });
-    });
+    })
+    .catch((error) => console.warn(error));
     console.log(this.codeResult);
   }
 
@@ -127,8 +124,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.submissionService.createSubmission(submission, kernelId).subscribe(
         response => {
-          console.log("response for submitting code");
-          console.log(response);
           this.codeResult = '';
           this.tokenStorageService.setKernelId(response.kernelId, this.selectedLanguage.language);
           this.tests = response.testResultsTest;
@@ -212,8 +207,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   // Map over this instead of hard coding, this is not readable
   completeTask = (taskNumber): boolean => {
     if (this.task.taskNumber === taskNumber) {
-      let checker = arr => arr.every(v => v === true);
-      return checker(this.tests)
+      const checker = arr => arr.every(v => v === true);
+      return checker(this.tests);
     } else {
       return false;
     }
@@ -227,7 +222,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   checkIsLoggedIn = (): boolean => this.tokenStorageService.isUserLoggedIn();
 
   resetTests = () => {
-    console.log("resetting");
     // reset the test array
     this.tests = [false, false, false, false, false, false, false, false, false, false];
   }
