@@ -18,7 +18,7 @@ import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.comp
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
-  styleUrls: ['./task.component.css']
+  styleUrls: ['./task.component.scss']
 })
 
 export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {

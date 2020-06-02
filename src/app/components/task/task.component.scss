@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.container {
+    padding: 20px;
+}
+.ace-editor {
+    min-height: 300px;
+    margin-top: 20px;
+}
+
+.assignment-header {
+    font-family: 'Roboto Condensed Light', sans-serif;
+    font: 300;
+    color: #000000;
+}
+
+.header-one, header-two {
+    font-family: 'Roboto Condensed Light', sans-serif;
+    font: 300;
+    color: #000000;
+
+}
+
+.assignment-list {
+    font-family: "Roboto", arial, sans-serif;
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    list-style: circle;
+}
