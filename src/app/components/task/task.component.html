@@ -1,12 +1,31 @@
 <!-- We load the task and show the description -->
 <ng-container *ngIf="selectedLanguage && task">
-  <div [innerHTML]="task.description"></div>
-  <div [innerHTML]="taskSpecificDescription"></div>
+  <h1 class="assignmentHeader_h1">Risk IT Test</h1>
+  <p>{{task.headerOne}}</p>
+
+  <ul class="assignmentList" *ngFor="let item of taskDescriptionOne">
+    <li>{{item}}</li>
+  </ul>
+
+  <p>{{task.headerTwo}}</p>
+  <ul class="assignmentList" *ngFor="let item of taskDescriptionTwo">
+    <li>{{item}}</li>
+  </ul>
+  <p>&nbsp;</p>
+
+  <ul *ngFor="let item of taskSpecificDescription | keyvalue">
+    <li>
+      {{item.key}}
+    </li>
+    <li>
+      {{item.value}}
+    </li>
+  </ul>
   <ace-editor editor [(text)]="text" [mode]="selectedLanguage.language" [theme]="selectedLanguage.editorTheme"
-  (textChanged)="onChange($event)" [readOnly]="false" class="ace-editor"></ace-editor>
-  
+    (textChanged)="onChange($event)" [readOnly]="false" class="ace-editor"></ace-editor>
+
   <br>
-  
+
   <button (click)="evaluateCode()" mat-raised-button color="warn">Run</button>
 
   <div>
@@ -16,19 +35,19 @@
         {{this.codeResult}}
       </li>
     </ul>
-  
+
   </div>
-    <!-- We create the same button twice, if the user is not logged in the functionality will be that of logging in rather than submitting -->
-    
-    <div>
-      <br>
-        Submit your code and try to turn on all the lights to complete the task (this can take a few seconds).
-      <br>
-    </div>
-    
-    <button (click)="submitCode()" mat-raised-button color="warn">
-      Submit Code
-    </button>
+  <!-- We create the same button twice, if the user is not logged in the functionality will be that of logging in rather than submitting -->
+
+  <div>
+    <br>
+    Submit your code and try to turn on all the lights to complete the task. (This can take a few seconds)
+    <br>
+  </div>
+
+  <button (click)="submitCode()" mat-raised-button color="warn">
+    Submit Code
+  </button>
   <div>
     <br>
     <li *ngFor="let te of tests; let i = index">
@@ -52,7 +71,7 @@
     </div>
   </div>
   <br>
-  
+
   <app-canvas [(results)]="tests"></app-canvas>
-  
+
 </ng-container>

@@ -7,7 +7,6 @@ import { AceEditorComponent } from 'ng2-ace-editor';
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
-import { CandidateService } from '@services/candidate/candidate.service';
 import { SubmissionService } from '@services/submission/submission.service';
 import { TaskService } from '@services/task/task.service';
 import { LanguageService } from '@services/language/language.service';
@@ -15,10 +14,6 @@ import { TokenStorageService } from '@services/token/token-storage.service';
 import { OverlayService } from '@services/overlay/overlay.service';
 
 import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.component';
-
-// TODO: There are A LOT of things going on here (too many for just one component)
-// We need to split this up thats one
-// Two, a lot of this code is not necessary, let's refactor
 
 @Component({
   selector: 'app-task',
@@ -43,6 +38,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   subscribeComponent = SubscribeComponent;
 
   taskSpecificDescription: string;
+  taskDescriptionOne: string;
+  taskDescriptionTwo: string;
   submissionSubscription: Subscription;
   task: ITask;
   candidate: ICandidate;
@@ -75,7 +72,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onChange = (event: any) => this.codeSnippet = event;
 
-   evaluateCode = async () => {
+  evaluateCode = async () => {
     // Fill the 'codeResult' in the 'evaluateCode' function.
     const runCodeSubmission: ISubmission = {
       answer: this.codeSnippet,
@@ -99,7 +96,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     })
     .catch((error) => console.warn(error));
-    console.log(this.codeResult);
   }
 
   loginWindow(content: ComponentType<SubscribeComponent>) {
@@ -149,7 +145,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
           exerciseId = 1; // simply assign 1 if there's a problem
         }
 
-        // get the task with this id and switch to that Observable
         return this.taskService.getTask(exerciseId);
       })
     ).subscribe((task: ITask) => {
@@ -161,17 +156,38 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   setBoilerPlateCode = (): void => {
     let boilerplate = '';
+
     if (this.selectedLanguage && this.task) {
-      // If both objects are filled we will set the boilerplate code
+      const descriptionOne = `${this.task.descriptionOne}`;
+      const descriptionTwo = `${this.task.descriptionTwo}`;
+
+      const parsedDescriptionOne = JSON.parse(descriptionOne);
+      const parsedDescriptionTwo = JSON.parse(descriptionTwo);
+
+      this.taskDescriptionOne = parsedDescriptionOne;
+      this.taskDescriptionTwo = parsedDescriptionTwo;
+
       if (this.selectedLanguage.language === 'java') {
         boilerplate = this.task.boilerplateJava;
-        this.taskSpecificDescription = this.task.descriptionJava;
+
+        const object = `${this.task.descriptionJava}`;
+        const newObject = JSON.parse(object);
+
+        this.taskSpecificDescription = newObject;
       } else if (this.selectedLanguage.language === 'python') {
         boilerplate = this.task.boilerplatePython;
-        this.taskSpecificDescription = this.task.descriptionPython;
+
+        const object = `${this.task.descriptionPython}`;
+        const newObject = JSON.parse(object);
+
+        this.taskSpecificDescription = newObject;
       } else if (this.selectedLanguage.language === 'javascript') {
         boilerplate = this.task.boilerplateJavascript;
-        this.taskSpecificDescription = this.task.descriptionJavascript;
+
+        const object = `${this.task.descriptionJavascript}`;
+        const newObject = JSON.parse(object);
+
+        this.taskSpecificDescription = newObject;
       }
     }
     const lines = boilerplate.split('\\n');
@@ -185,7 +201,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   goToTask = (taskNumber: number) => {
-    console.log('going to task number ' + taskNumber);
     this.router.navigateByUrl('challenge/' + this.selectedLanguage.language + '/' + taskNumber);
     this.resetTests();
   }
