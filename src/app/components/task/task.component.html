@@ -2,26 +2,33 @@
 <ng-container *ngIf="selectedLanguage && task">
   <div class="container">
     <h1 class="assignment-header">Risk IT Test</h1>
-    <p class="header-one">{{task.headerOne}}</p>
 
-    <ul class="assignment-list" *ngFor="let item of taskDescriptionOne">
-      <li>{{item}}</li>
-    </ul>
+    <div class="list-container">
+      <p class="header-one">{{task.headerOne}}</p>
+      <ul class="assignment-list" *ngFor="let item of taskDescriptionOne">
+        <li>{{item}}</li>
+      </ul>
+    </div>
 
-    <p class="header-one">{{task.headerTwo}}</p>
-    <ul class="assignment-list" *ngFor="let item of taskDescriptionTwo">
-      <li>{{item}}</li>
-    </ul>
-    <!-- <p>&nbsp;</p> -->
+    <div class="list-container">
+      <p class="header-two">{{task.headerTwo}}</p>
+      <ul class="assignment-list" *ngFor="let item of taskDescriptionTwo">
+        <li>{{item}}</li>
+      </ul>
+    </div>
 
-    <ul class="assignment-list" *ngFor="let item of taskSpecificDescription | keyvalue">
-      <li>
-        {{item.key}}
-      </li>
-      <li>
-        {{item.value}}
-      </li>
-    </ul>
+    <div class="list-container">
+      <!-- <p class="header-one">We need a third header</p> -->
+      <div  *ngFor="let item of taskSpecificDescription | keyvalue">
+        <p class="header-three">
+          {{item.key}}:
+        </p>
+        <p class="task-specific-description">
+          {{item.value}}
+        </p>
+      </div>
+    </div>
+
     <ace-editor editor [(text)]="text" [mode]="selectedLanguage.language" [theme]="selectedLanguage.editorTheme"
       (textChanged)="onChange($event)" [readOnly]="false" class="ace-editor"></ace-editor>
 

@@ -158,8 +158,10 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     let boilerplate = '';
 
     if (this.selectedLanguage && this.task) {
-      const descriptionOne = `${this.task.descriptionOne}`;
-      const descriptionTwo = `${this.task.descriptionTwo}`;
+      // tslint:disable-next-line: quotemark
+      const descriptionOne = `${this.task.descriptionOne.replace(/`/g, "''")}`;
+      // tslint:disable-next-line: quotemark
+      const descriptionTwo = `${this.task.descriptionTwo.replace(/`/g, "''")}`;
 
       const parsedDescriptionOne = JSON.parse(descriptionOne);
       const parsedDescriptionTwo = JSON.parse(descriptionTwo);

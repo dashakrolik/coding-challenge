@@ -13,13 +13,31 @@
     font-family: 'Roboto Condensed Light', sans-serif;
     font: 300;
     color: #000000;
+    text-align: center;
 }
 
-.header-one, header-two {
+.header-one {
     font-family: 'Roboto Condensed Light', sans-serif;
     font: 300;
     color: #000000;
+}
 
+.header-two {
+    font-family: 'Roboto Condensed Light', sans-serif;
+    font: 300;
+    color: #000000;
+}
+
+.header-three {
+    font-family: 'Roboto Condensed Light', sans-serif;
+    font: 300;
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+.list-container {
+    margin-top: 25px;
+    max-width: 900px;
 }
 
 .assignment-list {
@@ -29,4 +47,11 @@
     margin-bottom: 5px;
     margin-top: 10px;
     list-style: circle;
+    margin-left: 50px;
+}
+
+.task-specific-description {
+    font-family: "Roboto", arial, sans-serif;
+    font-size: 16px;
+    color: #666;
 }
