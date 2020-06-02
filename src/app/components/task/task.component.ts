@@ -94,7 +94,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
           this.codeResult += line.errorValue;
         }
       });
-    });
+    })
+    .catch((error) => console.warn(error));
   }
 
   loginWindow(content: ComponentType<SubscribeComponent>) {

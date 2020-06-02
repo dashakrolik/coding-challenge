@@ -6,7 +6,7 @@
   <ul class="assignmentList" *ngFor="let item of taskDescriptionOne">
     <li>{{item}}</li>
   </ul>
-  
+
   <p>{{task.headerTwo}}</p>
   <ul class="assignmentList" *ngFor="let item of taskDescriptionTwo">
     <li>{{item}}</li>
@@ -27,8 +27,6 @@
   <br>
 
   <button (click)="evaluateCode()" mat-raised-button color="warn">Run</button>
-  <!-- TODO why a special behavior for javascript? -->
-  <app-javascript-task *ngIf="selectedLanguage.language === 'javascript'"></app-javascript-task>
 
   <div>
     Your Output:
@@ -73,5 +71,7 @@
     </div>
   </div>
   <br>
+
+  <app-canvas [(results)]="tests"></app-canvas>
 
 </ng-container>
