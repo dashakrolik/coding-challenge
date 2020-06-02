@@ -30,8 +30,11 @@
         </div>
       </div>
     </div>
-    <ace-editor editor [(text)]="text" [mode]="selectedLanguage.language" [theme]="selectedLanguage.editorTheme"
-      (textChanged)="onChange($event)" [readOnly]="false" class="ace-editor"></ace-editor>
+
+    <div class="ace-editor-container">
+      <ace-editor editor [(text)]="text" [mode]="selectedLanguage.language" [theme]="selectedLanguage.editorTheme"
+        (textChanged)="onChange($event)" [readOnly]="false" class="ace-editor"></ace-editor>
+    </div>
 
     <button (click)="evaluateCode()" mat-button>Run</button>
 
@@ -76,6 +79,6 @@
     </div>
     <br>
 
-    <app-canvas [(results)]="tests"></app-canvas>
+    <app-canvas class="canvas" [(results)]="tests"></app-canvas>
   </div>
 </ng-container>
