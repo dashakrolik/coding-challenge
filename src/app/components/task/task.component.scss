@@ -2,7 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 .container {
-    padding: 20px;
+    // padding: 40px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 30px;
 }
 .ace-editor {
     min-height: 300px;
@@ -17,21 +20,21 @@
 }
 
 .header-one {
-    font-family: 'Roboto Condensed Light', sans-serif;
-    font: 300;
-    color: #000000;
+    font-family: 'Roboto', arial, sans-serif;
+    font-weight: bold;
+    color: #666;
 }
 
 .header-two {
-    font-family: 'Roboto Condensed Light', sans-serif;
-    font: 300;
-    color: #000000;
+    font-family: 'Roboto', arial, sans-serif;
+    font-weight: bold;
+    color: #666;
 }
 
 .header-three {
-    font-family: 'Roboto Condensed Light', sans-serif;
-    font: 300;
-    color: #000000;
+    font-family: 'Roboto', arial, sans-serif;
+    font-weight: bold;
+    color: #666;
     margin-bottom: 10px;
 }
 
@@ -40,11 +43,17 @@
     max-width: 900px;
 }
 
+.lists-outer-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .assignment-list {
     font-family: "Roboto", arial, sans-serif;
     font-size: 16px;
     color: #666;
-    margin-bottom: 5px;
+    margin-bottom: 25px;
     margin-top: 10px;
     list-style: circle;
     margin-left: 50px;

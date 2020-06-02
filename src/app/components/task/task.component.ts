@@ -172,21 +172,24 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.selectedLanguage.language === 'java') {
         boilerplate = this.task.boilerplateJava;
 
-        const object = `${this.task.descriptionJava}`;
+        // tslint:disable-next-line: quotemark
+        const object = `${this.task.descriptionJava.replace(/`/g, "''")}`;
         const newObject = JSON.parse(object);
 
         this.taskSpecificDescription = newObject;
       } else if (this.selectedLanguage.language === 'python') {
         boilerplate = this.task.boilerplatePython;
 
-        const object = `${this.task.descriptionPython}`;
+        // tslint:disable-next-line: quotemark
+        const object = `${this.task.descriptionPython.replace(/`/g, "''")}`;
         const newObject = JSON.parse(object);
 
         this.taskSpecificDescription = newObject;
       } else if (this.selectedLanguage.language === 'javascript') {
         boilerplate = this.task.boilerplateJavascript;
 
-        const object = `${this.task.descriptionJavascript}`;
+        // tslint:disable-next-line: quotemark
+        const object = `${this.task.descriptionJavascript.replace(/`/g, "''")}`;
         const newObject = JSON.parse(object);
 
         this.taskSpecificDescription = newObject;
