@@ -57,7 +57,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.resetTests();
     this.retrieveAndSetTask();
     this.retrieveAndSetLanguage();
   }
@@ -86,7 +85,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       this.codeResult = '';
       this.tokenStorageService.setKernelId(response.kernelId, this.selectedLanguage.language);
       response.jupyterResponses.forEach(line => {
-        if (line.errorType === null ) {
+        if (line.errorType === null) {
           this.codeResult += line.contentValue;
         } else {
           this.codeResult += line.errorType;
@@ -95,7 +94,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       });
     })
-    .catch((error) => console.warn(error));
+      .catch((error) => console.warn(error));
   }
 
   loginWindow(content: ComponentType<SubscribeComponent>) {
@@ -115,7 +114,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         correct: [],
         runningTime: 0
       };
-      
+
       const kernelId = this.tokenStorageService.getKernelId(this.selectedLanguage.language);
 
       this.submissionService.createSubmission(submission, kernelId).subscribe(
@@ -207,21 +206,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   goToTask = (taskNumber: number) => {
     this.router.navigateByUrl('challenge/' + this.selectedLanguage.language + '/' + taskNumber);
-    this.resetTests();
-  }
-
-  isTest = (testNumber): boolean => {
-    // simple function to see how many tests should be displayed on the screen.
-    if (this.task.taskNumber === 1) {
-      // if it's the first task we want to show the first 5 test dots
-      return testNumber <= 5;
-    } else if (this.task.taskNumber === 2) {
-      return testNumber <= 6;
-    } else if (this.task.taskNumber === 3) {
-      return testNumber <= 8;
-    } else {
-      return false;
-    }
   }
 
   // Map over this instead of hard coding, this is not readable
@@ -239,11 +223,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log('The code challenge is completed');
   }
 
+  // Create a Subject in navigation, then make this component listen to it
   checkIsLoggedIn = (): boolean => this.tokenStorageService.isUserLoggedIn();
-
-  resetTests = () => {
-    // reset the test array
-    this.tests = [false, false, false, false, false];
-  }
 
 }
