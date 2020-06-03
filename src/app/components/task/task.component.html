@@ -38,33 +38,34 @@
 
     <button (click)="evaluateCode()" mat-button>Run</button>
 
-    <div class="output-container">
-      <p>Your Output:</p>
-      <ul>
-        <li>
-          {{this.codeResult}}
-        </li>
-      </ul>
-    </div>
     <!-- We create the same button twice, if the user is not logged in the functionality will be that of logging in rather than submitting -->
 
-    <p>
-      Submit your code and try to turn on all the lights to complete the task. (This can take a few seconds)
-    </p>
-
+    <div class="test-overview">
+      <div class="test-overview-inner-container">
+        <h1>Test overview</h1>
+        <p class="test-overview-subheader">
+          Make sure all these tests have a green check before submitting your code.
+        </p>
+        <ul class="test-list">
+          <li *ngFor="let test of tests; let i = index">
+            <mat-icon *ngIf="!test" class="icon-failed-test">not_interested</mat-icon>
+            <mat-icon *ngIf="test" class="icon-passed-test">check</mat-icon>
+          </li>
+        </ul>
+        <div class="output-container">
+          <p>Your Output:</p>
+          <ul>
+            <li>
+              {{this.codeResult}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
     <button (click)="submitCode()" mat-button>
       Submit Code
     </button>
-    <div>
-      <br>
-      <li *ngFor="let te of tests; let i = index">
-        <span *ngIf="isTest(i+1)" [ngClass]="{
-        'dot-green' : te,
-        'dot-red' : !te
-     }">
-        </span>
-      </li>
-    </div>
+
     <!-- TODO: change the ng ifs with something better -->
     <div>
       <button *ngIf="completeTask(1)" (click)="goToTask(2)" mat-raised-button>

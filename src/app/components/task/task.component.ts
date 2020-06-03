@@ -34,7 +34,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   taskSubscription: Subscription;
   languageSubscription: Subscription;
   codeResult: any;
-  tests: boolean[];
+  tests: boolean[] = [false, false, false, false, false];
   subscribeComponent = SubscribeComponent;
 
   taskSpecificDescription: string;
@@ -243,7 +243,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   resetTests = () => {
     // reset the test array
-    this.tests = [false, false, false, false, false, false, false, false, false, false];
+    this.tests = [false, false, false, false, false];
   }
 
 }
