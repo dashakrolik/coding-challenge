@@ -19,7 +19,6 @@
       </div>
 
       <div class="list-container">
-        <!-- <p class="header-one">We need a third header</p> -->
         <div *ngFor="let item of taskSpecificDescription | keyvalue">
           <p class="header-three">
             {{item.key}}:
@@ -34,6 +33,14 @@
     <div class="ace-editor-container">
       <ace-editor editor [(text)]="text" [mode]="selectedLanguage.language" [theme]="selectedLanguage.editorTheme"
         (textChanged)="onChange($event)" [readOnly]="false" class="ace-editor"></ace-editor>
+        <div class="output-container">
+          <p class="your-output">Your Output:</p>
+          <ul>
+            <li>
+              {{this.codeResult}}
+            </li>
+          </ul>
+        </div>
     </div>
 
     <button (click)="evaluateCode()" mat-button>Run</button>
@@ -44,7 +51,7 @@
       <div class="test-overview-inner-container">
         <h1>Test overview</h1>
         <p class="test-overview-subheader">
-          Make sure all these tests have a green check before submitting your code.
+          Submit your code to see how many tests pass.
         </p>
         <ul class="test-list">
           <li *ngFor="let test of tests; let i = index">
@@ -52,14 +59,6 @@
             <mat-icon *ngIf="test" class="icon-passed-test">check</mat-icon>
           </li>
         </ul>
-        <div class="output-container">
-          <p>Your Output:</p>
-          <ul>
-            <li>
-              {{this.codeResult}}
-            </li>
-          </ul>
-        </div>
       </div>
     </div>
     <button (click)="submitCode()" mat-button>
