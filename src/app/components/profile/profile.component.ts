@@ -28,6 +28,7 @@ export class ProfileComponent implements OnInit {
   scoreJava: number;
   scorePython: number;
   scoreJavascript: number;
+  pointsTasks: number[][];
   taskTests: number[];
 
   constructor(
@@ -69,9 +70,18 @@ export class ProfileComponent implements OnInit {
     });
 
     this.personService.getPersonPoints().pipe(take(1)).subscribe(person => {
+      this.pointsTasks = [],[],[];
+      this.pointsTasks[0] = person.javaPointsTasks;
+      this.pointsTasks[1] = person.pythonPointsTasks;
+      this.pointsTasks[2] = person.javascriptPointsTasks;
       this.scoreJava = person.javaPoints;
       this.scorePython = person.pythonPoints;
       this.scoreJavascript = person.javascriptPoints;
+
+      console.log("another test");
+      console.log(this.pointsTasks[0][0]);
+      console.log(this.pointsTasks[0][1]);
+      console.log(this.pointsTasks[0][2]);
     });
 
     // TODO: get the score of the languages from the person table
@@ -91,7 +101,7 @@ export class ProfileComponent implements OnInit {
       } else {
         this.content = 'Hello ' + user.firstname + ' ' + user.lastname + '.';
       }
-      this.content += ' Select your language and check your progress';
+      this.content += ' Select your language and check your progress. The higher the score the better';
     } else {
       this.content = 'nobody is logged in, please log in or create an account';
     }
