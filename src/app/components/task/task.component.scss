@@ -1,0 +1,129 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import "variables.scss";
+
+p {
+    font-family: "Roboto", arial, sans-serif;
+    font-size: 16px;
+    color: #666;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 30px;
+}
+.ace-editor {
+    min-height: 300px;
+    border-bottom: solid #e1e1e1 1px;
+}
+
+.ace-editor-container {
+    border: 1px;
+    border-style: solid;
+    color: #e1e1e1;
+    border-radius: 3px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.assignment-header {
+    font-family: "Roboto Condensed Light", sans-serif;
+    font: 300;
+    color: #000000;
+    text-align: center;
+}
+
+.header-one {
+    font-family: "Roboto", arial, sans-serif;
+    font-weight: bold;
+    color: #666;
+}
+
+.header-two {
+    font-family: "Roboto", arial, sans-serif;
+    font-weight: bold;
+    color: #666;
+}
+
+.header-three {
+    font-family: "Roboto", arial, sans-serif;
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.list-container {
+    margin-top: 25px;
+}
+
+.lists-outer-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.assignment-list {
+    font-family: "Roboto", arial, sans-serif;
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 25px;
+    margin-top: 10px;
+    list-style: circle;
+    margin-left: 50px;
+}
+
+.task-specific-description {
+    font-family: "Roboto", arial, sans-serif;
+    font-size: 16px;
+    color: #666;
+}
+
+.test-overview {
+    border: 1px;
+    border-style: solid;
+    border-color: #e1e1e1;
+    border-radius: 3px;
+    margin-top: 45px;
+    margin-bottom: 25px;
+}
+
+.test-overview-inner-container {
+    padding: 15px;
+}
+
+.test-overview-subheader {
+    margin-top: 5px;
+}
+
+.test-list {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.icon-failed-test {
+    color: #c40808;
+}
+
+.icon-passed-test {
+    color: rgb(142, 214, 142);
+}
+
+.output-container {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.your-output {
+    margin-left: 5px;
+}
+
+.mat-button {
+    background-color: #f58220;
+    color: white;
+    font-family: "Roboto", arial, sans-serif;
+    font-size: 16px;
+}
+

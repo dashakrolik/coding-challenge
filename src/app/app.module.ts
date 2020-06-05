@@ -13,6 +13,7 @@ import { MatTableModule } from '@angular/material/table';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 
 import { AceEditorModule } from 'ng2-ace-editor';
 
@@ -83,6 +84,7 @@ import { authInterceptorProviders } from './guards/auth/auth.interceptor';
     MatSortModule,
     MatDialogModule,
     MatCardModule,
+    MatIconModule
   ],
   providers: [
     authInterceptorProviders,
