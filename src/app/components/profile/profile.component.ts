@@ -77,11 +77,6 @@ export class ProfileComponent implements OnInit {
       this.scoreJava = person.javaPoints;
       this.scorePython = person.pythonPoints;
       this.scoreJavascript = person.javascriptPoints;
-
-      console.log("another test");
-      console.log(this.pointsTasks[0][0]);
-      console.log(this.pointsTasks[0][1]);
-      console.log(this.pointsTasks[0][2]);
     });
 
     // TODO: get the score of the languages from the person table
