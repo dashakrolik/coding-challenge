@@ -15,40 +15,41 @@
         </p>
     </div>
 
-    <div class="start">
-        <div class="flex-row-containter">
-            <p class="email">Email</p>
-            <!-- Form field is just as an example here for now -->
-            <mat-form-field appearance="outline">
-                <mat-label></mat-label>
-                <input matInput>
-            </mat-form-field>
-        </div>
-
-        <div class="flex-row-containter">
-            <p class="password">Password</p>
-            <!-- Form field is just as an example here for now -->
-            <mat-form-field appearance="outline">
-                <mat-label></mat-label>
-                <input matInput>
-            </mat-form-field>
-        </div>
-
-        <ng-container *ngIf="(languageNames$ | async) as languageNames">
+    <div class="start-container">
+        <div class="start">
+            <div class="flex-row-containter">
+                <p class="email">Email</p>
+                <!-- Form field is just as an example here for now -->
+                <mat-form-field appearance="outline">
+                    <mat-label></mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
 
             <div class="flex-row-containter">
-                <p class="programming-language">Programming language </p>
-                <app-dropdown [inputValue]="languageNames" labelText="Select a Language"
-                    (valueOutput)="onSelect($event)">
-                </app-dropdown>
+                <p class="password">Password</p>
+                <!-- Form field is just as an example here for now -->
+                <mat-form-field appearance="outline">
+                    <mat-label></mat-label>
+                    <input matInput>
+                </mat-form-field>
             </div>
-            <div class="flex-row-containter">
-                <p class="hidden-p"></p>
-                <button class="button" [disabled]="!languageNames?.length" (click)="submit()" mat-raised-button>
-                    Start Challenge</button>
-            </div>
-        </ng-container>
 
+            <ng-container *ngIf="(languageNames$ | async) as languageNames">
+
+                <div class="flex-row-containter">
+                    <p class="programming-language">Programming language </p>
+                    <app-dropdown [inputValue]="languageNames" labelText="Select a Language"
+                        (valueOutput)="onSelect($event)">
+                    </app-dropdown>
+                </div>
+                <div class="flex-row-containter">
+                    <p class="hidden-p"></p>
+                    <button class="button" [disabled]="!languageNames?.length" (click)="submit()" mat-raised-button>
+                        Start Challenge</button>
+                </div>
+            </ng-container>
+
+        </div>
     </div>
-
 </div>
