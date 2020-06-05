@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit {
   scoreJava: number;
   scorePython: number;
   scoreJavascript: number;
-  pointsTasks: number[][];
+  pointsTasks: number[][] = [[], [], []];
   taskTests: number[];
 
   constructor(
@@ -70,7 +70,6 @@ export class ProfileComponent implements OnInit {
     });
 
     this.personService.getPersonPoints().pipe(take(1)).subscribe(person => {
-      this.pointsTasks = [],[],[];
       this.pointsTasks[0] = person.javaPointsTasks;
       this.pointsTasks[1] = person.pythonPointsTasks;
       this.pointsTasks[2] = person.javascriptPointsTasks;
