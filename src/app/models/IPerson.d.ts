@@ -5,10 +5,6 @@ interface IPerson {
     username: string;
     password: string;
     roles: IRole[];
-    javaPointsTasks: number[];
-    pythonPointsTasks: number[];
-    javascriptPointsTasks: number[];
-    javaPoints: number;
-    pythonPoints: number;
-    javascriptPoints: number;
+    pointsTasks: number[][];
+    points: number[];
 }

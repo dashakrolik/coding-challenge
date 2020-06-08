@@ -70,12 +70,12 @@ export class ProfileComponent implements OnInit {
     });
 
     this.personService.getPersonPoints().pipe(take(1)).subscribe(person => {
-      this.pointsTasks[0] = person.javaPointsTasks;
-      this.pointsTasks[1] = person.pythonPointsTasks;
-      this.pointsTasks[2] = person.javascriptPointsTasks;
-      this.scoreJava = person.javaPoints;
-      this.scorePython = person.pythonPoints;
-      this.scoreJavascript = person.javascriptPoints;
+      console.log("person");
+      console.log(person);
+      this.pointsTasks = person.pointsTasks;
+      this.scoreJava = person.points[0];
+      this.scorePython = person.points[1];
+      this.scoreJavascript = person.points[2];
     });
 
     // TODO: get the score of the languages from the person table
