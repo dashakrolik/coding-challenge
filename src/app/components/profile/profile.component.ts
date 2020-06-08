@@ -18,7 +18,7 @@ import { Observable } from 'rxjs';
 })
 export class ProfileComponent implements OnInit {
   content = '';
-  
+
   selectedLanguage: string;
   languageNames$: Observable<string[]>;
 
@@ -51,8 +51,8 @@ export class ProfileComponent implements OnInit {
     this.submissionService.getAllSubmissionsProfile().pipe(take(1)).subscribe(submissions => {
 
       submissions.forEach(submission => {
-        // For each submission we will check which language it is for and for which task. 
-        // We will than count the number of correct tests that submission has. 
+        // For each submission we will check which language it is for and for which task.
+        // We will than count the number of correct tests that submission has.
         // The highest will count for the score that will be displayed on the screen.
         const amountCorrect = submission.correct.filter(Boolean).length;
         for (var languageNumber = 1; languageNumber <= 3; languageNumber++) {
@@ -70,8 +70,6 @@ export class ProfileComponent implements OnInit {
     });
 
     this.personService.getPersonPoints().pipe(take(1)).subscribe(person => {
-      console.log("person");
-      console.log(person);
       this.pointsTasks = person.pointsTasks;
       this.scoreJava = person.points[0];
       this.scorePython = person.points[1];
@@ -79,7 +77,7 @@ export class ProfileComponent implements OnInit {
     });
 
     // TODO: get the score of the languages from the person table
-    
+
     // get just the names of the languages
     this.languageNames$ = this.languageService.getLanguages().pipe(
       map(languages =>
