@@ -1,15 +1,82 @@
 @import "variables.scss";
 
-
-.welcome{
-    padding: 0 0 4em 2em;
-    background-color: $ordinaOrange;
-    p{
-        max-width: 40%;
-    }
+.container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 30px;
 }
 
-.start{
-    padding: 1em 2em;
-    background-color: $ontdekkingBright;
+.start {
+    border: 1px;
+    border-style: solid;
+    border-color: #e1e1e1;
+    border-radius: 3px;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    min-width: fit-content;
+
+}
+
+.flex-row-containter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.programming-language {
+    font-family: "Roboto", arial, sans-serif;
+    font-size: 16px;
+    color: #666;
+    align-items: center;
+    display: flex;
+}
+
+.button-container {
+    text-align: right;
+}
+
+.button {
+    max-width: 192px;
+}
+
+.header-one {
+    font-family: "Roboto Condensed Light", sans-serif;
+    font: 300;
+    color: #000000;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.text-content {
+    font-family: "Roboto", arial, sans-serif;
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.email {
+    align-items: center;
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.password {
+    align-items: center;
+    display: flex;
+    margin-bottom: 15px;
+}
+
+p {
+    font-family: "Roboto", arial, sans-serif;
+    font-size: 16px;
+    color: #666;
+    text-align: center;
+}
+
+.hidden-p {
+    align-items: center;
+    display: flex;
 }

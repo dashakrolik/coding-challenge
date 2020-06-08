@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSelectChange } from '@angular/material/select';
+
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -13,19 +14,10 @@ import { LanguageService } from '@services/language/language.service';
   styleUrls: ['./welcome-page.component.scss']
 })
 export class WelcomePageComponent implements OnInit {
-  email: string;
   form: FormGroup;
-  squareMargin = 'margin-left: 20px';
-  user = {
-    email: 'test@test.nl',
-    language: 'java',
-    exercise: {
-      progressId: 0,
-      exerciseId: 1
-    }
-  };
+  taskId = 1;
   selectedLanguage: string;
-  languageNames$: Observable<string[]>;
+  languageNames: Observable<string[]>;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -36,9 +28,7 @@ export class WelcomePageComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-
-    // get just the names of the languages
-    this.languageNames$ = this.languageService.getLanguages().pipe(
+    this.languageNames = this.languageService.getLanguages().pipe(
       map(languages =>
         languages.map(lang => lang.language)
       )
@@ -48,10 +38,7 @@ export class WelcomePageComponent implements OnInit {
   createForm = () => this.form = this.formBuilder.group({});
 
   submit = () => {
-    const { progressId } = this.user.exercise;
-    const taskId = progressId || 1;
-
-    this.router.navigateByUrl(`challenge/${this.selectedLanguage}/${taskId}`);
+    this.router.navigateByUrl(`challenge/${this.selectedLanguage}/${this.taskId}`);
   }
 
   onSelect = (event: MatSelectChange) => this.selectedLanguage = event.value;

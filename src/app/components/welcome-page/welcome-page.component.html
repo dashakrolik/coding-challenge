@@ -1,26 +1,53 @@
-<div class="welcome">
-    <h1>Welcome to the Ordina coding challenge!</h1>
-    <p>
-        In this challenge you get a chance to test your coding skills and compare yourself to some of our most
-        experienced developers. In this game you get to score points by answering questions and coding solutions to
-        intricate problems. These points decide your place on the leaderboard where you can see how your skills stack
-        up!<br>
-        This challenge is made for fun. It is for you to see how high up the leaderboard your skills place you and not
-        for anyone else.
-    </p>
-</div>
+<div class="container">
+    <div>
+        <h1 class="header-one">Welcome to the Ordina coding challenge!</h1>
+        <p class="text-content">
+            In this challenge you get a chance to test your coding skills and compare yourself to some of our most
+            experienced developers. In this game you get to score points by answering questions and coding solutions to
+            intricate problems. These points decide your place on the leaderboard where you can see how your skills
+            stack
+            up!
+        </p>
+        <p class="text-content"> This challenge is made for fun. It is for you to see how high up the leaderboard your
+            skills place you and
+            not
+            for anyone else.
+        </p>
+    </div>
 
-<div class="start">
-    <p>Please enter your email to proceed to the coding challenge</p>
+    <div class="start">
+        <div class="flex-row-containter">
+            <p class="email">Email</p>
+            <!-- Form field is just as an example here for now -->
+            <mat-form-field appearance="outline">
+                <mat-label></mat-label>
+                <input matInput>
+            </mat-form-field>
+        </div>
 
-    <ng-container *ngIf="(languageNames$ | async) as languageNames">
+        <div class="flex-row-containter">
+            <p class="password">Password</p>
+            <!-- Form field is just as an example here for now -->
+            <mat-form-field appearance="outline">
+                <mat-label></mat-label>
+                <input matInput>
+            </mat-form-field>
+        </div>
 
-        <app-dropdown [inputValue]="languageNames" labelText="Select a Language" (valueOutput)="onSelect($event)">
-        </app-dropdown>
+        <ng-container *ngIf="(languageNames | async) as languageNames">
 
-        <button class="button" [disabled]="!languageNames?.length" (click)="submit()" mat-raised-button>
-            Submit</button>
+            <div class="flex-row-containter">
+                <p class="programming-language">Programming language </p>
+                <app-dropdown [inputValue]="languageNames" labelText="Select a Language"
+                    (valueOutput)="onSelect($event)">
+                </app-dropdown>
+            </div>
+            <div class="flex-row-containter">
+                <p class="hidden-p"></p>
+                <button class="button" [disabled]="!languageNames?.length" (click)="submit()" mat-raised-button>
+                    Start Challenge</button>
+            </div>
+        </ng-container>
 
-    </ng-container>
-
+    </div>
 </div>
