@@ -12,11 +12,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+
 import { AceEditorModule } from 'ng2-ace-editor';
 
 import { MatDialogProvider } from '@shared/constants';
 
-import { MatDialogModule } from '@angular/material/dialog';
 import { AdminPanelComponent } from '@components/admin/admin-panel/admin-panel.component';
 import { PersonTableComponent } from '@components/admin/person-table/person-table.component';
 import { ProfileComponent as AdminProfileComponent } from '@components/admin/profile/profile.component';
@@ -32,11 +34,13 @@ import { TaskComponent } from '@components/task/task.component';
 import { LeaderboardComponent } from './components/leaderboard/table/leaderboard.component';
 import { CardComponent } from './components/leaderboard/card/card.component';
 import { WelcomePageComponent } from '@components/welcome-page/welcome-page.component';
+import { MessageDialogComponent } from '@components/dialog/message-dialog/message-dialog.component';
+import { OkCancelDialogComponent } from '@components/dialog/ok-cancel-dialog/ok-cancel-dialog.component';
+import { CanvasComponent } from '@components/canvas/canvas.component';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MessageDialogComponent } from './components/dialog/message-dialog/message-dialog.component';
-import { OkCancelDialogComponent } from './components/dialog/ok-cancel-dialog/ok-cancel-dialog.component';
+
 import { authInterceptorProviders } from './guards/auth/auth.interceptor';
 
 @NgModule({
@@ -60,6 +64,7 @@ import { authInterceptorProviders } from './guards/auth/auth.interceptor';
     SubmitDialogComponent,
     LeaderboardComponent,
     CardComponent,
+    CanvasComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,6 +84,7 @@ import { authInterceptorProviders } from './guards/auth/auth.interceptor';
     MatSortModule,
     MatDialogModule,
     MatCardModule,
+    MatIconModule
   ],
   providers: [
     authInterceptorProviders,
@@ -94,5 +100,6 @@ import { authInterceptorProviders } from './guards/auth/auth.interceptor';
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })
+
 export class AppModule {
 }

@@ -1,8 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
-@import 'variables.scss';
-@import 'mixins.scss';
+@import "variables.scss";
+@import "mixins.scss";
 
-@import '~bulma/bulma.sass';
+@import "~bulma/bulma.sass";
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap");
 
 .modal {
   pointer-events: none !important;
@@ -33,40 +34,34 @@
   display: inline-block;
 }
 
-.assignmentList {
-  padding:20px;
-  list-style: circle;
-}
-
-.assignmentHeader_h1 {
-    font-size: 300%;
-}
-.assignmentHeader_h2 {
-  font-size: 200%;
-}
-
 .ul {
   margin: 4px;
 }
 
-h1{
-  font: 600 2rem 'Roboto Condensed Light',arial,sans-serif;
-  padding: 1rem;
+h1 {
+  font: 700 24px "Roboto Condensed Light", bold, sans-serif;
 }
 
-h2{
-  font: 700 1.5rem 'Roboto Condensed',arial,sans-serif;
-  padding: 0.75rem;
+h2 {
+  font: 700 16px "Roboto Condensed Light", bold, sans-serif;
 }
 
-p, a, label, input{
-  font: 300 12pt 'Roboto Light';
+li {
+  font: 300 16px "Roboto", arial, sans-serif;
 }
 
-.button{
+p,
+a,
+label,
+input {
+  font: 300 12pt "Roboto Light";
+}
+
+.button {
   background-color: $ordinaOrange;
+  color: white;
   margin: 1rem;
-  &.mat-raised-button{
+  &.mat-raised-button {
     margin: 1rem;
   }
 }
