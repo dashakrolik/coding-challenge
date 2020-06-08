@@ -72,6 +72,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   onChange = (event: any) => this.codeSnippet = event;
 
   evaluateCode = async () => {
+    console.log("test");
     // Fill the 'codeResult' in the 'evaluateCode' function.
     const runCodeSubmission: ISubmission = {
       answer: this.codeSnippet,
@@ -80,6 +81,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       correct: [],
       runningTime: 0
     };
+    console.log(runCodeSubmission);
     const kernelId = this.tokenStorageService.getKernelId(this.selectedLanguage.language);
     await this.submissionService.runCode(runCodeSubmission, kernelId).toPromise().then(response => {
       this.codeResult = '';
@@ -168,6 +170,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       this.taskDescriptionOne = parsedDescriptionOne;
       this.taskDescriptionTwo = parsedDescriptionTwo;
 
+      // TODO: add boilers for c# and scala.
       if (this.selectedLanguage.language === 'java') {
         boilerplate = this.task.boilerplateJava;
 
