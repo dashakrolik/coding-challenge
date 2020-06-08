@@ -18,7 +18,7 @@ import { Observable } from 'rxjs';
 })
 export class ProfileComponent implements OnInit {
   content = '';
-  
+
   selectedLanguage: string;
   languageNames$: Observable<string[]>;
 
@@ -28,6 +28,7 @@ export class ProfileComponent implements OnInit {
   scoreJava: number;
   scorePython: number;
   scoreJavascript: number;
+  pointsTasks: number[][] = [[], [], []];
   taskTests: number[];
 
   constructor(
@@ -50,8 +51,8 @@ export class ProfileComponent implements OnInit {
     this.submissionService.getAllSubmissionsProfile().pipe(take(1)).subscribe(submissions => {
 
       submissions.forEach(submission => {
-        // For each submission we will check which language it is for and for which task. 
-        // We will than count the number of correct tests that submission has. 
+        // For each submission we will check which language it is for and for which task.
+        // We will than count the number of correct tests that submission has.
         // The highest will count for the score that will be displayed on the screen.
         const amountCorrect = submission.correct.filter(Boolean).length;
         for (var languageNumber = 1; languageNumber <= 3; languageNumber++) {
@@ -69,13 +70,14 @@ export class ProfileComponent implements OnInit {
     });
 
     this.personService.getPersonPoints().pipe(take(1)).subscribe(person => {
-      this.scoreJava = person.javaPoints;
-      this.scorePython = person.pythonPoints;
-      this.scoreJavascript = person.javascriptPoints;
+      this.pointsTasks = person.pointsTasks;
+      this.scoreJava = person.points[0];
+      this.scorePython = person.points[1];
+      this.scoreJavascript = person.points[2];
     });
 
     // TODO: get the score of the languages from the person table
-    
+
     // get just the names of the languages
     this.languageNames$ = this.languageService.getLanguages().pipe(
       map(languages =>
@@ -91,7 +93,7 @@ export class ProfileComponent implements OnInit {
       } else {
         this.content = 'Hello ' + user.firstname + ' ' + user.lastname + '.';
       }
-      this.content += ' Select your language and check your progress';
+      this.content += ' Select your language and check your progress. The higher the score the better';
     } else {
       this.content = 'nobody is logged in, please log in or create an account';
     }
