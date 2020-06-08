@@ -111,6 +111,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         answer: this.codeSnippet,
         languageId: this.selectedLanguage.id,
         taskId: this.task.id,
+        // we should not have to send the folowing two lines to the backend then
         correct: [],
         runningTime: 0
       };
