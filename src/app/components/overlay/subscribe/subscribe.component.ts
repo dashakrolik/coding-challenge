@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { LoginService } from '@services/login/login.service';
 import { MyOverlayRef } from '@services/overlay/myoverlay-ref';
 import { TokenStorageService } from '@services/token/token-storage.service';
+import { DialogService } from '@services/dialog/dialog.service';
+import { OverlayService } from '@services/overlay/overlay.service';
 
 @Component({
   selector: 'app-subscribe',
@@ -34,30 +36,44 @@ export class SubscribeComponent {
     private fb: FormBuilder,
     private ref: MyOverlayRef,
     private loginService: LoginService,
-    private tokenStorageService: TokenStorageService
+    private tokenStorageService: TokenStorageService,
+    private dialogService: DialogService,
+    private overlayService: OverlayService,
   ) {
   }
 
-  submitRegister() {
+  submitRegistration() {
     const { firstName, lastName, email, password } = this.frmSubscribe.value;
 
     this.loginService.getRegister(firstName, lastName, email, password).subscribe(
-      response => this.handleSuccessfulResponseGetRegister(response, email, password),
+      response => {
+        this.handleSuccessfulResponseGetRegister(response, email, password),
+          this.ref.close(this.frmSubscribe.value);
+      },
       err => {
+        console.log(err);
         // TODO: show error message on screen
-        console.log(err.error.message);
+        const message = {
+          title: 'Error in the registration!',
+          message: this.setMessage(err.error.violations)
+        };
+        this.dialogService.openMessage(message);
       }
     );
 
-    this.ref.close(this.frmSubscribe.value);
   }
 
-  handleSuccessfulResponseGetRegister = (response:any, email:string, password:string): void => {
+  handleSuccessfulResponseGetRegister = (response: any, email: string, password: string): void => {
     // The user successfully registered. We will log him in.
     this.loginService.getLogin(email, password).subscribe(
       this.handleSuccessfulResponseGetLogin, err => {
         // TODO: show error message on screen
         console.log(err.error.message);
+        const message = {
+          title: 'Error while logging in.',
+          message: this.setMessage(err.error.violations),
+        };
+        this.dialogService.openMessage(message);
       }
     );
   }
@@ -67,14 +83,18 @@ export class SubscribeComponent {
     this.loginService.getLogin(email, password).subscribe(
       response => {
         this.handleSuccessfulResponseGetLogin(response);
+        this.ref.close(this.frmSubscribe.value);
       },
       err => {
-        // TODO: show error message on screen
-        console.log(err.error.message);
+        console.log(err.error);
+        const dialogMessage = {
+          title: 'Error while logging in.',
+          message: this.setMessage(err.error.violations),
+        };
+        this.dialogService.openMessage(dialogMessage);
       }
     );
 
-    this.ref.close(this.frmSubscribe.value);
   }
 
   handleSuccessfulResponseGetLogin = (response): void => {
@@ -106,4 +126,13 @@ export class SubscribeComponent {
   }
 
   cancel = () => this.ref.close(null);
+
+  setMessage = (violations: any[]): string => {
+    let message = '';
+    for (let i = 0; i < violations.length; i++) {
+      if (i !== 0) { message += '</br>'; }
+      message += violations[i].message;
+    }
+    return message;
+  }
 }
