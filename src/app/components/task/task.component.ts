@@ -24,6 +24,7 @@ import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.comp
 export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('editor') editor: AceEditorComponent;
+  loading = false;
 
   selectedLanguage: ILanguage;
   codeSnippet = '';
@@ -72,6 +73,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   onChange = (event: any) => this.codeSnippet = event;
 
   evaluateCode = async () => {
+    this.loading = true;
     // Fill the 'codeResult' in the 'evaluateCode' function.
     const runCodeSubmission: ISubmission = {
       answer: this.codeSnippet,
@@ -82,6 +84,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     };
     const kernelId = this.tokenStorageService.getKernelId(this.selectedLanguage.language);
     await this.submissionService.runCode(runCodeSubmission, kernelId).toPromise().then(response => {
+
       this.codeResult = '';
       this.tokenStorageService.setKernelId(response.kernelId, this.selectedLanguage.language);
       response.jupyterResponses.forEach(line => {
@@ -95,6 +98,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     })
       .catch((error) => console.warn(error));
+      // @ELISA in .finally this.loading op false zetten;
   }
 
   loginWindow(content: ComponentType<SubscribeComponent>) {
@@ -102,6 +106,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   submitCode = () => {
+    // @ELISA implement the same here
     if (!this.checkIsLoggedIn()) {
       this.loginWindow(this.subscribeComponent);
     } else {

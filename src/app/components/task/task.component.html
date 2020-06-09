@@ -43,8 +43,17 @@
         </div>
     </div>
 
-    <button (click)="evaluateCode()" mat-button>Run</button>
+    <button (click)="evaluateCode()" mat-button>
+      <!-- @ELISA try to come up with a way to make a loader appear instead of "Run" once you 
+      succeed with showing a material loader below -->
+      Run
+    </button>
 
+    <!-- @Elisa show material loader here on the basis of "loading" using ngIf -->
+
+    <div *ngIf="loading">LOADING</div>
+
+    
     <!-- We create the same button twice, if the user is not logged in the functionality will be that of logging in rather than submitting -->
 
     <div class="test-overview">

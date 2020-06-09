@@ -43,6 +43,9 @@ import { AppComponent } from './app.component';
 
 import { authInterceptorProviders } from './guards/auth/auth.interceptor';
 
+// @ELISA Import Material loader here and put it into the imports array
+// https://material.angular.io/components/progress-spinner/api
+
 @NgModule({
   declarations: [
     AppComponent,
