@@ -5,6 +5,7 @@ const USER_KEY = 'auth-user';
 const KERNEL_KEY_PYTHON = 'auth-kernel-python';
 const KERNEL_KEY_JAVA = 'auth-kernel-java';
 const KERNEL_KEY_JAVASCRIPT = 'auth-kernel-javascript';
+const KERNEL_KEY_SCALA = 'auth-kernel-scala';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,8 @@ export class TokenStorageService {
       return window.sessionStorage.getItem(KERNEL_KEY_PYTHON)
     } else if (language === 'javascript') {
       return window.sessionStorage.getItem(KERNEL_KEY_JAVASCRIPT)
+    } else if (language === 'scala') {
+      return window.sessionStorage.getItem(KERNEL_KEY_SCALA)
     }
   };
 
@@ -56,6 +59,11 @@ export class TokenStorageService {
       const currentKernelId = window.sessionStorage.getItem(KERNEL_KEY_JAVASCRIPT);
       if (currentKernelId == null || kernelId != currentKernelId) {
         window.sessionStorage.setItem(KERNEL_KEY_JAVASCRIPT, kernelId);
+      }
+    } else if (language === 'scala') {
+      const currentKernelId = window.sessionStorage.getItem(KERNEL_KEY_SCALA);
+      if (currentKernelId == null || kernelId != currentKernelId) {
+        window.sessionStorage.setItem(KERNEL_KEY_SCALA, kernelId);
       }
     }
   }

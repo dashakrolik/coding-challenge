@@ -72,7 +72,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   onChange = (event: any) => this.codeSnippet = event;
 
   evaluateCode = async () => {
-    console.log("test");
     // Fill the 'codeResult' in the 'evaluateCode' function.
     const runCodeSubmission: ISubmission = {
       answer: this.codeSnippet,
@@ -81,7 +80,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       correct: [],
       runningTime: 0
     };
-    console.log(runCodeSubmission);
     const kernelId = this.tokenStorageService.getKernelId(this.selectedLanguage.language);
     await this.submissionService.runCode(runCodeSubmission, kernelId).toPromise().then(response => {
       this.codeResult = '';
@@ -158,6 +156,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   setBoilerPlateCode = (): void => {
     let boilerplate = '';
 
+    console.log("setting the boilerplate");
+    console.log(this.selectedLanguage);
     if (this.selectedLanguage && this.task) {
       // tslint:disable-next-line: quotemark
       const descriptionOne = `${this.task.descriptionOne.replace(/`/g, "''")}`;
@@ -192,6 +192,22 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
         // tslint:disable-next-line: quotemark
         const object = `${this.task.descriptionJavascript.replace(/`/g, "''")}`;
+        const newObject = JSON.parse(object);
+
+        this.taskSpecificDescription = newObject;
+      } else if (this.selectedLanguage.language === 'scala') {
+        boilerplate = this.task.boilerplateScala;
+
+        // tslint:disable-next-line: quotemark
+        const object = `${this.task.descriptionScala.replace(/`/g, "''")}`;
+        const newObject = JSON.parse(object);
+
+        this.taskSpecificDescription = newObject;
+      } else if (this.selectedLanguage.language === 'csharp') {
+        boilerplate = this.task.boilerplateCSharp;
+
+        // tslint:disable-next-line: quotemark
+        const object = `${this.task.descriptionCSharp.replace(/`/g, "''")}`;
         const newObject = JSON.parse(object);
 
         this.taskSpecificDescription = newObject;

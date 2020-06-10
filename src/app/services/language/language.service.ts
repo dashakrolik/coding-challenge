@@ -18,7 +18,7 @@ export class LanguageService {
       case 'javascript': return 'dracula';
       case 'python': return 'monokai';
       case 'java': return 'eclipse'; // java theme
-      case 'c_sharp': return 'monokai'; // TODO: Find editor for c sharp
+      case 'csharp': return 'monokai'; // TODO: Find editor for c sharp
       case 'scala': return 'monokai'; // TODO: find editor for scala.
       default: throw new Error(`No editor theme specified for this language: ${languageName}.`);
     }

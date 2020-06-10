@@ -8,7 +8,11 @@ interface ITask {
     descriptionJava: string;
     descriptionPython: string;
     descriptionJavascript: string;
+    descriptionScala: string;
+    descriptionCSharp: string;
     boilerplateJava: string;
     boilerplatePython: string;
     boilerplateJavascript: string;
+    boilerplateScala: string;
+    boilerplateCSharp: string;
 }

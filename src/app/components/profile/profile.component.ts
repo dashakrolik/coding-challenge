@@ -28,7 +28,9 @@ export class ProfileComponent implements OnInit {
   scoreJava: number;
   scorePython: number;
   scoreJavascript: number;
-  pointsTasks: number[][] = [[], [], []];
+  scoreScala: number;
+  scoreCSharp: number;
+  pointsTasks: number[][] = [[], [], [], [], []];
   taskTests: number[];
 
   constructor(
@@ -44,6 +46,8 @@ export class ProfileComponent implements OnInit {
     this.taskTests = [5, 6, 8]
     // Initialize the test scores to zero. For 3 languages we initialize 3 tasks to 0
     this.tasksCorrect = [];
+    this.tasksCorrect.push([0, 0, 0]);
+    this.tasksCorrect.push([0, 0, 0]);
     this.tasksCorrect.push([0, 0, 0]);
     this.tasksCorrect.push([0, 0, 0]);
     this.tasksCorrect.push([0, 0, 0]);
@@ -74,6 +78,8 @@ export class ProfileComponent implements OnInit {
       this.scoreJava = person.points[0];
       this.scorePython = person.points[1];
       this.scoreJavascript = person.points[2];
+      this.scoreScala = person.points[3];
+      this.scoreCSharp = person.points[4];
     });
 
     // TODO: get the score of the languages from the person table
@@ -107,7 +113,13 @@ export class ProfileComponent implements OnInit {
       this.lang = 1;
     } else if (this.selectedLanguage==='javascript') {
       this.lang = 2;
-    } else {
+    }  else if (this.selectedLanguage==='scala') {
+      this.lang = 3;
+    } else if (this.selectedLanguage==='csharp') {
+      this.lang = 4;
+      // We also set the selected language to be 'C#' This is so that is shows up correctly on the page.
+      this.selectedLanguage = "C#";
+    }else {
       this.lang = null;
     }
   }
