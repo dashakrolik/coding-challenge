@@ -4,12 +4,12 @@ import { ComponentType } from '@angular/cdk/portal';
 import { AceEditorComponent } from 'ng2-ace-editor';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SubscribeComponent } from '../overlay/subscribe/subscribe.component';
-import { CandidateService } from '@service/candidate/candidate.service';
-import { TaskService } from '@service/task/task.service';
-import { SubmissionService } from '@service/submission/submission.service';
-import { LanguageService } from '@service/language/language.service';
-import { OverlayService } from '@service/overlay/overlay.service';
-import { TokenStorageService } from '@service/token/token-storage.service';
+import { CandidateService } from '@services/candidate/candidate.service';
+import { TaskService } from '@services/task/task.service';
+import { SubmissionService } from '@services/submission/submission.service';
+import { LanguageService } from '@services/language/language.service';
+import { OverlayService } from '@services/overlay/overlay.service';
+import { TokenStorageService } from '@services/token/token-storage.service';
 import { Subscription } from 'rxjs';
 // @TODO: There are A LOT of things going on here (too many for just one component)
 // We need to split this up thats one
@@ -18,7 +18,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-code-editor',
   templateUrl: './code-editor.component.html',
-  styleUrls: ['./code-editor.component.css']
+  // styleUrls: ['./code-editor.component.css']
 })
 
 export class CodeEditorComponent implements OnInit, OnDestroy {
@@ -48,7 +48,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   submissionLanguageId: number;
   submissionCandidateId: number;
   submissionTaskId: number;
-  submission: Submission;
+  submission: ISubmission;
 
   taskDescription: string;
   subscribeComponent = SubscribeComponent;
@@ -141,10 +141,10 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   createSubmission = (): void => {
     // When creating a new Submission we give id null so it creates a new entry. It will determine the id by itself.
     this.submission = {
-      id: null,
+      // id: null,
       answer: this.codeSnippet,
-      correct: false,
-      personId: this.submissionCandidateId,
+      correct: [false],
+      // personId: this.submissionCandidateId,
       languageId: this.submissionLanguageId,
       taskId: this.submissionTaskId
     };
