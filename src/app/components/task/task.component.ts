@@ -86,13 +86,14 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       this.tokenStorageService.setKernelId(response.kernelId, this.selectedLanguage.language);
       response.jupyterResponses.forEach(line => {
         if (line.errorType === null) {
-          this.codeResult += line.contentValue;
+          this.codeResult += line.contentValue.replace(/(?:\r\n|\r|\n)/g, '<br>');
         } else {
           this.codeResult += line.errorType;
-          this.codeResult += '\n';
-          this.codeResult += line.errorValue;
+          this.codeResult += '<br>';
+          this.codeResult += line.errorValue; 
         }
       });
+      document.getElementById('code_output').innerHTML = this.codeResult;
     })
       .catch((error) => console.warn(error));
   }

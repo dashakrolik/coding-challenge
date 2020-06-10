@@ -35,11 +35,7 @@
         (textChanged)="onChange($event)" [readOnly]="false" class="ace-editor"></ace-editor>
         <div class="output-container">
           <p class="your-output">Your Output:</p>
-          <ul>
-            <li>
-              {{this.codeResult}}
-            </li>
-          </ul>
+          <p id="code_output"></p>
         </div>
     </div>
 
