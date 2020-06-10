@@ -33,19 +33,23 @@
     <div class="ace-editor-container">
       <ace-editor editor [(text)]="text" [mode]="selectedLanguage.language" [theme]="selectedLanguage.editorTheme"
         (textChanged)="onChange($event)" [readOnly]="false" class="ace-editor"></ace-editor>
-        <div class="output-container">
-          <p class="your-output">Your Output:</p>
-          <ul>
-            <li>
-              {{this.codeResult}}
-            </li>
-          </ul>
-        </div>
+      <div class="output-container">
+        <p class="your-output">Your Output:</p>
+        <ul>
+          <li>
+            {{this.codeResult}}
+          </li>
+        </ul>
+      </div>
     </div>
 
-    <button (click)="evaluateCode()" mat-button>Run</button>
+    <button (click)="evaluateCode()" mat-button>
+        <mat-progress-spinner [diameter]="36" *ngIf="loading; else run" style="margin:0 auto;" mode="indeterminate"></mat-progress-spinner>
+    </button>
 
-    <!-- We create the same button twice, if the user is not logged in the functionality will be that of logging in rather than submitting -->
+    <ng-template #run>
+      Run
+    </ng-template>
 
     <div class="test-overview">
       <div class="test-overview-inner-container">
@@ -62,9 +66,14 @@
       </div>
     </div>
     <button (click)="submitCode()" mat-button>
-      Submit Code
+        <mat-progress-spinner [diameter]="36" *ngIf="loadingSubmit; else submit" style="margin:0 auto;" mode="indeterminate"></mat-progress-spinner>
     </button>
 
+    <ng-template #submit>
+      Submit Code
+    </ng-template>
+
+  
     <!-- TODO: change the ng ifs with something better -->
     <div>
       <button *ngIf="completeTask(1)" (click)="goToTask(2)" mat-raised-button>

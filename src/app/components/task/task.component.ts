@@ -24,6 +24,8 @@ import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.comp
 export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('editor') editor: AceEditorComponent;
+  loading = false;
+  loadingSubmit = false;
 
   selectedLanguage: ILanguage;
   codeSnippet = '';
@@ -72,6 +74,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   onChange = (event: any) => this.codeSnippet = event;
 
   evaluateCode = async () => {
+    this.loading = true;
     // Fill the 'codeResult' in the 'evaluateCode' function.
     const runCodeSubmission: ISubmission = {
       answer: this.codeSnippet,
@@ -82,6 +85,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     };
     const kernelId = this.tokenStorageService.getKernelId(this.selectedLanguage.language);
     await this.submissionService.runCode(runCodeSubmission, kernelId).toPromise().then(response => {
+
       this.codeResult = '';
       this.tokenStorageService.setKernelId(response.kernelId, this.selectedLanguage.language);
       response.jupyterResponses.forEach(line => {
@@ -94,7 +98,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       });
     })
-      .catch((error) => console.warn(error));
+      .catch((error) => console.warn(error))
+      .finally(() => this.loading = false);
   }
 
   loginWindow(content: ComponentType<SubscribeComponent>) {
@@ -102,6 +107,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   submitCode = () => {
+    this.loadingSubmit = true;
+
     if (!this.checkIsLoggedIn()) {
       this.loginWindow(this.subscribeComponent);
     } else {
@@ -122,9 +129,14 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
           this.codeResult = '';
           this.tokenStorageService.setKernelId(response.kernelId, this.selectedLanguage.language);
           this.tests = response.testResultsTest;
+          this.loadingSubmit = false;
+        },
+        error => {
+          this.loadingSubmit = false;
         }
       );
     }
+    
   }
 
   retrieveAndSetLanguage = (): void => {
