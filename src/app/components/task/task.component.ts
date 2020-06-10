@@ -25,6 +25,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('editor') editor: AceEditorComponent;
   loading = false;
+  loadingSubmit = false;
 
   selectedLanguage: ILanguage;
   codeSnippet = '';
@@ -97,8 +98,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       });
     })
-      .catch((error) => console.warn(error));
-      // @ELISA in .finally this.loading op false zetten;
+      .catch((error) => console.warn(error))
+      .finally(() => this.loading = false);
   }
 
   loginWindow(content: ComponentType<SubscribeComponent>) {
@@ -107,6 +108,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   submitCode = () => {
     // @ELISA implement the same here
+    this.loadingSubmit = true;
+    console.log(this.loadingSubmit);
     if (!this.checkIsLoggedIn()) {
       this.loginWindow(this.subscribeComponent);
     } else {
@@ -119,7 +122,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         correct: [],
         runningTime: 0
       };
-
+      console.log(this.loadingSubmit);
       const kernelId = this.tokenStorageService.getKernelId(this.selectedLanguage.language);
 
       this.submissionService.createSubmission(submission, kernelId).subscribe(
@@ -130,6 +133,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       );
     }
+    this.loadingSubmit = false;
+    console.log(this.loadingSubmit);
   }
 
   retrieveAndSetLanguage = (): void => {

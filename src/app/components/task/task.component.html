@@ -46,14 +46,13 @@
     <button (click)="evaluateCode()" mat-button>
       <!-- @ELISA try to come up with a way to make a loader appear instead of "Run" once you 
       succeed with showing a material loader below -->
-      Run
+      <div *ngIf="loading; else run"><mat-progress-spinner style="margin:0 auto;" mode="indeterminate"></mat-progress-spinner></div>
     </button>
 
-    <!-- @Elisa show material loader here on the basis of "loading" using ngIf -->
+    <ng-template #run>
+      Run
+    </ng-template>
 
-    <div *ngIf="loading">LOADING</div>
-
-    
     <!-- We create the same button twice, if the user is not logged in the functionality will be that of logging in rather than submitting -->
 
     <div class="test-overview">
@@ -71,8 +70,12 @@
       </div>
     </div>
     <button (click)="submitCode()" mat-button>
-      Submit Code
+      <div *ngIf="loadingSubmit; else submit"><mat-progress-spinner style="margin:0 auto;" mode="indeterminate"></mat-progress-spinner></div>
     </button>
+
+    <ng-template #submit>
+      Submit Code
+    </ng-template>
 
     <!-- TODO: change the ng ifs with something better -->
     <div>
