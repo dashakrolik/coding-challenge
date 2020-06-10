@@ -107,9 +107,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   submitCode = () => {
-    // @ELISA implement the same here
     this.loadingSubmit = true;
-    console.log(this.loadingSubmit);
+
     if (!this.checkIsLoggedIn()) {
       this.loginWindow(this.subscribeComponent);
     } else {
@@ -122,7 +121,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         correct: [],
         runningTime: 0
       };
-      console.log(this.loadingSubmit);
+
       const kernelId = this.tokenStorageService.getKernelId(this.selectedLanguage.language);
 
       this.submissionService.createSubmission(submission, kernelId).subscribe(
@@ -130,11 +129,14 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
           this.codeResult = '';
           this.tokenStorageService.setKernelId(response.kernelId, this.selectedLanguage.language);
           this.tests = response.testResultsTest;
+          this.loadingSubmit = false;
+        },
+        error => {
+          this.loadingSubmit = false;
         }
       );
     }
-    this.loadingSubmit = false;
-    console.log(this.loadingSubmit);
+    
   }
 
   retrieveAndSetLanguage = (): void => {
