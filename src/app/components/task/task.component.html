@@ -33,27 +33,23 @@
     <div class="ace-editor-container">
       <ace-editor editor [(text)]="text" [mode]="selectedLanguage.language" [theme]="selectedLanguage.editorTheme"
         (textChanged)="onChange($event)" [readOnly]="false" class="ace-editor"></ace-editor>
-        <div class="output-container">
-          <p class="your-output">Your Output:</p>
-          <ul>
-            <li>
-              {{this.codeResult}}
-            </li>
-          </ul>
-        </div>
+      <div class="output-container">
+        <p class="your-output">Your Output:</p>
+        <ul>
+          <li>
+            {{this.codeResult}}
+          </li>
+        </ul>
+      </div>
     </div>
 
     <button (click)="evaluateCode()" mat-button>
-      <!-- @ELISA try to come up with a way to make a loader appear instead of "Run" once you 
-      succeed with showing a material loader below -->
-      <div *ngIf="loading; else run"><mat-progress-spinner style="margin:0 auto;" mode="indeterminate"></mat-progress-spinner></div>
+        <mat-progress-spinner [diameter]="36" *ngIf="loading; else run" style="margin:0 auto;" mode="indeterminate"></mat-progress-spinner>
     </button>
 
     <ng-template #run>
       Run
     </ng-template>
-
-    <!-- We create the same button twice, if the user is not logged in the functionality will be that of logging in rather than submitting -->
 
     <div class="test-overview">
       <div class="test-overview-inner-container">
@@ -70,13 +66,14 @@
       </div>
     </div>
     <button (click)="submitCode()" mat-button>
-      <div *ngIf="loadingSubmit; else submit"><mat-progress-spinner style="margin:0 auto;" mode="indeterminate"></mat-progress-spinner></div>
+        <mat-progress-spinner [diameter]="36" *ngIf="loadingSubmit; else submit" style="margin:0 auto;" mode="indeterminate"></mat-progress-spinner>
     </button>
 
     <ng-template #submit>
       Submit Code
     </ng-template>
 
+  
     <!-- TODO: change the ng ifs with something better -->
     <div>
       <button *ngIf="completeTask(1)" (click)="goToTask(2)" mat-raised-button>
