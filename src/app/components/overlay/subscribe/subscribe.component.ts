@@ -55,7 +55,7 @@ export class SubscribeComponent {
         // TODO: show error message on screen
         const message = {
           title: 'Error in the registration!',
-          message: this.setMessage(err.error.violations)
+          message: this.setMessage(err.error)
         };
         this.dialogService.openMessage(message);
       }
@@ -71,7 +71,7 @@ export class SubscribeComponent {
         console.log(err.error.message);
         const message = {
           title: 'Error while logging in.',
-          message: this.setMessage(err.error.violations),
+          message: this.setMessage(err.error),
         };
         this.dialogService.openMessage(message);
       }
@@ -89,7 +89,7 @@ export class SubscribeComponent {
         console.log(err.error);
         const dialogMessage = {
           title: 'Error while logging in.',
-          message: this.setMessage(err.error.violations),
+          message: this.setMessage(err.error),
         };
         this.dialogService.openMessage(dialogMessage);
       }
@@ -127,11 +127,12 @@ export class SubscribeComponent {
 
   cancel = () => this.ref.close(null);
 
-  setMessage = (violations: any[]): string => {
+  setMessage = (error: any): string => {
+    if (error.status === 401) { return "Invalid username and password combination." }
     let message = '';
-    for (let i = 0; i < violations.length; i++) {
+    for (let i = 0; i < error.violations.length; i++) {
       if (i !== 0) { message += '</br>'; }
-      message += violations[i].message;
+      message += error.violations[i].message;
     }
     return message;
   }
