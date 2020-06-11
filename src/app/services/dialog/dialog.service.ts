@@ -15,7 +15,7 @@ export class DialogService {
     private dialog: MatDialog,
   ) { }
 
-  openMessage = (data: Data) => {
+  openMessage = (data: IDialogData) => {
     return new Promise((resolve, reject) => {
       const dialogRef = this.dialog.open(MessageDialogComponent, {
         width: '500px',
@@ -25,7 +25,7 @@ export class DialogService {
     });
   }
 
-  openOkCancel = (data: Data) => {
+  openOkCancel = (data: IDialogData) => {
     return new Promise((resolve, reject) => {
       const dialogRef = this.dialog.open(OkCancelDialogComponent, {
         width: '500px',
@@ -41,9 +41,4 @@ export class DialogService {
     });
   }
 
-}
-
-class Data {
-  title: string;
-  messages: string[];
 }
