@@ -4,7 +4,7 @@ import { take } from 'rxjs/operators';
 
 import { MessageDialogComponent } from '@components/dialog/message-dialog/message-dialog.component';
 import {
-    OkCancelDialogComponent
+  OkCancelDialogComponent
 } from '@components/dialog/ok-cancel-dialog/ok-cancel-dialog.component';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class DialogService {
     private dialog: MatDialog,
   ) { }
 
-  openMessage = (data: any) => {
+  openMessage = (data: Data) => {
     return new Promise((resolve, reject) => {
       const dialogRef = this.dialog.open(MessageDialogComponent, {
         width: '500px',
@@ -25,7 +25,7 @@ export class DialogService {
     });
   }
 
-  openOkCancel = (data: any) => {
+  openOkCancel = (data: Data) => {
     return new Promise((resolve, reject) => {
       const dialogRef = this.dialog.open(OkCancelDialogComponent, {
         width: '500px',
@@ -40,4 +40,10 @@ export class DialogService {
       });
     });
   }
+
+}
+
+class Data {
+  title: string;
+  messages: string[];
 }

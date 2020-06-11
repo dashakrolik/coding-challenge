@@ -51,7 +51,6 @@ export class SubscribeComponent {
           this.ref.close(this.frmSubscribe.value);
       },
       err => {
-        console.log(err);
         // TODO: show error message on screen
         const message = {
           title: 'Error in the registration!',
@@ -68,7 +67,6 @@ export class SubscribeComponent {
     this.loginService.getLogin(email, password).subscribe(
       this.handleSuccessfulResponseGetLogin, err => {
         // TODO: show error message on screen
-        console.log(err.error.message);
         const message = {
           title: 'Error while logging in.',
           messages: this.setMessage(err.error),
@@ -86,7 +84,6 @@ export class SubscribeComponent {
         this.ref.close(this.frmSubscribe.value);
       },
       err => {
-        console.log(err.error);
         const dialogMessage = {
           title: 'Error while logging in.',
           messages: this.setMessage(err.error),
@@ -104,7 +101,6 @@ export class SubscribeComponent {
 
   // USE TSLINT GUIDELINES!!
   openTab(tabName) {
-    console.log('opening new tab ' + tabName);
     // We get both tab elements and we turn them off. Then we immediately turn the tab on that the user clicked on.
     const signIn = document.getElementById('Sign-in');
     const signUp = document.getElementById('Sign-up');

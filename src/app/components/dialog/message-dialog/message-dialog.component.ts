@@ -11,7 +11,7 @@ export class MessageDialogComponent {
     dialog: MatDialog,
     public dialogRef: MatDialogRef<MessageDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-  ) { console.log(this.data); }
+  ) { }
 
   closeDialog = (): void => {
     this.dialogRef.close();
