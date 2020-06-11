@@ -28,7 +28,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   taskSubscription: Subscription;
   languageSubscription: Subscription;
   codeResult: any;
-  tests: boolean[] = [false, false, false, false, false];
+  tests: boolean[] = [true, true, true, true, true];
+  // tests: boolean[] = [false, false, false, false, false];
   subscribeComponent = SubscribeComponent;
   taskSpecificDescription: string;
   taskDescriptionOne: string;
@@ -169,6 +170,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         this.taskSpecificDescription = newObject;
       }
     }
+
     const lines = boilerplate.split('\\n');
     this.text = '\n';
     lines.forEach(line => {
@@ -177,19 +179,14 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.codeSnippet = this.text;
   }
-  goToTask = (taskNumber: number) => {
+
+  goToTask = () => {
+    const taskNumber = parseInt(this.route.firstChild.snapshot.params.id) + 1;
     this.router.navigateByUrl('challenge/' + this.selectedLanguage.language + '/' + taskNumber);
   }
   // Map over this instead of hard coding, this is not readable
-  completeTask = (taskNumber): boolean => {
-    // if (this.task.taskNumber === taskNumber) {
-      // const checker = arr => arr.every(v => v === true);
-      return this.tests.every(test => test === true ? this.showNextTaskButton = true : null);
-      // return checker(this.tests);
-    // } else {
-    //   return false;
-    // }
-  }
+  completeTask = (): boolean => this.tests.every(test => test === true ? this.showNextTaskButton = true : null);
+
   finishedCodeChallenge = () => {
     // TODO: add some functionality if the user has finished the code challenge, like showing score or going to leaderboard or profile.
     console.log('The code challenge is completed');
