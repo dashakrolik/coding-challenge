@@ -31,14 +31,12 @@ export class SubscribeComponent {
     password: ''
   });
 
-  // TODO use Material Design Dialogue instead
   constructor(
     private fb: FormBuilder,
     private ref: MyOverlayRef,
     private loginService: LoginService,
     private tokenStorageService: TokenStorageService,
     private dialogService: DialogService,
-    private overlayService: OverlayService,
   ) {
   }
 
