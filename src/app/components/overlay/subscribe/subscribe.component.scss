@@ -5,12 +5,26 @@ p, a {
     margin-left: 2px;
 }
 
-// a {
-//     font-family: "Roboto", arial, sans-serif;
-//     font-size: 16px;
-//     color: #666;
-// }
+::ng-deep .mat-tab-header {
+    background-color: white;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
 
+::ng-deep .mat-tab-label-content {
+    font-family: "Roboto", arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: #666;
+}
+
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
+    background-color: rgb(185, 218, 227);
+}
+
+::ng-deep .mat-tab-labels {
+    justify-content: space-around;
+}
 .mat-form-field {
     width: -webkit-fill-available;
 }
