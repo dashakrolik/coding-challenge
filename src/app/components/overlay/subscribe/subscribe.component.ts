@@ -5,7 +5,6 @@ import { LoginService } from '@services/login/login.service';
 import { MyOverlayRef } from '@services/overlay/myoverlay-ref';
 import { TokenStorageService } from '@services/token/token-storage.service';
 import { DialogService } from '@services/dialog/dialog.service';
-import { OverlayService } from '@services/overlay/overlay.service';
 
 @Component({
   selector: 'app-subscribe',
@@ -13,6 +12,17 @@ import { OverlayService } from '@services/overlay/overlay.service';
   styleUrls: ['./subscribe.component.scss']
 })
 export class SubscribeComponent {
+  constructor(
+    private fb: FormBuilder,
+    private ref: MyOverlayRef,
+    private loginService: LoginService,
+    private tokenStorageService: TokenStorageService,
+    private dialogService: DialogService,
+  ) {
+  }
+  signInTabActive = true;
+  registerTabOpen: boolean;
+
   frmSubscribe = this.fb.group({
     firstName: '',
     lastName: '',
@@ -31,16 +41,7 @@ export class SubscribeComponent {
     password: ''
   });
 
-  constructor(
-    private fb: FormBuilder,
-    private ref: MyOverlayRef,
-    private loginService: LoginService,
-    private tokenStorageService: TokenStorageService,
-    private dialogService: DialogService,
-  ) {
-  }
-
-  submitRegistration() {
+  submitRegistration = () => {
     const { firstName, lastName, email, password } = this.frmSubscribe.value;
 
     this.loginService.getRegister(firstName, lastName, email, password).subscribe(
@@ -60,7 +61,8 @@ export class SubscribeComponent {
 
   }
 
-  handleSuccessfulResponseGetRegister = (response: any, email: string, password: string): void => {
+  // tslint:disable-next-line: variable-name
+  handleSuccessfulResponseGetRegister = (_response: any, email: string, password: string): void => {
     // The user successfully registered. We will log him in.
     this.loginService.getLogin(email, password).subscribe(
       this.handleSuccessfulResponseGetLogin, err => {
@@ -74,8 +76,9 @@ export class SubscribeComponent {
     );
   }
 
-  submitLogin() {
+  submitLogin = () => {
     const { email, password } = this.frmLogin.value;
+    
     this.loginService.getLogin(email, password).subscribe(
       response => {
         this.handleSuccessfulResponseGetLogin(response);
@@ -92,14 +95,24 @@ export class SubscribeComponent {
 
   }
 
-  handleSuccessfulResponseGetLogin = (response): void => {
+  handleSuccessfulResponseGetLogin = (response: any): void => {
     this.tokenStorageService.saveToken(response.token);
     this.tokenStorageService.saveUser(response);
   }
 
   // USE TSLINT GUIDELINES!!
-  openTab(tabName) {
+  openTab = (tabName: string) => {
     // We get both tab elements and we turn them off. Then we immediately turn the tab on that the user clicked on.
+
+    if (tabName === 'Sign-in') {
+      this.signInTabActive = true;
+    } else {
+      this.registerTabOpen = true;
+      this.signInTabActive = false;
+    }
+
+    // Fix this, we should not getElementById in Angular and manipulate the dom directly
+
     const signIn = document.getElementById('Sign-in');
     const signUp = document.getElementById('Sign-up');
     signIn.style.display = 'none';
@@ -123,7 +136,9 @@ export class SubscribeComponent {
 
   setMessage = (error: any): string[] => {
     if (error.status === 401) { return ['Invalid username and password combination.']; }
+
     const messages: string[] = [];
+    
     for (const violation of error.violations) {
       messages.push(violation.message);
     }
