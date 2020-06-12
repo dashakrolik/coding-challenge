@@ -20,7 +20,8 @@ const routes: Routes = [
   },
   {
     path: 'profile',
-    component: ProfileComponent
+    component: ProfileComponent,
+    canActivate: [AuthGuard]
   },
   {
     // you have to be logged in to see this page
@@ -35,6 +36,7 @@ const routes: Routes = [
       {
         path: ':id',
         component: TaskComponent,
+        canActivate: [AuthGuard]
       }
     ]
   },
@@ -55,7 +57,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
