@@ -27,9 +27,10 @@
           </mat-form-field>
         </div>
 
-        
+
       </section>
     </form>
+
     <footer class="modal-card-foot">
       <div class="buttons">
         <button id="button-submit-login" (click)="submitLogin()" type="submit" class="button">Login</button>
@@ -37,43 +38,49 @@
       </div>
     </footer>
   </div>
+
   <div id="Sign-up" class="content-tab" style="display:none">
     <form [formGroup]="frmSubscribe">
       <section class="modal-card-body">
-        <div class="field">
-          <label class="label">First Name</label>
-          <div class="control">
+
+        <div>
+          <p>First Name</p>
+          <mat-form-field appearance="outline">
+            <mat-label></mat-label>
             <input formControlName="firstName" class="input" type="text" placeholder="">
-          </div>
+          </mat-form-field>
         </div>
 
-        <div class="field">
-          <label class="label">Last Name</label>
-          <div class="control">
+        <div>
+          <p>Last Name</p>
+          <mat-form-field appearance="outline">
+            <mat-label></mat-label>
             <input formControlName="lastName" class="input" type="text" placeholder="">
-          </div>
+          </mat-form-field>
         </div>
 
-        <div class="field">
-          <label class="label">Email</label>
-          <div class="control">
+        <div>
+          <p>Email</p>
+          <mat-form-field appearance="outline">
+            <mat-label></mat-label>
             <input formControlName="email" class="input" type="email" placeholder="">
-          </div>
+          </mat-form-field>
         </div>
 
-        <div class="field">
-          <label class="label">Password</label>
-          <div class="control">
+        <div>
+          <p>Password</p>
+          <mat-form-field appearance="outline">
+            <mat-label></mat-label>
             <input formControlName="password" class="input" type="password" placeholder="">
-          </div>
+          </mat-form-field>
         </div>
 
       </section>
       <footer class="modal-card-foot">
         <div class="buttons">
           <button id="button-submit-register" (click)="submitRegistration()" type="submit"
-            class="button is-success">Register</button>
-          <button (click)="cancel()" type="button" class="button is-danger">Cancel</button>
+            class="button">Register</button>
+          <button (click)="cancel()" type="button"[ngStyle]="{backgroundColor: '#3da4bf'}" class="button">Cancel</button>
         </div>
       </footer>
     </form>
