@@ -24,7 +24,7 @@ export class SubmissionService {
 
   getAllSubmissionsProfile = (): Observable<ISubmission[]> => this.http.get(this.endpoint + '/person');
 
-  createSubmission = (submission: ISubmission, kernelId?: string): Observable<ISubmitCodeResponse> => {
+  createSubmission = (submission: ISubmission, kernelId: string): Observable<ISubmitCodeResponse> => {
     
     return this.http.post('submission', {
       submission,
