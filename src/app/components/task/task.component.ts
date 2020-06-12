@@ -20,24 +20,29 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('editor') editor: AceEditorComponent;
   loading = false;
   loadingSubmit = false;
+
   selectedLanguage: ILanguage;
+  submissionSubscription: Subscription;
+  task: ITask;
+  candidate: ICandidate;
+  taskSubscription: Subscription;
+  languageSubscription: Subscription;
+
   codeSnippet = '';
   evaluationResult: boolean;
   showNextTaskButton = false;
   text: string;
-  taskSubscription: Subscription;
-  languageSubscription: Subscription;
   codeResult: any;
-  tests: boolean[] = [true, true, true, true, true];
-  // tests: boolean[] = [false, false, false, false, false];
+  // tests: boolean[] = [true, true, true, true, true];
+  tests: boolean[] = [false, false, false, false, false];
+  
   subscribeComponent = SubscribeComponent;
   taskSpecificDescription: string;
   taskDescriptionOne: string;
   taskDescriptionTwo: string;
-  submissionSubscription: Subscription;
-  task: ITask;
-  candidate: ICandidate;
+
   output: any;
+
   constructor(
     private router: Router,
     private overlayService: OverlayService,
@@ -85,10 +90,12 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       .catch((error) => console.warn(error))
       .finally(() => this.loading = false);
   }
+
   loginWindow(content: ComponentType<SubscribeComponent>) {
     const ref = this.overlayService.open(content, null);
   }
-  submitCode = () => {
+
+  submitCode = (): void => {
     this.loadingSubmit = true;
     if (!this.checkIsLoggedIn()) {
       this.loginWindow(this.subscribeComponent);
@@ -122,7 +129,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     this.languageSubscription = this.languageService.getLanguagesMap().subscribe((languagesMap) => {
       this.selectedLanguage = languagesMap.get(languageParam);
       this.setBoilerPlateCode();
-      console.log(this.selectedLanguage)
     });
   }
   retrieveAndSetTask = (): void => {
@@ -139,15 +145,18 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       this.setBoilerPlateCode();
     });
   }
+
   setBoilerPlateCode = (): void => {
     let boilerplate = '';
     if (this.selectedLanguage && this.task) {
       // tslint:disable-next-line: quotemark
+      
       const descriptionOne = `${this.task.descriptionOne.replace(/`/g, "''")}`;
       // tslint:disable-next-line: quotemark
       const descriptionTwo = `${this.task.descriptionTwo.replace(/`/g, "''")}`;
       const parsedDescriptionOne = JSON.parse(descriptionOne);
       const parsedDescriptionTwo = JSON.parse(descriptionTwo);
+
       this.taskDescriptionOne = parsedDescriptionOne;
       this.taskDescriptionTwo = parsedDescriptionTwo;
       if (this.selectedLanguage.language === 'java') {
@@ -158,6 +167,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         this.taskSpecificDescription = newObject;
       } else if (this.selectedLanguage.language === 'python') {
         boilerplate = this.task.boilerplatePython;
+
         // tslint:disable-next-line: quotemark
         const object = `${this.task.descriptionPython.replace(/`/g, "''")}`;
         const newObject = JSON.parse(object);
@@ -166,6 +176,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         boilerplate = this.task.boilerplateJavascript;
         // tslint:disable-next-line: quotemark
         const object = `${this.task.descriptionJavascript.replace(/`/g, "''")}`;
+
         const newObject = JSON.parse(object);
         this.taskSpecificDescription = newObject;
       }
@@ -187,10 +198,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   // Map over this instead of hard coding, this is not readable
   completeTask = (): boolean => this.tests.every(test => test === true ? this.showNextTaskButton = true : null);
 
-  finishedCodeChallenge = () => {
-    // TODO: add some functionality if the user has finished the code challenge, like showing score or going to leaderboard or profile.
-    console.log('The code challenge is completed');
-  }
   // Create a Subject in navigation, then make this component listen to it
   checkIsLoggedIn = (): boolean => this.tokenStorageService.isUserLoggedIn();
 }
