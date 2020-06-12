@@ -46,6 +46,7 @@ export class WelcomePageComponent implements OnInit {
   createForm = () => this.form = this.formBuilder.group({});
 
   submit = () => {
+    this.checkIsLoggedIn();
     this.router.navigateByUrl(`challenge/${this.selectedLanguage}/${this.taskId}`);
   }
 
