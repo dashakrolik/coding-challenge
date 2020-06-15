@@ -8,7 +8,7 @@ import { HttpClientService } from '../http/http-client.service';
 })
 export class TaskService {
 
-  endpoint = 'task'
+  endpoint = 'task';
 
   constructor(
     private http: HttpClientService
@@ -16,5 +16,4 @@ export class TaskService {
 
   getTask = (subTaskNumber: number): Observable<ITask> => this.http.get(this.endpoint + '/' + subTaskNumber);
 
-  getAllTasks = (): Observable<ITask[]> => this.http.get(this.endpoint);
 }

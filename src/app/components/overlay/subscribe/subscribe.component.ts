@@ -20,8 +20,6 @@ export class SubscribeComponent {
     private dialogService: DialogService,
   ) {
   }
-  signInTabActive = true;
-  registerTabOpen: boolean;
 
   frmSubscribe = this.fb.group({
     firstName: '',

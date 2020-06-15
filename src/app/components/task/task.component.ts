@@ -56,6 +56,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     this.retrieveAndSetTask();
     this.retrieveAndSetLanguage();
   }
+
   ngAfterViewInit() {
   }
   ngOnDestroy() {
