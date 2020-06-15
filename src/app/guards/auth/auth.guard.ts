@@ -13,7 +13,8 @@ export class AuthGuard implements CanActivate {
     private tokenStorageService: TokenStorageService
   ) { }
 
-  canActivate = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+  // tslint:disable-next-line: variable-name
+  canActivate = (_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot) => {
     if (this.tokenStorageService.isUserLoggedIn()) {
       return true;
     }

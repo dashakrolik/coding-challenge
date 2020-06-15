@@ -3,5 +3,5 @@ interface ISubmission {
   taskId: number;
   languageId: number;
   correct: boolean[];
-  runningTime: number;
+  runningTime?: number;
 }
