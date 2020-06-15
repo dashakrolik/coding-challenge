@@ -73,21 +73,17 @@
       Submit Code
     </ng-template>
 
-  
+
     <!-- TODO: change the ng ifs with something better -->
     <div>
-      <button *ngIf="completeTask(1)" (click)="goToTask(2)" mat-raised-button>
+      <button *ngIf="completeTask()" (click)="goToTask()" mat-raised-button>
         Next Task
       </button>
-      <button *ngIf="completeTask(2)" (click)="goToTask(3)" mat-raised-button>
-        Next Task
-      </button>
-      <div *ngIf="completeTask(3)">
-        <b>Congratulations!</b> you finished the code challenge!
-      </div>
+
     </div>
     <br>
 
-    <app-canvas class="canvas" [(results)]="tests"></app-canvas>
+    <!-- TODO: remove after demo -->
+    <!-- <app-canvas class="canvas" [(results)]="tests"></app-canvas> -->
   </div>
 </ng-container>
