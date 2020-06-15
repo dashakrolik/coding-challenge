@@ -34,9 +34,6 @@ export class LeaderboardComponent implements OnInit {
   left: number;
   personOnCard: IPerson;
 
-  // TODO: remove after demo
-  currentPoint: number;
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<IPerson>;
@@ -55,14 +52,6 @@ export class LeaderboardComponent implements OnInit {
   ngOnInit(): void {
     this.personService.getAllPersons().pipe(take(1)).subscribe(persons => {
       this.setDataSource(persons);
-      this.currentPoint = 0;
-      this.currentPoint += persons[1].points[0];
-      this.currentPoint += persons[1].points[1];
-      this.currentPoint += persons[1].points[2];
-      this.currentPoint += persons[1].points[3];
-      this.currentPoint += persons[1].points[4];
-      console.log(persons[1].points);
-      console.log(this.currentPoint);
       this.dataSource.sort = this.sort;
     });
     this.languageService.getLanguages().pipe(take(1)).subscribe(languages => {
@@ -76,10 +65,6 @@ export class LeaderboardComponent implements OnInit {
 
   selectLanguage = () => {
     this.displayedColumns[1] = this.selectedLanguage + 'Points';
-    // TODO: remove after demo
-    if (this.selectedLanguage === 'java') {
-      this.currentPoint = 0;
-    }
   }
 
 }
