@@ -32,16 +32,16 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   evaluationResult: boolean;
   showNextTaskButton = false;
   text: string;
-  codeResult: any;
-  // tests: boolean[] = [true, true, true, true, true];
+
   tests: boolean[] = [false, false, false, false, false];
-  
+
   subscribeComponent = SubscribeComponent;
   taskSpecificDescription: string;
   taskDescriptionOne: string;
   taskDescriptionTwo: string;
 
-  output: any;
+  outputLines: string[];
+
 
   constructor(
     private router: Router,
@@ -76,15 +76,17 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     };
     const kernelId = this.tokenStorageService.getKernelId(this.selectedLanguage.language);
     await this.submissionService.runCode(runCodeSubmission, kernelId).toPromise().then(response => {
-      this.codeResult = '';
+      this.outputLines = [];
       this.tokenStorageService.setKernelId(response.kernelId, this.selectedLanguage.language);
       response.jupyterResponses.forEach(line => {
         if (line.errorType === null) {
-          this.codeResult += line.contentValue;
+          // For python it returns a single line split with newlines. Other languages get a list of lines.
+          line.contentValue.split("\n").forEach(entry => {
+            this.outputLines.push(entry);
+          })
         } else {
-          this.codeResult += line.errorType;
-          this.codeResult += '\n';
-          this.codeResult += line.errorValue;
+          this.outputLines.push(line.errorType);
+          this.outputLines.push(line.errorValue);
         }
       });
     })
@@ -114,7 +116,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       const kernelId = this.tokenStorageService.getKernelId(this.selectedLanguage.language);
       this.submissionService.createSubmission(submission, this.selectedLanguage.language).subscribe(
         response => {
-          this.codeResult = '';
+          this.outputLines = [];
           this.tokenStorageService.setKernelId(response.kernelId, this.selectedLanguage.language);
           this.tests = response.testResultsTest;
           this.loadingSubmit = false;
@@ -152,7 +154,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     let boilerplate = '';
     if (this.selectedLanguage && this.task) {
       // tslint:disable-next-line: quotemark
-      
+
       const descriptionOne = `${this.task.descriptionOne.replace(/`/g, "''")}`;
       // tslint:disable-next-line: quotemark
       const descriptionTwo = `${this.task.descriptionTwo.replace(/`/g, "''")}`;
