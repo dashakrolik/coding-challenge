@@ -83,6 +83,9 @@
     </div>
     <br>
 
+    <button *ngIf="redirectToFinish()" mat-raised-button>
+      FINISHED
+    </button>
     <app-canvas class="canvas" [(results)]="tests"></app-canvas>
   </div>
 </ng-container>

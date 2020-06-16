@@ -28,13 +28,15 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   taskSubscription: Subscription;
   languageSubscription: Subscription;
 
+  goToFinishTaskComponent = false;
+  totalNumberOfTasks: number;
   codeSnippet = '';
   evaluationResult: boolean;
   showNextTaskButton = false;
   text: string;
   codeResult: any;
-  // tests: boolean[] = [true, true, true, true, true];
-  tests: boolean[] = [false, false, false, false, false];
+  tests: boolean[] = [true, true, true, true, true];
+  // tests: boolean[] = [false, false, false, false, false];
 
   subscribeComponent = SubscribeComponent;
   taskSpecificDescription: string;
@@ -52,7 +54,10 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     private submissionService: SubmissionService,
     private tokenStorageService: TokenStorageService,
   ) { }
+
   ngOnInit() {
+    this.taskService.getTotalNumberOfTasks().subscribe(response => this.totalNumberOfTasks = response);
+
     this.retrieveAndSetTask();
     this.retrieveAndSetLanguage();
   }
@@ -111,7 +116,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         correct: [],
         runningTime: 0
       };
-      const kernelId = this.tokenStorageService.getKernelId(this.selectedLanguage.language);
+      // const kernelId = this.tokenStorageService.getKernelId(this.selectedLanguage.language);
+
       this.submissionService.createSubmission(submission, this.selectedLanguage.language).subscribe(
         response => {
           this.codeResult = '';
@@ -152,7 +158,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     let boilerplate = '';
     if (this.selectedLanguage && this.task) {
 
-      this.taskDescriptionOne =  this.parseCode(this.task.descriptionOne);
+      this.taskDescriptionOne = this.parseCode(this.task.descriptionOne);
       this.taskDescriptionTwo = this.parseCode(this.task.descriptionTwo);
 
       if (this.selectedLanguage.language === 'java') {
@@ -162,7 +168,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       } else if (this.selectedLanguage.language === 'python') {
         boilerplate = this.task.boilerplatePython;
         this.taskSpecificDescription = this.parseCode(this.task.descriptionPython);
-        
+
       } else if (this.selectedLanguage.language === 'javascript') {
         boilerplate = this.task.boilerplateJavascript;
         this.taskSpecificDescription = this.parseCode(this.task.descriptionJavascript);
@@ -181,7 +187,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // tslint:disable-next-line: quotemark
   parseCode = (stringToParse: string) => JSON.parse(`${stringToParse.replace(/`/g, "''")}`);
-  
+
 
   goToTask = () => {
     const taskNumber = parseInt(this.route.firstChild.snapshot.params.id) + 1;
@@ -189,6 +195,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   // Map over this instead of hard coding, this is not readable
   completeTask = (): boolean => this.tests.every(test => test === true ? this.showNextTaskButton = true : null);
+  // tslint:disable-next-line: max-line-length
+  redirectToFinish = () => this.tests.every(test => (test === true && this.task.id === this.totalNumberOfTasks) ? (this.goToFinishTaskComponent = true, this.showNextTaskButton = false) : null);
 
   // Create a Subject in navigation, then make this component listen to it
   checkIsLoggedIn = (): boolean => this.tokenStorageService.isUserLoggedIn();
