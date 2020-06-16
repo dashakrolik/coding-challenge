@@ -43,9 +43,13 @@
         </div>
     </div>
 
-    <button (click)="evaluateCode()" mat-button>Run</button>
+    <button (click)="evaluateCode()" mat-button>
+        <mat-progress-spinner [diameter]="36" *ngIf="loading; else run" style="margin:0 auto;" mode="indeterminate"></mat-progress-spinner>
+    </button>
 
-    <!-- We create the same button twice, if the user is not logged in the functionality will be that of logging in rather than submitting -->
+    <ng-template #run>
+      Run
+    </ng-template>
 
     <div class="test-overview">
       <div class="test-overview-inner-container">
@@ -62,20 +66,20 @@
       </div>
     </div>
     <button (click)="submitCode()" mat-button>
-      Submit Code
+        <mat-progress-spinner [diameter]="36" *ngIf="loadingSubmit; else submit" style="margin:0 auto;" mode="indeterminate"></mat-progress-spinner>
     </button>
+
+    <ng-template #submit>
+      Submit Code
+    </ng-template>
+
 
     <!-- TODO: change the ng ifs with something better -->
     <div>
-      <button *ngIf="completeTask(1)" (click)="goToTask(2)" mat-raised-button>
+      <button *ngIf="completeTask()" (click)="goToTask()" mat-raised-button>
         Next Task
       </button>
-      <button *ngIf="completeTask(2)" (click)="goToTask(3)" mat-raised-button>
-        Next Task
-      </button>
-      <div *ngIf="completeTask(3)">
-        <b>Congratulations!</b> you finished the code challenge!
-      </div>
+
     </div>
     <br>
 

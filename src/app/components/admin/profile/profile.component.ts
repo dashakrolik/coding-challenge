@@ -91,7 +91,7 @@ export class ProfileComponent implements OnInit {
     console.log(this.getPersonFromFormValue());
     const data = {
       title: 'Save personDetails',
-      message: 'Are you sure you want to save these changes?'
+      messages: ['Are you sure you want to save these changes?']
     };
     this.dialogService.openOkCancel(data)
       .then(this.savePersonToBackend).catch(() => { });
@@ -106,7 +106,7 @@ export class ProfileComponent implements OnInit {
   deletePerson = () => {
     const data = {
       title: 'Delete person',
-      message: 'Are you sure you want to delete this person?<br/>This also deletes all their submissions.'
+      messages: ['Are you sure you want to delete this person?<br/>This also deletes all their submissions.']
     };
     this.dialogService.openOkCancel(data)
       .then(this.deletePersonOnBackend).catch(() => {
@@ -145,6 +145,3 @@ export class ProfileComponent implements OnInit {
   navigateToAdminPanel = () => this.router.navigate(['/admin']);
 
 }
-
-
-

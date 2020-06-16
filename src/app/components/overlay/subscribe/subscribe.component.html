@@ -32,44 +32,45 @@
     </footer>
   </div>
   <div id="Sign-up" class="content-tab" style="display:none">
-      <form [formGroup]="frmSubscribe">
-        <section class="modal-card-body">
-          <div class="field">
-            <label class="label">First Name</label>
-            <div class="control">
-              <input formControlName="firstName" class="input" type="text" placeholder="">
-            </div>
+    <form [formGroup]="frmSubscribe">
+      <section class="modal-card-body">
+        <div class="field">
+          <label class="label">First Name</label>
+          <div class="control">
+            <input formControlName="firstName" class="input" type="text" placeholder="">
           </div>
+        </div>
 
-          <div class="field">
-            <label class="label">Last Name</label>
-            <div class="control">
-              <input formControlName="lastName" class="input" type="text" placeholder="">
-            </div>
+        <div class="field">
+          <label class="label">Last Name</label>
+          <div class="control">
+            <input formControlName="lastName" class="input" type="text" placeholder="">
           </div>
+        </div>
 
-          <div class="field">
-            <label class="label">Email</label>
-            <div class="control">
-              <input formControlName="email" class="input" type="email" placeholder="">
-            </div>
+        <div class="field">
+          <label class="label">Email</label>
+          <div class="control">
+            <input formControlName="email" class="input" type="email" placeholder="">
           </div>
+        </div>
 
-          <div class="field">
-            <label class="label">Password</label>
-            <div class="control">
-              <input formControlName="password" class="input" type="password" placeholder="">
-            </div>
+        <div class="field">
+          <label class="label">Password</label>
+          <div class="control">
+            <input formControlName="password" class="input" type="password" placeholder="">
           </div>
+        </div>
 
-        </section>
-        <footer class="modal-card-foot">
-          <div class="buttons">
-            <button id="button-submit-register" (click)="submitRegister()" type="submit" class="button is-success">Register</button>
-            <button (click)="cancel()" type="button" class="button is-danger">Cancel</button>
-          </div>
-        </footer>
-      </form>
+      </section>
+      <footer class="modal-card-foot">
+        <div class="buttons">
+          <button id="button-submit-register" (click)="submitRegistration()" type="submit"
+            class="button is-success">Register</button>
+          <button (click)="cancel()" type="button" class="button is-danger">Cancel</button>
+        </div>
+      </footer>
+    </form>
   </div>
 
 </div>

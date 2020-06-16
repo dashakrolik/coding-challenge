@@ -14,6 +14,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import { AceEditorModule } from 'ng2-ace-editor';
 
@@ -84,7 +85,8 @@ import { authInterceptorProviders } from './guards/auth/auth.interceptor';
     MatSortModule,
     MatDialogModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     authInterceptorProviders,
