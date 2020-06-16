@@ -11,6 +11,8 @@ import { LanguageService } from '@services/language/language.service';
 import { TokenStorageService } from '@services/token/token-storage.service';
 import { OverlayService } from '@services/overlay/overlay.service';
 import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.component';
+import { FinishedPageComponent } from '@components/finished-page/finished-page.component';
+
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
@@ -41,6 +43,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   taskDescriptionOne: string;
   taskDescriptionTwo: string;
 
+  totalNumberOfTasks: number;
   output: any;
 
   constructor(
@@ -53,6 +56,9 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     private tokenStorageService: TokenStorageService,
   ) { }
   ngOnInit() {
+    // maybe you will have to move this function into another block, test it in the app first
+    this.taskService.getTotalNumberOfTasks(this.selectedLanguage.language).toPromise().then(response => this.totalNumberOfTasks = response)
+
     this.retrieveAndSetTask();
     this.retrieveAndSetLanguage();
   }
@@ -114,11 +120,15 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       const kernelId = this.tokenStorageService.getKernelId(this.selectedLanguage.language);
       this.submissionService.createSubmission(submission, this.selectedLanguage.language).subscribe(
         response => {
-          this.codeResult = '';
-          this.tokenStorageService.setKernelId(response.kernelId, this.selectedLanguage.language);
-          this.tests = response.testResultsTest;
-          this.loadingSubmit = false;
-          this.tests.every(test => test === true ? this.showNextTaskButton = true : null);
+          if(!(this.task.id === this.totalNumberOfTasks)) {
+            this.codeResult = '';
+            this.tokenStorageService.setKernelId(response.kernelId, this.selectedLanguage.language);
+            this.tests = response.testResultsTest;
+            this.loadingSubmit = false;
+            this.tests.every(test => test === true ? this.showNextTaskButton = true : null);
+          } else {
+          //  go to finished page
+          }
         },
         error => {
           this.loadingSubmit = false;
