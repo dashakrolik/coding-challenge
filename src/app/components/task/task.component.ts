@@ -33,7 +33,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   taskSubscription: Subscription;
   languageSubscription: Subscription;
-  codeResult: any;
   tests: boolean[] = [false, false, false, false, false];
   subscribeComponent = SubscribeComponent;
 
@@ -43,7 +42,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   submissionSubscription: Subscription;
   task: ITask;
   candidate: ICandidate;
-  output: any;
+  
+  outputLines: string[];
 
   constructor(
     private router: Router,
@@ -72,7 +72,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   onChange = (event: any) => this.codeSnippet = event;
 
   evaluateCode = async () => {
-    // Fill the 'codeResult' in the 'evaluateCode' function.
     const runCodeSubmission: ISubmission = {
       answer: this.codeSnippet,
       languageId: this.selectedLanguage.id,
@@ -82,18 +81,19 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     };
     const kernelId = this.tokenStorageService.getKernelId(this.selectedLanguage.language);
     await this.submissionService.runCode(runCodeSubmission, kernelId).toPromise().then(response => {
-      this.codeResult = '';
+      this.outputLines = [];
       this.tokenStorageService.setKernelId(response.kernelId, this.selectedLanguage.language);
       response.jupyterResponses.forEach(line => {
         if (line.errorType === null) {
-          this.codeResult += line.contentValue.replace(/(?:\r\n|\r|\n)/g, '<br>');
+          // For python it returns a single line split with newlines. Other languages get a list of lines.
+          line.contentValue.split("\n").forEach(entry => {
+            this.outputLines.push(entry);
+          })
         } else {
-          this.codeResult += line.errorType;
-          this.codeResult += '<br>';
-          this.codeResult += line.errorValue; 
+          this.outputLines.push(line.errorType);
+          this.outputLines.push(line.errorValue);
         }
       });
-      document.getElementById('code_output').innerHTML = this.codeResult;
     })
       .catch((error) => console.warn(error));
   }
@@ -120,7 +120,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.submissionService.createSubmission(submission, kernelId).subscribe(
         response => {
-          this.codeResult = '';
+          this.outputLines = [];
           this.tokenStorageService.setKernelId(response.kernelId, this.selectedLanguage.language);
           this.tests = response.testResultsTest;
         }

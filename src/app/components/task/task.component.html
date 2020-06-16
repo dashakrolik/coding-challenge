@@ -35,7 +35,11 @@
         (textChanged)="onChange($event)" [readOnly]="false" class="ace-editor"></ace-editor>
         <div class="output-container">
           <p class="your-output">Your Output:</p>
-          <p id="code_output"></p>
+          <ul>
+            <li *ngFor="let line of outputLines" style='color: darkgray;'>
+              {{ line }}
+            </li>
+          </ul>
         </div>
     </div>
 
