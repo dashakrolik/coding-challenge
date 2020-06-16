@@ -126,5 +126,11 @@ export class ProfileComponent implements OnInit {
 
   goHome = (): Promise<boolean> => this.router.navigate(['/']);
 
-  goToTask = (taskNumber: number): Promise<boolean> => this.router.navigate(['challenge/' + this.selectedLanguage + '/' + (taskNumber+1)])
+  goToTask = (taskNumber: number): Promise<boolean> => {
+    if (this.selectedLanguage === "C#") {
+      return this.router.navigate(['challenge/csharp/' + (taskNumber+1)])
+    } else {
+      return this.router.navigate(['challenge/' + this.selectedLanguage + '/' + (taskNumber+1)])
+    }
+  }
 }
