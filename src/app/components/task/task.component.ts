@@ -44,8 +44,6 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   taskSpecificDescription: string;
   taskDescriptionOne: string;
   taskDescriptionTwo: string;
-
-  totalNumberOfTasks: number;
   output: any;
 
   constructor(
@@ -59,12 +57,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   ) { }
 
   ngOnInit() {
-<<<<<<< HEAD
     this.taskService.getTotalNumberOfTasks().subscribe(response => this.totalNumberOfTasks = response);
-=======
-    // maybe you will have to move this function into another block, test it in the app first
-    this.taskService.getTotalNumberOfTasks(this.selectedLanguage.language).toPromise().then(response => this.totalNumberOfTasks = response)
->>>>>>> fee1fef9f3c5f7dc0a9e1b44fc8fff21fb0f0184
 
     this.retrieveAndSetTask();
     this.retrieveAndSetLanguage();
