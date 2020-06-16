@@ -16,6 +16,10 @@ export class TaskService {
 
   getTask = (subTaskNumber: number): Observable<ITask> => this.http.get(this.endpoint + '/' + subTaskNumber);
 
+<<<<<<< HEAD
   getTotalNumberOfTasks = (): Observable<number> => this.http.get(this.endpoint + '/' + 'all');
 
+=======
+  getTotalNumberOfTasks = (language: string) => this.http.get(this.endpoint + '/' + 'all');
+>>>>>>> fee1fef9f3c5f7dc0a9e1b44fc8fff21fb0f0184
 }
