@@ -35,7 +35,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   codeResult: any;
   // tests: boolean[] = [true, true, true, true, true];
   tests: boolean[] = [false, false, false, false, false];
-  
+
   subscribeComponent = SubscribeComponent;
   taskSpecificDescription: string;
   taskDescriptionOne: string;
@@ -151,36 +151,22 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   setBoilerPlateCode = (): void => {
     let boilerplate = '';
     if (this.selectedLanguage && this.task) {
-      // tslint:disable-next-line: quotemark
-      
-      const descriptionOne = `${this.task.descriptionOne.replace(/`/g, "''")}`;
-      // tslint:disable-next-line: quotemark
-      const descriptionTwo = `${this.task.descriptionTwo.replace(/`/g, "''")}`;
-      const parsedDescriptionOne = JSON.parse(descriptionOne);
-      const parsedDescriptionTwo = JSON.parse(descriptionTwo);
 
-      this.taskDescriptionOne = parsedDescriptionOne;
-      this.taskDescriptionTwo = parsedDescriptionTwo;
+      this.taskDescriptionOne =  this.parseCode(this.task.descriptionOne);
+      this.taskDescriptionTwo = this.parseCode(this.task.descriptionTwo);
+
       if (this.selectedLanguage.language === 'java') {
         boilerplate = this.task.boilerplateJava;
-        // tslint:disable-next-line: quotemark
-        const object = `${this.task.descriptionJava.replace(/`/g, "''")}`;
-        const newObject = JSON.parse(object);
-        this.taskSpecificDescription = newObject;
+        this.taskSpecificDescription = this.parseCode(this.task.descriptionJava);
+
       } else if (this.selectedLanguage.language === 'python') {
         boilerplate = this.task.boilerplatePython;
-
-        // tslint:disable-next-line: quotemark
-        const object = `${this.task.descriptionPython.replace(/`/g, "''")}`;
-        const newObject = JSON.parse(object);
-        this.taskSpecificDescription = newObject;
+        this.taskSpecificDescription = this.parseCode(this.task.descriptionPython);
+        
       } else if (this.selectedLanguage.language === 'javascript') {
         boilerplate = this.task.boilerplateJavascript;
-        // tslint:disable-next-line: quotemark
-        const object = `${this.task.descriptionJavascript.replace(/`/g, "''")}`;
+        this.taskSpecificDescription = this.parseCode(this.task.descriptionJavascript);
 
-        const newObject = JSON.parse(object);
-        this.taskSpecificDescription = newObject;
       }
     }
 
@@ -192,6 +178,10 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.codeSnippet = this.text;
   }
+
+  // tslint:disable-next-line: quotemark
+  parseCode = (stringToParse: string) => JSON.parse(`${stringToParse.replace(/`/g, "''")}`);
+  
 
   goToTask = () => {
     const taskNumber = parseInt(this.route.firstChild.snapshot.params.id) + 1;
