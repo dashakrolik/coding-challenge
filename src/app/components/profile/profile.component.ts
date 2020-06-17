@@ -22,7 +22,8 @@ export class ProfileComponent implements OnInit {
   selectedLanguage: string;
   languageNames$: Observable<string[]>;
 
-  tasksCorrect = [];
+  // Initialize the test scores to zero. For 3 languages we initialize 3 tasks to 0
+  tasksCorrect = [] = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
   lang: number;
 
   scoreJava: number;
@@ -31,7 +32,8 @@ export class ProfileComponent implements OnInit {
   scoreScala: number;
   scoreCSharp: number;
   pointsTasks: number[][] = [[], [], [], [], []];
-  taskTests: number[];
+  // the amount of tests that each task has.
+  taskTests: number[] = [5, 6, 8];
 
   constructor(
     private tokenStorageService: TokenStorageService,
@@ -42,15 +44,6 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // the amount of tests that each task has.
-    this.taskTests = [5, 6, 8]
-    // Initialize the test scores to zero. For 3 languages we initialize 3 tasks to 0
-    this.tasksCorrect = [];
-    this.tasksCorrect.push([0, 0, 0]);
-    this.tasksCorrect.push([0, 0, 0]);
-    this.tasksCorrect.push([0, 0, 0]);
-    this.tasksCorrect.push([0, 0, 0]);
-    this.tasksCorrect.push([0, 0, 0]);
 
     this.submissionService.getAllSubmissionsProfile().pipe(take(1)).subscribe(submissions => {
 
@@ -127,10 +120,11 @@ export class ProfileComponent implements OnInit {
   goHome = (): Promise<boolean> => this.router.navigate(['/']);
 
   goToTask = (taskNumber: number): Promise<boolean> => {
+    const num = taskNumber + 1;
     if (this.selectedLanguage === "C#") {
-      return this.router.navigate(['challenge/csharp/' + (taskNumber+1)])
+      return this.router.navigate(['challenge/csharp/' + num])
     } else {
-      return this.router.navigate(['challenge/' + this.selectedLanguage + '/' + (taskNumber+1)])
+      return this.router.navigate(['challenge/' + this.selectedLanguage + '/' + num])
     }
   }
 }
