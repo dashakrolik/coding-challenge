@@ -30,6 +30,7 @@ export class ProfileComponent implements OnInit {
   scoreJavascript: number;
   pointsTasks: number[][] = [[], [], []];
   taskTests: number[];
+  isAdmin: boolean = false;
 
   constructor(
     private tokenStorageService: TokenStorageService,
@@ -70,6 +71,11 @@ export class ProfileComponent implements OnInit {
     });
 
     this.personService.getPersonPoints().pipe(take(1)).subscribe(person => {
+      person.roles.forEach(role => {
+        if (role.name === 'ROLE_ADMIN' || role.name === 'ROLE_MODERATOR') {
+          this.isAdmin = true;
+        }
+      })
       this.pointsTasks = person.pointsTasks;
       this.scoreJava = person.points[0];
       this.scorePython = person.points[1];
@@ -115,4 +121,6 @@ export class ProfileComponent implements OnInit {
   goHome = (): Promise<boolean> => this.router.navigate(['/']);
 
   goToTask = (taskNumber: number): Promise<boolean> => this.router.navigate(['challenge/' + this.selectedLanguage + '/' + (taskNumber+1)])
+  
+  goAdmin = (): Promise<boolean> => this.router.navigate(['/admin']);
 }
