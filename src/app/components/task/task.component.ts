@@ -11,7 +11,6 @@ import { LanguageService } from '@services/language/language.service';
 import { TokenStorageService } from '@services/token/token-storage.service';
 import { OverlayService } from '@services/overlay/overlay.service';
 import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.component';
-import { FinishedPageComponent } from '@components/finished-page/finished-page.component';
 
 @Component({
   selector: 'app-task',
@@ -36,7 +35,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   evaluationResult: boolean;
   showNextTaskButton = false;
   text: string;
-
+  codeResult: any;
+  // tests: boolean[] = [true, true, true, true, true];
   tests: boolean[] = [false, false, false, false, false];
 
   subscribeComponent = SubscribeComponent;
@@ -124,11 +124,15 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.submissionService.createSubmission(submission, this.selectedLanguage.language).subscribe(
         response => {
-          this.outputLines = [];
+          this.codeResult = '';
           this.tokenStorageService.setKernelId(response.kernelId, this.selectedLanguage.language);
           this.tests = response.testResultsTest;
           this.loadingSubmit = false;
-          this.tests.every(test => test === true ? this.showNextTaskButton = true : null);
+          if (!(this.task.id === this.totalNumberOfTasks)) {
+            this.tests.every(test => test === true ? this.showNextTaskButton = true : null);
+          } else {
+            this.tests.every(test => test === true ? this.goToFinishTaskComponent = true : null);
+          }
         },
         error => {
           this.loadingSubmit = false;
@@ -204,10 +208,16 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     const taskNumber = parseInt(this.route.firstChild.snapshot.params.id) + 1;
     this.router.navigateByUrl('challenge/' + this.selectedLanguage.language + '/' + taskNumber);
   }
+
+  goToLeaderboard = () => {
+    this.router.navigateByUrl('leaderboard');
+  }
+
   // Map over this instead of hard coding, this is not readable
-  completeTask = (): boolean => this.tests.every(test => test === true ? this.showNextTaskButton = true : null);
   // tslint:disable-next-line: max-line-length
-  redirectToFinish = () => this.tests.every(test => (test === true && this.task.id === this.totalNumberOfTasks) ? (this.goToFinishTaskComponent = true, this.showNextTaskButton = false) : null);
+  completeTask = (): boolean => this.tests.every(test => (test === true && this.task.id !== this.totalNumberOfTasks) ? this.showNextTaskButton = true : null);
+  // tslint:disable-next-line: max-line-length
+  redirectToFinish = () => this.tests.every(test => (test === true && this.task.id === this.totalNumberOfTasks) ? this.goToFinishTaskComponent = true : null);
 
   // Create a Subject in navigation, then make this component listen to it
   checkIsLoggedIn = (): boolean => this.tokenStorageService.isUserLoggedIn();
