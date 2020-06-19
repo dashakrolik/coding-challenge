@@ -33,14 +33,14 @@
     <div class="ace-editor-container">
       <ace-editor editor [(text)]="text" [mode]="selectedLanguage.language" [theme]="selectedLanguage.editorTheme"
         (textChanged)="onChange($event)" [readOnly]="false" class="ace-editor"></ace-editor>
-      <div class="output-container">
-        <p class="your-output">Your Output:</p>
-        <ul>
-          <li>
-            {{this.codeResult}}
-          </li>
-        </ul>
-      </div>
+        <div class="output-container">
+          <p class="your-output">Your Output:</p>
+          <ul>
+            <li *ngFor="let line of outputLines" style='color: darkgray;'>
+              {{ line }}
+            </li>
+          </ul>
+        </div>
     </div>
 
     <button (click)="evaluateCode()" mat-button>
