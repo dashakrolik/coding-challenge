@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
@@ -33,6 +34,7 @@ export class LeaderboardComponent implements OnInit {
   top: number;
   left: number;
   personOnCard: IPerson;
+  languageIndex: number;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -40,6 +42,7 @@ export class LeaderboardComponent implements OnInit {
 
   constructor(
     private personService: PersonService,
+    private router: Router,
     private languageService: LanguageService,
   ) { }
 
@@ -50,6 +53,7 @@ export class LeaderboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.languageIndex = 0;
     this.personService.getAllPersons().pipe(take(1)).subscribe(persons => {
       this.setDataSource(persons);
       this.dataSource.sort = this.sort;
@@ -64,7 +68,15 @@ export class LeaderboardComponent implements OnInit {
   }
 
   selectLanguage = () => {
+    if (this.selectedLanguage.toLowerCase() === 'java') {
+      this.languageIndex = 0;
+    } else if (this.selectedLanguage.toLowerCase() === 'python') {
+      this.languageIndex = 1;
+    } else if (this.selectedLanguage.toLowerCase() === 'javascript') {
+      this.languageIndex = 2;
+    }
     this.displayedColumns[1] = this.selectedLanguage + 'Points';
   }
 
+  goHome = (): Promise<boolean> => this.router.navigate(['/']);
 }

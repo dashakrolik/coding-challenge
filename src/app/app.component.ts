@@ -37,4 +37,5 @@ export class AppComponent {
 
   checkLogin = (): boolean => this.tokenStorageService.isUserLoggedIn();
 
+  goToLeaderboard = (): Promise<boolean> => this.router.navigate(['/leaderboard']);
 }
