@@ -121,14 +121,16 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.submissionService.createSubmission(submission, this.selectedLanguage.language).subscribe(
         response => {
-          if(!(this.task.id === this.totalNumberOfTasks)) {
-            this.codeResult = '';
-            this.tokenStorageService.setKernelId(response.kernelId, this.selectedLanguage.language);
-            this.tests = response.testResultsTest;
-            this.loadingSubmit = false;
+          this.codeResult = '';
+          this.tokenStorageService.setKernelId(response.kernelId, this.selectedLanguage.language);
+          this.tests = response.testResultsTest;
+          this.loadingSubmit = false;
+          if (!(this.task.id === this.totalNumberOfTasks)) {
             this.tests.every(test => test === true ? this.showNextTaskButton = true : null);
+            console.log('This is task 1 or 2');
           } else {
-          //  go to finished page
+            this.tests.every(test => test === true ? this.goToFinishTaskComponent = true : null);
+            console.log('This is task 3');
           }
         },
         error => {
@@ -198,10 +200,16 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     const taskNumber = parseInt(this.route.firstChild.snapshot.params.id) + 1;
     this.router.navigateByUrl('challenge/' + this.selectedLanguage.language + '/' + taskNumber);
   }
+
+  goToLeaderboard = () => {
+    this.router.navigateByUrl('leaderboard');
+  }
+
   // Map over this instead of hard coding, this is not readable
-  completeTask = (): boolean => this.tests.every(test => test === true ? this.showNextTaskButton = true : null);
   // tslint:disable-next-line: max-line-length
-  redirectToFinish = () => this.tests.every(test => (test === true && this.task.id === this.totalNumberOfTasks) ? (this.goToFinishTaskComponent = true, this.showNextTaskButton = false) : null);
+  completeTask = (): boolean => this.tests.every(test => (test === true && this.task.id !== this.totalNumberOfTasks) ? this.showNextTaskButton = true : null);
+  // tslint:disable-next-line: max-line-length
+  redirectToFinish = () => this.tests.every(test => (test === true && this.task.id === this.totalNumberOfTasks) ? this.goToFinishTaskComponent = true : null);
 
   // Create a Subject in navigation, then make this component listen to it
   checkIsLoggedIn = (): boolean => this.tokenStorageService.isUserLoggedIn();
