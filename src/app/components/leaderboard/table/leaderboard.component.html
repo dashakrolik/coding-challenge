@@ -18,7 +18,7 @@
 
         <ng-container matColumnDef="{{selectedLanguage.toLowerCase() + 'Points'}}">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Points</th>
-            <td mat-cell *matCellDef="let person">{{person[selectedLanguage.toLowerCase() + "Points"]}}</td>
+            <td mat-cell *matCellDef="let person">{{person.points}}</td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

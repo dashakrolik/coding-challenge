@@ -182,6 +182,23 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         const object = `${this.task.descriptionJavascript.replace(/`/g, "''")}`;
 
         const newObject = JSON.parse(object);
+
+        this.taskSpecificDescription = newObject;
+      } else if (this.selectedLanguage.language === 'scala') {
+        boilerplate = this.task.boilerplateScala;
+
+        // tslint:disable-next-line: quotemark
+        const object = `${this.task.descriptionScala.replace(/`/g, "''")}`;
+        const newObject = JSON.parse(object);
+
+        this.taskSpecificDescription = newObject;
+      } else if (this.selectedLanguage.language === 'csharp') {
+        boilerplate = this.task.boilerplateCSharp;
+
+        // tslint:disable-next-line: quotemark
+        const object = `${this.task.descriptionCSharp.replace(/`/g, "''")}`;
+        const newObject = JSON.parse(object);
+
         this.taskSpecificDescription = newObject;
       }
     }
