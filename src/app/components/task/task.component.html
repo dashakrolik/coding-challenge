@@ -79,10 +79,11 @@
       <button *ngIf="completeTask()" (click)="goToTask()" mat-raised-button>
         Next Task
       </button>
-
     </div>
     <br>
 
-    <app-canvas class="canvas" [(results)]="tests"></app-canvas>
+    <button *ngIf="redirectToFinish()" (click)="goToLeaderboard()" mat-raised-button>
+      Finished!
+    </button>
   </div>
 </ng-container>
