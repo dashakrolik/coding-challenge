@@ -37,8 +37,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   showNextTaskButton = false;
   text: string;
   codeResult: any;
-  tests: boolean[] = [true, true, true, true, true];
-  // tests: boolean[] = [false, false, false, false, false];
+  // tests: boolean[] = [true, true, true, true, true];
+  tests: boolean[] = [false, false, false, false, false];
 
   subscribeComponent = SubscribeComponent;
   taskSpecificDescription: string;
@@ -127,10 +127,8 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
           this.loadingSubmit = false;
           if (!(this.task.id === this.totalNumberOfTasks)) {
             this.tests.every(test => test === true ? this.showNextTaskButton = true : null);
-            console.log('This is task 1 or 2');
           } else {
             this.tests.every(test => test === true ? this.goToFinishTaskComponent = true : null);
-            console.log('This is task 3');
           }
         },
         error => {
