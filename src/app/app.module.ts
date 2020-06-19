@@ -39,8 +39,6 @@ import { WelcomePageComponent } from '@components/welcome-page/welcome-page.comp
 import { MessageDialogComponent } from '@components/dialog/message-dialog/message-dialog.component';
 import { OkCancelDialogComponent } from '@components/dialog/ok-cancel-dialog/ok-cancel-dialog.component';
 import { CanvasComponent } from '@components/canvas/canvas.component';
-import { FinishedPageComponent } from './components/finished-page/finished-page.component';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -68,7 +66,6 @@ import { authInterceptorProviders } from './guards/auth/auth.interceptor';
     LeaderboardComponent,
     CardComponent,
     CanvasComponent,
-    FinishedPageComponent,
   ],
   imports: [
     BrowserModule,

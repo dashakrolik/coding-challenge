@@ -11,7 +11,6 @@ import { LanguageService } from '@services/language/language.service';
 import { TokenStorageService } from '@services/token/token-storage.service';
 import { OverlayService } from '@services/overlay/overlay.service';
 import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.component';
-import { FinishedPageComponent } from '@components/finished-page/finished-page.component';
 
 @Component({
   selector: 'app-task',
