@@ -8,7 +8,7 @@
       mat-raised-button>Login</button>
     <button *ngIf="checkLogin()" class="button" (click)="myAccount()" mat-raised-button>My Account</button>
     <button *ngIf="checkLogin()" class="button logout_button" (click)="logout()" mat-raised-button>Logout</button>
-    <button class="button" (click)="goToLeaderboard()" mat-raised-button>Leaderboard</button>
+    <button class="button" (click)="goToLeaderboard()" mat-raised-button name="leaderboard">Leaderboard</button>
   </div>
 </nav>
 
