@@ -37,7 +37,11 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   text: string;
   codeResult: any;
   // tests: boolean[] = [true, true, true, true, true];
-  tests: boolean[] = [false, false, false, false, false];
+  // tests: boolean[][] = [[true, true, true, true, true], [true, true, true, true, true, true],
+  //   [true, true, true, true, true, true, true, true]];
+  tests: boolean[][] = [[false, false, false, false, false], [false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false]];
+
 
   subscribeComponent = SubscribeComponent;
   taskSpecificDescription: string;
@@ -129,7 +133,14 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
           this.tests = response.testResultsTest;
           this.loadingSubmit = false;
           if (!(this.task.id === this.totalNumberOfTasks)) {
-            this.tests.every(test => test === true ? this.showNextTaskButton = true : null);
+
+            console.log(this.getCol(0, this.tests));
+            if (this.task.id === 1) {
+              this.testsTask1.every(test => test === true ? this.showNextTaskButton = true : null);
+            }
+            if (this.task.id === 2) {
+              this.tests[1].every(test => test === true ? this.showNextTaskButton = true : null);
+            }
           } else {
             this.tests.every(test => test === true ? this.goToFinishTaskComponent = true : null);
           }
@@ -215,9 +226,9 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // Map over this instead of hard coding, this is not readable
   // tslint:disable-next-line: max-line-length
-  completeTask = (): boolean => this.tests.every(test => (test === true && this.task.id !== this.totalNumberOfTasks) ? this.showNextTaskButton = true : null);
+  completeTask = (): boolean => this.testsTask1.every(test => (test === true && this.task.id !== this.totalNumberOfTasks) ? this.showNextTaskButton = true : null);
   // tslint:disable-next-line: max-line-length
-  redirectToFinish = () => this.tests.every(test => (test === true && this.task.id === this.totalNumberOfTasks) ? this.goToFinishTaskComponent = true : null);
+  redirectToFinish = () => this.testsTask3.every(test => (test === true && this.task.id === this.totalNumberOfTasks) ? this.goToFinishTaskComponent = true : null);
 
   // Create a Subject in navigation, then make this component listen to it
   checkIsLoggedIn = (): boolean => this.tokenStorageService.isUserLoggedIn();

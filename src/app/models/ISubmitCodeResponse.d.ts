@@ -1,4 +1,4 @@
 interface ISubmitCodeResponse {
     kernelId: string;
-    testResultsTest: boolean[];
+    testResultsTest: boolean[][];
 }

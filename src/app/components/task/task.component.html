@@ -58,10 +58,24 @@
           Submit your code to see how many tests pass.
         </p>
         <ul class="test-list">
-          <li *ngFor="let test of tests; let i = index">
-            <mat-icon *ngIf="!test" class="icon-failed-test">not_interested</mat-icon>
-            <mat-icon *ngIf="test" class="icon-passed-test">check</mat-icon>
-          </li>
+          <ng-container *ngIf="task.id===1;">
+            <li *ngFor="let test of tests[0]; let i = index">
+              <mat-icon *ngIf="!test" class="icon-failed-test">not_interested</mat-icon>
+              <mat-icon *ngIf="test" class="icon-passed-test">check</mat-icon>
+            </li>
+          </ng-container>
+          <ng-container *ngIf="task.id===2;">
+            <li *ngFor="let test of tests[1]; let i = index">
+              <mat-icon *ngIf="!test" class="icon-failed-test">not_interested</mat-icon>
+              <mat-icon *ngIf="test" class="icon-passed-test">check</mat-icon>
+            </li>
+          </ng-container>
+          <ng-container *ngIf="task.id===3;">
+            <li *ngFor="let test of tests[2]; let i = index">
+              <mat-icon *ngIf="!test" class="icon-failed-test">not_interested</mat-icon>
+              <mat-icon *ngIf="test" class="icon-passed-test">check</mat-icon>
+            </li>
+          </ng-container>
         </ul>
       </div>
     </div>
