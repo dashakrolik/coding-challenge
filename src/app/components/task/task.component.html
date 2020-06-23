@@ -1,4 +1,3 @@
-<!-- We load the task and show the description -->
 <ng-container *ngIf="selectedLanguage && task">
   <div class="container">
     <h1 class="assignment-header">Risk IT Test</h1>
@@ -58,24 +57,10 @@
           Submit your code to see how many tests pass.
         </p>
         <ul class="test-list">
-          <ng-container *ngIf="task.id===1;">
-            <li *ngFor="let test of tests[0]; let i = index">
-              <mat-icon *ngIf="!test" class="icon-failed-test">not_interested</mat-icon>
-              <mat-icon *ngIf="test" class="icon-passed-test">check</mat-icon>
-            </li>
-          </ng-container>
-          <ng-container *ngIf="task.id===2;">
-            <li *ngFor="let test of tests[1]; let i = index">
-              <mat-icon *ngIf="!test" class="icon-failed-test">not_interested</mat-icon>
-              <mat-icon *ngIf="test" class="icon-passed-test">check</mat-icon>
-            </li>
-          </ng-container>
-          <ng-container *ngIf="task.id===3;">
-            <li *ngFor="let test of tests[2]; let i = index">
-              <mat-icon *ngIf="!test" class="icon-failed-test">not_interested</mat-icon>
-              <mat-icon *ngIf="test" class="icon-passed-test">check</mat-icon>
-            </li>
-          </ng-container>
+          <li *ngFor="let test of tests; let i = index">
+            <mat-icon *ngIf="!test" class="icon-failed-test">not_interested</mat-icon>
+            <mat-icon *ngIf="test" class="icon-passed-test">check</mat-icon>
+          </li>
         </ul>
       </div>
     </div>
@@ -99,5 +84,10 @@
     <button *ngIf="redirectToFinish()" (click)="goToLeaderboard()" mat-raised-button>
       Finished!
     </button>
+    <app-canvas class="canvas" [(results)]="tests"></app-canvas>
   </div>
 </ng-container>
+
+
+
+

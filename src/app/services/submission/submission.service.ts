@@ -1,19 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { baseUrl } from '@shared/constants';
 import { HttpClientService } from '@services/http/http-client.service';
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 
 @Injectable({
   providedIn: 'root'
 })
 export class SubmissionService {
-
-  endpoint = 'submission'
+  endpoint = 'submission';
 
   constructor(
     private http: HttpClientService,
