@@ -42,13 +42,14 @@ export class LeaderboardComponent implements OnInit {
   personOnCard: IPerson;
   persons: IPerson[];
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatTable) table: MatTable<IPerson>;
+  @ViewChild(MatPaginator) set paginator(paginator: MatPaginator) {
+    if (this.dataSource) { this.dataSource.paginator = paginator; }
+  }
   @ViewChild(MatSort) set sort(sort: MatSort) {
     if (this.dataSource) { this.dataSource.sort = sort; }
     console.log(this.dataSource);
   }
-
 
   ngOnInit(): void {
     this.personService.getAllPersons().pipe(take(1)).subscribe(persons => {
