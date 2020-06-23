@@ -108,12 +108,16 @@ export class ProfileComponent implements OnInit {
     this.selectedLanguage = event.value;
     if (this.selectedLanguage==='java') {
       this.lang = 0;
+      this.selectedLanguage = 'Java';
     } else if (this.selectedLanguage==='python') {
       this.lang = 1;
+      this.selectedLanguage = 'Python';
     } else if (this.selectedLanguage==='javascript') {
       this.lang = 2;
+      this.selectedLanguage = 'JavaScript';
     }  else if (this.selectedLanguage==='scala') {
       this.lang = 3;
+      this.selectedLanguage = 'Scala';
     } else if (this.selectedLanguage==='csharp') {
       this.lang = 4;
       // We also set the selected language to be 'C#' This is so that is shows up correctly on the page.
@@ -130,7 +134,7 @@ export class ProfileComponent implements OnInit {
     if (this.selectedLanguage === "C#") {
       return this.router.navigate(['challenge/csharp/' + num])
     } else {
-      return this.router.navigate(['challenge/' + this.selectedLanguage + '/' + num])
+      return this.router.navigate(['challenge/' + this.selectedLanguage.toLowerCase() + '/' + num])
     }
   }
 

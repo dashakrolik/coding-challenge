@@ -74,6 +74,10 @@ export class LeaderboardComponent implements OnInit {
       this.languageIndex = 1;
     } else if (this.selectedLanguage.toLowerCase() === 'javascript') {
       this.languageIndex = 2;
+    } else if (this.selectedLanguage.toLowerCase() === 'scala') {
+      this.languageIndex = 3;
+    } else if (this.selectedLanguage.toLowerCase() === 'csharp') {
+      this.languageIndex = 4;
     }
     this.displayedColumns[1] = this.selectedLanguage + 'Points';
   }
