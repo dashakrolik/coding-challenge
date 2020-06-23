@@ -16,9 +16,9 @@
             <td mat-cell *matCellDef="let person">{{person.firstName}}</td>
         </ng-container>
 
-        <ng-container matColumnDef="{{selectedLanguage.toLowerCase() + 'Points'}}">
+        <ng-container matColumnDef="displayedPoints">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Points</th>
-            <td mat-cell *matCellDef="let person">{{person.points[languageIndex]}}</td>
+            <td mat-cell *matCellDef="let person">{{person.displayedPoints}}</td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

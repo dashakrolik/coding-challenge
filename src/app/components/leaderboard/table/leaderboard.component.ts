@@ -26,25 +26,38 @@ import { LanguageService } from '@services/language/language.service';
 })
 export class LeaderboardComponent implements OnInit {
 
-  displayedColumns = ['firstName', 'points'];
-  dataSource: MatTableDataSource<IPerson>;
+  constructor(
+    private personService: PersonService,
+    private router: Router,
+    private languageService: LanguageService,
+  ) { }
+
+  displayedColumns = ['firstName', 'displayedPoints'];
+  dataSource: MatTableDataSource<IPersonInTable>;
   state: string;
   allLanguages: ILanguage[];
   selectedLanguage: string;
   top: number;
   left: number;
   personOnCard: IPerson;
-  languageIndex: number;
+  persons: IPerson[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<IPerson>;
+  @ViewChild(MatSort) set sort(sort: MatSort) {
+    if (this.dataSource) { this.dataSource.sort = sort; }
+    console.log(this.dataSource);
+  }
 
-  constructor(
-    private personService: PersonService,
-    private router: Router,
-    private languageService: LanguageService,
-  ) { }
+
+  ngOnInit(): void {
+    this.personService.getAllPersons().pipe(take(1)).subscribe(persons => {
+      this.persons = persons;
+    });
+    this.languageService.getLanguages().pipe(take(1)).subscribe(languages => {
+      this.allLanguages = languages;
+    });
+  }
 
   showCard = (event: MouseEvent, person: IPerson) => {
     this.personOnCard = person;
@@ -52,34 +65,30 @@ export class LeaderboardComponent implements OnInit {
     this.left = event.x + 10;
   }
 
-  ngOnInit(): void {
-    this.languageIndex = 0;
-    this.personService.getAllPersons().pipe(take(1)).subscribe(persons => {
-      this.setDataSource(persons);
-      this.dataSource.sort = this.sort;
-    });
-    this.languageService.getLanguages().pipe(take(1)).subscribe(languages => {
-      this.allLanguages = languages;
-    });
-  }
-
-  setDataSource(data: IPerson[]) {
+  setDataSource(data: IPersonInTable[]) {
     this.dataSource = new MatTableDataSource(data);
   }
 
   selectLanguage = () => {
+    const languageIndex = this.findLanguageIndex();
+    this.persons.forEach(person => {
+      (person as IPersonInTable).displayedPoints = person.points[languageIndex];
+    });
+    this.dataSource = new MatTableDataSource(this.persons as IPersonInTable[]);
+  }
+
+  findLanguageIndex = () => {
     if (this.selectedLanguage.toLowerCase() === 'java') {
-      this.languageIndex = 0;
+      return 0;
     } else if (this.selectedLanguage.toLowerCase() === 'python') {
-      this.languageIndex = 1;
+      return 1;
     } else if (this.selectedLanguage.toLowerCase() === 'javascript') {
-      this.languageIndex = 2;
+      return 2;
     } else if (this.selectedLanguage.toLowerCase() === 'scala') {
-      this.languageIndex = 3;
+      return 3;
     } else if (this.selectedLanguage.toLowerCase() === 'csharp') {
-      this.languageIndex = 4;
+      return 4;
     }
-    this.displayedColumns[1] = this.selectedLanguage + 'Points';
   }
 
   goHome = (): Promise<boolean> => this.router.navigate(['/']);
