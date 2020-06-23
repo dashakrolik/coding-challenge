@@ -6,13 +6,13 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PersonTableComponent } from './person-table.component';
 
-describe('PersonTableComponent', () => {
+xdescribe('PersonTableComponent', () => {
   let component: PersonTableComponent;
   let fixture: ComponentFixture<PersonTableComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PersonTableComponent ],
+      declarations: [PersonTableComponent],
       imports: [
         NoopAnimationsModule,
         MatPaginatorModule,
