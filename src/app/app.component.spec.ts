@@ -34,7 +34,7 @@ const mockRoutes: Routes = [
   },
 ];
 
-fdescribe('AppComponent', () => {
+describe('AppComponent', () => {
   let location: Location;
   let router: Router;
   let OverlayServiceSpy: jasmine.SpyObj<{}>;

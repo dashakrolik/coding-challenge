@@ -2,15 +2,15 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SubmitDialogComponent } from './submit-dialog.component';
 
-describe('SubmitDialogComponent', () => {
+xdescribe('SubmitDialogComponent', () => {
   let component: SubmitDialogComponent;
   let fixture: ComponentFixture<SubmitDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SubmitDialogComponent ]
+      declarations: [SubmitDialogComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
