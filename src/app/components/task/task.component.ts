@@ -125,7 +125,6 @@ export class TaskComponent implements OnInit, OnDestroy {
           this.codeResult = '';
           this.tokenStorageService.setKernelId(response.kernelId, this.selectedLanguage.language);
           this.tests = response.testResultsTest;
-          console.log(this.tests);
           this.loadingSubmit = false;
           if (!(this.task.id === this.totalNumberOfTasks)) {
             this.tests.every(test => test === true ? this.showNextTaskButton = true : null);
