@@ -17,7 +17,7 @@ import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.comp
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.scss']
 })
-export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
+export class TaskComponent implements OnInit, OnDestroy {
   @ViewChild('editor') editor: AceEditorComponent;
   loading = false;
   loadingSubmit = false;
@@ -36,8 +36,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
   showNextTaskButton = false;
   text: string;
   codeResult: any;
-  // tests: boolean[] = [true, true, true, true, true];
-  tests: boolean[] = [false, false, false, false, false];
+  tests: boolean[] = [];
 
   subscribeComponent = SubscribeComponent;
   taskSpecificDescription: string;
@@ -64,8 +63,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
     this.retrieveAndSetLanguage();
   }
 
-  ngAfterViewInit() {
-  }
+
   ngOnDestroy() {
     this.taskSubscription.unsubscribe();
     this.languageSubscription.unsubscribe();
@@ -116,7 +114,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
         answer: this.codeSnippet,
         languageId: this.selectedLanguage.id,
         taskId: this.task.id,
-        // we should not have to send the folowing two lines to the backend then
+        // we should not have to send the following two lines to the backend then
         correct: [],
         runningTime: 0
       };
@@ -158,6 +156,7 @@ export class TaskComponent implements OnInit, OnDestroy, AfterViewInit {
       })
     ).subscribe((task: ITask) => {
       this.task = task;
+      this.tests = task.defaultTestsArray;
       this.setBoilerPlateCode();
     });
   }

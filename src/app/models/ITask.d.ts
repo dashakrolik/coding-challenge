@@ -15,4 +15,5 @@ interface ITask {
     boilerplateJavascript: string;
     boilerplateScala: string;
     boilerplateCSharp: string;
+    defaultTestsArray: boolean[];
 }

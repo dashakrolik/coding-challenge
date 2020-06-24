@@ -1,4 +1,3 @@
-<!-- We load the task and show the description -->
 <ng-container *ngIf="selectedLanguage && task">
   <div class="container">
     <h1 class="assignment-header">Risk IT Test</h1>
@@ -85,5 +84,10 @@
     <button *ngIf="redirectToFinish()" (click)="goToLeaderboard()" mat-raised-button>
       Finished!
     </button>
+    <app-canvas class="canvas" [(results)]="tests"></app-canvas>
   </div>
 </ng-container>
+
+
+
+
