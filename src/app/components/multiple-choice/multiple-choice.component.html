@@ -1,0 +1,12 @@
+<h1>Multiple choice questions</h1>
+
+<p>{{introtext}}</p>
+
+<h2>{{question.question}}</h2>
+
+<mat-radio-group [(ngModel)]="selectedAnswer" class="radioGroup" (ngModelChange)="pickedAnAnswer()">
+    <mat-radio-button *ngFor="let answer of question.answerOptions" [value]="answer" class="radioAnswer">
+        {{answer}}
+    </mat-radio-button>
+</mat-radio-group>
+<button (click)="submit()">Submit</button>
