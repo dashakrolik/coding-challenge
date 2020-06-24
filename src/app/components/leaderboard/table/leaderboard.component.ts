@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortable } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { take } from 'rxjs/operators';
 import { trigger, state, style, animate, transition } from '@angular/animations';
@@ -48,7 +48,7 @@ export class LeaderboardComponent implements OnInit {
   }
   @ViewChild(MatSort) set sort(sort: MatSort) {
     if (this.dataSource) { this.dataSource.sort = sort; }
-    console.log(this.dataSource);
+    this.dataSource.sort.sort(({ id: 'displayedPoints', start: 'desc' }) as MatSortable);
   }
 
   ngOnInit(): void {
@@ -66,16 +66,13 @@ export class LeaderboardComponent implements OnInit {
     this.left = event.x + 10;
   }
 
-  setDataSource(data: IPersonInTable[]) {
-    this.dataSource = new MatTableDataSource(data);
-  }
-
   selectLanguage = () => {
     const languageIndex = this.findLanguageIndex();
     this.persons.forEach(person => {
       (person as IPersonInTable).displayedPoints = person.points[languageIndex];
     });
     this.dataSource = new MatTableDataSource(this.persons as IPersonInTable[]);
+    this.dataSource.sort.sort(({ id: 'displayedPoints', start: 'desc' }) as MatSortable);
   }
 
   findLanguageIndex = () => {
