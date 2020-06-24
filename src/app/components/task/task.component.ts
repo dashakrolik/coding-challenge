@@ -37,7 +37,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   text: string;
   codeResult: any;
   // tests: boolean[] = [true, true, true, true, true];
-  tests: boolean[] = [false, false, false, false, false];
+  tests: boolean[] = [];
 
   subscribeComponent = SubscribeComponent;
   taskSpecificDescription: string;
@@ -158,6 +158,7 @@ export class TaskComponent implements OnInit, OnDestroy {
       })
     ).subscribe((task: ITask) => {
       this.task = task;
+      this.tests = task.defaultTestsArray;
       this.setBoilerPlateCode();
     });
   }
@@ -205,6 +206,7 @@ export class TaskComponent implements OnInit, OnDestroy {
 
 
   goToTask = () => {
+
     this.tests = [false, false, false, false, false];
     const taskNumber = parseInt(this.route.firstChild.snapshot.params.id) + 1;
     this.router.navigateByUrl('challenge/' + this.selectedLanguage.language + '/' + taskNumber);
