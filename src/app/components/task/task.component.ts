@@ -36,7 +36,6 @@ export class TaskComponent implements OnInit, OnDestroy {
   showNextTaskButton = false;
   text: string;
   codeResult: any;
-  // tests: boolean[] = [true, true, true, true, true];
   tests: boolean[] = [];
 
   subscribeComponent = SubscribeComponent;
@@ -115,7 +114,7 @@ export class TaskComponent implements OnInit, OnDestroy {
         answer: this.codeSnippet,
         languageId: this.selectedLanguage.id,
         taskId: this.task.id,
-        // we should not have to send the folowing two lines to the backend then
+        // we should not have to send the following two lines to the backend then
         correct: [],
         runningTime: 0
       };
@@ -206,8 +205,6 @@ export class TaskComponent implements OnInit, OnDestroy {
 
 
   goToTask = () => {
-
-    this.tests = [false, false, false, false, false];
     const taskNumber = parseInt(this.route.firstChild.snapshot.params.id) + 1;
     this.router.navigateByUrl('challenge/' + this.selectedLanguage.language + '/' + taskNumber);
   }
@@ -216,12 +213,9 @@ export class TaskComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('leaderboard');
   }
 
-  showNextAndResetTests = () => {
-    return this.showNextTaskButton = true;
-  }
   // Map over this instead of hard coding, this is not readable
   // tslint:disable-next-line: max-line-length
-  completeTask = (): boolean => this.tests.every(test => (test === true && this.task.id !== this.totalNumberOfTasks) ? this.showNextAndResetTests() : null);
+  completeTask = (): boolean => this.tests.every(test => (test === true && this.task.id !== this.totalNumberOfTasks) ? this.showNextTaskButton = true : null);
   // tslint:disable-next-line: max-line-length
   redirectToFinish = () => this.tests.every(test => (test === true && this.task.id === this.totalNumberOfTasks) ? this.goToFinishTaskComponent = true : null);
 
