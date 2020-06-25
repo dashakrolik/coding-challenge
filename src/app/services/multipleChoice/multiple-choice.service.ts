@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class MultipleChoiceService {
 
-  readonly endpoint = 'multiple_choice';
+  private readonly endpoint = 'multi';
 
   constructor(
     private http: HttpClientService
@@ -15,7 +15,8 @@ export class MultipleChoiceService {
 
   getQuestion = (questionid: number): Observable<IMultipleChoiceQuestion> => this.http.get(this.endpoint + '/' + questionid);
 
-  postAnswer = (answerNumber: number, questionid: number): Observable<boolean> => {
-    return this.http.post(this.endpoint, { answerNumber, questionid });
+  getIsAnswerCorrect = (submission: IMultipleChoiceSubmission): Observable<IMultipleChoiceIsAnswerCorrect> => {
+    return this.http.post(this.endpoint + '/submit', submission);
   }
+
 }
