@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MultipleChoiceService } from '@services/multiple-choice.service';
+import { MultipleChoiceService } from '@services/multipleChoice/multiple-choice.service';
 
 @Component({
   selector: 'app-multiple-choice',
