@@ -20,6 +20,8 @@ export class PersonService {
 
   getPersonPoints = (): Observable<IPerson> => this.http.get(this.endpoint + '/points');
 
+  getPersonProgress = (language: ILanguage): Observable<number> => this.http.post(this.endpoint + '/progress', language);
+
   updatePerson = (person: IPerson): Observable<IPerson> => this.http.put(this.endpoint, person);
 
   deletePerson = (person: IPerson): Observable<IPerson> => this.http.delete(this.endpoint + '/' + person.id, person);

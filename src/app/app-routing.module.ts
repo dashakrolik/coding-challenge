@@ -42,16 +42,19 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'multi',
-    component: MultipleChoiceComponent
+    path: 'multi/:language/:questionId',
+    component: MultipleChoiceComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'admin',
     component: AdminPanelComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'admin/profile/:id',
-    component: AdminProfileComponent
+    component: AdminProfileComponent,
+    canActivate: [AuthGuard]
   },
   {
     // you have to be logged in to see this page

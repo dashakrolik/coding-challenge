@@ -1,4 +1,31 @@
-.radioGroup{
-    display: flex;
-    flex-direction: column;
+.mat-radio-group {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
+
+.mat-radio-button {
+  padding: 0 1em;
+  transition-duration: .25s;
+  ;
+}
+
+.correct {
+  background-color: rgba(6, 143, 6, 0.753);
+}
+
+.wrong {
+  background-color: rgba(255, 40, 40, 0.719);
+}
+
+h1 {
+  margin: 1em;
+}
+
+h2 {
+  margin: 1em;
+}
+
+p {
+  margin: 1em;
 }

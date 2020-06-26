@@ -4,14 +4,15 @@
 
 <ng-container *ngIf="question">
 
-    <h2>{{question.question}}</h2>
+  <h2>{{question.question}}</h2>
 
-    <mat-radio-group [(ngModel)]="selectedAnswer" class="radioGroup">
-        <mat-radio-button *ngFor="let answer of question.multipleChoiceAnswerOptions" [value]="answer"
-            class="radioAnswer">
-            {{answer.answer}}
-        </mat-radio-button>
-    </mat-radio-group>
-    <button (click)="submit()">Submit</button>
+  <mat-radio-group [(ngModel)]="selectedAnswer">
+    <mat-radio-button *ngFor="let answer of question.multipleChoiceAnswerOptions" [value]="answer"
+      [ngClass]="answer.id===isAnswerCorrect?.multipleChoiceAnswerOptionId ? chosenAnswerClass : ''">
+      {{answer.answer}}
+    </mat-radio-button>
+  </mat-radio-group>
+  <button (click)="submit()" *ngIf="!completed">Submit</button>
+  <button (click)="nextQuestion()" *ngIf="completed">Next</button>
 
 </ng-container>
