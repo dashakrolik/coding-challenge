@@ -39,14 +39,17 @@ export class WelcomePageComponent implements OnInit {
   }
 
   submit = () => {
-    this.checkIsLoggedIn();
-    this.personService.getPersonProgress(this.selectedLanguage).subscribe(locationNumber => {
-      if (locationNumber === 0) {
-        this.router.navigateByUrl(`challenge/${this.selectedLanguage.language}/${this.taskId}`);
-      } else {
-        this.router.navigateByUrl(`multi/${this.selectedLanguage.language}/${locationNumber}`);
-      }
-    });
+    if (this.checkIsLoggedIn()) {
+      this.personService.getPersonProgress(this.selectedLanguage).subscribe(progressObject => {
+        console.log('progress:', progressObject);
+        if (progressObject.multipleChoiceCompleted) {
+          this.router.navigateByUrl(`challenge/${this.selectedLanguage.language}/${this.taskId}`);
+        } else {
+          console.log(`multi/${this.selectedLanguage.language}/${progressObject.multipleChoiceProgress}`);
+          this.router.navigateByUrl(`multi/${this.selectedLanguage.language}/${progressObject.multipleChoiceProgress}`);
+        }
+      });
+    }
   }
 
   loginWindow(content: ComponentType<SubscribeComponent>) {
@@ -60,6 +63,3 @@ export class WelcomePageComponent implements OnInit {
     return this.tokenStorageService.isUserLoggedIn();
   }
 }
-
-
-

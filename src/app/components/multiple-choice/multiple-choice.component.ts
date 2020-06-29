@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MultipleChoiceService } from '@services/multipleChoice/multiple-choice.service';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
+import { LanguageService } from '@services/language/language.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-multiple-choice',
@@ -15,6 +17,7 @@ export class MultipleChoiceComponent implements OnInit, OnDestroy {
 
   questionNumber = parseInt(this.route.snapshot.params.questionId);
   language = this.route.snapshot.params.language;
+  languageId: number;
   question: IMultipleChoiceQuestion;
   selectedAnswer: IMultipleChoiceAnswerOption;
   isAnswerCorrect: IMultipleChoiceIsAnswerCorrect;
@@ -23,17 +26,24 @@ export class MultipleChoiceComponent implements OnInit, OnDestroy {
 
   $questionSubscription: Subscription;
   $submissionSubscription: Subscription;
+  $languageSubscription: Subscription;
 
   constructor(
     private multipleChoiceService: MultipleChoiceService,
     private router: Router,
     private route: ActivatedRoute,
+    private languageService: LanguageService,
   ) { }
 
   ngOnInit(): void {
     this.completed = false;
     this.$questionSubscription = this.multipleChoiceService.getQuestion(this.questionNumber).subscribe(question => {
       this.question = question;
+    });
+    this.$languageSubscription = this.languageService.getLanguages().subscribe(languages => {
+      languages.forEach((language => {
+        if (language.language === this.language) { this.languageId = language.id; }
+      }));
     });
   }
 
@@ -42,6 +52,8 @@ export class MultipleChoiceComponent implements OnInit, OnDestroy {
     let multipleChoiceSubmission: IMultipleChoiceSubmission;
     multipleChoiceSubmission = {
       id: undefined,
+      personId: undefined,
+      languageId: this.languageId,
       questionId: this.question.id,
       answerId: this.selectedAnswer.id,
       isAnswerCorrect: undefined
