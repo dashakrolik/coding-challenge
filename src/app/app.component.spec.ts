@@ -2,7 +2,7 @@ import { async, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { Component, NgZone } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router, RouterModule, Routes } from '@angular/router';
-import { Location } from "@angular/common";
+import { Location } from '@angular/common';
 import { OverlayService } from '@services/overlay/overlay.service';
 
 import { AppComponent } from './app.component';
@@ -37,7 +37,7 @@ const mockRoutes: Routes = [
 describe('AppComponent', () => {
   let location: Location;
   let router: Router;
-  let OverlayServiceSpy: jasmine.SpyObj<{}>;
+  const OverlayServiceSpy: jasmine.SpyObj<{}> = null;
   let TokenStorageServiceSpy: jasmine.SpyObj<{ isUserLoggedIn: () => boolean }>;
   let fixture;
 
@@ -55,11 +55,12 @@ describe('AppComponent', () => {
         declarations: [
           AppComponent, WelcomePageStubComponent, LeaderboardStubComponent
         ],
-        providers: [AppComponent, { provide: OverlayService, useValue: OverlayServiceSpy }, { provide: TokenStorageService, useValue: TokenStorageServiceSpy }]
+        providers: [AppComponent, { provide: OverlayService, useValue: OverlayServiceSpy }, 
+          { provide: TokenStorageService, useValue: TokenStorageServiceSpy }]
       }).compileComponents();
 
-      router = TestBed.get(Router);
-      location = TestBed.get(Location);
+      router = TestBed.inject(Router);
+      location = TestBed.inject(Location);
 
       fixture = TestBed.createComponent(AppComponent);
       router.initialNavigation();
@@ -94,12 +95,12 @@ describe('AppComponent', () => {
       const compiled = fixture.nativeElement;
       compiled.querySelector('button[name=leaderboard]').click();
       tick();
-      expect(location.path()).toBe("/leaderboard")
+      expect(location.path()).toBe('/leaderboard');
     }));
 
     it('calls isUserLoggedIn from the template via the checkLogin method', () => {
-      const fixture = TestBed.createComponent(AppComponent);
-      fixture.detectChanges();
+      const fixtureVar = TestBed.createComponent(AppComponent);
+      fixtureVar.detectChanges();
       expect(TokenStorageServiceSpy.isUserLoggedIn).toHaveBeenCalledTimes(6);
     });
   });
@@ -118,11 +119,12 @@ describe('AppComponent', () => {
         declarations: [
           AppComponent, WelcomePageStubComponent, LeaderboardStubComponent
         ],
-        providers: [AppComponent, { provide: OverlayService, useValue: OverlayServiceSpy }, { provide: TokenStorageService, useValue: TokenStorageServiceSpy }]
+        providers: [AppComponent, { provide: OverlayService, useValue: OverlayServiceSpy }, 
+          { provide: TokenStorageService, useValue: TokenStorageServiceSpy }]
       }).compileComponents();
 
-      router = TestBed.get(Router);
-      location = TestBed.get(Location);
+      router = TestBed.inject(Router);
+      location = TestBed.inject(Location);
 
       fixture = TestBed.createComponent(AppComponent);
       router.initialNavigation();
@@ -142,7 +144,7 @@ describe('AppComponent', () => {
       const compiled = fixture.nativeElement;
       compiled.querySelector('button[name=my-account]').click();
       tick();
-      expect(location.path()).toBe("/profile")
+      expect(location.path()).toBe('/profile');
     }));
   });
 });
