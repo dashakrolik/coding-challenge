@@ -57,6 +57,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    console.log("wut wut wut wut");
     this.taskService.getTotalNumberOfTasks().subscribe(response => this.totalNumberOfTasks = response);
 
     this.retrieveAndSetTask();
