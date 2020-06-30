@@ -14,7 +14,7 @@ export class SubmissionService {
     private httpClient: HttpClient
   ) { }
 
-  getAllSubmissionsFromPerson = (personId: number): Observable<ISubmission[]> => this.http.get(this.endpoint + "/" + personId);
+  getAllSubmissionsFromPerson = (personId: number): Observable<ISubmission[]> => this.http.get(this.endpoint + '/' + personId);
 
   getAllSubmissionsProfile = (): Observable<ISubmission[]> => this.http.get(this.endpoint + '/person');
 

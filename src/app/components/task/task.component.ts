@@ -85,9 +85,9 @@ export class TaskComponent implements OnInit, OnDestroy {
       response.forEach(line => {
         if (line.errorType === null) {
           // For python it returns a single line split with newlines. Other languages get a list of lines.
-          line.contentValue.split("\n").forEach(entry => {
+          line.contentValue.split('\n').forEach(entry => {
             this.outputLines.push(entry);
-          })
+          });
         } else {
           this.outputLines.push(line.errorType);
           this.outputLines.push(line.errorValue);

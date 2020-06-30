@@ -34,7 +34,7 @@ export class ProfileComponent implements OnInit {
   pointsTasks: number[][] = [[], [], [], [], []];
   // the amount of tests that each task has.
   taskTests: number[] = [5, 6, 8];
-  isAdmin: boolean = false;
+  isAdmin = false;
 
   constructor(
     private tokenStorageService: TokenStorageService,
@@ -53,12 +53,12 @@ export class ProfileComponent implements OnInit {
         // We will than count the number of correct tests that submission has.
         // The highest will count for the score that will be displayed on the screen.
         const amountCorrect = submission.correct.filter(Boolean).length;
-        for (var languageNumber = 1; languageNumber <= 3; languageNumber++) {
-          for (var taskNumber = 1; taskNumber <= 3; taskNumber++) {
-            if (submission.languageId == languageNumber) {
-              if (submission.taskId == taskNumber) {
-                if (amountCorrect > this.tasksCorrect[languageNumber-1][taskNumber-1]) {
-                  this.tasksCorrect[languageNumber-1][taskNumber-1] = amountCorrect;
+        for (let languageNumber = 1; languageNumber <= 3; languageNumber++) {
+          for (let taskNumber = 1; taskNumber <= 3; taskNumber++) {
+            if (submission.languageId === languageNumber) {
+              if (submission.taskId === taskNumber) {
+                if (amountCorrect > this.tasksCorrect[languageNumber - 1][taskNumber - 1]) {
+                  this.tasksCorrect[languageNumber - 1][taskNumber - 1] = amountCorrect;
                 }
               }
             }
@@ -106,19 +106,19 @@ export class ProfileComponent implements OnInit {
 
   onSelect = (event: MatSelectChange) => {
     this.selectedLanguage = event.value;
-    if (this.selectedLanguage==='java') {
+    if (this.selectedLanguage === 'java') {
       this.lang = 0;
-    } else if (this.selectedLanguage==='python') {
+    } else if (this.selectedLanguage === 'python') {
       this.lang = 1;
-    } else if (this.selectedLanguage==='javascript') {
+    } else if (this.selectedLanguage === 'javascript') {
       this.lang = 2;
-    }  else if (this.selectedLanguage==='scala') {
+    }  else if (this.selectedLanguage === 'scala') {
       this.lang = 3;
-    } else if (this.selectedLanguage==='csharp') {
+    } else if (this.selectedLanguage === 'csharp') {
       this.lang = 4;
       // We also set the selected language to be 'C#' This is so that is shows up correctly on the page.
-      this.selectedLanguage = "C#";
-    }else {
+      this.selectedLanguage = 'C#';
+    } else {
       this.lang = null;
     }
   }
@@ -127,10 +127,10 @@ export class ProfileComponent implements OnInit {
 
   goToTask = (taskNumber: number): Promise<boolean> => {
     const num = taskNumber + 1;
-    if (this.selectedLanguage === "C#") {
-      return this.router.navigate(['challenge/csharp/' + num])
+    if (this.selectedLanguage === 'C#') {
+      return this.router.navigate(['challenge/csharp/' + num]);
     } else {
-      return this.router.navigate(['challenge/' + this.selectedLanguage + '/' + num])
+      return this.router.navigate(['challenge/' + this.selectedLanguage + '/' + num]);
     }
   }
 
