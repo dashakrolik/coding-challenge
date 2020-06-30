@@ -18,19 +18,13 @@ export class SubmissionService {
 
   getAllSubmissionsProfile = (): Observable<ISubmission[]> => this.http.get(this.endpoint + '/person');
 
-  createSubmission = (submission: ISubmission, kernelId: string): Observable<ISubmitCodeResponse> => {
+  createSubmission = (submission: ISubmission): Observable<boolean[]> => {
     
-    return this.http.post('submission', {
-      submission,
-      kernelId,
-    });
+    return this.http.post('submission', submission);
   }
 
-  runCode = (submission: ISubmission, kernelId: string): Observable<IRunCodeResponse> => {
+  runCode = (submission: ISubmission): Observable<IJupyterResponse[]> => {
     
-    return this.http.post('submission/runcode', {
-      submission,
-      kernelId,
-    });
+    return this.http.post('submission/runcode', submission);
   }
 }
