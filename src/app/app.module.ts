@@ -25,6 +25,7 @@ import { AdminPanelComponent } from '@components/admin/admin-panel/admin-panel.c
 import { PersonTableComponent } from '@components/admin/person-table/person-table.component';
 import { ProfileComponent as AdminProfileComponent } from '@components/admin/profile/profile.component';
 import { SubmissionTableComponent } from '@components/admin/submission-table/submission-table.component';
+import { FeedbackComponent } from './components/admin/feedback/feedback.component';
 import { TaskComponent as AdminTaskComponent } from '@components/admin/task/task.component';
 import { CandidateComponent } from '@components/candidate/candidate.component';
 import { DropdownComponent } from '@components/dropdown/dropdown.component';
@@ -66,6 +67,7 @@ import { authInterceptorProviders } from './guards/auth/auth.interceptor';
     LeaderboardComponent,
     CardComponent,
     CanvasComponent,
+    FeedbackComponent,
   ],
   imports: [
     BrowserModule,

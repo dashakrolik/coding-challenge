@@ -12,6 +12,7 @@ import {
   ProfileComponent as AdminProfileComponent
 } from './components/admin/profile/profile.component';
 import { LeaderboardComponent } from '@components/leaderboard/table/leaderboard.component';
+import { FeedbackComponent } from '@components/admin/feedback/feedback.component';
 
 const routes: Routes = [
   {
@@ -47,6 +48,10 @@ const routes: Routes = [
   {
     path: 'admin/profile/:id',
     component: AdminProfileComponent
+  },
+  {
+    path: 'admin/feedback',
+    component: FeedbackComponent
   },
   {
     // you have to be logged in to see this page
