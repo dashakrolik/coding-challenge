@@ -53,12 +53,12 @@ export class ProfileComponent implements OnInit {
         // We will than count the number of correct tests that submission has.
         // The highest will count for the score that will be displayed on the screen.
         const amountCorrect = submission.correct.filter(Boolean).length;
-        for (var languageNumber = 1; languageNumber <= 3; languageNumber++) {
-          for (var taskNumber = 1; taskNumber <= 3; taskNumber++) {
-            if (submission.languageId == languageNumber) {
-              if (submission.taskId == taskNumber) {
-                if (amountCorrect > this.tasksCorrect[languageNumber-1][taskNumber-1]) {
-                  this.tasksCorrect[languageNumber-1][taskNumber-1] = amountCorrect;
+        for (let languageNumber = 1; languageNumber <= 3; languageNumber++) {
+          for (let taskNumber = 1; taskNumber <= 3; taskNumber++) {
+            if (submission.languageId === languageNumber) {
+              if (submission.taskId === taskNumber) {
+                if (amountCorrect > this.tasksCorrect[languageNumber - 1][taskNumber - 1]) {
+                  this.tasksCorrect[languageNumber - 1][taskNumber - 1] = amountCorrect;
                 }
               }
             }
