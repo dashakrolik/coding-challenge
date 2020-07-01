@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./card.component.scss']
 })
 export class CardComponent {
+  // tslint:disable-next-line:no-input-rename
   @Input('person') person: IPerson;
   languages$: Observable<ILanguage[]>;
 
