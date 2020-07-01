@@ -52,11 +52,13 @@ const routes: Routes = [
   },
   {
     path: 'admin/feedback',
-    component: FeedbackComponent
+    component: FeedbackComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'give_feedback',
-    component: GiveFeedbackComponent
+    component: GiveFeedbackComponent,
+    canActivate: [AuthGuard]
   },
   {
     // you have to be logged in to see this page

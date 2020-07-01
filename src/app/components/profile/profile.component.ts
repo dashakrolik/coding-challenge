@@ -36,6 +36,8 @@ export class ProfileComponent implements OnInit {
   taskTests: number[] = [5, 6, 8];
   isAdmin: boolean = false;
 
+  person: IPerson;
+
   constructor(
     private tokenStorageService: TokenStorageService,
     private router: Router,
@@ -79,6 +81,8 @@ export class ProfileComponent implements OnInit {
       this.scoreJavascript = person.points[2];
       this.scoreScala = person.points[3];
       this.scoreCSharp = person.points[4];
+
+      this.person = person;
     });
 
     // TODO: get the score of the languages from the person table
@@ -135,4 +139,18 @@ export class ProfileComponent implements OnInit {
   }
 
   goAdmin = (): Promise<boolean> => this.router.navigate(['/admin']);
+
+  goToFeedbackScreen = (): Promise<boolean> => this.router.navigate(['/give_feedback']);
+  
+  removeAccount = (): void => {
+    if(confirm('Are you sure you want to delete your account and your progress?')) {
+      this.personService.deletePerson(this.person).pipe(
+        take(1)
+      ).subscribe(() => {
+        this.tokenStorageService.logOut();
+        this.router.navigate(['/']);
+      });
+      console.log("Implement delete functionality here");
+    }
+  }
 }
