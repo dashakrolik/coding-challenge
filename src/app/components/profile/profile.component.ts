@@ -143,7 +143,7 @@ export class ProfileComponent implements OnInit {
   goToFeedbackScreen = (): Promise<boolean> => this.router.navigate(['/give_feedback']);
   
   removeAccount = (): void => {
-    if(confirm('Are you sure you want to delete your account and your progress?')) {
+    if (confirm('Are you sure you want to delete your account and your progress?')) {
       this.personService.deletePerson(this.person).pipe(
         take(1)
       ).subscribe(() => {
