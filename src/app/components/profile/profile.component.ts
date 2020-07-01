@@ -150,7 +150,6 @@ export class ProfileComponent implements OnInit {
         this.tokenStorageService.logOut();
         this.router.navigate(['/']);
       });
-      console.log("Implement delete functionality here");
     }
   }
 }

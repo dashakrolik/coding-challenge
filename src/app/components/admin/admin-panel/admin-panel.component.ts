@@ -22,6 +22,6 @@ export class AdminPanelComponent implements OnInit {
     // this.tasks$ = this.taskService.getAllTasks();
   }
 
-  goToFeedback = (): Promise<boolean> => this.router.navigate(['/']);
+  goToFeedback = (): Promise<boolean> => this.router.navigate(['/admin/feedback']);
 }
 

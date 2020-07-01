@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FeedbackService } from '@services/feedback/feedback.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,7 +12,8 @@ export class GiveFeedbackComponent implements OnInit {
   feedback: string;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private feedbackService: FeedbackService
   ) { }
 
   ngOnInit(): void {
@@ -19,9 +21,16 @@ export class GiveFeedbackComponent implements OnInit {
 
   sendFeedback = (): void => {
     if (this.feedback === undefined) {
-      alert('please give feedback before sending feedback');
+      alert('please give feedback input before sending feedback');
     } else {
-      console.log("quick test " + this.feedback);
+      this.feedbackService.sendFeedback(this.feedback).subscribe(
+        response => {
+          if (response) {
+            this.feedback = '';
+            alert('thank you for your feedback');
+          }
+        }
+      );
     }
   }
   
