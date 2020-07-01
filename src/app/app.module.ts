@@ -26,6 +26,7 @@ import { PersonTableComponent } from '@components/admin/person-table/person-tabl
 import { ProfileComponent as AdminProfileComponent } from '@components/admin/profile/profile.component';
 import { SubmissionTableComponent } from '@components/admin/submission-table/submission-table.component';
 import { FeedbackComponent } from './components/admin/feedback/feedback.component';
+import { GiveFeedbackComponent } from './components/give-feedback/give-feedback.component';
 import { TaskComponent as AdminTaskComponent } from '@components/admin/task/task.component';
 import { CandidateComponent } from '@components/candidate/candidate.component';
 import { DropdownComponent } from '@components/dropdown/dropdown.component';
@@ -68,6 +69,7 @@ import { authInterceptorProviders } from './guards/auth/auth.interceptor';
     CardComponent,
     CanvasComponent,
     FeedbackComponent,
+    GiveFeedbackComponent,
   ],
   imports: [
     BrowserModule,

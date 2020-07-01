@@ -13,6 +13,7 @@ import {
 } from './components/admin/profile/profile.component';
 import { LeaderboardComponent } from '@components/leaderboard/table/leaderboard.component';
 import { FeedbackComponent } from '@components/admin/feedback/feedback.component';
+import { GiveFeedbackComponent } from '@components/give-feedback/give-feedback.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,10 @@ const routes: Routes = [
   {
     path: 'admin/feedback',
     component: FeedbackComponent
+  },
+  {
+    path: 'give_feedback',
+    component: GiveFeedbackComponent
   },
   {
     // you have to be logged in to see this page
