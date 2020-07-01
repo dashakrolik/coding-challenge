@@ -79,16 +79,15 @@ export class TaskComponent implements OnInit, OnDestroy {
       correct: [],
       runningTime: 0
     };
-    const kernelId = this.tokenStorageService.getKernelId(this.selectedLanguage.language);
-    await this.submissionService.runCode(runCodeSubmission, kernelId).toPromise().then(response => {
+
+    await this.submissionService.runCode(runCodeSubmission).toPromise().then(response => {
       this.outputLines = [];
-      this.tokenStorageService.setKernelId(response.kernelId, this.selectedLanguage.language);
-      response.jupyterResponses.forEach(line => {
+      response.forEach(line => {
         if (line.errorType === null) {
           // For python it returns a single line split with newlines. Other languages get a list of lines.
-          line.contentValue.split("\n").forEach(entry => {
+          line.contentValue.split('\n').forEach(entry => {
             this.outputLines.push(entry);
-          })
+          });
         } else {
           this.outputLines.push(line.errorType);
           this.outputLines.push(line.errorValue);
@@ -118,13 +117,11 @@ export class TaskComponent implements OnInit, OnDestroy {
         correct: [],
         runningTime: 0
       };
-      // const kernelId = this.tokenStorageService.getKernelId(this.selectedLanguage.language);
 
-      this.submissionService.createSubmission(submission, this.selectedLanguage.language).subscribe(
+      this.submissionService.createSubmission(submission).subscribe(
         response => {
           this.codeResult = '';
-          this.tokenStorageService.setKernelId(response.kernelId, this.selectedLanguage.language);
-          this.tests = response.testResultsTest;
+          this.tests = response;
           this.loadingSubmit = false;
           if (!(this.task.id === this.totalNumberOfTasks)) {
             this.tests.every(test => test === true ? this.showNextTaskButton = true : null);
