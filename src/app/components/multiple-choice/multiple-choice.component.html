@@ -8,8 +8,8 @@
 
   <mat-radio-group [(ngModel)]="selectedAnswer">
     <mat-radio-button [disabled]="completed" *ngFor="let answer of question.multipleChoiceAnswerOptions"
-      [value]="answer" [ngClass]="answer.id===isAnswerCorrect?.multipleChoiceAnswerOptionId ? chosenAnswerClass : ''">
-      {{answer.answer}}
+      [value]="answer" [ngClass]="answer === selectedAnswer ? chosenAnswerClass : ''">
+      {{answer}}
     </mat-radio-button>
   </mat-radio-group>
   <button [disabled]="!selectedAnswer" (click)="submit()" *ngIf="!completed">Submit</button>

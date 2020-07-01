@@ -13,11 +13,11 @@ export class MultipleChoiceService {
     private http: HttpClientService
   ) { }
 
-  getQuestion = (language: string, questionid: number): Observable<IMultipleChoiceQuestion> => {
-    return this.http.get(this.endpoint + '/' + language + '/' + questionid);
+  getQuestion = (language: string, questionNumber: number): Observable<IMultipleChoiceQuestion> => {
+    return this.http.get(this.endpoint + '/' + language + '/' + questionNumber);
   }
 
-  getIsAnswerCorrect = (submission: IMultipleChoiceSubmission): Observable<IMultipleChoiceIsAnswerCorrect> => {
+  getIsAnswerCorrect = (submission: IMultipleChoiceSubmission): Observable<boolean> => {
     return this.http.post(this.endpoint + '/submit', submission);
   }
 

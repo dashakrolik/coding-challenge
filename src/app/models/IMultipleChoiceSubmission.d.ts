@@ -3,6 +3,6 @@ interface IMultipleChoiceSubmission {
     personId: number;
     languageId: number;
     questionId: number;
-    answerId: number;
+    answer: string;
     isAnswerCorrect: boolean;
 }

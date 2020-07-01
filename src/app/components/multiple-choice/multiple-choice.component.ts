@@ -3,7 +3,6 @@ import { MultipleChoiceService } from '@services/multipleChoice/multiple-choice.
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LanguageService } from '@services/language/language.service';
-import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-multiple-choice',
@@ -18,9 +17,9 @@ export class MultipleChoiceComponent implements OnInit, OnDestroy {
   questionNumber = parseInt(this.route.snapshot.params.questionId);
   language = this.route.snapshot.params.language;
   languageId: number;
+  selectedAnswer: string;
+  isAnswerCorrect: boolean;
   question: IMultipleChoiceQuestion;
-  selectedAnswer: IMultipleChoiceAnswerOption;
-  isAnswerCorrect: IMultipleChoiceIsAnswerCorrect;
   chosenAnswerClass: string;
   completed: boolean;
 
@@ -55,12 +54,12 @@ export class MultipleChoiceComponent implements OnInit, OnDestroy {
       personId: undefined,
       languageId: this.languageId,
       questionId: this.question.id,
-      answerId: this.selectedAnswer.id,
+      answer: this.selectedAnswer,
       isAnswerCorrect: undefined
     };
     this.$submissionSubscription = this.multipleChoiceService.getIsAnswerCorrect(multipleChoiceSubmission).subscribe(isAnswerCorrect => {
       this.isAnswerCorrect = isAnswerCorrect;
-      if (isAnswerCorrect.isCorrect) { this.chosenAnswerClass = 'correct'; } else { this.chosenAnswerClass = 'wrong'; }
+      if (isAnswerCorrect) { this.chosenAnswerClass = 'correct'; } else { this.chosenAnswerClass = 'wrong'; }
     });
   }
 
@@ -70,8 +69,8 @@ export class MultipleChoiceComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.$questionSubscription.unsubscribe();
-    this.$submissionSubscription.unsubscribe();
+    this.$questionSubscription?.unsubscribe();
+    this.$submissionSubscription?.unsubscribe();
   }
 
 }
