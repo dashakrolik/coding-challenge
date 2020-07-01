@@ -14,7 +14,7 @@ export class FeedbackService {
 
   getFeedback = (): Observable<IFeedback[]> => this.http.get('feedback');
 
-  sendFeedback = (feedback: string): Observable<ISubmitCodeResponse> => {    
+  sendFeedback = (feedback: string): Observable<Boolean> => {    
     return this.http.post('feedback', feedback);
   }
 }
