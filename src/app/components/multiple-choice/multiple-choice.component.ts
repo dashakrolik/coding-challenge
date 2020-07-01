@@ -37,7 +37,7 @@ export class MultipleChoiceComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.completed = false;
-    this.$questionSubscription = this.multipleChoiceService.getQuestion(this.questionNumber).subscribe(question => {
+    this.$questionSubscription = this.multipleChoiceService.getQuestion(this.language, this.questionNumber).subscribe(question => {
       this.question = question;
     });
     this.$languageSubscription = this.languageService.getLanguages().subscribe(languages => {
