@@ -1,1 +1,7 @@
-<p>feedback works!</p>
+<tbody>
+    <tr *ngFor="let feedback of feedbacks">
+       <td>{{ feedback.id }}</td>
+       <td>{{ feedback.email }}</td>
+       <td>{{ feedback.feedback}}</td>
+    </tr>
+ </tbody>
