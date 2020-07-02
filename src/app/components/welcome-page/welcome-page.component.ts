@@ -40,11 +40,11 @@ export class WelcomePageComponent implements OnInit {
 
   submit = () => {
     if (this.checkIsLoggedIn()) {
-      this.personService.getPersonProgress(this.selectedLanguage).subscribe(progressObject => {
-        if (progressObject.multipleChoiceCompleted) {
+      this.personService.getPersonProgress(this.selectedLanguage).subscribe(multipleChoiceCompleted => {
+        if (multipleChoiceCompleted) {
           this.router.navigateByUrl(`challenge/${this.selectedLanguage.language}/${this.taskId}`);
         } else {
-          this.router.navigateByUrl(`multi/${this.selectedLanguage.language}/${progressObject.multipleChoiceProgress}`);
+          this.router.navigateByUrl(`multi/${this.selectedLanguage.language}`);
         }
       });
     }

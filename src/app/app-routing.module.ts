@@ -42,7 +42,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'multi/:language/:questionId',
+    path: 'multi/:language',
     component: MultipleChoiceComponent,
     canActivate: [AuthGuard]
   },

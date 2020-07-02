@@ -14,7 +14,6 @@ export class MultipleChoiceComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line: max-line-length
   introtext = 'This is a placeholder text explaining that we are first going to ask a few multiple choice questions and then later the user gets to program stuff';
 
-  questionNumber = parseInt(this.route.snapshot.params.questionId);
   language = this.route.snapshot.params.language;
   languageId: number;
   selectedAnswer: string;
@@ -35,8 +34,10 @@ export class MultipleChoiceComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.isAnswerCorrect = undefined;
+    this.chosenAnswerClass = undefined;
     this.completed = false;
-    this.$questionSubscription = this.multipleChoiceService.getQuestion(this.language, this.questionNumber).subscribe(question => {
+    this.$questionSubscription = this.multipleChoiceService.getQuestion(this.language).subscribe(question => {
       this.question = question;
     });
     this.$languageSubscription = this.languageService.getLanguages().subscribe(languages => {
@@ -64,13 +65,17 @@ export class MultipleChoiceComponent implements OnInit, OnDestroy {
   }
 
   nextQuestion = (): void => {
-    this.questionNumber++;
+    if (this.question.questionNumber === 4) {
+      this.router.navigate([`challenge/${this.language}/1`]);
+    }
+    this.ngOnDestroy();
     this.ngOnInit();
   }
 
   ngOnDestroy(): void {
     this.$questionSubscription?.unsubscribe();
     this.$submissionSubscription?.unsubscribe();
+    this.$languageSubscription?.unsubscribe();
   }
 
 }
