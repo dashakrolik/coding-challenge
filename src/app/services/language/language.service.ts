@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { HttpClientService } from '@services/http/http-client.service';
@@ -11,6 +11,9 @@ export class LanguageService {
   constructor(
     private http: HttpClientService
   ) { }
+
+  languages: BehaviorSubject<ILanguage[]> = new BehaviorSubject(undefined);
+  selectedLanguage: BehaviorSubject<ILanguage> = new BehaviorSubject(undefined);
 
   getTheme = (languageName: string): string => {
     // TODO store the theme in the database as well
@@ -47,7 +50,7 @@ export class LanguageService {
           );
           return hashMap;
         }
-      )
-    );
+        )
+      );
   }
 }
