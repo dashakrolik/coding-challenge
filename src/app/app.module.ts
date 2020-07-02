@@ -27,7 +27,6 @@ import { PersonTableComponent } from '@components/admin/person-table/person-tabl
 import { ProfileComponent as AdminProfileComponent } from '@components/admin/profile/profile.component';
 import { SubmissionTableComponent } from '@components/admin/submission-table/submission-table.component';
 import { TaskComponent as AdminTaskComponent } from '@components/admin/task/task.component';
-import { CandidateComponent } from '@components/candidate/candidate.component';
 import { DropdownComponent } from '@components/dropdown/dropdown.component';
 import { OverlayComponent } from '@components/overlay/overlay/overlay.component';
 import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.component';
@@ -51,7 +50,6 @@ import { MultipleChoiceComponent } from './components/multiple-choice/multiple-c
     AppComponent,
     TaskComponent,
     WelcomePageComponent,
-    CandidateComponent,
     OverlayComponent,
     SubscribeComponent,
     DropdownComponent,

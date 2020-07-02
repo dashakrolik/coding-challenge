@@ -14,7 +14,7 @@ export class SubmitDialogComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<SubmitDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: ICandidate
+    @Inject(MAT_DIALOG_DATA) private data: IPerson
   ) { }
 
   ngOnInit(): void {
