@@ -1,0 +1,18 @@
+<h1>Multiple choice questions</h1>
+
+<p>{{introtext}}</p>
+
+<ng-container *ngIf="question">
+
+  <h2>{{question.question}}</h2>
+
+  <mat-radio-group [(ngModel)]="selectedAnswer">
+    <mat-radio-button [disabled]="completed" *ngFor="let answer of question.multipleChoiceAnswerOptions"
+      [value]="answer" [ngClass]="answer === selectedAnswer ? chosenAnswerClass : ''">
+      {{answer}}
+    </mat-radio-button>
+  </mat-radio-group>
+  <button [disabled]="!selectedAnswer" (click)="submit()" *ngIf="!completed">Submit</button>
+  <button (click)="nextQuestion()" *ngIf="completed">Next</button>
+
+</ng-container>

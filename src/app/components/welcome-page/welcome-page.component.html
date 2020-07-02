@@ -1,32 +1,37 @@
 <div class="container">
-    <div>
-        <h1 class="header-one">Welcome to the Ordina coding challenge!</h1>
-        <p class="text-content">
-            Welcome to the Ordina coding challenge!
-            Test your codings skills and compare yourself to some of our most experienced developers.
-            In this game you get to score points by answering questions and coding solutions to intricate problems.
-            These points decide your place on the leaderboard, where you can see how your skills stack up!
-        </p>
-        <p class="text-content"> This challenge is made for fun. Only you can see your ranking on the leaderboard.
-        </p>
-    </div>
+  <div>
+    <h1 class="header-one">Welcome to the Ordina coding challenge!</h1>
+    <p class="text-content">
+      Welcome to the Ordina coding challenge!
+      Test your codings skills and compare yourself to some of our most experienced developers.
+      In this game you get to score points by answering questions and coding solutions to intricate problems.
+      These points decide your place on the leaderboard, where you can see how your skills stack up!
+    </p>
+    <p class="text-content"> This challenge is made for fun. Only you can see your ranking on the leaderboard.
+    </p>
+  </div>
 
-    <div class="start">
+  <div class="start">
 
-        <ng-container *ngIf="(languageNames | async) as languageNames">
+    <ng-container *ngIf="(languages)">
 
-            <div class="flex-row-containter">
-                <p class="programming-language">Programming language </p>
-                <app-dropdown [inputValue]="languageNames" labelText="Select a Language"
-                    (valueOutput)="onSelect($event)">
-                </app-dropdown>
-            </div>
-            <div class="flex-row-containter">
-                <p class="hidden-p"></p>
-                <button class="button" [disabled]="!languageNames?.length" (click)="submit()" mat-raised-button>
-                    Start Challenge</button>
-            </div>
-        </ng-container>
+      <div class="flex-row-containter">
+        <p class="programming-language">Programming language </p>
+        <mat-form-field>
+          <mat-label>Select a language</mat-label>
+          <mat-select [(ngModel)]="selectedLanguage">
+            <mat-option *ngFor="let language of languages" [value]="language">
+              {{language.language}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="flex-row-containter">
+        <p class="hidden-p"></p>
+        <button class="button" [disabled]="!languages?.length" (click)="submit()" mat-raised-button>
+          Start Challenge</button>
+      </div>
+    </ng-container>
 
-    </div>
+  </div>
 </div>

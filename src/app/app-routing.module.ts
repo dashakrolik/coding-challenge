@@ -12,6 +12,7 @@ import {
   ProfileComponent as AdminProfileComponent
 } from './components/admin/profile/profile.component';
 import { LeaderboardComponent } from '@components/leaderboard/table/leaderboard.component';
+import { MultipleChoiceComponent } from '@components/multiple-choice/multiple-choice.component';
 
 const routes: Routes = [
   {
@@ -41,12 +42,19 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'multi/:language',
+    component: MultipleChoiceComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'admin',
     component: AdminPanelComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'admin/profile/:id',
-    component: AdminProfileComponent
+    component: AdminProfileComponent,
+    canActivate: [AuthGuard]
   },
   {
     // you have to be logged in to see this page
@@ -57,7 +65,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload'})],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

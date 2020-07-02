@@ -10,6 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
+import { MatRadioModule } from '@angular/material/radio';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -43,6 +44,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { authInterceptorProviders } from './guards/auth/auth.interceptor';
+import { MultipleChoiceComponent } from './components/multiple-choice/multiple-choice.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +68,7 @@ import { authInterceptorProviders } from './guards/auth/auth.interceptor';
     LeaderboardComponent,
     CardComponent,
     CanvasComponent,
+    MultipleChoiceComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,7 +90,8 @@ import { authInterceptorProviders } from './guards/auth/auth.interceptor';
     MatCardModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    MatTabsModule
+    MatTabsModule,
+    MatRadioModule,
   ],
   providers: [
     authInterceptorProviders,
