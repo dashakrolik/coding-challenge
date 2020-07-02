@@ -31,7 +31,6 @@ import { DropdownComponent } from '@components/dropdown/dropdown.component';
 import { OverlayComponent } from '@components/overlay/overlay/overlay.component';
 import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.component';
 import { ProfileComponent } from '@components/profile/profile.component';
-import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';
 import { TaskComponent } from '@components/task/task.component';
 import { LeaderboardComponent } from './components/leaderboard/table/leaderboard.component';
 import { CardComponent } from './components/leaderboard/card/card.component';
@@ -62,7 +61,6 @@ import { MultipleChoiceComponent } from './components/multiple-choice/multiple-c
     OkCancelDialogComponent,
     MessageDialogComponent,
     DropdownComponent,
-    SubmitDialogComponent,
     LeaderboardComponent,
     CardComponent,
     CanvasComponent,
