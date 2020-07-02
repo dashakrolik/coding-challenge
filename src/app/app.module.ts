@@ -26,6 +26,8 @@ import { AdminPanelComponent } from '@components/admin/admin-panel/admin-panel.c
 import { PersonTableComponent } from '@components/admin/person-table/person-table.component';
 import { ProfileComponent as AdminProfileComponent } from '@components/admin/profile/profile.component';
 import { SubmissionTableComponent } from '@components/admin/submission-table/submission-table.component';
+import { FeedbackComponent } from './components/admin/feedback/feedback.component';
+import { GiveFeedbackComponent } from './components/give-feedback/give-feedback.component';
 import { TaskComponent as AdminTaskComponent } from '@components/admin/task/task.component';
 import { CandidateComponent } from '@components/candidate/candidate.component';
 import { DropdownComponent } from '@components/dropdown/dropdown.component';
@@ -69,6 +71,8 @@ import { MultipleChoiceComponent } from './components/multiple-choice/multiple-c
     CardComponent,
     CanvasComponent,
     MultipleChoiceComponent,
+    FeedbackComponent,
+    GiveFeedbackComponent,
   ],
   imports: [
     BrowserModule,

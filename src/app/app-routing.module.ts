@@ -13,6 +13,8 @@ import {
 } from './components/admin/profile/profile.component';
 import { LeaderboardComponent } from '@components/leaderboard/table/leaderboard.component';
 import { MultipleChoiceComponent } from '@components/multiple-choice/multiple-choice.component';
+import { FeedbackComponent } from '@components/admin/feedback/feedback.component';
+import { GiveFeedbackComponent } from '@components/give-feedback/give-feedback.component';
 
 const routes: Routes = [
   {
@@ -54,6 +56,16 @@ const routes: Routes = [
   {
     path: 'admin/profile/:id',
     component: AdminProfileComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'admin/feedback',
+    component: FeedbackComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'give_feedback',
+    component: GiveFeedbackComponent,
     canActivate: [AuthGuard]
   },
   {
