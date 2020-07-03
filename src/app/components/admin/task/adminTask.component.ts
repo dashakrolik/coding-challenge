@@ -2,9 +2,9 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-admin-task',
-  templateUrl: './task.component.html',
-  styleUrls: ['./task.component.css']
+  templateUrl: './adminTask.component.html',
+  styleUrls: ['./adminTask.component.css']
 })
-export class TaskComponent {
+export class AdminTaskComponent {
   @Input() task: ITask;
 }

@@ -28,7 +28,7 @@ import { ProfileComponent as AdminProfileComponent } from '@components/admin/pro
 import { SubmissionTableComponent } from '@components/admin/submission-table/submission-table.component';
 import { FeedbackComponent } from './components/admin/feedback/feedback.component';
 import { GiveFeedbackComponent } from './components/give-feedback/give-feedback.component';
-import { TaskComponent as AdminTaskComponent } from '@components/admin/task/task.component';
+import { AdminTaskComponent } from '@components/admin/task/adminTask.component';
 import { CandidateComponent } from '@components/candidate/candidate.component';
 import { DropdownComponent } from '@components/dropdown/dropdown.component';
 import { OverlayComponent } from '@components/overlay/overlay/overlay.component';

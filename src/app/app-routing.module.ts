@@ -15,6 +15,7 @@ import { LeaderboardComponent } from '@components/leaderboard/table/leaderboard.
 import { MultipleChoiceComponent } from '@components/multiple-choice/multiple-choice.component';
 import { FeedbackComponent } from '@components/admin/feedback/feedback.component';
 import { GiveFeedbackComponent } from '@components/give-feedback/give-feedback.component';
+import { AdminTaskComponent } from '@components/admin/task/adminTask.component';
 
 const routes: Routes = [
   {
@@ -51,17 +52,29 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminPanelComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'admin/profile/:id',
-    component: AdminProfileComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'admin/feedback',
-    component: FeedbackComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'users',
+        component: AdminProfileComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'tasks',
+        component: AdminTaskComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'multiplechoice',
+        component: FeedbackComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'feedback',
+        component: FeedbackComponent,
+        canActivate: [AuthGuard]
+      },
+    ]
   },
   {
     path: 'give_feedback',

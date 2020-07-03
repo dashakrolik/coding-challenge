@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TaskComponent } from './task.component';
+import { TaskComponent } from './adminTask.component';
 
 xdescribe('TaskComponent', () => {
   let component: TaskComponent;

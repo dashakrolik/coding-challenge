@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 
-import { TaskService } from '@services/task/task.service';
 
 @Component({
   selector: 'app-admin-panel',
@@ -10,18 +8,17 @@ import { TaskService } from '@services/task/task.service';
   styleUrls: ['./admin-panel.component.css']
 })
 
-export class AdminPanelComponent implements OnInit {
-  tasks$: Observable<ITask[]>;
+export class AdminPanelComponent {
 
   constructor(
     // private taskService: TaskService,
     private router: Router,
   ) { }
 
-  ngOnInit(): void {
-    // this.tasks$ = this.taskService.getAllTasks();
-  }
 
+  goToUsers = (): Promise<boolean> => this.router.navigate(['/admin/users']);
+  goToTasks = (): Promise<boolean> => this.router.navigate(['/admin/tasks']);
+  goToMultipleChoice = (): Promise<boolean> => this.router.navigate(['/admin/multiplechoice']);
   goToFeedback = (): Promise<boolean> => this.router.navigate(['/admin/feedback']);
 }
 
