@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 
 import { PersonService } from '@services/person/person.service';
+import { AdminService } from '@services/admin.service';
 
 @Component({
   selector: 'app-person-table',
@@ -13,11 +14,6 @@ import { PersonService } from '@services/person/person.service';
   styleUrls: ['./person-table.component.scss']
 })
 export class PersonTableComponent implements OnInit {
-
-  constructor(
-    private personService: PersonService,
-    private router: Router
-  ) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -27,10 +23,19 @@ export class PersonTableComponent implements OnInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'firstName', 'lastName', 'username'];
 
+  constructor(
+    private personService: PersonService,
+    private router: Router,
+    private adminService: AdminService,
+  ) {
+    adminService.activeComponent.next('users');
+  }
+
   ngOnInit() {
     this.personService.getAllPersons().pipe(take(1)).subscribe(persons => {
       this.setDataSource(persons);
       this.dataSource.sort = this.sort;
+      this.dataSource.sort.sort({ id: 'id', start: 'asc', disableClear: false });
     });
   }
 
@@ -39,7 +44,7 @@ export class PersonTableComponent implements OnInit {
   }
 
   toProfile = (person: IPerson) => {
-    this.router.navigate(['/admin/profile/' + person.id], { state: { person } });
+    this.router.navigate(['/admin/users/' + person.id]);
   }
 
 }

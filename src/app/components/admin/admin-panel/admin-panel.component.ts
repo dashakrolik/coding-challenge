@@ -1,24 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AdminService } from '@services/admin.service';
 
 
 @Component({
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.component.html',
-  styleUrls: ['./admin-panel.component.css']
+  styleUrls: ['./admin-panel.component.scss']
 })
 
-export class AdminPanelComponent {
+export class AdminPanelComponent implements OnInit {
+  router: Router;
+  selectedComponent: string;
+
 
   constructor(
-    // private taskService: TaskService,
-    private router: Router,
-  ) { }
+    router: Router,
+    private adminService: AdminService,
+  ) {
+    this.router = router;
+  }
 
+  ngOnInit() {
+    this.adminService.activeComponent.subscribe(location => {
+      this.selectedComponent = location;
+    });
+  }
 
-  goToUsers = (): Promise<boolean> => this.router.navigate(['/admin/users']);
-  goToTasks = (): Promise<boolean> => this.router.navigate(['/admin/tasks']);
-  goToMultipleChoice = (): Promise<boolean> => this.router.navigate(['/admin/multiplechoice']);
-  goToFeedback = (): Promise<boolean> => this.router.navigate(['/admin/feedback']);
+  getClass = (buttonName: string): string => {
+    if (buttonName === this.selectedComponent) {
+      return 'selected button';
+    } else {
+      return 'button';
+    }
+  }
+
 }
-

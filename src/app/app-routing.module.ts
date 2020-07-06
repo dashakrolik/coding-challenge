@@ -8,14 +8,14 @@ import { ProfileComponent } from '@components/profile/profile.component';
 import { TaskComponent } from '@components/task/task.component';
 import { WelcomePageComponent } from '@components/welcome-page/welcome-page.component';
 
-import {
-  ProfileComponent as AdminProfileComponent
-} from './components/admin/profile/profile.component';
+import { AdminProfileComponent } from './components/admin/profile/profile.component';
 import { LeaderboardComponent } from '@components/leaderboard/table/leaderboard.component';
 import { MultipleChoiceComponent } from '@components/multiple-choice/multiple-choice.component';
 import { FeedbackComponent } from '@components/admin/feedback/feedback.component';
 import { GiveFeedbackComponent } from '@components/give-feedback/give-feedback.component';
 import { AdminTaskComponent } from '@components/admin/task/adminTask.component';
+import { PersonsComponent } from '@components/admin/persons/persons/persons.component';
+import { AdminMultipleChoiceComponent } from '@components/admin/admin-multiple-choice/admin-multiple-choice.component';
 
 const routes: Routes = [
   {
@@ -56,17 +56,22 @@ const routes: Routes = [
     children: [
       {
         path: 'users',
+        component: PersonsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'users/:personId',
         component: AdminProfileComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: 'tasks',
         component: AdminTaskComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
       {
         path: 'multiplechoice',
-        component: FeedbackComponent,
+        component: AdminMultipleChoiceComponent,
         canActivate: [AuthGuard]
       },
       {
@@ -74,12 +79,13 @@ const routes: Routes = [
         component: FeedbackComponent,
         canActivate: [AuthGuard]
       },
+
+      {
+        path: 'give_feedback',
+        component: GiveFeedbackComponent,
+        canActivate: [AuthGuard]
+      },
     ]
-  },
-  {
-    path: 'give_feedback',
-    component: GiveFeedbackComponent,
-    canActivate: [AuthGuard]
   },
   {
     // you have to be logged in to see this page

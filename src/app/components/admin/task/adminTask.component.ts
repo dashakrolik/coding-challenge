@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { AdminService } from '@services/admin.service';
 
 @Component({
   selector: 'app-admin-task',
@@ -7,4 +8,10 @@ import { Component, Input } from '@angular/core';
 })
 export class AdminTaskComponent {
   @Input() task: ITask;
+
+  constructor(
+    adminService: AdminService,
+  ) {
+    adminService.activeComponent.next('tasks');
+  }
 }
