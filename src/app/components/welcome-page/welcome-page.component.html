@@ -21,7 +21,21 @@
           <mat-label>Select a language</mat-label>
           <mat-select [(ngModel)]="selectedLanguage">
             <mat-option *ngFor="let language of languages" [value]="language">
-              {{language.language}}
+              <div *ngIf="language.language==='java'">
+                Java
+              </div>
+              <div *ngIf="language.language==='python'">
+                Python
+              </div>
+              <div *ngIf="language.language==='javascript'">
+                JavaScript
+              </div>
+              <div *ngIf="language.language==='scala'">
+                Scala
+              </div>
+              <div *ngIf="language.language==='csharp'">
+                C#
+              </div>
             </mat-option>
           </mat-select>
         </mat-form-field>
