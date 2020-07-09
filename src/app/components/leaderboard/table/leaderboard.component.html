@@ -2,7 +2,22 @@
     <mat-form-field>
         <mat-label>Select a leaderboard</mat-label>
         <mat-select [(ngModel)]="selectedLanguage" (ngModelChange)="selectLanguage()">
-            <mat-option *ngFor="let lang of allLanguages" [value]="lang.language">{{lang.language}}
+            <mat-option *ngFor="let lang of allLanguages" [value]="lang.language">
+              <div *ngIf="lang.language==='java'">
+                Java
+              </div>
+              <div *ngIf="lang.language==='python'">
+                Python
+              </div>
+              <div *ngIf="lang.language==='javascript'">
+                JavaScript
+              </div>
+              <div *ngIf="lang.language==='scala'">
+                Scala
+              </div>
+              <div *ngIf="lang.language==='csharp'">
+                C#
+              </div>
             </mat-option>
         </mat-select>
     </mat-form-field>
