@@ -1,18 +1,19 @@
-<div class="container">
-  <header class="jumbotron">
+<div class="scores">  <header class="jumbotron">
     <p>{{ content }}</p>
   </header>
-</div>
-<br>
+  <br>
+  <div>
+    Select your language and check your progress. The higher the score the better.
+    <br>
+    You can also check out how you measure up against other developers, by clicking on the Leaderbord at the top right.
+  </div>
+  <ng-container *ngIf="(languageNames$ | async) as languageNames">
 
-<ng-container *ngIf="(languageNames$ | async) as languageNames">
+    <app-dropdown [inputValue]="languageNames" labelText="Select a language" (valueOutput)="onSelect($event)">
+    </app-dropdown>
 
-  <app-dropdown [inputValue]="languageNames" labelText="Select a Language" (valueOutput)="onSelect($event)">
-  </app-dropdown>
-  
-</ng-container>
+  </ng-container>
 
-<div>
   <ul>
     <li *ngFor="let item of tasksCorrect[lang]; let i = index">
       {{selectedLanguage}} task {{i+1}} has {{tasksCorrect[lang][i]}} out of {{taskTests[i]}} tests correct 
@@ -20,7 +21,7 @@
       Score for task {{i+1}}: {{pointsTasks[lang][i]}}
     </li>
   </ul>
-  
+
   <div>
     Score for Java: {{scoreJava}}
   </div>
