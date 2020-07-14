@@ -65,7 +65,7 @@ export class MultipleChoiceComponent implements OnInit, OnDestroy {
   }
 
   nextQuestion = (): void => {
-    if (this.question.questionNumber === 4) {
+    if (this.question.questionNumber === 5) {
       this.router.navigate([`challenge/${this.language}/1`]);
     }
     this.ngOnDestroy();

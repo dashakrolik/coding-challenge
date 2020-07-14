@@ -5,7 +5,7 @@
 <ng-container *ngIf="question">
 
   <h2>{{question.question}}</h2>
-  <pre>
+  <pre *ngIf="question.questionCode != null">
     <code>{{question.questionCode}}</code>
   </pre>
 
