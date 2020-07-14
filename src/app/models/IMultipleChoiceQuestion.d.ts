@@ -3,5 +3,6 @@ interface IMultipleChoiceQuestion {
     languageId: number;
     questionNumber: number;
     question: string;
+    questionCode: string;
     multipleChoiceAnswerOptions: string[]
 }

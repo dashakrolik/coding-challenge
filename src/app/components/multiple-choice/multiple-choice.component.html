@@ -5,6 +5,9 @@
 <ng-container *ngIf="question">
 
   <h2>{{question.question}}</h2>
+  <pre>
+    <code>{{question.questionCode}}</code>
+  </pre>
 
   <mat-radio-group [(ngModel)]="selectedAnswer">
     <mat-radio-button [disabled]="completed" *ngFor="let answer of question.multipleChoiceAnswerOptions"
