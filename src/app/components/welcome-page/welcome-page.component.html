@@ -13,39 +13,18 @@
 
   <div class="start">
 
-    <ng-container *ngIf="(languages)">
-
-      <div class="flex-row-containter">
-        <p class="programming-language">Programming language </p>
-        <mat-form-field>
-          <mat-label>Select a language</mat-label>
-          <mat-select [(ngModel)]="selectedLanguage">
-            <mat-option *ngFor="let language of languages" [value]="language">
-              <div *ngIf="language.language==='java'">
-                Java
-              </div>
-              <div *ngIf="language.language==='python'">
-                Python
-              </div>
-              <div *ngIf="language.language==='javascript'">
-                JavaScript
-              </div>
-              <div *ngIf="language.language==='scala'">
-                Scala
-              </div>
-              <div *ngIf="language.language==='csharp'">
-                C#
-              </div>
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="flex-row-containter">
-        <p class="hidden-p"></p>
-        <button class="button" [disabled]="!languages?.length" (click)="submit()" mat-raised-button>
-          Start Challenge</button>
-      </div>
-    </ng-container>
+    <div class="flex-row-containter">
+      <p class="programming-language">Programming language </p>
+      <ng-container *ngIf="(languageNames$ | async) as languageNames">
+        <app-dropdown [inputValue]="languageNames" labelText="Select a Language" (valueOutput)="onSelect($event)">
+        </app-dropdown>
+      </ng-container>
+    </div>
+    <div class="flex-row-containter">
+      <p class="hidden-p"></p>
+      <button class="button" (click)="submit()" mat-raised-button>
+        Start Challenge</button>
+    </div>
 
   </div>
 </div>
