@@ -6,6 +6,7 @@
     Select your language and check your progress. The higher the score the better.
     <br>
     You can also check out how you measure up against other developers, by clicking on the Leaderboard at the top right.
+    <br>
   </div>
   <ng-container *ngIf="(languageNames$ | async) as languageNames">
 
@@ -14,6 +15,9 @@
 
   </ng-container>
 
+  <div *ngIf="lang != null">
+    Score for multiple choice questions: {{pointsMultipleChoice[lang]}}
+  </div>
   <ul>
     <li *ngFor="let item of tasksCorrect[lang]; let i = index">
       {{selectedLanguage}} task {{i+1}} has {{tasksCorrect[lang][i]}} out of {{taskTests[i]}} tests correct 
