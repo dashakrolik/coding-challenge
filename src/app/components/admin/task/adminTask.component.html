@@ -1,6 +1,28 @@
-hallo?
-<div>
-  <p>
-    {{task.taskNumber}}. {{task.descriptionOne}}
-  </p>
-</div>
+<nav *ngIf="allLanguages">
+  Select Language:
+  <div class="navbar-brand" *ngFor="let language of allLanguages">
+    <button [ngClass]="getClass(language.language)" (click)="selectLanguage(language.id)" mat-raised-button>
+      {{language.language}}
+    </button>
+  </div>
+</nav>
+<nav *ngIf="selectedLanguage">
+  Select Task:
+  <div class="navbar-brand" *ngFor="let task of allTasks">
+    <button [ngClass]="getClass(task.taskNumber.toString())" (click)="selectTask(task.id)" mat-raised-button>
+      {{task.taskNumber}}
+    </button>
+  </div>
+</nav>
+<nav *ngIf="selectedTask">
+  Select component:
+  <div class="navbar-brand" *ngFor="let key of keys">
+    <button class="button" (click)="selectKey(key)">
+      {{key}}
+    </button>
+  </div>
+</nav>
+
+<ng-container *ngIf="selectedTask&&selectedLanguage&&selectedKey">
+  <textarea [(ngModel)]="inputText" wrap="off" [rows]="countLines()"></textarea>
+</ng-container>

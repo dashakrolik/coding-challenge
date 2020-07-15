@@ -24,6 +24,9 @@ export class AdminPanelComponent implements OnInit {
   ngOnInit() {
     this.adminService.activeComponent.subscribe(location => {
       this.selectedComponent = location;
+      if (location !== undefined && this.router.url === '/admin') {
+        this.router.navigateByUrl('admin/' + location);
+      }
     });
   }
 

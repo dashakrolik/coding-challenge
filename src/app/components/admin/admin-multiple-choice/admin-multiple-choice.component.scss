@@ -1,0 +1,28 @@
+@import "variables.scss";
+
+.navbar-brand {
+  display: inline;
+}
+
+.button {
+  &.selected {
+    background-color: $ontdekkingBright;
+  }
+
+  &.deleteButton {
+    background-color: red;
+
+    &.small {
+      margin: 0;
+      height: 1.6em;
+    }
+  }
+}
+
+.question {
+  margin: 1em 1em 3em 1em;
+}
+
+.answerOption {
+  margin: 1em;
+}

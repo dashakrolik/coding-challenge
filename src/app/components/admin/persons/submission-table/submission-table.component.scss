@@ -1,19 +1,23 @@
 /* TODO: fix table sizing  */
-.data-table{
+@import "variables.scss";
+
+.data-table {
   width: fit-content;
   border-collapse: unset;
 
-  .mat-row{
+  .mat-row {
     transition: .5s;
-    .mat-cell{
+
+    .mat-cell {
       width: fit-content;
-      border:none;
+      border: none;
     }
-    
+
     &.submission-row:hover {
       background: #99ccd3;
     }
-    .mat-column-answer{
+
+    .mat-column-answer {
       width: fit-content;
       max-width: 3em;
       overflow: hidden;
@@ -21,20 +25,20 @@
       white-space: nowrap;
       padding-right: 24px;
     }
-    
+
     &.answer-row {
       height: 0;
       border-bottom: 1px solid #e0e0e0;
     }
   }
+
   .answer-container {
     display: flex;
     height: fit-content;
     white-space: normal;
     overflow: auto;
     text-overflow: clip;
-    border:none;
+    border: none;
+    white-space: pre;
   }
 }
-
-

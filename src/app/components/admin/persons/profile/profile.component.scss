@@ -1,3 +1,5 @@
+@import "variables.scss";
+
 .personDetails {
   display: grid;
   grid-column-gap: 1em;
@@ -7,7 +9,7 @@
 
   >input:nth-of-type(even),
   >label:nth-of-type(even) {
-    background-color: #99ccd3;
+    background-color: $ontdekkingBright;
   }
 }
 
@@ -36,17 +38,21 @@ input[type=button] {
   margin: 1em;
 }
 
-.submission-table {
+.table {
   margin: 1.25em;
 }
 
 .mat-option {
   &:hover {
-    background-color: #99ccd3;
+    background-color: $ontdekkingBright;
   }
 
   &.mat-active {
     background-color: rgba(0, 0, 0, .1);
   }
 
+}
+
+h2 {
+  margin: 2em;
 }

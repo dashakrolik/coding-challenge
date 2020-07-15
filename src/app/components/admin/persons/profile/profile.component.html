@@ -32,7 +32,13 @@
     <input type="button" class="del" (click)="deletePerson()" value="Delete person">
   </form>
 
-  <div class="submission-table">
+  <h2>Multiple choice answers</h2>
+  <div class="multiple-choice-table table">
+    <app-multiple-choice-table [personId]='person.id'></app-multiple-choice-table>
+  </div>
+
+  <h2>Task Submissions</h2>
+  <div class="submission-table table">
     <app-submission-table [personId]='person.id'>
     </app-submission-table>
   </div>

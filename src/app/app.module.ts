@@ -24,8 +24,7 @@ import { MatDialogProvider } from '@shared/constants';
 
 import { AdminPanelComponent } from '@components/admin/admin-panel/admin-panel.component';
 import { PersonTableComponent } from '@components/admin/persons/person-table/person-table.component';
-import { AdminProfileComponent } from '@components/admin/profile/profile.component';
-import { SubmissionTableComponent } from '@components/admin/submission-table/submission-table.component';
+import { AdminProfileComponent } from '@components/admin/persons/profile/profile.component';
 import { FeedbackComponent } from './components/admin/feedback/feedback.component';
 import { GiveFeedbackComponent } from './components/give-feedback/give-feedback.component';
 import { AdminTaskComponent } from '@components/admin/task/adminTask.component';
@@ -49,6 +48,8 @@ import { authInterceptorProviders } from './guards/auth/auth.interceptor';
 import { MultipleChoiceComponent } from './components/multiple-choice/multiple-choice.component';
 import { PersonsComponent } from './components/admin/persons/persons/persons.component';
 import { AdminMultipleChoiceComponent } from './components/admin/admin-multiple-choice/admin-multiple-choice.component';
+import { MultipleChoiceTableComponent } from './components/admin/persons/multiple-choice-table/multiple-choice-table.component';
+import { SubmissionTableComponent } from '@components/admin/persons/submission-table/submission-table.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { AdminMultipleChoiceComponent } from './components/admin/admin-multiple-
     GiveFeedbackComponent,
     PersonsComponent,
     AdminMultipleChoiceComponent,
+    MultipleChoiceTableComponent,
   ],
   imports: [
     BrowserModule,

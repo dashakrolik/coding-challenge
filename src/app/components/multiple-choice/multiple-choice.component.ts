@@ -3,6 +3,7 @@ import { MultipleChoiceService } from '@services/multipleChoice/multiple-choice.
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LanguageService } from '@services/language/language.service';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-multiple-choice',
@@ -39,7 +40,9 @@ export class MultipleChoiceComponent implements OnInit, OnDestroy {
     this.completed = false;
     this.$questionSubscription = this.multipleChoiceService.getQuestion(this.language).subscribe(question => {
       this.question = question;
-    });
+    },
+      err => this.router.navigateByUrl(`challenge/${this.language}/1`)
+    );
     this.$languageSubscription = this.languageService.getLanguages().subscribe(languages => {
       languages.forEach((language => {
         if (language.language === this.language) { this.languageId = language.id; }
@@ -65,9 +68,6 @@ export class MultipleChoiceComponent implements OnInit, OnDestroy {
   }
 
   nextQuestion = (): void => {
-    if (this.question.questionNumber === 4) {
-      this.router.navigate([`challenge/${this.language}/1`]);
-    }
     this.ngOnDestroy();
     this.ngOnInit();
   }

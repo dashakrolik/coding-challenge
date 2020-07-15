@@ -18,11 +18,11 @@ export class LanguageService {
   getTheme = (languageName: string): string => {
     // TODO store the theme in the database as well
     switch (languageName) {
-      case 'javascript': return 'dracula';
-      case 'python': return 'monokai';
-      case 'java': return 'eclipse'; // java theme
-      case 'csharp': return 'monokai'; // TODO: Find editor for c sharp
-      case 'scala': return 'monokai'; // TODO: find editor for scala.
+      case 'Javascript': return 'dracula';
+      case 'Python': return 'monokai';
+      case 'Java': return 'eclipse'; // java theme
+      case 'CSharp': return 'monokai'; // TODO: Find editor for c sharp
+      case 'Scala': return 'monokai'; // TODO: find editor for scala.
       default: throw new Error(`No editor theme specified for this language: ${languageName}.`);
     }
   }

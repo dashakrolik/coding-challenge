@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@guards/auth/auth.guard';
+import { CanDeactivateGuard } from '@guards/canDeactivate/can-deactivate.guard';
 
 import { AdminPanelComponent } from '@components/admin/admin-panel/admin-panel.component';
 import { CandidateComponent } from '@components/candidate/candidate.component';
@@ -8,7 +9,7 @@ import { ProfileComponent } from '@components/profile/profile.component';
 import { TaskComponent } from '@components/task/task.component';
 import { WelcomePageComponent } from '@components/welcome-page/welcome-page.component';
 
-import { AdminProfileComponent } from './components/admin/profile/profile.component';
+import { AdminProfileComponent } from './components/admin/persons/profile/profile.component';
 import { LeaderboardComponent } from '@components/leaderboard/table/leaderboard.component';
 import { MultipleChoiceComponent } from '@components/multiple-choice/multiple-choice.component';
 import { FeedbackComponent } from '@components/admin/feedback/feedback.component';
@@ -72,6 +73,7 @@ const routes: Routes = [
       {
         path: 'multiplechoice',
         component: AdminMultipleChoiceComponent,
+        canDeactivate: [CanDeactivateGuard],
         canActivate: [AuthGuard]
       },
       {
@@ -79,13 +81,12 @@ const routes: Routes = [
         component: FeedbackComponent,
         canActivate: [AuthGuard]
       },
-
-      {
-        path: 'give_feedback',
-        component: GiveFeedbackComponent,
-        canActivate: [AuthGuard]
-      },
     ]
+  },
+  {
+    path: 'give_feedback',
+    component: GiveFeedbackComponent,
+    canActivate: [AuthGuard]
   },
   {
     // you have to be logged in to see this page
