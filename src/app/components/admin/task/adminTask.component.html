@@ -24,5 +24,6 @@
 </nav>
 
 <ng-container *ngIf="selectedTask&&selectedLanguage&&selectedKey">
-  <textarea [(ngModel)]="inputText" wrap="off" [rows]="countLines()"></textarea>
+  <textarea [(ngModel)]="inputText" wrap="off" [rows]="countLines()" (ngModelChange)="hasChanges = true"></textarea>
+  <button (click)="saveTask()">Save</button>
 </ng-container>

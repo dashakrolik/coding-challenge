@@ -85,16 +85,12 @@ export class AdminMultipleChoiceComponent implements OnInit {
   trackByFn = (index: number) => index;
 
   canDeactivate = (): Promise<boolean> | boolean => {
-    // Allow synchronous navigation (`true`) if no crisis or the crisis is unchanged
     if (!this.hasChanges) {
       return true;
     }
-    // Otherwise ask the user with the dialog service and return its
-    // observable which resolves to true or false when the user decides
     return this.getConfirmation();
   }
 
-  // TODO: make this save the question.
   save = () => {
     if (!this.hasChanges) {
       return;
