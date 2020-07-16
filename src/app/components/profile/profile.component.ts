@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
   content = '';
@@ -100,9 +100,8 @@ export class ProfileComponent implements OnInit {
       if (user.firstname == null && user.lastname == null) {
         this.content = 'Hello ' + user.username + '.';
       } else {
-        this.content = 'Hello ' + user.firstname + ' ' + user.lastname + '.';
+        this.content = 'Hello ' + user.firstname + ' ' + user.lastname + '!';
       }
-      this.content += ' Select your language and check your progress. The higher the score the better';
     } else {
       this.content = 'nobody is logged in, please log in or create an account';
     }

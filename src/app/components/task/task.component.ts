@@ -25,7 +25,6 @@ export class TaskComponent implements OnInit, OnDestroy {
   selectedLanguage: ILanguage;
   submissionSubscription: Subscription;
   task: ITask;
-  candidate: ICandidate;
   taskSubscription: Subscription;
   languageSubscription: Subscription;
 
