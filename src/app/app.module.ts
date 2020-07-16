@@ -29,12 +29,10 @@ import { SubmissionTableComponent } from '@components/admin/submission-table/sub
 import { FeedbackComponent } from './components/admin/feedback/feedback.component';
 import { GiveFeedbackComponent } from './components/give-feedback/give-feedback.component';
 import { TaskComponent as AdminTaskComponent } from '@components/admin/task/task.component';
-import { CandidateComponent } from '@components/candidate/candidate.component';
 import { DropdownComponent } from '@components/dropdown/dropdown.component';
 import { OverlayComponent } from '@components/overlay/overlay/overlay.component';
 import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.component';
 import { ProfileComponent } from '@components/profile/profile.component';
-import { SubmitDialogComponent } from '@components/submit-dialog/submit-dialog.component';
 import { TaskComponent } from '@components/task/task.component';
 import { LeaderboardComponent } from './components/leaderboard/table/leaderboard.component';
 import { CardComponent } from './components/leaderboard/card/card.component';
@@ -53,7 +51,6 @@ import { MultipleChoiceComponent } from './components/multiple-choice/multiple-c
     AppComponent,
     TaskComponent,
     WelcomePageComponent,
-    CandidateComponent,
     OverlayComponent,
     SubscribeComponent,
     DropdownComponent,
@@ -66,7 +63,6 @@ import { MultipleChoiceComponent } from './components/multiple-choice/multiple-c
     OkCancelDialogComponent,
     MessageDialogComponent,
     DropdownComponent,
-    SubmitDialogComponent,
     LeaderboardComponent,
     CardComponent,
     CanvasComponent,
