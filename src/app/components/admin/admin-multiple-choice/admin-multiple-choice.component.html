@@ -23,13 +23,13 @@
     <input type="text" class="questionInput" [(ngModel)]="selectedQuestion.question"
       (ngModelChange)="hasChanges = true">
   </div>
-  <mat-radio-group [(ngModel)]="selectedQuestion.correctAnswer">
+  <mat-radio-group [(ngModel)]="selectedQuestion.correctAnswer" (ngModelChange)="hasChanges = true">
     <div class="answerOption"
       *ngFor="let answer of selectedQuestion.multipleChoiceAnswerOptions; index as i; trackBy:trackByFn">
       <p class="answer">Answeroption {{i+1}}:</p>
       <input class="answerInput" [(ngModel)]="selectedQuestion.multipleChoiceAnswerOptions[i]"
         (ngModelChange)="hasChanges = true">
-      <mat-radio-button [value]="answer">
+      <mat-radio-button [value]="selectedQuestion.multipleChoiceAnswerOptions[i]">
       </mat-radio-button>
       <button class="button deleteButton small" (click)="deleteAnswerOption(i)">delete</button>
     </div>

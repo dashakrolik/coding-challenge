@@ -26,9 +26,6 @@ export class AdminMultipleChoiceComponent implements OnInit {
   questionsFromSelectedLanguage: IMultipleChoiceQuestion[];
   hasChanges = false;
 
-  arr = [1, 2, 3, 4, 5, 6];
-  5;
-
   ngOnInit(): void {
     this.languageService.getLanguages().subscribe(languages => {
       this.allLanguages = languages;
@@ -132,7 +129,7 @@ export class AdminMultipleChoiceComponent implements OnInit {
       questionNumber: this.questionsFromSelectedLanguage.length + 1,
       multipleChoiceAnswerOptions: [],
       languageId: this.selectedLanguage.id,
-      correctAnswer: undefined,
+      correctAnswer: '',
     });
     this.selectQuestion(this.questionsFromSelectedLanguage[this.questionsFromSelectedLanguage.length - 1]);
   }
