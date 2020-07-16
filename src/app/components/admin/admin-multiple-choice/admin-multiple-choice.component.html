@@ -37,6 +37,5 @@
   <button class="button" (click)="addAnswerOption()">Add answeroption</button>
 </div>
 
-
-<button class="button" (click)="save()" *ngIf="hasChanges">save</button>
 <button class="button deleteButton" (click)="deleteQuestion()" *ngIf="selectedQuestion">Delete question</button>
+<button class="button" (click)="save()" *ngIf="hasChanges">Save</button>

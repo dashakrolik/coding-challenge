@@ -27,15 +27,15 @@ input {
   color: black;
 }
 
-input[type=button].del {
-  background-color: #ff0000;
-  border: black;
-  border-radius: 5px;
-}
 
-button,
-input[type=button] {
+.button {
   margin: 1em;
+
+  &.del {
+    background-color: red;
+    border: black;
+    border-radius: 5px;
+  }
 }
 
 .table {
