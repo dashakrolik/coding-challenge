@@ -10,7 +10,8 @@ describe('MultipleChoiceService', () => {
     service = TestBed.inject(MultipleChoiceService);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+  // TODO: These tests should be added.
+  // it('should be created', () => {
+  //   expect(service).toBeTruthy();
+  // });
 });

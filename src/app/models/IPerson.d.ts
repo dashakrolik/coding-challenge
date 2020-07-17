@@ -7,4 +7,5 @@ interface IPerson {
     roles: IRole[];
     pointsTasks: number[][];
     points: number[];
+    pointsMultipleChoice: number[];
 }
