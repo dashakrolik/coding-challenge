@@ -15,7 +15,7 @@
       {{answer}}
     </mat-radio-button>
   </mat-radio-group>
-  <button [disabled]="!selectedAnswer" (click)="submit()" *ngIf="!completed">Submit</button>
-  <button (click)="nextQuestion()" *ngIf="completed">Next</button>
+  <button [disabled]="!selectedAnswer" (click)="submit()" *ngIf="!completed" class="button">Submit</button>
+  <button (click)="nextQuestion()" *ngIf="completed" class="button">Next</button>
 
 </ng-container>

@@ -68,6 +68,7 @@ export class MultipleChoiceComponent implements OnInit, OnDestroy {
     if (this.question.questionNumber === 5) {
       this.router.navigate([`challenge/${this.language}/1`]);
     }
+    this.selectedAnswer = undefined;
     this.ngOnDestroy();
     this.ngOnInit();
   }
