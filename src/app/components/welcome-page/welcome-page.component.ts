@@ -10,6 +10,9 @@ import { OverlayService } from '@services/overlay/overlay.service';
 
 import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.component';
 import { PersonService } from '@services/person/person.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-welcome-page',
@@ -17,9 +20,11 @@ import { PersonService } from '@services/person/person.service';
   styleUrls: ['./welcome-page.component.scss']
 })
 export class WelcomePageComponent implements OnInit {
+  
+  languageNames$: Observable<string[]>;
+
   taskId = 1;
-  selectedLanguage: ILanguage;
-  languages: ILanguage[];
+  selectedLanguage: string;
   $languageSubscription: Subscription;
   subscribeComponent = SubscribeComponent;
 
@@ -33,18 +38,22 @@ export class WelcomePageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.$languageSubscription = this.languageService.getLanguages().subscribe(languages => {
-      this.languages = languages;
-    });
+
+    // get just the names of the languagess
+    this.languageNames$ = this.languageService.getLanguages().pipe(
+      map(languages => 
+        languages.map(lang => lang.language)
+      )
+    );
   }
 
   submit = () => {
     if (this.checkIsLoggedIn()) {
       this.personService.getPersonProgress(this.selectedLanguage).subscribe(multipleChoiceCompleted => {
         if (multipleChoiceCompleted) {
-          this.router.navigateByUrl(`challenge/${this.selectedLanguage.language}/${this.taskId}`);
+          this.router.navigateByUrl(`challenge/${this.selectedLanguage}/${this.taskId}`);
         } else {
-          this.router.navigateByUrl(`multi/${this.selectedLanguage.language}`);
+          this.router.navigateByUrl(`multi/${this.selectedLanguage}`);
         }
       });
     }
@@ -52,6 +61,10 @@ export class WelcomePageComponent implements OnInit {
 
   loginWindow(content: ComponentType<SubscribeComponent>) {
     this.overlayService.open(content, null);
+  }
+
+  onSelect = (event: MatSelectChange) => {
+    this.selectedLanguage = event.value;
   }
 
   checkIsLoggedIn = (): boolean => {

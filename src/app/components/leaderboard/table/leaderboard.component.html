@@ -1,12 +1,12 @@
 <h1 class="leaderboard">
-    <mat-form-field>
-        <mat-label>Select a leaderboard</mat-label>
-        <mat-select [(ngModel)]="selectedLanguage" (ngModelChange)="selectLanguage()">
-            <mat-option *ngFor="let lang of allLanguages" [value]="lang.language">{{lang.language}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+Select a leaderboard from the dropdown
 </h1>
+<br>
+
+<ng-container *ngIf="(languageNames$ | async) as languageNames">
+    <app-dropdown [inputValue]="languageNames" labelText="Select a Language" (valueOutput)="onSelect($event)">
+    </app-dropdown>
+</ng-container>
 
 <div class="mat-elevation-z8 data-table" *ngIf="selectedLanguage">
     <h1>{{selectedLanguage}} leaderboard</h1>
