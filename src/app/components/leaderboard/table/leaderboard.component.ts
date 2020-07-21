@@ -12,7 +12,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { PersonService } from '@services/person/person.service';
 import { LanguageService } from '@services/language/language.service';
 
-export interface TableElement {
+export interface ITableElement {
   name: string;
   points: number;
 }
@@ -38,10 +38,10 @@ export class LeaderboardComponent implements OnInit {
   languageNames$: Observable<string[]>;
 
   // This is what will be shown in the table.
-  TABLE_DATA: TableElement[] = [];
+  TABLE_DATA: ITableElement[] = [];
 
   displayedColumns = ['name', 'points'];
-  dataSource: MatTableDataSource<TableElement>;
+  dataSource: MatTableDataSource<ITableElement>;
   state: string;
   selectedLanguage: string;
   top: number;
@@ -105,7 +105,7 @@ export class LeaderboardComponent implements OnInit {
 
     // We fill the table with the correct data
     this.allPeople.forEach(person => {
-      const element: TableElement = {name: person.name, points: person.points[tableIndex]};
+      const element: ITableElement = {name: person.name, points: person.points[tableIndex]};
       this.TABLE_DATA.push(element);
     });
     
