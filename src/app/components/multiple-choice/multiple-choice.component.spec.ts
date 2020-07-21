@@ -4,14 +4,13 @@ import { MultipleChoiceComponent } from './multiple-choice.component';
 import { MultipleChoiceService } from '@services/multipleChoice/multiple-choice.service';
 import { of } from 'rxjs';
 
-const mockMultipleChoice: IMultipleChoiceQuestion = 
-{ 
+const mockMultipleChoice: IMultipleChoiceQuestion = { 
   id: 1, 
   languageId: 1, 
   questionNumber: 1, 
-  question: "question", 
-  questionCode: "questionCode", 
-  multipleChoiceAnswerOptions: ["answer1", "answer2", "answer3", "answer4"] 
+  question: 'question', 
+  questionCode: 'questionCode', 
+  multipleChoiceAnswerOptions: ['answer1', 'answer2', 'answer3', 'answer4'] 
 };
 
 describe('MultipleChoiceComponent', () => {
@@ -20,7 +19,7 @@ describe('MultipleChoiceComponent', () => {
   let MultipleChoiceServiceSpy;
 
   beforeEach(async(() => {
-    MultipleChoiceServiceSpy = jasmine.createSpyObj('MultipleChoiceService', ['getQuestion'], ["question1"]);
+    MultipleChoiceServiceSpy = jasmine.createSpyObj('MultipleChoiceService', ['getQuestion'], ['question1']);
     MultipleChoiceServiceSpy.getQuestion.and.returnValue(of([mockMultipleChoice]));
     TestBed.configureTestingModule({
       declarations: [ MultipleChoiceComponent ],
