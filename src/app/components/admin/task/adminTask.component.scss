@@ -1,0 +1,24 @@
+@import "variables.scss";
+
+.navbar-brand {
+  display: inline;
+}
+
+p {
+  white-space: pre;
+}
+
+textarea {
+  width: 90%;
+  margin: 2em;
+}
+
+.button {
+  &.selected {
+    background-color: $ontdekkingBright;
+  }
+
+  &.save {
+    display: block;
+  }
+}

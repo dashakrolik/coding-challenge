@@ -25,7 +25,7 @@ export class DialogService {
     });
   }
 
-  openOkCancel = (data: IDialogData) => {
+  openOkCancel = (data: IDialogData): Promise<boolean> => {
     return new Promise((resolve, reject) => {
       const dialogRef = this.dialog.open(OkCancelDialogComponent, {
         width: '500px',
@@ -33,9 +33,9 @@ export class DialogService {
       });
       dialogRef.afterClosed().pipe(take(1)).subscribe((isAccepted: boolean) => {
         if (isAccepted) {
-          resolve();
+          resolve(true);
         } else {
-          reject();
+          reject(false);
         }
       });
     });

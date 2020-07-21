@@ -1,0 +1,11 @@
+@import "variables.scss";
+
+h1 {
+  margin: 1em;
+
+}
+
+.button.selected {
+  background-color: $ontdekkingBrightest;
+  color: black
+}

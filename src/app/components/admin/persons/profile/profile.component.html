@@ -1,5 +1,3 @@
-<button class="admin-button" (click)="navigateToAdminPanel()">Admin panel</button>
-
 <ng-container *ngIf="person">
   <h1>{{person.firstName}}'s Profile</h1>
   <form class="personDetails" [formGroup]="form" (ngSubmit)="savePerson()">
@@ -18,23 +16,29 @@
     <label>Role</label>
     <mat-select formControlName="roles" multiple>
       <mat-select-trigger *ngIf="form.controls.roles as roles">
-        {{roles.value[0] || ''}}
+        {{roles.value[0].name || ''}}
         <span *ngIf="roles.value?.length > 1">
           (+{{roles.value.length - 1}} others)
         </span>
       </mat-select-trigger>
-      <mat-option *ngFor="let role of allRoles" [value]="role.name">{{role.name}}
+      <mat-option *ngFor="let role of person.roles" [value]="role">{{role.name}}
       </mat-option>
     </mat-select>
 
     <label>Password</label>
     <input type="password" formControlName="password" size="30">
 
-    <button type="submit">Save changes</button>
-    <input type="button" class="del" (click)="deletePerson()" value="Delete person">
+    <button class="button" type="submit">Save changes</button>
+    <button class="button del" (click)="deletePerson()">Delete person</button>
   </form>
 
-  <div class="submission-table">
+  <h2>Multiple choice answers</h2>
+  <div class="multiple-choice-table table">
+    <app-multiple-choice-table [personId]='person.id'></app-multiple-choice-table>
+  </div>
+
+  <h2>Task Submissions</h2>
+  <div class="submission-table table">
     <app-submission-table [personId]='person.id'>
     </app-submission-table>
   </div>

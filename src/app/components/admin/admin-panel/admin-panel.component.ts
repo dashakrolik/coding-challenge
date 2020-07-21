@@ -1,27 +1,41 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { AdminService } from '@services/admin.service';
 
-import { TaskService } from '@services/task/task.service';
 
 @Component({
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.component.html',
-  styleUrls: ['./admin-panel.component.css']
+  styleUrls: ['./admin-panel.component.scss']
 })
 
 export class AdminPanelComponent implements OnInit {
-  tasks$: Observable<ITask[]>;
+  router: Router;
+  selectedComponent: string;
+
 
   constructor(
-    // private taskService: TaskService,
-    private router: Router,
-  ) { }
-
-  ngOnInit(): void {
-    // this.tasks$ = this.taskService.getAllTasks();
+    router: Router,
+    private adminService: AdminService,
+  ) {
+    this.router = router;
   }
 
-  goToFeedback = (): Promise<boolean> => this.router.navigate(['/admin/feedback']);
-}
+  ngOnInit() {
+    this.adminService.activeComponent.subscribe(location => {
+      this.selectedComponent = location;
+      if (location !== undefined && this.router.url === '/admin') {
+        this.router.navigateByUrl('admin/' + location);
+      }
+    });
+  }
 
+  getClass = (buttonName: string): string => {
+    if (buttonName === this.selectedComponent) {
+      return 'selected button';
+    } else {
+      return 'button';
+    }
+  }
+
+}

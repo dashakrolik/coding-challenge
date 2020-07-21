@@ -23,12 +23,11 @@ import { AceEditorModule } from 'ng2-ace-editor';
 import { MatDialogProvider } from '@shared/constants';
 
 import { AdminPanelComponent } from '@components/admin/admin-panel/admin-panel.component';
-import { PersonTableComponent } from '@components/admin/person-table/person-table.component';
-import { ProfileComponent as AdminProfileComponent } from '@components/admin/profile/profile.component';
-import { SubmissionTableComponent } from '@components/admin/submission-table/submission-table.component';
+import { PersonTableComponent } from '@components/admin/persons/person-table/person-table.component';
+import { AdminProfileComponent } from '@components/admin/persons/profile/profile.component';
 import { FeedbackComponent } from './components/admin/feedback/feedback.component';
 import { GiveFeedbackComponent } from './components/give-feedback/give-feedback.component';
-import { TaskComponent as AdminTaskComponent } from '@components/admin/task/task.component';
+import { AdminTaskComponent } from '@components/admin/task/adminTask.component';
 import { DropdownComponent } from '@components/dropdown/dropdown.component';
 import { OverlayComponent } from '@components/overlay/overlay/overlay.component';
 import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.component';
@@ -45,6 +44,10 @@ import { AppComponent } from './app.component';
 
 import { authInterceptorProviders } from './guards/auth/auth.interceptor';
 import { MultipleChoiceComponent } from './components/multiple-choice/multiple-choice.component';
+import { PersonsComponent } from './components/admin/persons/persons/persons.component';
+import { AdminMultipleChoiceComponent } from './components/admin/admin-multiple-choice/admin-multiple-choice.component';
+import { MultipleChoiceTableComponent } from './components/admin/persons/multiple-choice-table/multiple-choice-table.component';
+import { SubmissionTableComponent } from '@components/admin/persons/submission-table/submission-table.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +72,9 @@ import { MultipleChoiceComponent } from './components/multiple-choice/multiple-c
     MultipleChoiceComponent,
     FeedbackComponent,
     GiveFeedbackComponent,
+    PersonsComponent,
+    AdminMultipleChoiceComponent,
+    MultipleChoiceTableComponent,
   ],
   imports: [
     BrowserModule,

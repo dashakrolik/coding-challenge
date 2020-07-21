@@ -1,0 +1,58 @@
+@import "variables.scss";
+
+.personDetails {
+  display: grid;
+  grid-column-gap: 1em;
+  grid-template-columns: auto auto;
+  justify-content: start;
+  margin: 1em;
+
+  >input:nth-of-type(even),
+  >label:nth-of-type(even) {
+    background-color: $ontdekkingBright;
+  }
+}
+
+input {
+  border: none;
+}
+
+:disabled {
+  background-color: white;
+}
+
+label,
+input {
+  font: 300 12pt Roboto Light;
+  color: black;
+}
+
+
+.button {
+  margin: 1em;
+
+  &.del {
+    background-color: red;
+    border: black;
+    border-radius: 5px;
+  }
+}
+
+.table {
+  margin: 1.25em;
+}
+
+.mat-option {
+  &:hover {
+    background-color: $ontdekkingBright;
+  }
+
+  &.mat-active {
+    background-color: rgba(0, 0, 0, .1);
+  }
+
+}
+
+h2 {
+  margin: 2em;
+}

@@ -1,17 +1,21 @@
 @import "variables.scss";
 
-.data-table{
+.data-table {
   width: fit-content;
 }
 
-.mat-row{
+.mat-row {
   transition: .5s;
-  &:hover{
+
+  &:hover {
     background: $ontdekkingBright;
-    cursor: pointer;
   }
 }
 
-.mat-cell{
+.mat-cell {
   padding: 0 .5em;
+}
+
+.mat-header-cell {
+  padding: 0 1em;
 }

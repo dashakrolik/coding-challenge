@@ -1,18 +1,15 @@
-<h1>
-  Admin Panel
-</h1>
-<h2>
-  tasks
-</h2>
-<div class="tasks" *ngIf=" tasks$ | async as tasks">
-  <app-admin-task *ngFor="let task of tasks" [task]="task">
-  </app-admin-task>
-</div>
-<h2>
-  persons
-</h2>
-<div class="person-table">
-  <app-person-table>
-  </app-person-table>
-</div>
-<button class="button" (click)="goToFeedback()" type="button" mat-raised-button>Feedback</button>
+<nav class="navbar">
+  <h1>
+    Admin Panel
+  </h1>
+  <div class="navbar-brand">
+    <button [ngClass]="getClass('users')" (click)="router.navigate(['admin/users'])" mat-raised-button>Users</button>
+    <button [ngClass]="getClass('tasks')" (click)="router.navigate(['admin/tasks'])" mat-raised-button>Tasks</button>
+    <button [ngClass]="getClass('multiplechoice')" (click)="router.navigate(['admin/multiplechoice'])"
+      mat-raised-button>MultipleChoice</button>
+    <button [ngClass]="getClass('feedback')" (click)="router.navigate(['admin/feedback'])"
+      mat-raised-button>Feedback</button>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>

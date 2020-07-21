@@ -1,0 +1,46 @@
+<nav *ngIf="allLanguages">
+  Select Language:
+  <div class="navbar-brand" *ngFor="let language of allLanguages">
+    <button [ngClass]="getClass(language.language)" (click)="selectLanguage(language)" mat-raised-button>
+      {{language.language}}
+    </button>
+  </div>
+</nav>
+<nav *ngIf="selectedLanguage">
+  Select question:
+  <div class="navbar-brand">
+    <button *ngFor="let question of questionsFromSelectedLanguage" [ngClass]="getClass(question.questionNumber)"
+      (click)="selectQuestion(question)" mat-raised-button>
+      {{question.questionNumber}}
+    </button>
+    <button class="button" (click)="addQuestion()">Add new question</button>
+  </div>
+</nav>
+
+<div *ngIf="selectedQuestion">
+  <div class="question">
+    <p>Question:</p>
+    <input type="text" class="questionInput" [(ngModel)]="selectedQuestion.question"
+      (ngModelChange)="hasChanges = true">
+  </div>
+  <div class="question-code">
+    <p>Question Code:</p>
+    <input type="text" class="question-code-input" [(ngModel)]="selectedQuestion.questionCode"
+      (ngModelChange)="hasChanges = true">
+  </div>
+  <mat-radio-group [(ngModel)]="selectedQuestion.correctAnswer" (ngModelChange)="hasChanges = true">
+    <div class="answerOption"
+      *ngFor="let answer of selectedQuestion.multipleChoiceAnswerOptions; index as i; trackBy:trackByFn">
+      <p class="answer">Answeroption {{i+1}}:</p>
+      <input class="answerInput" [(ngModel)]="selectedQuestion.multipleChoiceAnswerOptions[i]"
+        (ngModelChange)="hasChanges = true">
+      <mat-radio-button [value]="selectedQuestion.multipleChoiceAnswerOptions[i]">
+      </mat-radio-button>
+      <button class="button deleteButton small" (click)="deleteAnswerOption(i)">delete</button>
+    </div>
+  </mat-radio-group>
+  <button class="button" (click)="addAnswerOption()">Add answeroption</button>
+</div>
+
+<button class="button deleteButton" (click)="deleteQuestion()" *ngIf="selectedQuestion">Delete question</button>
+<button class="button" (click)="save()" *ngIf="hasChanges">Save</button>
