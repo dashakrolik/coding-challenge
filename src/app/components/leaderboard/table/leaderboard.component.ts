@@ -86,7 +86,6 @@ export class LeaderboardComponent implements OnInit {
   }
 
   onSelect = (event: MatSelectChange) => {
-    // TODO: Add correct behaviour.
     this.selectedLanguage = event.value;
     this.TABLE_DATA = []
     var tableIndex = 0;

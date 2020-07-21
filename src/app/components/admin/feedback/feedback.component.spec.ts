@@ -4,7 +4,7 @@ import { FeedbackComponent } from './feedback.component';
 import { FeedbackService } from '@services/feedback/feedback.service';
 import { of } from 'rxjs';
 
-const mockFeedback: IFeedback = { email: "", feedback: "", id: 1 };
+const mockFeedback: IFeedback = { email: '', feedback: '', id: 1 };
 
 describe('FeedbackComponent', () => {
   let component: FeedbackComponent;
@@ -36,5 +36,5 @@ describe('FeedbackComponent', () => {
 
   it('retrieves the feedback on init', () => {
     expect(FeedbackServiceSpy.getFeedback).toHaveBeenCalledTimes(1);
-  })
+  });
 });
