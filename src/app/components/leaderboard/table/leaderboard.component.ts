@@ -70,7 +70,7 @@ export class LeaderboardComponent implements OnInit {
     this.languageIndex = 0;
     this.personService.getAllPersons().pipe(take(1)).subscribe(persons => {
       persons.forEach(person => {
-        this.allPeople.push({name: person.firstName, points: person.points});
+        this.allPeople.push({name: person.firstName + " " + person.lastName, points: person.points});
       })
     });
 
