@@ -12,7 +12,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { PersonService } from '@services/person/person.service';
 import { LanguageService } from '@services/language/language.service';
 
-export interface tableElement {
+export interface TableElement {
   name: string;
   points: number;
 }
@@ -38,10 +38,10 @@ export class LeaderboardComponent implements OnInit {
   languageNames$: Observable<string[]>;
 
   // This is what will be shown in the table.
-  TABLE_DATA: tableElement[] = []
+  TABLE_DATA: TableElement[] = [];
 
   displayedColumns = ['name', 'points'];
-  dataSource: MatTableDataSource<tableElement>;
+  dataSource: MatTableDataSource<TableElement>;
   state: string;
   selectedLanguage: string;
   top: number;
@@ -70,8 +70,8 @@ export class LeaderboardComponent implements OnInit {
     this.languageIndex = 0;
     this.personService.getAllPersons().pipe(take(1)).subscribe(persons => {
       persons.forEach(person => {
-        this.allPeople.push({name: person.firstName + " " + person.lastName, points: person.points});
-      })
+        this.allPeople.push({name: person.firstName + ' ' + person.lastName, points: person.points});
+      });
     });
 
     // get just the names of the languages
@@ -87,8 +87,8 @@ export class LeaderboardComponent implements OnInit {
 
   onSelect = (event: MatSelectChange) => {
     this.selectedLanguage = event.value;
-    this.TABLE_DATA = []
-    var tableIndex = 0;
+    this.TABLE_DATA = [];
+    let tableIndex = 0;
     if (this.selectedLanguage === 'java') {
       tableIndex = 0;
     } else if (this.selectedLanguage === 'python') {
@@ -105,9 +105,9 @@ export class LeaderboardComponent implements OnInit {
 
     // We fill the table with the correct data
     this.allPeople.forEach(person => {
-      const element: tableElement = {name: person.name, points: person.points[tableIndex]};
-      this.TABLE_DATA.push(element)
-    })
+      const element: TableElement = {name: person.name, points: person.points[tableIndex]};
+      this.TABLE_DATA.push(element);
+    });
     
     this.dataSource = new MatTableDataSource(this.TABLE_DATA);
     this.dataSource.sort = this.sort;
