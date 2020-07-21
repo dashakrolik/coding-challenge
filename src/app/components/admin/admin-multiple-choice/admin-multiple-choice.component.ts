@@ -129,7 +129,8 @@ export class AdminMultipleChoiceComponent implements OnInit {
       questionNumber: this.questionsFromSelectedLanguage.length + 1,
       multipleChoiceAnswerOptions: [],
       languageId: this.selectedLanguage.id,
-      correctAnswer: '',
+      questionCode: '',
+      correctAnswer: ''
     });
     this.selectQuestion(this.questionsFromSelectedLanguage[this.questionsFromSelectedLanguage.length - 1]);
   }

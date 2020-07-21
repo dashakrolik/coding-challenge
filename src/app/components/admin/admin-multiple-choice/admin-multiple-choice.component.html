@@ -23,6 +23,11 @@
     <input type="text" class="questionInput" [(ngModel)]="selectedQuestion.question"
       (ngModelChange)="hasChanges = true">
   </div>
+  <div class="question-code">
+    <p>Question Code:</p>
+    <input type="text" class="question-code-input" [(ngModel)]="selectedQuestion.questionCode"
+      (ngModelChange)="hasChanges = true">
+  </div>
   <mat-radio-group [(ngModel)]="selectedQuestion.correctAnswer" (ngModelChange)="hasChanges = true">
     <div class="answerOption"
       *ngFor="let answer of selectedQuestion.multipleChoiceAnswerOptions; index as i; trackBy:trackByFn">
