@@ -11,7 +11,7 @@ describe('GiveFeedbackComponent', () => {
 
   beforeEach(async(() => {
     FeedbackServiceSpy = jasmine.createSpyObj('FeedbackService', ['sendFeedback']);
-    FeedbackServiceSpy.sendFeedback("it is very good");
+    FeedbackServiceSpy.sendFeedback('it is very good');
     TestBed.configureTestingModule({
       declarations: [ GiveFeedbackComponent ],
       providers: [{

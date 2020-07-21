@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { take } from 'rxjs/operators';
 import { trigger, state, style, animate, transition } from '@angular/animations';
@@ -11,6 +11,11 @@ import { MatSelectChange } from '@angular/material/select';
 
 import { PersonService } from '@services/person/person.service';
 import { LanguageService } from '@services/language/language.service';
+
+export interface ITableElement {
+  name: string;
+  points: number;
+}
 
 @Component({
   selector: 'app-leaderboard',
@@ -27,18 +32,23 @@ import { LanguageService } from '@services/language/language.service';
     ])
   ]
 })
+
 export class LeaderboardComponent implements OnInit {
 
   languageNames$: Observable<string[]>;
 
-  displayedColumns = ['firstName', 'points'];
-  dataSource: MatTableDataSource<IPerson>;
+  // This is what will be shown in the table.
+  TABLE_DATA: ITableElement[] = [];
+
+  displayedColumns = ['name', 'points'];
+  dataSource: MatTableDataSource<ITableElement>;
   state: string;
   selectedLanguage: string;
   top: number;
   left: number;
   personOnCard: IPerson;
   languageIndex: number;
+  allPeople: {name: string, points: number[]}[] = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -59,8 +69,9 @@ export class LeaderboardComponent implements OnInit {
   ngOnInit(): void {
     this.languageIndex = 0;
     this.personService.getAllPersons().pipe(take(1)).subscribe(persons => {
-      this.setDataSource(persons);
-      this.dataSource.sort = this.sort;
+      persons.forEach(person => {
+        this.allPeople.push({name: person.firstName + ' ' + person.lastName, points: person.points});
+      });
     });
 
     // get just the names of the languages
@@ -69,36 +80,43 @@ export class LeaderboardComponent implements OnInit {
         languages.map(lang => lang.language)
       )
     );
-  }
 
-  setDataSource(data: IPerson[]) {
-    this.dataSource = new MatTableDataSource(data);
+    this.dataSource = new MatTableDataSource(this.TABLE_DATA);
+    this.dataSource.sort = this.sort;
   }
 
   onSelect = (event: MatSelectChange) => {
-    // TODO: Add correct behaviour.
     this.selectedLanguage = event.value;
+    this.TABLE_DATA = [];
+    let tableIndex = 0;
     if (this.selectedLanguage === 'java') {
-      this.languageIndex = 0;
-      // this.lang = 0;
+      tableIndex = 0;
     } else if (this.selectedLanguage === 'python') {
-      this.languageIndex = 1;
-      // this.lang = 1;
+      tableIndex = 1;
     } else if (this.selectedLanguage === 'javascript') {
-      this.languageIndex = 2;
-      // this.lang = 2;
-    }  else if (this.selectedLanguage === 'scala') {
-      this.languageIndex = 3;
-      // this.lang = 3;
+      tableIndex = 2;
+    } else if (this.selectedLanguage === 'scala') {
+      tableIndex = 3;
     } else if (this.selectedLanguage === 'csharp') {
-      this.languageIndex = 4;
-      // this.lang = 4;
+      tableIndex = 4;
       // We also set the selected language to be 'C#' This is so that is shows up correctly on the page.
       this.selectedLanguage = 'C#';
-    } else {
-      // this.lang = null;
     }
-    this.displayedColumns[1] = this.selectedLanguage + 'Points';
+
+    // We fill the table with the correct data
+    this.allPeople.forEach(person => {
+      const element: ITableElement = {name: person.name, points: person.points[tableIndex]};
+      this.TABLE_DATA.push(element);
+    });
+    
+    this.dataSource = new MatTableDataSource(this.TABLE_DATA);
+    this.dataSource.sort = this.sort;
+
+    // We set the sorting of the table to be on the points. The highest points will be on the top
+    const sortState: Sort = {active: 'points', direction: 'desc'};
+    this.sort.active = sortState.active;
+    this.sort.direction = sortState.direction;
+    this.sort.sortChange.emit(sortState);
   }
 
   goHome = (): Promise<boolean> => this.router.navigate(['/']);

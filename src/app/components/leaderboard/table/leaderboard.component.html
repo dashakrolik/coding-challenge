@@ -8,26 +8,30 @@ Select a leaderboard from the dropdown
     </app-dropdown>
 </ng-container>
 
-<div class="mat-elevation-z8 data-table" *ngIf="selectedLanguage">
-    <h1>{{selectedLanguage}} leaderboard</h1>
-    <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
-        <ng-container matColumnDef="firstName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-            <td mat-cell *matCellDef="let person">{{person.firstName}}</td>
+<div class="mat-elevation-z8 data-table">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="{{selectedLanguage.toLowerCase() + 'Points'}}">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Points</th>
-            <td mat-cell *matCellDef="let person">{{person.points[languageIndex]}}</td>
+        <!-- Points Column -->
+        <ng-container matColumnDef="points">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{selectedLanguage}} points </th>
+            <td mat-cell *matCellDef="let element"> {{element.points}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let element; columns: displayedColumns;" (click)="showCard($event, element)"></tr>
+        <!-- removed the popup window for now -->
+        <!-- <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="showCard($event, row)"></tr> -->
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     <mat-paginator #paginator [length]="dataSource?.data?.length" [pageIndex]="0" [pageSize]="50"
-        [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+            [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
 </div>
-
+  
 <br>
 <button class="button" (click)="goHome()" mat-raised-button>Home</button>
 
