@@ -3,12 +3,21 @@
     <mat-select (selectionChange)="setValue($event)">
         <ng-container *ngFor="let value of inputValue">
             <mat-option [value]="value">
-                <div *ngIf="value=='csharp'">
-                    C#
-                </div>
-                <div *ngIf="value!='csharp'">
-                    {{ value }}
-                </div>
+              <div *ngIf="value=='java'">
+                Java
+              </div>
+              <div *ngIf="value=='python'">
+                Python
+              </div>
+              <div *ngIf="value=='javascript'">
+                JavaScript
+              </div>
+              <div *ngIf="value=='scala'">
+                Scala
+              </div>
+              <div *ngIf="value=='csharp'">
+                C#
+              </div>
             </mat-option>
         </ng-container>
     </mat-select>

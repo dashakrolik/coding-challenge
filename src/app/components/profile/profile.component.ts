@@ -32,6 +32,7 @@ export class ProfileComponent implements OnInit {
   scoreScala: number;
   scoreCSharp: number;
   pointsTasks: number[][] = [[], [], [], [], []];
+  pointsMultipleChoice: number[] = [];
   // the amount of tests that each task has.
   taskTests: number[] = [5, 6, 8];
   isAdmin = false;
@@ -81,6 +82,7 @@ export class ProfileComponent implements OnInit {
       this.scoreJavascript = person.points[2];
       this.scoreScala = person.points[3];
       this.scoreCSharp = person.points[4];
+      this.pointsMultipleChoice = person.pointsMultipleChoice;
 
       this.person = person;
     });

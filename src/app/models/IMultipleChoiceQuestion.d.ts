@@ -4,5 +4,5 @@ interface IMultipleChoiceQuestion {
     questionNumber: number;
     question: string;
     multipleChoiceAnswerOptions: string[];
-    correctAnswer: string;
+    questionCode: string;
 }
