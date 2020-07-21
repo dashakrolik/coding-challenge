@@ -104,6 +104,7 @@ export class LeaderboardComponent implements OnInit {
       this.selectedLanguage = 'C#';
     }
 
+    // We fill the table with the correct data
     this.allPeople.forEach(person => {
       const element: tableElement = {name: person.name, points: person.points[tableIndex]};
       this.TABLE_DATA.push(element)
@@ -112,6 +113,7 @@ export class LeaderboardComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.TABLE_DATA);
     this.dataSource.sort = this.sort;
 
+    // We set the sorting of the table to be on the points. The highest points will be on the top
     const sortState: Sort = {active: 'points', direction: 'desc'};
     this.sort.active = sortState.active;
     this.sort.direction = sortState.direction;
