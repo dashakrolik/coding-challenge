@@ -1,19 +1,23 @@
-mat-card{
-    width: fit-content;
-    background-color: #2879ff;
+mat-card {
+  width: fit-content;
+  background-color: #f58220;
+  color: white;
 }
 
-a{
-    color:black;
+a {
+  color: white;
 }
 
-table{
-    margin-left: 1rem;
-    width: 80%;
-    .u-capitalize:first-letter{
-        text-transform: capitalize;
-    }
-    th{
-        text-align: right;
-    }
+table {
+  margin-left: 1rem;
+  width: 80%;
+
+  .u-capitalize:first-letter {
+    text-transform: capitalize;
+  }
+
+  th {
+    color: white;
+    text-align: right;
+  }
 }
