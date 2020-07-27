@@ -13,6 +13,7 @@ import { PersonService } from '@services/person/person.service';
 import { LanguageService } from '@services/language/language.service';
 
 export interface ITableElement {
+  id: number;
   name: string;
   points: number;
 }
@@ -48,7 +49,8 @@ export class LeaderboardComponent implements OnInit {
   left: number;
   personOnCard: IPerson;
   languageIndex: number;
-  allPeople: {name: string, points: number[]}[] = [];
+  allPeople: {id: number, name: string, points: number[]}[] = [];
+  allPersons: IPerson[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -60,8 +62,8 @@ export class LeaderboardComponent implements OnInit {
     private languageService: LanguageService,
   ) { }
 
-  showCard = (event: MouseEvent, person: IPerson) => {
-    this.personOnCard = person;
+  showCard = (event: MouseEvent, tableElement: ITableElement) => {
+    this.personOnCard = this.allPersons.filter(person => tableElement.id === person.id)[0];
     this.top = event.y + 10;
     this.left = event.x + 10;
   }
@@ -69,8 +71,9 @@ export class LeaderboardComponent implements OnInit {
   ngOnInit(): void {
     this.languageIndex = 0;
     this.personService.getAllPersons().pipe(take(1)).subscribe(persons => {
+      this.allPersons = persons;
       persons.forEach(person => {
-        this.allPeople.push({name: person.firstName + ' ' + person.lastName, points: person.points});
+        this.allPeople.push({id: person.id, name: person.firstName + ' ' + person.lastName, points: person.points});
       });
     });
 
@@ -105,7 +108,7 @@ export class LeaderboardComponent implements OnInit {
 
     // We fill the table with the correct data
     this.allPeople.forEach(person => {
-      const element: ITableElement = {name: person.name, points: person.points[tableIndex]};
+      const element: ITableElement = {id: person.id, name: person.name, points: person.points[tableIndex]};
       this.TABLE_DATA.push(element);
     });
     
