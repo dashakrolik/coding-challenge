@@ -163,9 +163,23 @@ export class TaskComponent implements OnInit, OnDestroy {
 
       this.taskDescriptionOne = this.parseCode(this.task.descriptionOne);
       this.taskDescriptionTwo = this.parseCode(this.task.descriptionTwo);
-      boilerplate = this.task.boilerplateJava;
-      this.taskSpecificDescription = this.parseCode(this.task['description' + this.selectedLanguage.language]);
-
+      // TODO: improve this if else construction with something more scalable.
+      if (this.selectedLanguage.language === 'java') {
+        this.taskSpecificDescription = this.parseCode(this.task.descriptionJava);
+        boilerplate = this.task.boilerplateJava;
+      } else if (this.selectedLanguage.language === 'python') {
+        this.taskSpecificDescription = this.parseCode(this.task.descriptionPython);
+        boilerplate = this.task.boilerplatePython;
+      } else if (this.selectedLanguage.language === 'javascript') {
+        this.taskSpecificDescription = this.parseCode(this.task.descriptionJavascript);
+        boilerplate = this.task.boilerplateJavascript;
+      } else if (this.selectedLanguage.language === 'scala') {
+        this.taskSpecificDescription = this.parseCode(this.task.descriptionScala);
+        boilerplate = this.task.boilerplateScala;
+      } else if (this.selectedLanguage.language === 'csharp') {
+        this.taskSpecificDescription = this.parseCode(this.task.descriptionCSharp);
+        boilerplate = this.task.boilerplateCSharp;
+      } 
     }
 
     const lines = boilerplate.split('\\n');
