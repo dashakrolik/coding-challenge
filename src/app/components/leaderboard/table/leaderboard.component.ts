@@ -11,6 +11,7 @@ import { MatSelectChange } from '@angular/material/select';
 
 import { PersonService } from '@services/person/person.service';
 import { LanguageService } from '@services/language/language.service';
+import { DialogService } from '@services/dialog/dialog.service';
 
 export interface ITableElement {
   id: number;
@@ -60,12 +61,20 @@ export class LeaderboardComponent implements OnInit {
     private personService: PersonService,
     private router: Router,
     private languageService: LanguageService,
+    private dialogService: DialogService
   ) { }
 
   showCard = (event: MouseEvent, tableElement: ITableElement) => {
     this.personOnCard = this.allPersons.filter(person => tableElement.id === person.id)[0];
     this.top = event.y + 10;
     this.left = event.x + 10;
+  }
+
+  showCard2 = (event: MouseEvent, tableElement: ITableElement) => {
+    const data = {
+      sth: this.personOnCard = this.allPersons.filter(person => tableElement.id === person.id)[0],
+    };
+    this.dialogService.openCard(data);
   }
 
   ngOnInit(): void {

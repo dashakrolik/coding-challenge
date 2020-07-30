@@ -13,11 +13,19 @@ export class CardComponent {
   @Input('person') person: IPerson;
   languages$: Observable<ILanguage[]>;
 
+  showNotification = true;
+
   constructor(
     private sanitizer: DomSanitizer,
     private languageService: LanguageService,
   ) {
     this.languages$ = languageService.getLanguages();
+  }
+
+  onCloseClick(): void {
+    this.showNotification = !this.showNotification;
+    console.log(this.showNotification);
+    console.log(this.person);
   }
 
   getMailLink = () => {

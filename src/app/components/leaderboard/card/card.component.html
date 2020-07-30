@@ -1,5 +1,6 @@
-<mat-card *ngIf="person">
-    <h2>{{person.firstName}}</h2>
+<mat-card *ngIf="showNotification">
+  <ng-container *ngIf="person">
+    <h2>{{person.firstName + ' ' + person.lastName}}</h2>
     <p>Points:</p>
     <table>
         <tr *ngFor="let language of (languages$ | async); index as i">
@@ -10,4 +11,6 @@
 <!--    <p>-->
 <!--        <a [href]="getMailLink()">Get in contact with {{person.firstName}}</a>-->
 <!--    </p>-->
+    <button (click)="onCloseClick()">Close</button>
+  </ng-container>
 </mat-card>

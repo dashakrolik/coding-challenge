@@ -3,9 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { take } from 'rxjs/operators';
 
 import { MessageDialogComponent } from '@components/dialog/message-dialog/message-dialog.component';
-import {
-  OkCancelDialogComponent
-} from '@components/dialog/ok-cancel-dialog/ok-cancel-dialog.component';
+import { OkCancelDialogComponent } from '@components/dialog/ok-cancel-dialog/ok-cancel-dialog.component';
+import { CardDialogComponent } from '@components/dialog/card-dialog/card-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +37,16 @@ export class DialogService {
           reject(false);
         }
       });
+    });
+  }
+
+  openCard = (data) => {
+    return new Promise((resolve, reject) => {
+      const dialogRef = this.dialog.open(CardDialogComponent, {
+        width: '500px',
+        data
+      });
+      dialogRef.afterClosed().pipe(take(1)).subscribe(resolve);
     });
   }
 

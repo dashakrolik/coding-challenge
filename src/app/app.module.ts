@@ -48,6 +48,7 @@ import { PersonsComponent } from './components/admin/persons/persons/persons.com
 import { AdminMultipleChoiceComponent } from './components/admin/admin-multiple-choice/admin-multiple-choice.component';
 import { MultipleChoiceTableComponent } from './components/admin/persons/multiple-choice-table/multiple-choice-table.component';
 import { SubmissionTableComponent } from '@components/admin/persons/submission-table/submission-table.component';
+import { CardDialogComponent } from './components/dialog/card-dialog/card-dialog.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { SubmissionTableComponent } from '@components/admin/persons/submission-t
     PersonsComponent,
     AdminMultipleChoiceComponent,
     MultipleChoiceTableComponent,
+    CardDialogComponent,
   ],
   imports: [
     BrowserModule,
