@@ -34,7 +34,6 @@ import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.comp
 import { ProfileComponent } from '@components/profile/profile.component';
 import { TaskComponent } from '@components/task/task.component';
 import { LeaderboardComponent } from './components/leaderboard/table/leaderboard.component';
-import { CardComponent } from './components/leaderboard/card/card.component';
 import { WelcomePageComponent } from '@components/welcome-page/welcome-page.component';
 import { MessageDialogComponent } from '@components/dialog/message-dialog/message-dialog.component';
 import { OkCancelDialogComponent } from '@components/dialog/ok-cancel-dialog/ok-cancel-dialog.component';
@@ -68,7 +67,6 @@ import { CardDialogComponent } from './components/dialog/card-dialog/card-dialog
     MessageDialogComponent,
     DropdownComponent,
     LeaderboardComponent,
-    CardComponent,
     CanvasComponent,
     MultipleChoiceComponent,
     FeedbackComponent,
