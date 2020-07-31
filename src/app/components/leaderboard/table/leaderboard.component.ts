@@ -100,16 +100,19 @@ export class LeaderboardComponent implements OnInit {
     this.TABLE_DATA = [];
     let tableIndex = 0;
     if (this.selectedLanguage === 'java') {
+      this.selectedLanguage = 'Java';
       tableIndex = 0;
     } else if (this.selectedLanguage === 'python') {
       tableIndex = 1;
+      this.selectedLanguage = 'Python';
     } else if (this.selectedLanguage === 'javascript') {
       tableIndex = 2;
+      this.selectedLanguage = 'JavaScript';
     } else if (this.selectedLanguage === 'scala') {
       tableIndex = 3;
+      this.selectedLanguage = 'Scala';
     } else if (this.selectedLanguage === 'csharp') {
       tableIndex = 4;
-      // We also set the selected language to be 'C#' This is so that is shows up correctly on the page.
       this.selectedLanguage = 'C#';
     }
 
