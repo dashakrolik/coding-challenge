@@ -66,12 +66,6 @@ export class LeaderboardComponent implements OnInit {
 
   showCard = (event: MouseEvent, tableElement: ITableElement) => {
     this.personOnCard = this.allPersons.filter(person => tableElement.id === person.id)[0];
-    this.top = event.y + 10;
-    this.left = event.x + 10;
-  }
-
-  showCard2 = (event: MouseEvent, tableElement: ITableElement) => {
-    this.personOnCard = this.allPersons.filter(person => tableElement.id === person.id)[0]
     this.dialogService.openCard(this.personOnCard);
   }
 
