@@ -1,0 +1,38 @@
+::ng-deep .mat-dialog-container {
+  background-color: #FFFFFF;
+  width: 250px;
+  padding: 0;
+  padding-top: 15px;
+}
+
+h2 {
+  color: #f58220;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+table {
+  margin-left: 15px;
+  margin-bottom: 0.5rem;
+
+  .u-capitalize:first-letter {
+    text-transform: capitalize;
+    margin-left: 45px;
+  }
+
+  th {
+    color: #666666;
+    text-align: center;
+    font-family: "Roboto", arial, sans-serif;
+  }
+}
+
+footer.dialog-card-foot {
+  background-color: whitesmoke;
+  border-top: 1px solid #dbdbdb;
+}
+
+div {
+  text-align: center;
+}

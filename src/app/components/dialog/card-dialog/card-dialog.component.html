@@ -1,15 +1,17 @@
 <div *ngIf="person">
   <h2>{{person.firstName + ' ' + person.lastName}}</h2>
-  <p>Points:</p>
   <table>
     <tr *ngFor="let language of (languages$ | async); index as i">
-      <th class="u-capitalize">{{language.language}}:</th>
+      <th class="u-capitalize">{{language.language == 'javascript' ? 'JavaScript' :
+        (language.language == 'csharp' ? 'C#' : language.language)}}:</th>
       <th>{{person.points[i]}}</th>
     </tr>
   </table>
+  <!--  Comment this out for now, may not use it due to privacy issues -->
   <!--    <p>-->
   <!--        <a [href]="getMailLink()">Get in contact with {{person.firstName}}</a>-->
   <!--    </p>-->
-  <button (click)="onCloseClick()">Close</button>
+  <footer class="dialog-card-foot">
+    <button class="button" (click)="onCloseClick()" mat-raised-button>Close</button>
+  </footer>
 </div>
-
