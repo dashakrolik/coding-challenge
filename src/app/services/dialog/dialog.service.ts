@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import { take } from 'rxjs/operators';
 
 import { MessageDialogComponent } from '@components/dialog/message-dialog/message-dialog.component';
@@ -40,14 +40,17 @@ export class DialogService {
     });
   }
 
-  openCard = (data) => {
-    return new Promise((resolve, reject) => {
-      const dialogRef = this.dialog.open(CardDialogComponent, {
-        width: '500px',
-        data
-      });
-      dialogRef.afterClosed().pipe(take(1)).subscribe(resolve);
-    });
-  }
+ openCard(data: any): void {
+
+   const dialogConfig = new MatDialogConfig();
+
+   dialogConfig.disableClose = false;
+   dialogConfig.autoFocus = true;
+   dialogConfig.width = '500px';
+   dialogConfig.data = data;
+
+   const dialogRef = this.dialog.open(CardDialogComponent, dialogConfig);
+ }
+
 
 }

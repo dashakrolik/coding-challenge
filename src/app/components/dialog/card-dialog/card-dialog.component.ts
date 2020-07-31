@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {LanguageService} from '@services/language/language.service';
 import {DomSanitizer} from '@angular/platform-browser';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-card-dialog',
@@ -10,26 +11,24 @@ import {DomSanitizer} from '@angular/platform-browser';
 })
 export class CardDialogComponent implements OnInit {
   // tslint:disable-next-line:no-input-rename
-  @Input('person') person: IPerson;
+  person: IPerson;
   languages$: Observable<ILanguage[]>;
 
-  showNotification = true;
 
-  constructor(private sanitizer: DomSanitizer,
+  constructor(public dialogRef: MatDialogRef<CardDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public data,
+              private sanitizer: DomSanitizer,
               private languageService: LanguageService) {
     this.languages$ = languageService.getLanguages();
+    this.person = data;
   }
 
   ngOnInit(): void {
   }
 
-  printsth(): void { console.log(this.showNotification);
-                     console.log(this.person);
-  }
 
   onCloseClick(): void {
-    this.showNotification = !this.showNotification;
-    console.log(this.showNotification);
+    this.dialogRef.close();
   }
 
 }

@@ -71,10 +71,8 @@ export class LeaderboardComponent implements OnInit {
   }
 
   showCard2 = (event: MouseEvent, tableElement: ITableElement) => {
-    const data = {
-      sth: this.personOnCard = this.allPersons.filter(person => tableElement.id === person.id)[0],
-    };
-    this.dialogService.openCard(data);
+    this.personOnCard = this.allPersons.filter(person => tableElement.id === person.id)[0]
+    this.dialogService.openCard(this.personOnCard);
   }
 
   ngOnInit(): void {
@@ -120,7 +118,7 @@ export class LeaderboardComponent implements OnInit {
       const element: ITableElement = {id: person.id, name: person.name, points: person.points[tableIndex]};
       this.TABLE_DATA.push(element);
     });
-    
+
     this.dataSource = new MatTableDataSource(this.TABLE_DATA);
     this.dataSource.sort = this.sort;
 
