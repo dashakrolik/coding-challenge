@@ -52,6 +52,8 @@ export class LeaderboardComponent implements OnInit {
   languageIndex: number;
   allPeople: {id: number, name: string, points: number[]}[] = [];
   allPersons: IPerson[];
+  languageMap;
+  tableIndex = 0;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -61,8 +63,16 @@ export class LeaderboardComponent implements OnInit {
     private personService: PersonService,
     private router: Router,
     private languageService: LanguageService,
-    private dialogService: DialogService
-  ) { }
+    private dialogService: DialogService,
+  ) {
+    this.languageMap = new Map();
+
+    this.languageMap.set('java', [this.tableIndex = 0, this.selectedLanguage = 'Java']);
+    this.languageMap.set('python', [this.tableIndex = 1, this.selectedLanguage = 'Python']);
+    this.languageMap.set('javascript', [this.tableIndex = 2, this.selectedLanguage = 'JavaScript']);
+    this.languageMap.set('scala', [this.tableIndex = 3, this.selectedLanguage = 'Scala']);
+    this.languageMap.set('csharp', [this.tableIndex = 4, this.selectedLanguage = 'C#']);
+  }
 
   showCard = (event: MouseEvent, tableElement: ITableElement) => {
     this.personOnCard = this.allPersons.filter(person => tableElement.id === person.id)[0];
@@ -90,29 +100,15 @@ export class LeaderboardComponent implements OnInit {
   }
 
   onSelect = (event: MatSelectChange) => {
-    this.selectedLanguage = event.value;
     this.TABLE_DATA = [];
-    let tableIndex = 0;
-    if (this.selectedLanguage === 'java') {
-      this.selectedLanguage = 'Java';
-      tableIndex = 0;
-    } else if (this.selectedLanguage === 'python') {
-      tableIndex = 1;
-      this.selectedLanguage = 'Python';
-    } else if (this.selectedLanguage === 'javascript') {
-      tableIndex = 2;
-      this.selectedLanguage = 'JavaScript';
-    } else if (this.selectedLanguage === 'scala') {
-      tableIndex = 3;
-      this.selectedLanguage = 'Scala';
-    } else if (this.selectedLanguage === 'csharp') {
-      tableIndex = 4;
-      this.selectedLanguage = 'C#';
-    }
+
+    this.selectedLanguage = event.value;
+    this.tableIndex = this.languageMap.get(this.selectedLanguage)[0];
+    this.selectedLanguage = this.languageMap.get(this.selectedLanguage)[1];
 
     // We fill the table with the correct data
     this.allPeople.forEach(person => {
-      const element: ITableElement = {id: person.id, name: person.name, points: person.points[tableIndex]};
+      const element: ITableElement = {id: person.id, name: person.name, points: person.points[this.tableIndex]};
       this.TABLE_DATA.push(element);
     });
 
