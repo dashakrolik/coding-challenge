@@ -2,21 +2,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSortModule } from '@angular/material/sort';
-import { MatCardModule } from '@angular/material/card';
-import { MatTableModule } from '@angular/material/table';
-import { MatRadioModule } from '@angular/material/radio';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatTabsModule } from '@angular/material/tabs';
 
 import { AceEditorModule } from 'ng2-ace-editor';
 
@@ -47,7 +34,9 @@ import { PersonsComponent } from './components/admin/persons/persons/persons.com
 import { AdminMultipleChoiceComponent } from './components/admin/admin-multiple-choice/admin-multiple-choice.component';
 import { MultipleChoiceTableComponent } from './components/admin/persons/multiple-choice-table/multiple-choice-table.component';
 import { SubmissionTableComponent } from '@components/admin/persons/submission-table/submission-table.component';
-import { CardDialogComponent } from './components/dialog/card-dialog/card-dialog.component';
+import { CardDialogComponent } from '@components/dialog/card-dialog/card-dialog.component';
+import { AppMaterialModule } from './app-material/app-material.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -82,22 +71,10 @@ import { CardDialogComponent } from './components/dialog/card-dialog/card-dialog
     ReactiveFormsModule,
     AceEditorModule,
     BrowserAnimationsModule,
-    MatButtonModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    MatInputModule,
     HttpClientModule,
     OverlayModule,
     FormsModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatDialogModule,
-    MatCardModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    MatTabsModule,
-    MatRadioModule,
+    AppMaterialModule
   ],
   providers: [
     authInterceptorProviders,
