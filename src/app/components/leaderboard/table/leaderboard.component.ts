@@ -72,6 +72,7 @@ export class LeaderboardComponent implements OnInit {
     this.languageMap.set('javascript', [this.tableIndex = 2, this.selectedLanguage = 'JavaScript']);
     this.languageMap.set('scala', [this.tableIndex = 3, this.selectedLanguage = 'Scala']);
     this.languageMap.set('csharp', [this.tableIndex = 4, this.selectedLanguage = 'C#']);
+    this.selectedLanguage = '';
   }
 
   showCard = (event: MouseEvent, tableElement: ITableElement) => {
