@@ -192,7 +192,10 @@ export class TaskComponent implements OnInit, OnDestroy {
   }
 
   // tslint:disable-next-line: quotemark
-  parseCode = (stringToParse: string) => JSON.parse(`${stringToParse.replace(/`/g, "''")}`);
+  parseCode = (stringToParse: string) => {
+    const parsed = stringToParse.replace(/`/g, "''");
+    return JSON.parse(parsed);
+  }
 
 
   goToTask = () => {

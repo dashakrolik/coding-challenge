@@ -2,21 +2,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSortModule } from '@angular/material/sort';
-import { MatCardModule } from '@angular/material/card';
-import { MatTableModule } from '@angular/material/table';
-import { MatRadioModule } from '@angular/material/radio';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatTabsModule } from '@angular/material/tabs';
 
 import { AceEditorModule } from 'ng2-ace-editor';
 
@@ -25,16 +12,15 @@ import { MatDialogProvider } from '@shared/constants';
 import { AdminPanelComponent } from '@components/admin/admin-panel/admin-panel.component';
 import { PersonTableComponent } from '@components/admin/persons/person-table/person-table.component';
 import { AdminProfileComponent } from '@components/admin/persons/profile/profile.component';
-import { FeedbackComponent } from './components/admin/feedback/feedback.component';
-import { GiveFeedbackComponent } from './components/give-feedback/give-feedback.component';
+import { FeedbackComponent } from '@components/admin/feedback/feedback.component';
+import { GiveFeedbackComponent } from '@components/give-feedback/give-feedback.component';
 import { AdminTaskComponent } from '@components/admin/task/adminTask.component';
 import { DropdownComponent } from '@components/dropdown/dropdown.component';
 import { OverlayComponent } from '@components/overlay/overlay/overlay.component';
 import { SubscribeComponent } from '@components/overlay/subscribe/subscribe.component';
 import { ProfileComponent } from '@components/profile/profile.component';
 import { TaskComponent } from '@components/task/task.component';
-import { LeaderboardComponent } from './components/leaderboard/table/leaderboard.component';
-import { CardComponent } from './components/leaderboard/card/card.component';
+import { LeaderboardComponent } from '@components/leaderboard/table/leaderboard.component';
 import { WelcomePageComponent } from '@components/welcome-page/welcome-page.component';
 import { MessageDialogComponent } from '@components/dialog/message-dialog/message-dialog.component';
 import { OkCancelDialogComponent } from '@components/dialog/ok-cancel-dialog/ok-cancel-dialog.component';
@@ -42,12 +28,15 @@ import { CanvasComponent } from '@components/canvas/canvas.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { authInterceptorProviders } from './guards/auth/auth.interceptor';
-import { MultipleChoiceComponent } from './components/multiple-choice/multiple-choice.component';
-import { PersonsComponent } from './components/admin/persons/persons/persons.component';
-import { AdminMultipleChoiceComponent } from './components/admin/admin-multiple-choice/admin-multiple-choice.component';
-import { MultipleChoiceTableComponent } from './components/admin/persons/multiple-choice-table/multiple-choice-table.component';
+import { authInterceptorProviders } from '@guards/auth/auth.interceptor';
+import { MultipleChoiceComponent } from '@components/multiple-choice/multiple-choice.component';
+import { PersonsComponent } from '@components/admin/persons/persons/persons.component';
+import { AdminMultipleChoiceComponent } from '@components/admin/admin-multiple-choice/admin-multiple-choice.component';
+import { MultipleChoiceTableComponent } from '@components/admin/persons/multiple-choice-table/multiple-choice-table.component';
 import { SubmissionTableComponent } from '@components/admin/persons/submission-table/submission-table.component';
+import { CardDialogComponent } from '@components/dialog/card-dialog/card-dialog.component';
+import { AppMaterialModule } from './app-material/app-material.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -67,7 +56,6 @@ import { SubmissionTableComponent } from '@components/admin/persons/submission-t
     MessageDialogComponent,
     DropdownComponent,
     LeaderboardComponent,
-    CardComponent,
     CanvasComponent,
     MultipleChoiceComponent,
     FeedbackComponent,
@@ -75,6 +63,7 @@ import { SubmissionTableComponent } from '@components/admin/persons/submission-t
     PersonsComponent,
     AdminMultipleChoiceComponent,
     MultipleChoiceTableComponent,
+    CardDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,22 +71,10 @@ import { SubmissionTableComponent } from '@components/admin/persons/submission-t
     ReactiveFormsModule,
     AceEditorModule,
     BrowserAnimationsModule,
-    MatButtonModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    MatInputModule,
     HttpClientModule,
     OverlayModule,
     FormsModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatDialogModule,
-    MatCardModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    MatTabsModule,
-    MatRadioModule,
+    AppMaterialModule
   ],
   providers: [
     authInterceptorProviders,

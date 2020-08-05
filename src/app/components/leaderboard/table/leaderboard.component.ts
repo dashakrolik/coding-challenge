@@ -11,8 +11,10 @@ import { MatSelectChange } from '@angular/material/select';
 
 import { PersonService } from '@services/person/person.service';
 import { LanguageService } from '@services/language/language.service';
+import { DialogService } from '@services/dialog/dialog.service';
 
 export interface ITableElement {
+  id: number;
   name: string;
   points: number;
 }
@@ -48,7 +50,10 @@ export class LeaderboardComponent implements OnInit {
   left: number;
   personOnCard: IPerson;
   languageIndex: number;
-  allPeople: {name: string, points: number[]}[] = [];
+  allPeople: {id: number, name: string, points: number[]}[] = [];
+  allPersons: IPerson[];
+  languageMap;
+  tableIndex = 0;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -58,19 +63,29 @@ export class LeaderboardComponent implements OnInit {
     private personService: PersonService,
     private router: Router,
     private languageService: LanguageService,
-  ) { }
+    private dialogService: DialogService,
+  ) {
+    this.languageMap = new Map();
 
-  showCard = (event: MouseEvent, person: IPerson) => {
-    this.personOnCard = person;
-    this.top = event.y + 10;
-    this.left = event.x + 10;
+    this.languageMap.set('java', [this.tableIndex = 0, this.selectedLanguage = 'Java']);
+    this.languageMap.set('python', [this.tableIndex = 1, this.selectedLanguage = 'Python']);
+    this.languageMap.set('javascript', [this.tableIndex = 2, this.selectedLanguage = 'JavaScript']);
+    this.languageMap.set('scala', [this.tableIndex = 3, this.selectedLanguage = 'Scala']);
+    this.languageMap.set('csharp', [this.tableIndex = 4, this.selectedLanguage = 'C#']);
+    this.selectedLanguage = '';
+  }
+
+  showCard = (event: MouseEvent, tableElement: ITableElement) => {
+    this.personOnCard = this.allPersons.filter(person => tableElement.id === person.id)[0];
+    this.dialogService.openCard(this.personOnCard);
   }
 
   ngOnInit(): void {
     this.languageIndex = 0;
     this.personService.getAllPersons().pipe(take(1)).subscribe(persons => {
+      this.allPersons = persons;
       persons.forEach(person => {
-        this.allPeople.push({name: person.firstName + ' ' + person.lastName, points: person.points});
+        this.allPeople.push({id: person.id, name: person.firstName + ' ' + person.lastName, points: person.points});
       });
     });
 
@@ -86,29 +101,18 @@ export class LeaderboardComponent implements OnInit {
   }
 
   onSelect = (event: MatSelectChange) => {
-    this.selectedLanguage = event.value;
     this.TABLE_DATA = [];
-    let tableIndex = 0;
-    if (this.selectedLanguage === 'java') {
-      tableIndex = 0;
-    } else if (this.selectedLanguage === 'python') {
-      tableIndex = 1;
-    } else if (this.selectedLanguage === 'javascript') {
-      tableIndex = 2;
-    } else if (this.selectedLanguage === 'scala') {
-      tableIndex = 3;
-    } else if (this.selectedLanguage === 'csharp') {
-      tableIndex = 4;
-      // We also set the selected language to be 'C#' This is so that is shows up correctly on the page.
-      this.selectedLanguage = 'C#';
-    }
+
+    this.selectedLanguage = event.value;
+    this.tableIndex = this.languageMap.get(this.selectedLanguage)[0];
+    this.selectedLanguage = this.languageMap.get(this.selectedLanguage)[1];
 
     // We fill the table with the correct data
     this.allPeople.forEach(person => {
-      const element: ITableElement = {name: person.name, points: person.points[tableIndex]};
+      const element: ITableElement = {id: person.id, name: person.name, points: person.points[this.tableIndex]};
       this.TABLE_DATA.push(element);
     });
-    
+
     this.dataSource = new MatTableDataSource(this.TABLE_DATA);
     this.dataSource.sort = this.sort;
 
